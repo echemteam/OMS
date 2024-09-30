@@ -12,7 +12,7 @@ import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 import { getFileTypeIcon } from "../../../../utils/TransformData/TransformAPIData";
 
 const Base64FileViewer = forwardRef(({ isLoading, documentData }) => {
-  const [getFileType, setGetFileType] = useState([]);
+  const [getFileType, setGetFileType] = useState();
   const [documentList, setDocumentList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState(null);
@@ -33,6 +33,7 @@ const Base64FileViewer = forwardRef(({ isLoading, documentData }) => {
       const fileURL = URL.createObjectURL(blob);
       setSelectedDocument(fileURL);
       setIsModalOpen(true);
+      setGetFileType(determineFileType(isDownalodData.fileName));
     }
   }, [isDownalodFetching, isDownalodSucess, isDownalodData]);
 
@@ -54,7 +55,7 @@ const Base64FileViewer = forwardRef(({ isLoading, documentData }) => {
           detectedFileTypes.add(fileType);
         }
       });
-      setGetFileType(Array.from(detectedFileTypes));
+      // setGetFileType(Array.from(detectedFileTypes));
     }
   }, [documentData]);
 

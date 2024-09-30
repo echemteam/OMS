@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 //** Lib's */
 import { priceListConfig } from "./config/ProductPriceList.data";
-import { ErrorMessage } from "../../../../../../data/appMessages";
+import { ErrorMessage, SuccessMessage } from "../../../../../../data/appMessages";
 import { EventName } from "../../../../../../utils/Enums/APIEventEnums";
 import CardSection from "../../../../../../components/ui/card/CardSection";
 //** Service's */
@@ -12,7 +12,7 @@ import FinalMolGrid from "../../../../../../components/FinalMolGrid/FinalMolGrid
 import Buttons from "../../../../../../components/ui/button/Buttons";
 import SwalAlert from "../../../../../../services/swalService/SwalService";
 
-const ProductPriceList = ({ productId, onPriceListUpdate }) => {
+const ProductPriceList = ({ productId, onPriceListUpdate, isVerifyProduct }) => {
   const molGridRef = useRef();
   const [priceList, setPriceList] = useState([]);
   const [originalPriceList, setOriginalPriceList] = useState([]); // To store original data
@@ -100,18 +100,27 @@ const ProductPriceList = ({ productId, onPriceListUpdate }) => {
   };
 
   const handleEditClick = (data, rowIndex) => {
-    const updatedRow = {
-      ...priceList[rowIndex],
-      ...data,
-    };
-    const updatedPriceList = priceList.map((row, index) =>
-      index === rowIndex ? updatedRow : row
-    );
-    setPriceList(updatedPriceList);
-    const originalRow = originalPriceList[rowIndex];
-    if (JSON.stringify(updatedRow) !== JSON.stringify(originalRow)) {
-      onPriceListUpdate(updatedRow);
-      ToastService.success("Data details updated successfully!");
+    if (isVerifyProduct) {
+      const updatedRow = {
+        ...priceList[rowIndex],
+        ...data,
+      };
+      const updatedPriceList = priceList.map((row, index) =>
+        index === rowIndex ? updatedRow : row
+      );
+      setPriceList(updatedPriceList);
+      if (updatedRow.Size === '' || !updatedRow.Size) {
+        return ToastService.warning("Please enter size");
+      } else if (updatedRow.Unit === '' || !updatedRow.Unit) {
+        return ToastService.warning("Please enter unit");
+      } else if (updatedRow.Price === '' || !updatedRow.Price) {
+        return ToastService.warning("Please enter price");
+      } else {
+        onPriceListUpdate(updatedRow);
+        ToastService.success("Details updated successfully!");
+      }
+    } else {
+      ToastService.warning(SuccessMessage.VerifyProduct)
     }
   };
 

@@ -66,24 +66,27 @@ const MolGridDataRows = ({
    * Handles saving the edited row data.
    * @param {number} rowIndex - The index of the row being saved.
    */
-  const handleRowEditSave = useCallback(
-    (rowIndex) => {
-      if (editRowIndex.includes(rowIndex) || editGridSettings?.defualtEditableView) {
-        const updatedRowData = editRowData[rowIndex];
-        if (updatedRowData) {
-          const newErrors = validateColumns(columns, updatedRowData);
+  const handleRowEditSave = useCallback((rowIndex) => {
+    if (editRowIndex.includes(rowIndex) || editGridSettings?.defualtEditableView) {
+      const updatedRowData = editRowData[rowIndex];
+      if (updatedRowData) {
+        const newErrors = validateColumns(columns, updatedRowData);
 
-          if (Object.keys(newErrors).length === 0) {
-            if (onRowDataUpdateSaving) {
-              onRowDataUpdateSaving(updatedRowData, rowIndex);
-            }
-            handleCancelEdit(rowIndex);
-          } else {
-            setErrors((prevErrors) => ({ ...prevErrors, [rowIndex]: newErrors }));
+        if (Object.keys(newErrors).length === 0) {
+          if (onRowDataUpdateSaving) {
+            onRowDataUpdateSaving(updatedRowData, rowIndex);
           }
+          handleCancelEdit(rowIndex);
+        } else {
+          setErrors((prevErrors) => ({ ...prevErrors, [rowIndex]: newErrors }));
+        }
+      } else {
+        if (onRowDataUpdateSaving) {
+          onRowDataUpdateSaving(updatedRowData, rowIndex);
         }
       }
-    },
+    }
+  },
     [editRowData, columns, onRowDataUpdateSaving]
   );
 
@@ -92,35 +95,26 @@ const MolGridDataRows = ({
    * @param {number} rowIndex - The index of the row being updated.
    * @param {object} updatedData - The updated data for the row.
    */
-  const handleRowDataUpdate = useCallback(
-    (rowIndex, newRowData, fieldName, dataField) => {
-
-      const updatedRowData = [...editRowData];
-
-
-      if (newRowData) {
-        const newErrors = validateColumns(columns, newRowData);
-
-        if (Object.keys(newErrors).length === 0) {
-          setErrors((prevErrors) => {
-            const updatedErrors = { ...prevErrors };
-            delete updatedErrors[rowIndex];
-            return updatedErrors;
-          });
-        } else {
-          setErrors((prevErrors) => ({ ...prevErrors, [rowIndex]: newErrors }));
-        }
-
+  const handleRowDataUpdate = useCallback((rowIndex, newRowData, fieldName, dataField) => {
+    const updatedRowData = [...editRowData];
+    if (newRowData) {
+      const newErrors = validateColumns(columns, newRowData);
+      if (Object.keys(newErrors).length === 0) {
+        setErrors((prevErrors) => {
+          const updatedErrors = { ...prevErrors };
+          delete updatedErrors[rowIndex];
+          return updatedErrors;
+        });
+      } else {
+        setErrors((prevErrors) => ({ ...prevErrors, [rowIndex]: newErrors }));
       }
-
-
-      updatedRowData[rowIndex] = { ...updatedRowData[rowIndex], ...newRowData };
-      setEditRowData(updatedRowData);
-
-      if (onColumnDataChange) {
-        onColumnDataChange(fieldName, newRowData, rowIndex);
-      }
-    },
+    }
+    updatedRowData[rowIndex] = { ...updatedRowData[rowIndex], ...newRowData };
+    setEditRowData(updatedRowData);
+    if (onColumnDataChange) {
+      onColumnDataChange(fieldName, newRowData, rowIndex);
+    }
+  },
     [editRowData, columns, setEditRowData]
   );
 
@@ -169,10 +163,7 @@ const MolGridDataRows = ({
     const isRowEdited = editRowIndex.includes(rowIndex);
     const editedData = editRowData[rowIndex] || null;
 
-    if (
-      col.colType !== GridColumnType.ACTION &&
-      ((!isRowEdited && !editGridSettings?.defualtEditableView) || !col.allowEditColumn)
-    ) {
+    if (col.colType !== GridColumnType.ACTION && ((!isRowEdited && !editGridSettings?.defualtEditableView) || !col.allowEditColumn)) {
       return renderNonEditableColumn(rowData, col, rowIndex);
     }
 
@@ -374,7 +365,7 @@ const MolGridDataRows = ({
           >
             {configuration.hasChildGridTable ? (
               <td className="first-td" onClick={() => toggleRow(rowIndex)}>
-                <Iconify icon={`${collapsedRows[rowIndex] ? "ep:arrow-up-bold" : "ep:arrow-down-bold"}`}/>
+                <Iconify icon={`${collapsedRows[rowIndex] ? "ep:arrow-up-bold" : "ep:arrow-down-bold"}`} />
               </td>
             ) : null}
             {columns.map((col) => (

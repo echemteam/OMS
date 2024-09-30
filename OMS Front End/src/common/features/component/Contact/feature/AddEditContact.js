@@ -89,7 +89,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                     onhandleApiCall(getContectTypeId)
                 }
             }
-            getCompletionCount();
+            getCompletionCount && getCompletionCount();
         }
     }, [isAddEditSuccess, isAddEditData]);
 
@@ -152,7 +152,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                 }
             }
         }
-    }, [editMode, editRef, SecurityKey])
+    }, [editMode, editRef, SecurityKey]);
 
     const handleEditMode = (contactId) => {
         setEditMode(true);
