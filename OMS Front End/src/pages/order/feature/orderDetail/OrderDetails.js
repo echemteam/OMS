@@ -392,7 +392,7 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
     } else if (id === "CustomerName" || id === "SubCustomer") {
       navigate(`/addCustomer`);
     } else {
-      ToastService.warning("Please Add Customer Name");
+      ToastService.warning("Please select customer");
     }
   };
 
