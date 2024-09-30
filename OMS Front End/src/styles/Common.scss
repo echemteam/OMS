@@ -665,6 +665,7 @@ a {
     .btn-right-sec {
       button {
         margin-left: 20px;
+        min-width: auto;
       }
     }
   }
@@ -4394,6 +4395,19 @@ input[type="checkbox"]:disabled {
       line-height: normal;
       padding-top: 4px;
       padding-left: 3px;
+    }
+  }
+}
+
+
+.doc-view {
+  .pdf-iframe {
+    iframe {
+      height: calc(100vh - 60px) !important;
+
+      @media only screen and (max-width: 1750px) {
+        height: calc(100vh - 57px) !important;
+      }
     }
   }
 }

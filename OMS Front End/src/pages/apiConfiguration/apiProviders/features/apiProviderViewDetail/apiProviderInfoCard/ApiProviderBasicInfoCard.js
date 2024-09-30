@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
   return (     
        <div className="basic-customer-detail">
       <div className="col-xl-12 col-lg-12 col-md-12 col-12">
-        <div className="d-flex gap-5 profile-info  justify-content-between col-11">
+        <div className="d-flex gap-5 profile-info  justify-content-between col-12">
           <div className="d-flex col-3 flex-column profile-icon-desc justify-content-center">
             <div className="d-flex">
               <div className="profile-icon ">
