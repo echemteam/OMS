@@ -88,6 +88,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
   useEffect(() => {
     if (isSuccessAddEditResponsibleUserForSupplier && isAddEditResponsibleUserForSupplierData) {
       ToastService.success(isAddEditResponsibleUserForSupplierData.errorMessage);
+      getSupplierCompletionCount(supplierId);
     }
   }, [isSuccessAddEditResponsibleUserForSupplier, isAddEditResponsibleUserForSupplierData]);
 
@@ -462,17 +463,17 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
 
             <div className="col-3">
               <div className="field-desc">
-                <div className="inf-label" style={{ minWidth: '120px', maxWidth: '120px' }}>Group Type</div>
+                <div className="inf-label" style={{ minWidth: '130px', maxWidth: '130px' }}>Group Type</div>
                 <b>&nbsp;:&nbsp;</b>
                 <div className="info-desc">{supplierData?.groupType}</div>
               </div>
               <div className="field-desc">
-                <div className="inf-label" style={{ minWidth: '120px', maxWidth: '120px' }}>Incoterm</div>
+                <div className="inf-label" style={{ minWidth: '130px', maxWidth: '130px' }}>Incoterm</div>
                 <b>&nbsp;:&nbsp;</b>
                 <div className="info-desc">{supplierData?.incotermName}</div>
               </div>
               <div className="field-desc">
-                <div className="inf-label" style={{ minWidth: '120px', maxWidth: '120px' }}>Supplier Completion</div>
+                <div className="inf-label" style={{ minWidth: '130px', maxWidth: '130px' }}>Profile Completion</div>
                 <b>&nbsp;:&nbsp;</b>
                 {totalCount &&
                   <>

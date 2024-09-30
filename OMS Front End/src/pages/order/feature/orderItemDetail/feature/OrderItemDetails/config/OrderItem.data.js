@@ -31,7 +31,7 @@ export const orderItemSelectList = {
     },
     {
       name: "Order Total",
-      fieldName: "Order Total",
+      fieldName: "Price",
       colStyle: {
         width: "Price",
       },

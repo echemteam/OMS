@@ -75,7 +75,7 @@ const ContactCloneModel = ({ cloneRef, isSupplier, onGetContactList, getCompleti
                 setIsCloneModel(!isCloneModel);
                 ToastService.success(isAddEditData.errorMessage);
             }
-            getCompletionCount();
+            getCompletionCount && getCompletionCount();
         }
     }, [isAddEditSuccess, isAddEditData]);
 

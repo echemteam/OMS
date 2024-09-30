@@ -13,7 +13,7 @@ import Image from "../../../../../../components/image/Image";
 import Input from "../../../../../../components/ui/inputs/input/Input";
 import GridCheckbox from "../../../../../../components/FinalMolGrid/ui/checkbox/GridCheckbox";
 
-const VerifyProductDetail = ({ productId, onVerifyProductList }) => {
+const VerifyProductDetail = ({ productId, onVerifyProductList, setIsVerifyProduct }) => {
     const [productDetail, setProductDetail] = useState({});
     const [tempProductDetail, setTempProductDetail] = useState({});
     const [editingField, setEditingField] = useState(""); // Track which field is being edited
@@ -27,12 +27,34 @@ const VerifyProductDetail = ({ productId, onVerifyProductList }) => {
     }, [productId]);
 
     useEffect(() => {
+        // Array of all the checkable conditions
+        const checks = [
+            tempProductDetail.isChemicalChecked,
+            tempProductDetail.isCASNoChecked,
+            tempProductDetail.isMDLChecked
+        ];
+        // Check if all conditions are true using .every()
+        if (checks.every(Boolean)) {
+            setIsVerifyProduct(true);
+        } else {
+            setIsVerifyProduct(false);
+        }
+    }, [setIsVerifyProduct, setTempProductDetail, tempProductDetail]);
+
+
+    useEffect(() => {
         if (isApiResponseSuccess && isApiResponseData) {
             if (isApiResponseData.isSuccess) {
                 const responseData = JSON.parse(isApiResponseData.data);
                 let productDetail = responseData?.data;
                 setProductDetail(productDetail);
-                setTempProductDetail(productDetail);
+                let request = {
+                    ...productDetail,
+                    isChemicalChecked: false,
+                    isCASNoChecked: false,
+                    isMDLChecked: false
+                }
+                setTempProductDetail(request);
                 onVerifyProductList(productDetail);
             } else {
                 ToastService.warning(isApiResponseData.message || ErrorMessage.DefaultMessage);
@@ -87,8 +109,8 @@ const VerifyProductDetail = ({ productId, onVerifyProductList }) => {
 
     const shouldShowPencilIcon = (field) => {
         // Only show pencil icon if not editing and the checkbox is false
-        const checkboxState = field === "ProductName" ? tempProductDetail.isChecked :
-            field === "CASNo" ? tempProductDetail.isCASChecked :
+        const checkboxState = field === "ProductName" ? tempProductDetail.isChemicalChecked :
+            field === "CASNo" ? tempProductDetail.isCASNoChecked :
                 field === "MDLNo" ? tempProductDetail.isMDLChecked :
                     false;
         return editingField !== field && !checkboxState;
@@ -134,12 +156,13 @@ const VerifyProductDetail = ({ productId, onVerifyProductList }) => {
                                 ) : (
                                     <>
                                         <GridCheckbox
-                                            name="isChecked"
-                                            checked={tempProductDetail.isChecked || false}
+                                            name="isChemicalChecked"
+                                            checked={tempProductDetail.isChemicalChecked || false}
                                             onChange={(dataField, checked) => handleCheckboxChange(dataField, checked)}
-                                            dataField="isChecked"
+                                            dataField="isChemicalChecked"
                                             isStaticCheckBox={true}
                                         />
+                                        {console.log('tempProductDetail', tempProductDetail)}
                                         <div className="right-edit-pencil">
                                             {shouldShowPencilIcon("ProductName") && (
                                                 <button className="edit-button" onClick={() => handleEditClick("ProductName")}>
@@ -180,10 +203,10 @@ const VerifyProductDetail = ({ productId, onVerifyProductList }) => {
                                 ) : (
                                     <>
                                         <GridCheckbox
-                                            name="isCASChecked"
-                                            checked={tempProductDetail.isCASChecked || false}
+                                            name="isCASNoChecked"
+                                            checked={tempProductDetail.isCASNoChecked || false}
                                             onChange={(dataField, checked) => handleCheckboxChange(dataField, checked)}
-                                            dataField="isCASChecked"
+                                            dataField="isCASNoChecked"
                                             isStaticCheckBox={true}
                                         />
                                         <div className="right-edit-pencil">

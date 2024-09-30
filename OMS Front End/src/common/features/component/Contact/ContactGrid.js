@@ -190,6 +190,8 @@ const ContactGrid = ({
           selectedContactTypeId={contactTypeId}
           search={search}
           getCompletionCount={getCompletionCount}
+          isEditablePage={isEditablePage}
+          SecurityKey={SecurityKey}
         />
       </div>
     </div>,
@@ -205,6 +207,8 @@ const ContactGrid = ({
           selectedContactTypeId={contactTypeId}
           search={search}
           getCompletionCount={getCompletionCount}
+          isEditablePage={isEditablePage}
+          SecurityKey={SecurityKey}
         />
       </div>
     </div>,
@@ -220,6 +224,8 @@ const ContactGrid = ({
           selectedContactTypeId={contactTypeId}
           search={search}
           getCompletionCount={getCompletionCount}
+          isEditablePage={isEditablePage}
+          SecurityKey={SecurityKey}
         />
       </div>
     </div>,
@@ -234,21 +240,8 @@ const ContactGrid = ({
           selectedContactTypeId={contactTypeId}
           search={search}
           getCompletionCount={getCompletionCount}
-        />
-      </div>
-    </div>,
-    (contactTypeId) => <div className="mt-2">
-      <div className="mt-2">
-        <ContactList
-          keyId={keyId}
-          getListRef={getListRef}
-          isSupplier={isSupplier}
-          handleEdit={handleEdit}
-          showEditIcon={showEditIcon}
-          getContactByKeyId={getContactByKeyId}
-          selectedContactTypeId={contactTypeId}
-          search={search}
-          getCompletionCount={getCompletionCount}
+          isEditablePage={isEditablePage}
+          SecurityKey={SecurityKey}
         />
       </div>
     </div>,
@@ -264,6 +257,8 @@ const ContactGrid = ({
           selectedContactTypeId={contactTypeId}
           search={search}
           getCompletionCount={getCompletionCount}
+          isEditablePage={isEditablePage}
+          SecurityKey={SecurityKey}
         />
       </div>
     </div>,
@@ -279,6 +274,25 @@ const ContactGrid = ({
           selectedContactTypeId={contactTypeId}
           search={search}
           getCompletionCount={getCompletionCount}
+          isEditablePage={isEditablePage}
+          SecurityKey={SecurityKey}
+        />
+      </div>
+    </div>,
+    (contactTypeId) => <div className="mt-2">
+      <div className="mt-2">
+        <ContactList
+          keyId={keyId}
+          getListRef={getListRef}
+          isSupplier={isSupplier}
+          handleEdit={handleEdit}
+          showEditIcon={showEditIcon}
+          getContactByKeyId={getContactByKeyId}
+          selectedContactTypeId={contactTypeId}
+          search={search}
+          getCompletionCount={getCompletionCount}
+          isEditablePage={isEditablePage}
+          SecurityKey={SecurityKey}
         />
       </div>
     </div>
