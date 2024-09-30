@@ -88,6 +88,9 @@ import testApiIcon from "../assets/images/testApi.png";
 import backArrow from "../assets/images/BackArrow.svg";
 import pencilIcon from "../assets/images/pencil.png";
 import businessIcon from "../assets/images/Business-icon.png"
+import dummyLogo from "../assets/images/dummy-logo.png"
+
+
 
 export const AppIcons = {
   // Menus & Header Images
@@ -175,5 +178,6 @@ export const AppIcons = {
   TestApiIcon: testApiIcon,
   PencilIcon: pencilIcon,
   CompanyIcon:businessIcon,
-
+  DummyLogo:dummyLogo,
+  
 };

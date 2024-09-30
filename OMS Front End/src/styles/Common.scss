@@ -4227,7 +4227,9 @@ input[type="checkbox"]:disabled {
     }
   }
 }
-
+.detail-sec{
+  width: calc(100% - 80px);
+}
 .customer-name {
   max-width: calc(100% - 20px);
   display: flex;
