@@ -2,9 +2,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import CardSection from "../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../data/appIcons";
-import { UserGridConfig, userFormData } from "./features/config/UserForm.data";
+import { UserGridConfig, UserHistoryGridConfig, userFormData } from "./features/config/UserForm.data";
 import { encryptUrlData } from '../../../services/CryptoService'
-import { useDeleteUserMutation, useGetUsersMutation } from '../../../app/services/userAPI'
+import { useDeleteUserMutation, useGetUsersMutation, useLazyGetUserLoginLogoutHistoryByUserIdQuery } from '../../../app/services/userAPI'
 import SwalAlert from "../../../services/swalService/SwalService";
 import ToastService from "../../../services/toastService/ToastService";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +13,8 @@ import { securityKey } from "../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../utils/AuthorizeNavigation/authorizeNavigation";
 import "./Users.scss"
 import FinalMolGrid from "../../../components/FinalMolGrid/FinalMolGrid";
+import CenterModel from "../../../components/ui/centerModel/CenterModel";
+
 const Users = () => {
 
   const molGridRef = useRef();
@@ -24,7 +26,9 @@ const Users = () => {
   const { confirm } = SwalAlert();
   const navigate = useNavigate();
   const [buttonVisible, setButtonVisible] = useState(false);
-
+  const[userList,setUserList]=useState([]);
+  const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
+ 
   const hasAddPermission = hasFunctionalPermission(securityKey.ADDUSER);
   const hasEditPermission = hasFunctionalPermission(securityKey.EDITUSER);
   const hasDeletePermission = hasFunctionalPermission(securityKey.DELETEUSER);
@@ -36,6 +40,15 @@ const Users = () => {
     getUsers,
     { isLoading: isListLoading, isSuccess: isListSuccess, data: isListeData },
   ] = useGetUsersMutation();
+    
+  const [
+    getUserLoginLogoutHistoryByUserId,
+    {
+      isFetching: isGetUserLoginLogoutHistoryByUserIdFetching,
+      isSuccess: isGetUserLoginLogoutHistoryByUserIdSuccess,
+      data: isGetUserLoginLogoutHistoryByUserIdData,
+    },
+  ] = useLazyGetUserLoginLogoutHistoryByUserIdQuery();
 
   const [deleteUser, { isSuccess: isDeleteSuccess, data: isDeletData }] =
     useDeleteUserMutation();
@@ -123,6 +136,26 @@ const Users = () => {
   }, [debouncedSearch]);
 
 
+
+  useEffect(() => {
+  
+    if ( !isGetUserLoginLogoutHistoryByUserIdFetching &&isGetUserLoginLogoutHistoryByUserIdSuccess && isGetUserLoginLogoutHistoryByUserIdData ) {
+      if(isGetUserLoginLogoutHistoryByUserIdData){
+        setUserList(isGetUserLoginLogoutHistoryByUserIdData);
+        setIsHistoryModalOpen(true);
+      }
+    }
+  }, [isGetUserLoginLogoutHistoryByUserIdFetching, isGetUserLoginLogoutHistoryByUserIdSuccess, isGetUserLoginLogoutHistoryByUserIdData,]);
+
+  const closeHistoryModal = () => {
+    setIsHistoryModalOpen(false);
+  };
+
+  const handleHistory=(data)=>{
+     getUserLoginLogoutHistoryByUserId(data.userId);
+  }
+
+
   const handleEidtClick = (data) => {
     navigate(`/EditUser/${encryptUrlData(data.userId)}`, "_blank");
   };
@@ -143,6 +176,7 @@ const Users = () => {
   const actionHandler = {
     EDIT: handleEidtClick,
     DELETE: handleDeleteClick,
+    HISTORY :handleHistory
   };
 
   const AddUser = () => {
@@ -183,6 +217,30 @@ const Users = () => {
           </div>
         </div>
       </CardSection>
+
+      <CenterModel
+        showModal={isHistoryModalOpen}
+        handleToggleModal={closeHistoryModal}
+        modalTitle={`User History`}
+        modelSizeClass="w-60"
+      >
+         
+        <div className="row">
+        <div className="col-md-12 table-striped p-3">
+          <FinalMolGrid
+            ref={molGridRef}
+            configuration={UserHistoryGridConfig}
+            dataSource={userList}
+            allowPagination={false}
+            pagination={{
+              totalCount: totalRowCount,
+              pageSize: 20,
+              currentPage: 1,
+            }}
+          />
+        </div>
+      </div>
+      </CenterModel>
     </div>
   );
 };

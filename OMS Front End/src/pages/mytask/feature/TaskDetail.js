@@ -98,7 +98,7 @@ const TaskDetail = ({
   isEventByIdLoading,
   approvalRequest,
   tabId,
-}) => {
+  }) => {
   // const navigate = useNavigate();
   const ref = useRef();
   const [customerId, setCustomerId] = useState(0);
@@ -374,7 +374,7 @@ const TaskDetail = ({
                       ? formatDate(approvedData.requestedDate, "MM/DD/YYYY hh:mm A")
                       : "No Date"}
                   </div> */}
-                  {showRedirectButton && (
+                  {showRedirectButton && approvedData?.moduleName && (
                     <div
                       className="view-customer"
                       onClick={handleRedirectClick}
@@ -383,9 +383,10 @@ const TaskDetail = ({
                         imagePath={AppIcons.Iicon}
                         altText="View Customer Icon"
                       />
-                      View Details
+                      <span style={{ textDecoration: 'underline' }}>{approvedData?.moduleName ?? 'Unknown Module'}&nbsp;Details</span>
                     </div>
                   )}
+
                 </div>
               </div>
               <div className="customer-information">
