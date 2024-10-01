@@ -33,14 +33,15 @@ import {
 } from "../../app/services/basicdetailAPI";
 import { setDropDownOptionField } from "../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { excludingRoles } from "../../pages/customerDetail/feature/customerBasicDetail/config/CustomerBasicDetail.data";
-import { useAddCustomerNotesMutation } from "../../app/services/notesAPI";
+import { useAddCustomerNotesMutation, useLazyGetCustomerNoteByCustomerIdQuery } from "../../app/services/notesAPI";
 import { StatusFeild } from "../../utils/Enums/StatusEnums";
 import ShippingSetting from "./feature/ApprovalInformation/ShippingSetting";
-import { useAddSupplierNotesMutation } from "../../app/services/supplierNotesAPI";
+import { useAddSupplierNotesMutation, useLazyGetSupplierNotesBySupplierIdQuery } from "../../app/services/supplierNotesAPI";
 import {
   useAddEditResponsibleUserForSupplierMutation,
   useUpdateSupplierInActiveStatusMutation,
 } from "../../app/services/supplierAPI";
+import CustomerSupplierNotes from "./feature/ApprovalInformation/CustomerSupplierNotes";
 //** Component's */
 const BasicInformation = React.lazy(() =>
   import("./feature/ApprovalInformation/BasicInfo")
@@ -421,6 +422,15 @@ const ApprovalCheckList = ({
                           </div>
                         </div>
                       ) : null}
+                      <div className="col-12 mb-3">
+                        <div className="approval-list-part">
+                          <CustomerSupplierNotes
+                            mainId={mainId}
+                            isSupplierApproval={isSupplierApproval}
+                            onGetByIdNotes={!isSupplierApproval ? useLazyGetCustomerNoteByCustomerIdQuery : useLazyGetSupplierNotesBySupplierIdQuery}
+                          />
+                        </div>
+                      </div>
                     </div>
                     <div className="col-xl-6 col-lg-6 col-md-6 col-12">
                       <div className="approval-list-part">
