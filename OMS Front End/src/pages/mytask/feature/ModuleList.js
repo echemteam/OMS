@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import CardSection from "../../../components/ui/card/CardSection";
 import { useLazyGetAllModulesWithPendingRequestCountQuery } from "../../../app/services/commonAPI";
 
-const ModuleList = ({ moduleList, onModuleChange ,isPending,setModuleList,onGetById}) => {
+const ModuleList = ({ moduleList, onModuleChange, isPending, setModuleList, onGetById }) => {
     const [activeModule, setActiveModule] = useState(null);
     const [
         getAllModulesWithPendingRequestCount,
@@ -14,8 +14,7 @@ const ModuleList = ({ moduleList, onModuleChange ,isPending,setModuleList,onGetB
     // Set the first module as active by default when the component mounts
     useEffect(() => {
         getAllModulesWithPendingRequestCount(isPending);
-      
-    }, [getAllModulesWithPendingRequestCount,onGetById]);
+    }, [getAllModulesWithPendingRequestCount, onGetById]);
 
     useEffect(() => {
         if (isGetAllModulesWithPendingRequestCountSucess && allGetAllModulesWithPendingRequestCountData) {
@@ -43,7 +42,8 @@ const ModuleList = ({ moduleList, onModuleChange ,isPending,setModuleList,onGetB
                     {moduleList && moduleList.map((data, index) => (
                         <li className={activeModule === data.moduleId ? "active" : ""}
                             onClick={() => handleModuleClick(data)} key={index}>
-                            <span>{data.moduleName}</span>
+                            <span>{data.moduleName} {data.requestCount > 0 ? <> <div className="module-count">{data.requestCount}</div></> : null}</span>
+
                         </li>
                     ))}
                 </ul >
