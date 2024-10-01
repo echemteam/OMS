@@ -28,6 +28,7 @@ const Users = () => {
   const [buttonVisible, setButtonVisible] = useState(false);
   const[userList,setUserList]=useState([]);
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
  
   const hasAddPermission = hasFunctionalPermission(securityKey.ADDUSER);
   const hasEditPermission = hasFunctionalPermission(securityKey.EDITUSER);
@@ -152,7 +153,7 @@ const Users = () => {
   };
 
   const handleHistory=(data)=>{
-     getUserLoginLogoutHistoryByUserId(data.userId);
+         getUserLoginLogoutHistoryByUserId(data.userId);
   }
 
 
@@ -221,7 +222,7 @@ const Users = () => {
       <CenterModel
         showModal={isHistoryModalOpen}
         handleToggleModal={closeHistoryModal}
-        modalTitle={`User History`}
+        modalTitle={`User History : ${selectedUser?.firstName || ''} ${selectedUser?.lastName || ''}`}  
         modelSizeClass="w-60"
       >
          
