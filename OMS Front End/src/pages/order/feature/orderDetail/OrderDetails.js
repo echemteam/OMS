@@ -268,12 +268,12 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
       isGetAllSubCustomersSuccess &&
       isGetAllSubCustomersData
     ) {
-      if (isGetAllSubCustomersData.length === 0) {
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          formFields: prevFormData.formFields.filter((field) => field.dataField !== "subCustomerMainCustomerId"),
-        }));
-      } else {
+      // if (isGetAllSubCustomersData.length === 0) {
+      //   setFormData((prevFormData) => ({
+      //     ...prevFormData,
+      //     formFields: prevFormData.formFields.filter((field) => field.dataField !== "subCustomerMainCustomerId"),
+      //   }));
+      // } else {
         const subcustomerOptions = isGetAllSubCustomersData.map((item) => ({
           value: item.subCustomerId,
           label: item.subCustomerName,
@@ -287,7 +287,7 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
           return updatedFormData;
         });
       }
-    }
+   // }
   }, [
     isGetAllSubCustomersFetching,
     isGetAllSubCustomersSuccess,
@@ -307,6 +307,7 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
     if (dataField === "customerId") {
       setOrderCustomerId(data.value);
       if (data.isBuyingForThirdParty) {
+        setIsSubCustomerDropdownVisible(true);
         getAllSubCustomerByCustomerId(data.value);
         setFormData({ ...orderInformationData });
         basicInformation.current.updateFormFieldValue({

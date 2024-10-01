@@ -252,6 +252,10 @@ namespace OMS.Application.Services.Customers
         {
             return await repositoryManager.customers.AddEditResponsibleUserForCustomer(requestData, currentUserId); ;
         }
+        public async Task<List<GetSearchCustomersDetailsByNameEmailWebsiteResponse>> GetSearchCustomersDetailsByNameEmailWebsite(GetSearchCustomersDetailsByNameEmailWebsiteRequest requestData)
+        {
+            return await repositoryManager.customers.GetSearchCustomersDetailsByNameEmailWebsite(requestData);
+        }
         #endregion
     }
 }

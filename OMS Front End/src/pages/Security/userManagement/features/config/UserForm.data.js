@@ -162,7 +162,7 @@ export const UserHistoryGridConfig = {
       name: "Login Time",
       fieldName: "userLoginDateTime",
       colStyle: {
-        width: "25%",
+        width: "40%",
       },
       allowShort: true,
     },
@@ -170,7 +170,7 @@ export const UserHistoryGridConfig = {
       name: "Logout Time",
       fieldName: "userLogoutDateTime",
       colStyle: {
-        width: "25%",
+        width: "40%",
       },
       allowShort: true,
     },
@@ -178,15 +178,7 @@ export const UserHistoryGridConfig = {
       name: "IP Address",
       fieldName: "ipAddress",
       colStyle: {
-        width: "25%",
-      },
-      allowShort: true,
-    },
-    {
-      name: "Recorded At",
-      fieldName: "createdAt",
-      colStyle: {
-        width: "25%",
+        width: "20%",
       },
       allowShort: true,
     },

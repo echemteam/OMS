@@ -2,6 +2,7 @@ import React from "react";
 import "./Dashboard.scss";
 import Image from "../../components/image/Image";
 import { AppIcons } from "../../data/appIcons";
+import CKEditorNew from "../../components/ui/inputs/ckEditor/CKEditorNew";
 
 
 function Dashboard() {
@@ -92,6 +93,7 @@ function Dashboard() {
             This component using for the Image upload testing...
       */}
       {/* <TestImagesUploading /> */}
+      <CKEditorNew/>
     </>
   );
 }

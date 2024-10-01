@@ -14,6 +14,7 @@ import { hasFunctionalPermission } from "../../../utils/AuthorizeNavigation/auth
 import "./Users.scss"
 import FinalMolGrid from "../../../components/FinalMolGrid/FinalMolGrid";
 import CenterModel from "../../../components/ui/centerModel/CenterModel";
+import formatDate from "../../../lib/formatDate";
 
 const Users = () => {
 
@@ -139,10 +140,15 @@ const Users = () => {
 
 
   useEffect(() => {
-  
     if ( !isGetUserLoginLogoutHistoryByUserIdFetching &&isGetUserLoginLogoutHistoryByUserIdSuccess && isGetUserLoginLogoutHistoryByUserIdData ) {
-      if(isGetUserLoginLogoutHistoryByUserIdData){
-        setUserList(isGetUserLoginLogoutHistoryByUserIdData);
+      if (isGetUserLoginLogoutHistoryByUserIdData) {
+        const formattedHistoryData = isGetUserLoginLogoutHistoryByUserIdData.map(history => ({
+          ...history,
+          userLoginDateTime: formatDate(history.userLoginDateTime), 
+          userLogoutDateTime: formatDate(history.userLogoutDateTime), 
+           
+        }));
+        setUserList(formattedHistoryData);
         setIsHistoryModalOpen(true);
       }
     }
@@ -224,7 +230,7 @@ const Users = () => {
         showModal={isHistoryModalOpen}
         handleToggleModal={closeHistoryModal}
         modalTitle={`User History : ${selectedUser?.firstName || ''} ${selectedUser?.lastName || ''}`}  
-        modelSizeClass="w-60"
+        modelSizeClass="w-40"
       >
          
         <div className="row">
