@@ -274,20 +274,20 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
       //     formFields: prevFormData.formFields.filter((field) => field.dataField !== "subCustomerMainCustomerId"),
       //   }));
       // } else {
-        const subcustomerOptions = isGetAllSubCustomersData.map((item) => ({
-          value: item.subCustomerId,
-          label: item.subCustomerName,
-        }));
-        setFormData((prevFormData) => {
-          const updatedFormData = { ...prevFormData };
-          const dropdownField = updatedFormData.formFields?.find((item) => item.dataField === "subCustomerMainCustomerId");
-          if (dropdownField) {
-            dropdownField.fieldSetting.options = subcustomerOptions;
-          }
-          return updatedFormData;
-        });
-      }
-   // }
+      const subcustomerOptions = isGetAllSubCustomersData.map((item) => ({
+        value: item.subCustomerId,
+        label: item.subCustomerName,
+      }));
+      setFormData((prevFormData) => {
+        const updatedFormData = { ...prevFormData };
+        const dropdownField = updatedFormData.formFields?.find((item) => item.dataField === "subCustomerMainCustomerId");
+        if (dropdownField) {
+          dropdownField.fieldSetting.options = subcustomerOptions;
+        }
+        return updatedFormData;
+      });
+    }
+    // }
   }, [
     isGetAllSubCustomersFetching,
     isGetAllSubCustomersSuccess,
@@ -303,7 +303,21 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
     }
   }, [isSubCustomerDropdownVisible]);
 
-  const handleChangeDropdownList = (data, dataField) => {
+  const handleChangeDropdownList = async (data, dataField) => {
+
+    const blockedOptionValue = "Block";
+    if (data.status === blockedOptionValue) {
+      const result = await blocked(
+        "Blocked !",
+        "The selected customer is currently blocked. Please choose a different customer",
+        "OK",
+        "Cancel"
+      );
+      if (result) {
+        return; // Exit the function if blocked
+      }
+    }
+
     if (dataField === "customerId") {
       setOrderCustomerId(data.value);
       if (data.isBuyingForThirdParty) {
@@ -323,19 +337,6 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
       }
     }
 
-    const blockedOptionValue = "Blocked";
-    if (data.status === blockedOptionValue) {
-      blocked(
-        "Blocked !",
-        "The selected customer is currently blocked. Please choose a different customer",
-        "OK",
-        "Cancel"
-      ).then((result) => {
-        if (result) {
-          console.log("User acknowledged the blocked status alert.");
-        }
-      });
-    }
     if (data.value && dataField === "isShippingId") {
       const finalData = isGetAllShippingAddressData?.filter(
         (item) => item.addressId === data.value

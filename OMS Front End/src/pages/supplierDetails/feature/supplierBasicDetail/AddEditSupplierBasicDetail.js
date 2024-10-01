@@ -209,7 +209,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
     const handleAddEditSupplier = async () => {
         let data = basicDetailRef.current.getFormData();
         if (!data) {
-            ToastService.warning('Please enter supplier basic information');
+            ToastService.warning('Please fill up all the required fields');
             return;
         }
         if (!isOpen) {
