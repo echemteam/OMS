@@ -452,7 +452,7 @@ const TaskDetail = ({
                   >
                     {approvedData.status}
                   </span>
-                  {approvedData?.eventName !=
+                  {approvedData?.eventName !==
                   FunctionalitiesName.UPLOADCUSTOMERDOCUMENT ? <>
                   &nbsp; <span className="value-btn" onClick={()=>handlebtnClick("old Value")}>
                   Old Value

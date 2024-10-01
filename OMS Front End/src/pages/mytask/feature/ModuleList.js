@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import CardSection from "../../../components/ui/card/CardSection";
 import { useLazyGetAllModulesWithPendingRequestCountQuery } from "../../../app/services/commonAPI";
 
-const ModuleList = ({ moduleList, onModuleChange ,isPending,setModuleList}) => {
+const ModuleList = ({ moduleList, onModuleChange ,isPending,setModuleList,onGetById}) => {
     const [activeModule, setActiveModule] = useState(null);
     const [
         getAllModulesWithPendingRequestCount,
@@ -16,7 +16,7 @@ const ModuleList = ({ moduleList, onModuleChange ,isPending,setModuleList}) => {
 
         getAllModulesWithPendingRequestCount(isPending);
       
-    }, [getAllModulesWithPendingRequestCount]);
+    }, [getAllModulesWithPendingRequestCount,onGetById]);
 
     useEffect(() => {
         if (isGetAllModulesWithPendingRequestCountSucess && allGetAllModulesWithPendingRequestCountData) {
