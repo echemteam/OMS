@@ -482,15 +482,18 @@ const CustomerBasicInfoCard = ({
                         {customerData?.emailAddress}
                       </div>
                     </a>
+
                     <span
-                      title="Click to Copy"
-                      className="copy-icon"
+                      className="copy-icon tooltip-div"
                       onClick={() =>
                         CopyText(customerData?.emailAddress, "email")
                       }
                     >
-                      {/* <Image imagePath={AppIcons.copyIcon} altText="Website Icon" /> */}
                       <Iconify icon="bitcoin-icons:copy-outline" />
+                      <div className="tooltip-show">
+                        <p>Click to Copy</p>
+                      </div>
+                      <di className="tooltip-arrow-icon"></di>
                     </span>
                   </div>
 
