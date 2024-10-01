@@ -15,7 +15,7 @@ const DropDown = (props) => {
 
   return (
     <>
-      <span className="d-inline-block">
+      <span className="d-inline-block w-100">
         <DropdownSelect
           placeholder={props.placeholder}
           isMultiSelect={props.isMultiSelect}

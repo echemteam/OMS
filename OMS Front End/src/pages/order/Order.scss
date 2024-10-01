@@ -635,6 +635,114 @@
                 }
               }
             }
+
+            .accordion-body {
+              .key-value-se {
+                display: flex;
+                align-items: center;
+                font-size: var(--commonFont-medium);
+
+                .key-sec {
+                  min-width: 95px;
+                  font-weight: 600;
+                  color: var(--textColor);
+                }
+                .value-sec {
+                  color: var(--textColor2);
+
+                  &.add-value {
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    max-width: 210px;
+                  }
+
+                  .status-btn{
+                    &.heigh-bg {
+                      background-color: #ffcccc;
+                      color: #dd5252;
+                    }
+                    &.medium-bg {
+                      background-color: #ffe5cc;
+                      color: #ff9966;
+                    }
+
+                    &.low-bg {
+                      background-color: #e6ffee;
+                      color: #33cc33;
+                    }
+                  }
+                }
+
+                .value-right-btn {
+                  display: flex;
+                  align-items: center;
+                  
+                  .right-btn {
+                    margin-left: 5px;
+                    display: flex;
+                    align-items: center;
+
+                    .info-btn {
+                      color: var(--themeColor);
+                      margin-right: 3px;
+
+                      &:last-child {
+                        margin-right: 0;
+                      }
+                    }
+                    .info-btn{
+                      cursor: pointer;
+                      display: flex;
+                      align-items: center;
+                    }
+                  }
+                }
+              }
+              .accordian-right-full-sec{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                .right-action-section{
+                  .file-actions{
+                    display: flex;
+                    align-items: center;
+                    .btn-part {
+                      width: 35px;
+                      height: 35px;
+                      border-radius: 100%;
+                      padding: 3px;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      margin-right: 4px;
+                      .component-iconify{
+                        width: 19px !important;
+                        height: 19px !important;
+                        display: flex;
+                        align-items: center;
+                      }
+                      &:last-child{
+                        margin-right: 0;
+                      }
+                      &.pdf-view {
+                        background: #f0effc;
+                        color: var(--themeColor);
+                      }
+            
+                      &.dollar-view {
+                        background: #effbfc;
+                        color: #42b5c0;
+                      }
+            
+                      &.delete-icon {
+                        background: #fdeded;
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
 
