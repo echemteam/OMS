@@ -153,7 +153,8 @@ const Users = () => {
   };
 
   const handleHistory=(data)=>{
-         getUserLoginLogoutHistoryByUserId(data.userId);
+    setSelectedUser(data);
+     getUserLoginLogoutHistoryByUserId(data.userId);
   }
 
 
