@@ -493,7 +493,7 @@ const CustomerBasicInfoCard = ({
                       <div className="tooltip-show">
                         <p>Click to Copy</p>
                       </div>
-                      <di className="tooltip-arrow-icon"></di>
+                      <div className="tooltip-arrow-icon"></div>
                     </span>
                   </div>
 
@@ -509,7 +509,7 @@ const CustomerBasicInfoCard = ({
                       <div className="tooltip-show">
                         <p>Click to Copy</p>
                       </div>
-                      <di className="tooltip-arrow-icon"></di>
+                      <div className="tooltip-arrow-icon"></div>
                     </span>
                   </div>
                 </div>
@@ -646,7 +646,7 @@ const CustomerBasicInfoCard = ({
                   <div className="tooltip-show">
                     <p>Add/Edit Invoice Submission</p>
                   </div>
-                  <di className="tooltip-arrow-icon"></di>
+                  <div className="tooltip-arrow-icon"></div>
                 </div>
               </div>
             ) : null}
@@ -662,7 +662,6 @@ const CustomerBasicInfoCard = ({
                     className="submission-tab d-flex gap-2 align-items-center"
                     style={{ cursor: "pointer", fontSize: "13px" }}
                     onClick={getApprovalCheckList}
-                    title="Information"
                   >
                     {approvalSuccessCount + "/" + totalCount}
                     <span className="tooltip-div">
@@ -670,7 +669,7 @@ const CustomerBasicInfoCard = ({
                       <div className="tooltip-show">
                         <p>Validate Customer</p>
                       </div>
-                      <di className="tooltip-arrow-icon"></di>
+                      <div className="tooltip-arrow-icon"></div>
                     </span>
                   </div>
                 </>

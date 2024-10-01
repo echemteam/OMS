@@ -650,7 +650,7 @@ a {
     align-items: center;
     justify-content: space-between;
     position: relative;
-    min-height: 44px;
+    min-height: 40px;
 
     &::before {
       position: absolute;
@@ -4411,5 +4411,52 @@ input[type="checkbox"]:disabled {
         height: calc(100vh - 57px) !important;
       }
     }
+  }
+}
+
+
+
+.tooltip-div{
+  position: relative;
+  cursor: pointer;
+  .tooltip-arrow-icon {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid black;
+    position: absolute;
+    top: -2px;
+    left: -10%;
+    transform: translateX(-50%);
+    rotate: 180deg;
+    opacity: 0;
+    display: none;
+  }
+  .tooltip-show {
+    display: none;
+    padding: 5px 8px;
+    border-radius: 4px;
+    margin: 0;
+    background-color: black;
+    color: #fff !important;
+    position: absolute;
+    top: -26px;
+    right: 0;
+    font-size: var(--commonFont-extraSmall);
+    pointer-events: none;
+    width: max-content;
+    p {
+      margin: 0;
+    }
+  }
+
+  &:hover .tooltip-arrow-icon {
+    opacity: 1;
+    display: block;
+  }
+
+  &:hover .tooltip-show {
+    display: block;
   }
 }
