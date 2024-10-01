@@ -41,7 +41,7 @@ export const DocumentFormData = {
         placeholder: "Enter Document Name",
         allowSpace: true,
         maxLength: 50,
-        isDisable: true
+        isDisable: false
       },
       validation: [{ type: "require" }],
       style: {

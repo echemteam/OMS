@@ -132,6 +132,10 @@ namespace OMS.Application.Services.Supplier
         {
             return await repositoryManager.supplier.AddEditResponsibleUserForSupplier(requestData, currentUserId); ;
         }
+        public async Task<List<GetSearchSuppliersDetailsByNameEmailWebsiteResponse>> GetSearchSuppliersDetailsByNameEmailWebsite(GetSearchSuppliersDetailsByNameEmailWebsiteRequest requestData)
+        {
+            return await repositoryManager.supplier.GetSearchSuppliersDetailsByNameEmailWebsite(requestData);
+        }
         #endregion
     }
 }

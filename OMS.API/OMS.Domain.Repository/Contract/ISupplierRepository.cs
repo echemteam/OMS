@@ -22,6 +22,7 @@ namespace OMS.Domain.Repository.Contract
         Task<AddEntityDto<int>> AddEditContactForSupplier(AddEditContactForSupplierRequest requestData, short createdBy);
         Task<List<GetSupplierDetailsBySupplierNameResponse>> GetSupplierDetailsBySupplierName(string supplierName);
         Task<AddEntityDto<int>> AddEditResponsibleUserForSupplier(AddEditResponsibleUserForSupplierRequest requestData, short createdBy);
+        Task<List<GetSearchSuppliersDetailsByNameEmailWebsiteResponse>> GetSearchSuppliersDetailsByNameEmailWebsite(GetSearchSuppliersDetailsByNameEmailWebsiteRequest requestData);
 
     }
 }

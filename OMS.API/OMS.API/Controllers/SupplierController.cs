@@ -1,8 +1,6 @@
-﻿using ClientIPAuthentication;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
-using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Domain.Entities.API.Request.Supplier;
 using OMS.Domain.Entities.API.Response.Supplier;
 using OMS.Framework;
@@ -107,6 +105,16 @@ namespace OMS.API.Controllers
         {
             var updateItem = await _serviceManager.supplierServices.AddEditResponsibleUserForSupplier(requestData, CurrentUserId);
             return APISucessResponce(updateItem);
+        }
+        [HttpPost("GetSearchSuppliersDetailsByNameEmailWebsite")]
+        public async Task<IActionResult> GetSearchSuppliersDetailsByNameEmailWebsite(GetSearchSuppliersDetailsByNameEmailWebsiteRequest requestData)
+        {
+            if (requestData != null)
+            {
+                List<GetSearchSuppliersDetailsByNameEmailWebsiteResponse> responseData = await _serviceManager.supplierServices.GetSearchSuppliersDetailsByNameEmailWebsite(requestData).ConfigureAwait(true);
+                return APISucessResponce<object>(responseData);
+            }
+            return APISucessResponce(requestData);
         }
         #endregion
     }
