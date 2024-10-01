@@ -176,9 +176,9 @@ export const MyTaskKeyNames = {
     PAYMENTTERMID: "PaymentTerm"
 }
 
-export const EmailProviders={
-    Gmail :"Gmail",
-    Office365:"Office 365",
-    Outlook:"Outlook",
+export const EmailProviders=[
 
-}
+    { value: "Gmail", label: "Gmail" },
+    { value: "Office365", label: "Office 365" },
+    { value: "Outlook", label: "Outlook" },
+]
