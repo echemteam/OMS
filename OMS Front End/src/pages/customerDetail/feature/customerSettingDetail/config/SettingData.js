@@ -3,8 +3,8 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 export const SettingFormData = {
   name: "Setting Form",
   initialState: {
-    paymentTermId: "", creditLimit: 10000, paymentMethodId: "", billingCurrency: "USD",
-    invoiceSubmissionInstruction: "", bankFee: '', salesTax: '', cardProcessingCharges: '', exemptSalesTax: true
+    paymentTermId: "", creditLimit: 0, paymentMethodId: "", billingCurrency: "USD",
+    invoiceSubmissionInstruction: "", bankWireFee: '', salesTax: '', cardProcessingCharges: '', exemptSalesTax: true
   },
   formFields: [
     {
@@ -117,7 +117,7 @@ export const SettingFormData = {
       dataField: "bankWireFee",
       fieldSetting: {
         placeholder: "Enter Bank Wire Fee",
-        maxLength:4,
+        maxLength: 4,
       },
       validation: [{ type: "require" }],
       style: {

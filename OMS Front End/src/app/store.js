@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query/react';
 
 import authReducer from './slice/authSlice';
+import organizationReducer from './slice/OrganizationSlice';
 import authapi from './services/authAPI';
 import userAPI from './services/userAPI';
 import securityRoleAPI from './services/securityRoleAPI';
@@ -41,6 +42,7 @@ import emailTemplateAPI from './services/emailTemplateAPI';
 export const store = configureStore({
   reducer: {
     auth: authReducer,
+    organization: organizationReducer,
     [authapi.reducerPath]: authapi.reducer,
     [userAPI.reducerPath]: userAPI.reducer,
     [securityRoleAPI.reducerPath]: securityRoleAPI.reducer,
@@ -72,8 +74,8 @@ export const store = configureStore({
     [thirdPartyAPI.reducerPath]: thirdPartyAPI.reducer,
     [orderAPI.reducerPath]: orderAPI.reducer,
     [supplierFinancialSettingsAPI.reducerPath]: supplierFinancialSettingsAPI.reducer,
-    [dictionaryAPI.reducerPath]:dictionaryAPI.reducer,
-    [emailTemplateAPI.reducerPath]:emailTemplateAPI.reducer,
+    [dictionaryAPI.reducerPath]: dictionaryAPI.reducer,
+    [emailTemplateAPI.reducerPath]: emailTemplateAPI.reducer,
 
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
