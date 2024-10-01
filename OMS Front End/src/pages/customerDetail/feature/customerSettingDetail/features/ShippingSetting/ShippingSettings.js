@@ -128,7 +128,7 @@ const ShippingSettings = ({ isEditablePage, customerStatusId }) => {
         else if (!confirmed) {
           let form = { ...shippingFormData };
           form.initialState = {
-            deliveryAccountId: isGetDefaultValueData.deliveryAccountId
+            deliveryAccountId: isGetDefaultValueData?.deliveryAccountId
           }
           setFormData(form);
           // let defaultRequest = {
