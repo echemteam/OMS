@@ -503,6 +503,7 @@
   .order-item-list {
     .card-body-sec {
       margin-top: 0;
+
       .order-all-item-view {
         .accordian-title {
           display: flex;
@@ -510,6 +511,7 @@
           justify-content: space-between;
           border-bottom: 1px solid var(--linkMenu);
           padding-bottom: 10px;
+
           span {
             text-align: center;
             font-weight: 600;
@@ -517,6 +519,7 @@
 
             &:nth-child(1) {
               width: 20%;
+              padding-left: 15px;
             }
 
             &:nth-child(2) {
@@ -540,8 +543,101 @@
             }
           }
         }
-        .accordian-desc{}
-        
+      }
+
+      .accordian-desc {
+        margin-top: 10px;
+
+        .accordion {
+          .accordion-item {
+            margin-bottom: 10px;
+            border: 1px solid var(--linkMenu) !important;
+            border-radius: 7px !important;
+
+            .accordion-header {
+              .accordion-button {
+                padding: 7px 0;
+                border-top-right-radius: 7px;
+                border-top-left-radius: 7px;
+                background: var(--themeColorLight);
+
+                &:focus {
+                  outline: none !important;
+                  border: none !important;
+                  box-shadow: none !important;
+                }
+
+                &::after {
+                  margin-left: unset;
+                  position: absolute;
+                  left: 10px;
+                }
+
+                .header-items {
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  width: 100%;
+
+                  span {
+                    text-align: center;
+                    font-weight: 600;
+                    color: var(--textColor);
+                    font-size: var(--commonFont);
+
+                    &:nth-child(1) {
+                      width: 20%;
+                      padding-left: 15px;
+                    }
+
+                    &:nth-child(2) {
+                      width: 20%;
+                    }
+
+                    &:nth-child(3) {
+                      width: 15%;
+                    }
+
+                    &:nth-child(4) {
+                      width: 15%;
+                    }
+
+                    &:nth-child(5) {
+                      width: 15%;
+                    }
+
+                    &:nth-child(6) {
+                      width: 15%;
+                    }
+
+                    .status-btn {
+                      text-align: center;
+                      font-weight: 600;
+                      color: var(--textColor);
+                      border-radius: 5px;
+
+                      &.pending-bg {
+                        background-color: #ffe5cc;
+                        color: #ff9966;
+                      }
+
+                      &.complete-bg {
+                        background-color: #e6ffee;
+                        color: #33cc33;
+                      }
+                    }
+                  }
+                }
+
+                &.collapsed {
+                  border-top-right-radius: 7px;
+                  border-top-left-radius: 7px;
+                }
+              }
+            }
+          }
+        }
+
       }
     }
 

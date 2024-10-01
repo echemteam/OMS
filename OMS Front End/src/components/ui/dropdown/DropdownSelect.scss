@@ -1,6 +1,7 @@
 //Dropdown Select Start
 .custom-input {
   width: 100%;
+
 }
 
 .css-b62m3t-container {
@@ -136,6 +137,7 @@
 
 .customer-all-details {
   margin-top: 10px !important;
+
   .css-wsp0cs-MultiValueGeneric {
     padding: 0px 3px !important;
 
@@ -214,10 +216,11 @@
     margin-bottom: 4px !important;
     margin-top: 4px !important;
   }
+
   .customer-all-details {
     .css-1hb7zxy-IndicatorsContainer {
       height: 25px !important;
-  }
+    }
   }
 
   //Dropdown Select End
@@ -287,6 +290,30 @@
   .css-1hb7zxy-IndicatorsContainer {
     .css-1xc3v61-indicatorContainer {
       padding: 0 5px !important;
+    }
+  }
+}
+
+.status-dropdown {
+  .custom-input {
+    width: 92%;
+    position: relative;
+
+    &:before {
+      content: "";
+      position: absolute;
+      // background: url(../assets/images/editIcon-theme.png);
+      background: url(../../../assets/images/editIcon-theme.png);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      height: 16px;
+      width: 16px;
+      right: 4px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      pointer-events: none;
     }
   }
 }
