@@ -17,7 +17,7 @@ import ToastService from "../../../../../services/toastService/ToastService";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { securityKey } from "../../../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
-import { StatusValue } from "../../../../../utils/Enums/StatusEnums";
+import { StatusValue, statusMapping } from "../../../../../utils/Enums/StatusEnums";
 import { excludingRoles } from "../../customerBasicDetail/config/CustomerBasicDetail.data";
 import CopyText from "../../../../../utils/CopyText/CopyText";
 import { ErrorMessage, SuccessMessage } from "../../../../../data/appMessages";
@@ -65,7 +65,7 @@ const CustomerBasicInfoCard = ({
   const [responsibleUserIds, setResponsibleUserIds] = useState([]);
   const [rUserValue, setRUserValue] = useState([]);
   const [responsibleUserOptions, setResponsibleUserOptions] = useState([]);
-
+  const [filteredStatusOptions,setFilteredStatusOptions]=useState(StatusValue);
   const [
     updateCustomerSubCustomer,
     {
@@ -143,7 +143,7 @@ const CustomerBasicInfoCard = ({
     }
   }, [isSuccessUpdateCustomerStatus, updateCustomerStatusData]);
   useEffect(() => {
-    if (
+        if (
       GetCustomersBasicInformationByIdData &&
       isGetCustomersBasicInformationById &&
       !isGetCustomersBasicInformationByIdFetching
@@ -282,6 +282,21 @@ const CustomerBasicInfoCard = ({
     }
   };
 
+
+useEffect(() => {
+  if (customerData) {
+      let newStatusOptions = StatusValue;
+      if (customerData.status === statusMapping.APPROVED) {
+          newStatusOptions = StatusValue.filter(option => option.value !== 2);
+      } 
+        else if (customerData.status === statusMapping.PENDING) {
+          newStatusOptions = StatusValue.filter(option => option.value !== 3  )
+      }
+      setFilteredStatusOptions(newStatusOptions);
+  }
+}, [customerData]);
+  
+ 
   const removeFields = () => {
     const modifyFormFields = removeFormFields(formData, ["responsibleUserId"]);
     setFormData(modifyFormFields);
@@ -523,7 +538,7 @@ const CustomerBasicInfoCard = ({
               <b>&nbsp;:&nbsp;</b>
               <div className={`status-dropdown ${getStatusClass()}`}>
                 <DropDown
-                  options={StatusValue}
+                  options={filteredStatusOptions}
                   value={selectedStatus}
                   onChange={handleStatusChange}
                   placeholder="Select Status"

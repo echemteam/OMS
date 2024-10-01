@@ -4,10 +4,8 @@ import { EmailProviders } from "../../../../../utils/Enums/commonEnums";
 
 export const SMTPSettingsFormData = {
     // name: "Email From",
-    initialState: { smtpSettingId: 0, organizationId: 0, emailProvider: EmailProviders.Gmail, smtpServer: "", smtpPort: "", smtpUserName: "", smtpPassword: "", useSsl: true ,clientId:"",clientSecret:"",tenantId:""},
+    initialState: { smtpSettingId: 0, organizationId: 0, emailProvider: "", smtpServer: "", smtpPort: "", smtpUserName: "", smtpPassword: "", useSsl: true ,clientId:"",clientSecret:"",tenantId:""},
     formFields: [
-
-
         {
             id: "emailProvider",
             lable: "Email Provider  ",

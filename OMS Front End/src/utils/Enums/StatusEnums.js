@@ -37,3 +37,13 @@ export const StatusValue = [
     { value: 6, label: "Disable" },
     { value: 7, label: "Reject" },
 ];
+
+export const statusMapping = {
+    PENDING: "Pending",
+    SUBMITTED :"Submitted",
+    APPROVED: "Approved",  
+    FREEZE: "Freeze",
+    BLOCK: "Block",
+    DISABLE: "Disable",
+    REJECT: "Reject"
+  };

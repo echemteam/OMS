@@ -15,7 +15,8 @@ import { EmailProviders,FieldSettingType} from "../../../../utils/Enums/commonEn
 import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
 import { setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 const setInitialData = {
-  Gmail: "Gmail",
+  label: "Gmail",
+  value: "Gmail"
 };
 const SMTPSettings = (isEditablePage) => {
   const smtpRef = useRef();
@@ -23,7 +24,6 @@ const SMTPSettings = (isEditablePage) => {
   const [smtpId, setSmtpId] = useState(0);
   const [, setIsOfficeEmail] = useState(false);
   const [, setIsOutlook] = useState(false);
-
   const [, setIsGmail] = useState(true);
   const [addEditSmtpSetting,{isLoading: isAddEditSmtpSettingLoading,isSuccess: isAddEditSmtpSettingSuccess,data: isAddEditSmtpSettingData,},] = useAddEditSmtpSettingsMutation();
   const [ getSmtpSettings, {isFetching: isGetSmtpSettingsFetching,isSuccess: isGetSmtpSettingsSuccess, data: isGetSmtpSettingsData,},] = useLazyGetSmtpSettingsQuery();
@@ -49,20 +49,19 @@ const SMTPSettings = (isEditablePage) => {
   }, []);
 
   const setInitialValue = () => {
+    
     let updatedFormData;
     updatedFormData = removeFormFields(SMTPSettingsFormData, [ "clientId","clientSecret","tenantId",]);
+      handleChangeDropdownList(setInitialData, "emailProvider");
+      //setFieldSetting( smtpSettingData,"emailprovider",FieldSettingType.DISABLED,false);
 
-    // if (isGetSmtpSettingsData) {
-      handleChangeDropdownList(setInitialData.Gmail, "emailProvider");
-      setFieldSetting( smtpSettingData,"emailprovider",FieldSettingType.DISABLED,false);
-    // }
-    setSmtpSettingData(updatedFormData);
+   // setSmtpSettingData(updatedFormData);
   };
 
   const getFieldsToRemove = (type) => {
 
     switch (type) {
-      case "Office 365":
+      case "Office365":
         return ["smtpServer","smtpPort","smtpUserName","smtpPassword","useSsl",];
       case "Gmail":
         return ["clientId", "clientSecret", "tenantId"];
@@ -90,7 +89,6 @@ const SMTPSettings = (isEditablePage) => {
       case "Outlook":
         manageData.initialState.smtpServer = "smtp-mail.outlook.com";
         manageData.initialState.smtpPort = 587;
-
         break;
       default:
         break;
@@ -118,15 +116,11 @@ const SMTPSettings = (isEditablePage) => {
   };
 
   useEffect(() => {
+    
     const dropdownField = smtpSettingData.formFields.find(
       (item) => item.dataField === "emailProvider"
     );
-    dropdownField.fieldSetting.options = Object.entries(EmailProviders).map(
-      ([key, value]) => ({
-        value: value,
-        label: key,
-      })
-    );
+    dropdownField.fieldSetting.options =EmailProviders
   }, []);
 
   useEffect(() => {
@@ -158,20 +152,6 @@ const SMTPSettings = (isEditablePage) => {
 
   useEffect(() => {
     if ( !isGetSmtpSettingsFetching && isGetSmtpSettingsSuccess && isGetSmtpSettingsData) {
-      debugger;
-    //   const providertypes = {
-    //     [EmailProviders?.Gmail]: ["clientId", "clientSecret", "tenantId"],
-    //     [EmailProviders?.Office365]: [
-    //       "smtpServer",
-    //       "smtpPort",
-    //       "smtpUserName",
-    //       "smtpPassword",
-    //       "useSsl",
-    //     ],
-    //     [EmailProviders?.Outlook]: ["clientId", "clientSecret", "tenantId"],
-    //   };
-
-     // const fieldsToRemove = providertypes[isGetSmtpSettingsData.emailProvider];
      const fieldsToRemove = getFieldsToRemove(isGetSmtpSettingsData.emailProvider);
 
       let formData;
