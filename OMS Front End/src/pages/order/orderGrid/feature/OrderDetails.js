@@ -2,9 +2,9 @@ import React from "react";
 import "../../Order.scss";
 import CardSection from "../../../../components/ui/card/CardSection";
 import Iconify from "../../../../components/ui/iconify/Iconify";
-import Tooltip from "../../../../components/ui/tooltip/Tooltip";
 import Image from "../../../../components/image/Image";
 import { AppIcons } from "../../../../data/appIcons";
+import { Accordion } from "react-bootstrap";
 const OrderDetails = () => {
   return (
     <div className="order-review-section">
@@ -385,7 +385,106 @@ const OrderDetails = () => {
 
         {/* Right Side Section Start */}
         <div className="col-xxl-7 col-lg-7 col-md-7 col-12">
-          <CardSection cardTitle="Order Items"></CardSection>
+          <div className="order-action-sec">
+            <CardSection
+              cardTitle="Order Items"
+              rightButton={true}
+              buttonClassName="outline-theme-btn"
+              isIcon={true}
+              iconClass="iconamoon:history-bold"
+              multipleButton={true}
+              isTooltip={true}
+              tootipText="History"
+              rightButtonArray={[
+                {
+                  isIcon: true,
+                  buttonTypeClassName: "outline-theme-btn",
+                  iconClass: "fluent-mdl2:activate-orders",
+                  isTooltip: true,
+                  tootipText: "Original PO",
+                },
+                {
+                  isIcon: true,
+                  buttonTypeClassName: "outline-theme-btn",
+                  iconClass: "icon-park-outline:transaction-order",
+                  isTooltip: true,
+                  tootipText: "Price List",
+                },
+                {
+                  isIcon: true,
+                  buttonTypeClassName: "outline-theme-btn",
+                  iconClass: "fluent-mdl2:chart",
+                  isTooltip: true,
+                  tootipText: "Order Status",
+                },
+              ]}
+            ></CardSection>
+          </div>
+          <div className="order-item-list">
+            <CardSection>
+              <div className="order-all-item-view">
+                <div className="accordian-title">
+                  <span>Catalog ID</span>
+                  <span>Cas Number</span>
+                  <span>Unit Price</span>
+                  <span>Pack Size</span>
+                  <span>Total Price</span>
+                  <span>Status</span>
+                </div>
+              </div>
+              <div className="accordian-desc">
+                <Accordion defaultActiveKey="0">
+                  <Accordion.Item eventKey="0">
+                    <Accordion.Header>
+                      <div className="header-items">
+                        <span>Y-2520</span>
+                        <span>19679-75-5</span>
+                        <span>1X$20</span>
+                        <span>2 x 50MG</span>
+                        <span>$ 51.75</span>
+                        <span>
+                          <div className="status-btn complete-bg">
+                            Complete
+                          </div>
+                        </span>
+                      </div>
+                    </Accordion.Header>
+                    <Accordion.Body>
+                      <div className="row">
+                        <div className="">
+
+                        </div>
+                      </div>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                  <Accordion.Item eventKey="1">
+                    <Accordion.Header>
+                      <div className="header-items">
+                        <span>Y-2520</span>
+                        <span>19679-75-5</span>
+                        <span>1X$20</span>
+                        <span>2 x 50MG</span>
+                        <span>$ 51.75</span>
+                        <span>
+                          <div className="status-btn pending-bg">Pending</div>
+                        </span>
+                      </div>
+                    </Accordion.Header>
+                    <Accordion.Body>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                      Duis aute irure dolor in reprehenderit in voluptate velit
+                      esse cillum dolore eu fugiat nulla pariatur. Excepteur
+                      sint occaecat cupidatat non proident, sunt in culpa qui
+                      officia deserunt mollit anim id est laborum.
+                    </Accordion.Body>
+                  </Accordion.Item>
+                </Accordion>
+              </div>
+            </CardSection>
+          </div>
         </div>
         {/* Right Side Section End */}
       </div>

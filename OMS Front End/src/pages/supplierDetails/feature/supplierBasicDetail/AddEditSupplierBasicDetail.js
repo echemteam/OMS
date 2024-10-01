@@ -281,9 +281,10 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
 
     const handleInputFields = (data, dataField) => {
         if (dataField === 'name') {
-            const trimName = data.replace(/\s+/g, ' ').trim();
-            const newName=trimName.replace(/[.,]/g, '')
-            setSupplierName(newName);
+            const newName=data.replace(/[.,]/g, '')
+            const trimName = newName.replace(/\s+/g, ' ').trim();
+            
+            setSupplierName(trimName);
             basicDetailRef.current.updateFormFieldValue({
                 name: newName
             });

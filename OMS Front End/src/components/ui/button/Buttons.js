@@ -5,32 +5,87 @@ import "./Buttons.scss";
 import Iconify from "../iconify/Iconify";
 
 function Buttons(props) {
-  const { titleText, isLoading, buttonTypeClassName, onClick, textWithIcon,isIcon,iconClass, buttonText, imagePath, isDisable } = props;
+  const {
+    titleText,
+    isLoading,
+    buttonTypeClassName,
+    onClick,
+    textWithIcon,
+    isIcon,
+    iconClass,
+    buttonText,
+    imagePath,
+    isDisable,
+    isTooltip,
+    tootipText,
+  } = props;
 
   return (
-    <button
-      type="button"
-      className={`btn ${buttonTypeClassName} ${isDisable ? 'disable-btn' : ''}`}
-      onClick={onClick}
-      disabled={isDisable}
-      title={titleText}
-    >
-      {isLoading ? (
-        <div className="button-loading-part"></div>
-      ) : (
-        <>
-          {textWithIcon && (
-            <Image imagePath={imagePath} altText="button Icon" />
-          )}
-          {textWithIcon && buttonText}
+    <>
+      {isTooltip ? (
+        <span className="tooltip-div btn-tooltip">
+          <button
+            type="button"
+            className={`btn ${buttonTypeClassName} ${
+              isDisable ? "disable-btn" : ""
+            }`}
+            onClick={onClick}
+            disabled={isDisable}
+            title={titleText}
+          >
+            {isLoading ? (
+              <div className="button-loading-part"></div>
+            ) : (
+              <>
+                {textWithIcon && (
+                  <Image imagePath={imagePath} altText="button Icon" />
+                )}
+                {textWithIcon && buttonText ? (
+                  <span>{textWithIcon && buttonText}</span>
+                ) : null}
+                {!textWithIcon && buttonText ? (
+                  <span>{!textWithIcon && buttonText}</span>
+                ) : null}
 
-          {!textWithIcon && buttonText}
-        {isIcon && (
-          <Iconify icon={iconClass} className="button-icon" />
-        )}
-        </>
+                {isIcon && <Iconify icon={iconClass} className="button-icon" />}
+              </>
+            )}
+          </button>
+          <div className="tooltip-show">
+            <p>{tootipText}</p>
+          </div>
+          <div className="tooltip-arrow-icon"></div>
+        </span>
+      ) : (
+        <button
+          type="button"
+          className={`btn ${buttonTypeClassName} ${
+            isDisable ? "disable-btn" : ""
+          }`}
+          onClick={onClick}
+          disabled={isDisable}
+          title={titleText}
+        >
+          {isLoading ? (
+            <div className="button-loading-part"></div>
+          ) : (
+            <>
+              {textWithIcon && (
+                <Image imagePath={imagePath} altText="button Icon" />
+              )}
+              {textWithIcon && buttonText ? (
+                <span>{textWithIcon && buttonText}</span>
+              ) : null}
+              {!textWithIcon && buttonText ? (
+                <span>{!textWithIcon && buttonText}</span>
+              ) : null}
+
+              {isIcon && <Iconify icon={iconClass} className="button-icon" />}
+            </>
+          )}
+        </button>
       )}
-    </button>
+    </>
   );
 }
 
@@ -42,7 +97,7 @@ Buttons.propTypes = {
   textWithIcon: PropTypes.bool,
   buttonText: PropTypes.string,
   imagePath: PropTypes.string,
-  isDisable: PropTypes.bool
+  isDisable: PropTypes.bool,
 };
 
 export default Buttons;

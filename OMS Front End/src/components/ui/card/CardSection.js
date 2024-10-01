@@ -61,6 +61,8 @@ function CardSection({
   CenterBtnIcon,
   centerBtnTitle,
   centerBtnOnClick,
+  isTooltip,
+  tootipText,
 }) {
   return (
     <div
@@ -142,6 +144,8 @@ function CardSection({
                     iconClass={CenterBtnIcon}
                     titleText={centerBtnTitle}
                     onClick={centerBtnOnClick}
+                    isTooltip={isTooltip}
+                    tootipText={tootipText}
                   />
                 </div>
               </>
@@ -186,6 +190,10 @@ function CardSection({
                         imagePathBack={iconImgBack}
                         isLoading={isLoading}
                         titleText={titleText}
+                        isIcon={button.isIcon}
+                        iconClass={button.iconClass}
+                        isTooltip={button.isTooltip}
+                        tootipText={button.tootipText}
                       />
                     ))}
                   </div>
@@ -203,6 +211,8 @@ function CardSection({
                   titleText={titleText}
                   isIcon={isIcon}
                   iconClass={iconClass}
+                  isTooltip={isTooltip}
+                  tootipText={tootipText}
                 />
               </div>
             )
