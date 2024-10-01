@@ -238,7 +238,10 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             countryId: data.countryId && typeof data.countryId === "object" ? data.countryId.value : data.countryId,
             responsibleUserId: data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
             customerId: keyId ? keyId : customerId,
-            customerNoteId: noteId ? noteId : 0
+            customerNoteId: noteId ? noteId : 0,
+            attachmentName: null,
+            base64File: null,
+            storagePath: 'CustomerProfilePic'
         };
         if (data.taxId === "") {
             let value = {
@@ -252,6 +255,9 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                 if (data.taxId.length >= minLength || data.taxId.length <= maxLength) {
                     let value = {
                         ...req,
+                        attachmentName: null,
+                        base64File: null,
+                        storagePath: 'CustomerProfilePic',
                         responsibleUserId: data.responsibleUserId === "" ? 0 : data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
                     }
                     addEditCustomersBasicInformation(value);
@@ -301,7 +307,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     };
     const handleInputFields = (data, dataField) => {
         if (dataField === 'name') {
-            const newName=data.replace(/[.,]/g, '')
+            const newName = data.replace(/[.,]/g, '')
             const trimName = newName.replace(/\s+/g, ' ').trim();
             setCustomerName(trimName);
             basicDetailRef.current.updateFormFieldValue({
