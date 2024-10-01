@@ -18,5 +18,6 @@ namespace OMS.Application.Services.Supplier
         Task<EntityList<GetSupplierAuditHistoryBySupplierIdResponse>> GetSupplierAuditHistoryBySupplierId(GetSupplierAuditHistoryBySupplierIdRequest queryRequest);
         Task<List<GetSupplierDetailsBySupplierNameResponse>> GetSupplierDetailsBySupplierName(string supplierName);
         Task<AddEntityDto<int>> AddEditResponsibleUserForSupplier(AddEditResponsibleUserForSupplierRequest requestData, short CurrentUserId);
+        Task<List<GetSearchSuppliersDetailsByNameEmailWebsiteResponse>> GetSearchSuppliersDetailsByNameEmailWebsite(GetSearchSuppliersDetailsByNameEmailWebsiteRequest requestData);
     }
 }

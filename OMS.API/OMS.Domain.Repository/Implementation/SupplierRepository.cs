@@ -1,5 +1,6 @@
 ﻿using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Domain.Entities.API.Request.Supplier;
+using OMS.Domain.Entities.API.Response.Customers;
 using OMS.Domain.Entities.API.Response.Supplier;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Supplier;
@@ -27,6 +28,7 @@ namespace OMS.Domain.Repository.Implementation
         const string ADDEDITCONTACTFORSUPPLIER = "AddEditContactForSupplier";
         const string GETSUPPLIERDETAILSBYSUPPLIERNAME = "GetSupplierDetailsBySupplierName";
         const string ADDEDITRESPONSIBLEUSERFORSUPPLIER = "AddEditResponsibleUserForSupplier";
+        const string GETSEARCHSUPPLIERSDETAILSBYNAMEEMAILWEBSITE = "GetSearchSuppliersDetailsByNameEmailWebsite";
         #endregion
 
         public SupplierRepository(DapperContext dapperContext) : base(dapperContext)
@@ -177,6 +179,16 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.UserId,
                 createdBy,
             }, CommandType.StoredProcedure);
+        }
+        public async Task<List<GetSearchSuppliersDetailsByNameEmailWebsiteResponse>> GetSearchSuppliersDetailsByNameEmailWebsite(GetSearchSuppliersDetailsByNameEmailWebsiteRequest requestData)
+        {
+            List<GetSearchSuppliersDetailsByNameEmailWebsiteResponse> supplierDetails = await _context.GetList<GetSearchSuppliersDetailsByNameEmailWebsiteResponse>(GETSEARCHSUPPLIERSDETAILSBYNAMEEMAILWEBSITE, new
+            {
+                requestData.SupplierName,
+                requestData.Website,
+                requestData.EmailAddress
+            }, CommandType.StoredProcedure);
+            return supplierDetails;
         }
         #endregion
     }
