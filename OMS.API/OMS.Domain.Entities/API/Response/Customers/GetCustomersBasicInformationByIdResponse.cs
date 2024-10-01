@@ -20,5 +20,7 @@
         public bool? IsSubCustomer { get; set; }
         public byte? IncotermId { get; set; }
         public string? IncotermName { get; set; }
+        public string? Base64File { get; set; }
+        public string? AttachmentName { get; set; }
     }
 }
