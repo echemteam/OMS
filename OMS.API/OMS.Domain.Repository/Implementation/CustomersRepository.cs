@@ -56,7 +56,8 @@ namespace OMS.Domain.Repository.Implementation
                 customers.IsBuyingForThirdParty,
                 //customers.ResponsibleUserId,
                 customers.IsSubCustomer,
-                customers.IncotermId
+                customers.IncotermId,
+                customers.AttachmentName,  
             }, CommandType.StoredProcedure);
         }
 

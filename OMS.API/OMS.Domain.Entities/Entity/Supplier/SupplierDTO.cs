@@ -76,5 +76,9 @@ namespace OMS.Domain.Entities.Entity.Supplier
         public short? ResponsibleUserId { get; set; }
         [Column("IncotermId")]
         public byte? IncotermId { get; set; }
+        [Column("Base64File")]
+        public string? Base64File { get; set; }
+        [Column("AttachmentName")]
+        public string? AttachmentName { get; set; }
     }
 }

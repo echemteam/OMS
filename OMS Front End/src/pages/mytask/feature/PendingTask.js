@@ -95,6 +95,7 @@ const PendingTask = (props) => {
     setActiveTab(id);
     if (props.onGetById) {
       props.onGetById(id);
+     
     }
   };
 
@@ -121,7 +122,7 @@ const PendingTask = (props) => {
       <div className="row">
         <div className="col-5 pr-0 left-modual-sec">
           <ModuleList
-            moduleList={props.moduleList} isPending={true}
+            moduleList={props.moduleList} isPending={true} onGetById={props.onGetById}
             onModuleChange={handleModuleClick} setModuleList={props.setModuleList}
           />
         </div>
