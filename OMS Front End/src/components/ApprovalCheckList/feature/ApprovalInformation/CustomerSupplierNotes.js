@@ -99,7 +99,7 @@ const CustomerSupplierNotes = ({
           <span>
             <Iconify icon="ep:arrow-down-bold" className="open-bar" />
           </span>
-          <h5> Note </h5>
+          <h5> Notes </h5>
         </div>
       </div>
       {/* This Note for only Customer */}
