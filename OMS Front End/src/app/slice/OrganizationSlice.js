@@ -27,7 +27,7 @@ const organiazationSlice = createSlice({
             let request = {
                 cookieValue: cookieValue,
                 cookieName: 'organizationSettings',
-                expirationTime: 480
+                expirationTime: 980
             };
             createCookie(request);
         }
