@@ -6,7 +6,7 @@ import { InvoiceFormData } from "../../../../../supplierDetails/feature/supplier
 import { useAddEditCustomerInvoiceMutation, useLazyGetDetailsbyCustomerIDQuery } from "../../../../../../app/services/customerSettingsAPI";
 import ToastService from "../../../../../../services/toastService/ToastService";
 
-const AddEditInvoiceSubmissionInstructionDetail = ({ customerId, handleToggleModal, isInvoiceModelShow, setIsInvoiceModelShow }) => {
+const AddEditInvoiceSubmissionInstructionDetail = ({ customerId, handleToggleModal, isInvoiceModelShow, setIsInvoiceModelShow, hideButtons }) => {
     const invoiceRef = useRef();
     const [formData, setFormData] = useState(InvoiceFormData);
     const [shouldRerenderFormCreator] = useState(false);
@@ -53,23 +53,25 @@ const AddEditInvoiceSubmissionInstructionDetail = ({ customerId, handleToggleMod
 
     return (<div className="row custom-height-tiny add-edit-notesForm">
         <FormCreator config={formData} ref={invoiceRef} {...formData} key={shouldRerenderFormCreator} />
-        <div className="col-md-12">
-            <div className="d-flex align-item-end justify-content-end">
-                <div className="d-flex align-item-end">
-                    <Buttons
-                        buttonTypeClassName="theme-button"
-                        buttonText="Save"
-                        onClick={handleInvoiceSubmissionData}
-                        isLoading={isAddEditCustomerInvoiceLoading}
-                    />
-                    <Buttons
-                        buttonTypeClassName="dark-btn ml-5"
-                        buttonText="Cancel"
-                        onClick={handleToggleModal}
-                    />
+        {!hideButtons &&
+            <div className="col-md-12">
+                <div className="d-flex align-item-end justify-content-end">
+                    <div className="d-flex align-item-end">
+                        <Buttons
+                            buttonTypeClassName="theme-button"
+                            buttonText="Save"
+                            onClick={handleInvoiceSubmissionData}
+                            isLoading={isAddEditCustomerInvoiceLoading}
+                        />
+                        <Buttons
+                            buttonTypeClassName="dark-btn ml-5"
+                            buttonText="Cancel"
+                            onClick={handleToggleModal}
+                        />
+                    </div>
                 </div>
             </div>
-        </div>
+        }
     </div>)
 }
 export default AddEditInvoiceSubmissionInstructionDetail;
