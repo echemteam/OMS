@@ -209,7 +209,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
     const handleAddEditSupplier = async () => {
         let data = basicDetailRef.current.getFormData();
         if (!data) {
-            ToastService.warning('Please enter supplier basic information');
+            ToastService.warning('Please fill up all the required fields');
             return;
         }
         if (!isOpen) {
@@ -245,7 +245,10 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             countryId: getIdValue(data.countryId),
             responsibleUserId: getIdValue(data.responsibleUserId) || 0,
             supplierId: keyId || supplierId,
-            supplierNoteId: noteId || 0
+            supplierNoteId: noteId || 0,
+            attachmentName: null,
+            base64File: null,
+            storagePath: 'SupplierProfilePic'
         };
         if (!data.taxId) {
             addEditSupplierBasicInformation(req);
@@ -281,13 +284,19 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
 
     const handleInputFields = (data, dataField) => {
         if (dataField === 'name') {
-            const trimName = data.replace(/\s+/g, ' ').trim();
+            const newName = data.replace(/[.,]/g, '')
+            const trimName = newName.replace(/\s+/g, ' ').trim();
+
             setSupplierName(trimName);
+            basicDetailRef.current.updateFormFieldValue({
+                name: newName
+            });
         }
         if (dataField === 'website') {
             const trimmedUrl = data.replace(/\/$/, "");
+            const newUrl = trimmedUrl.replace(/^(https?:\/\/)?www\./, '$1');
             basicDetailRef.current.updateFormFieldValue({
-                website: trimmedUrl
+                website: newUrl
             });
         }
     };

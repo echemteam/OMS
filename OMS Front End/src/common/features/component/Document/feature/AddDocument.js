@@ -26,6 +26,7 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
 
     useEffect(() => {
         if (showModal) {
+
             onResetForm(formData, setFormData, DocumentFormData.initialState);
         }
     }, [showModal])
@@ -46,11 +47,12 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
     }, [isAddSuccess, isAddData]);
 
     const handleSave = async () => {
+    
         const data = ref.current.getFormData();
         if (data) {
             const documentList = [
                 {
-                    name: data.attachment.fileName,
+                    name: data.name,
                     attachment: data.attachment.fileName,
                     base64File: data.attachment.base64Data,
                     documentTypeId: data.documentTypeId && typeof data.documentTypeId === "object" ? data.documentTypeId.value : data.documentTypeId,
@@ -80,11 +82,14 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
 
 
     const onFormDataChange = (updatedData) => {
-        formData.initialState = {
-            ...updatedData,
-            name: updatedData.attachment && updatedData.attachment.fileName
-        };
-        setFormData(formData);
+        const fileName =  (updatedData.attachment && updatedData.attachment.fileName )|| "";  
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            initialState: {
+                ...updatedData,
+                name: updatedData.name || fileName, 
+            }
+        }));
     }
 
     return (

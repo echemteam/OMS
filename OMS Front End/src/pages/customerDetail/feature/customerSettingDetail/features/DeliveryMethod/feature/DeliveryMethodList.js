@@ -38,6 +38,17 @@ const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleT
         update(req);
     }
 
+    const handleGridCheckBoxChange = (fieldName, newRowData, rowIndex) => {
+        if (fieldName === 'isPrimary') {
+            console.log(dataSource);
+            const dataSourceCharge = Number(dataSource[rowIndex]?.charge);
+            const newRowDataCharge = Number(newRowData.charge);
+            if (dataSourceCharge === newRowDataCharge) {
+                handleEditClick(newRowData, rowIndex);
+            }
+        }
+    };
+
     useEffect(() => {
         if (isUpdateSuccess && isUpdateData) {
             if (isUpdateData.errorMessage.includes('EXISTS')) {
@@ -49,6 +60,7 @@ const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleT
             getCustomerCompletionCount(customerId, subCustomer);
         }
     }, [isUpdateSuccess, isUpdateData]);
+
 
 
     return (
@@ -72,6 +84,7 @@ const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleT
                         isLoading={isGetDataLoading}
                         onRowDataUpdate={handleEditClick}
                         onRowDataDelete={handleDeleteClick}
+                        onColumnChange={handleGridCheckBoxChange}
                     />
                 </div>
             </CardSection>

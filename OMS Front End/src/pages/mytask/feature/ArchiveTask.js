@@ -87,6 +87,7 @@
     };
 
     const handleTabClick = (id) => {
+  
       setActiveTab(id);
       if (props.onGetById) {
         props.onGetById(id);

@@ -27,5 +27,6 @@ namespace OMS.Domain.Repository.Contract
         Task<EntityList<GetSubCustomerByCustomerIdResponse>> GetSubCustomerByCustomerId(GetSubCustomerByCustomerIdRequest requestData);
         Task<AddEntityDto<int>> DeleteSubCustomer(int subCustomerMainCustomerId, short deletedBy);
         Task<AddEntityDto<int>> AddEditResponsibleUserForCustomer(AddEditResponsibleUserForCustomerRequest requestData, short createdBy);
+        Task<List<GetSearchCustomersDetailsByNameEmailWebsiteResponse>> GetSearchCustomersDetailsByNameEmailWebsite(GetSearchCustomersDetailsByNameEmailWebsiteRequest requestData);
     }
 }

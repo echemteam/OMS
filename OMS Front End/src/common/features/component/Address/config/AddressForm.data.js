@@ -14,7 +14,7 @@ export const addressFormData = {
         placeholder: "Select Address Type",
         isEnableOnChange: true,
         isMultiSelect: false,
-        isDisabled: false,
+      
       },
       validation: [{ type: "require" }],
       style: {

@@ -29,6 +29,9 @@ a {
     color: var(--darkColor);
   }
 }
+.theme-color{
+  color: var(--themeColor);
+}
 
 .input-label-part {
   width: 100%;
@@ -650,7 +653,7 @@ a {
     align-items: center;
     justify-content: space-between;
     position: relative;
-    min-height: 44px;
+    min-height: 40px;
 
     &::before {
       position: absolute;
@@ -664,7 +667,8 @@ a {
 
     .btn-right-sec {
       button {
-        margin-left: 20px;
+        margin-left: 12px;
+        min-width: auto;
       }
     }
   }
@@ -2374,26 +2378,7 @@ a {
   position: relative;
   padding-right: 0;
 
-  &:before {
-    content: "";
-    position: absolute;
-    background: url(../assets/images/editIcon-theme.png);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    height: 16px;
-    width: 16px;
-    right: 4px;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 2;
-    pointer-events: none;
 
-    @media only screen and (max-width: 1750px) {
-      height: 15px;
-      width: 15px;
-    }
-  }
 
   .css-1dimb5e-singleValue {
     margin-left: 0 !important;
@@ -4226,7 +4211,9 @@ input[type="checkbox"]:disabled {
     }
   }
 }
-
+.detail-sec{
+  width: calc(100% - 80px);
+}
 .customer-name {
   max-width: calc(100% - 20px);
   display: flex;
@@ -4395,5 +4382,65 @@ input[type="checkbox"]:disabled {
       padding-top: 4px;
       padding-left: 3px;
     }
+  }
+}
+
+
+.doc-view {
+  .pdf-iframe {
+    iframe {
+      height: calc(100vh - 60px) !important;
+
+      @media only screen and (max-width: 1750px) {
+        height: calc(100vh - 57px) !important;
+      }
+    }
+  }
+}
+
+
+
+.tooltip-div{
+  position: relative;
+  cursor: pointer;
+  .tooltip-arrow-icon {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid black;
+    position: absolute;
+    top: -2px;
+    left: -10%;
+    transform: translateX(-50%);
+    rotate: 180deg;
+    opacity: 0;
+    display: none;
+  }
+  .tooltip-show {
+    display: none;
+    padding: 5px 8px;
+    border-radius: 4px;
+    margin: 0;
+    background-color: black;
+    color: #fff !important;
+    position: absolute;
+    top: -26px;
+    right: 0;
+    font-size: var(--commonFont-extraSmall);
+    pointer-events: none;
+    width: max-content;
+    p {
+      margin: 0;
+    }
+  }
+
+  &:hover .tooltip-arrow-icon {
+    opacity: 1;
+    display: block;
+  }
+
+  &:hover .tooltip-show {
+    display: block;
   }
 }

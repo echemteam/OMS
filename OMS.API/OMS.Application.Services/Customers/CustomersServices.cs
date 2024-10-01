@@ -6,7 +6,10 @@ using OMS.Domain.Entities.API.Response.Supplier;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.CustomerNotes;
 using OMS.Domain.Entities.Entity.Customers;
+using OMS.Domain.Entities.Entity.User;
 using OMS.Domain.Repository;
+using OMS.FileManger.Services;
+using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Entities.CommonEntity;
 using OMS.Shared.Services.Contract;
 
@@ -28,7 +31,90 @@ namespace OMS.Application.Services.Customers
         #region Customers Services
         public async Task<AddEditResponse> AddEditCustomersBasicInformation(AddEditCustomersBasicInformationRequest requestData, short CurrentUserId)
         {
+            AddEntityDto<int> responceData = new();
+            if (requestData.CustomerId > 0)
+            {
+                var customerId = Convert.ToInt32(requestData.CustomerId);
+                var existingData = await repositoryManager.customers.GetCustomersBasicInformationById(customerId);
+
+                if (existingData.StatusId == (short)Status.Approved)
+                {
+                    var oldJsonData = JsonConvert.SerializeObject(existingData);
+                    var newJsonData = JsonConvert.SerializeObject(requestData);
+
+                    var oldDataDict = JsonConvert.DeserializeObject<Dictionary<string, object>>(oldJsonData);
+                    var newDataDict = JsonConvert.DeserializeObject<Dictionary<string, object>>(newJsonData);
+
+                    var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
+
+                    foreach (var rule in approvalRules)
+                    {
+                        var fieldName = rule.FieldName;
+
+                        if (string.IsNullOrEmpty(fieldName))
+                        {
+                            continue;
+                        }
+
+                        if (oldDataDict!.TryGetValue(fieldName, out var oldValue) && newDataDict!.TryGetValue(fieldName, out var newValue))
+                        {
+                            bool valuesChanged = !Equals(oldValue, newValue);
+                            if (!valuesChanged)
+                            {
+                                continue;
+                            }
+                            var fieldValue = newValue?.ToString();
+                            CheckFieldValueExistsResponse resData = await repositoryManager.approval.CheckFieldValueExists(fieldName, fieldValue!);
+
+                            if (resData.Exist == true)
+                            {
+                                return new AddEditResponse
+                                {
+                                    ErrorMessage = resData.ErrorMessage
+                                };
+                            }
+                            else
+                            {
+                                var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(rule.FunctionalityEventId);
+                                var approvalResponseData = await ApprovalRuleHelper.ProcessApprovalRequest(
+                                    oldJsonData,
+                                    newJsonData,
+                                    CurrentUserId,
+                                    formatTemplate,
+                                    rule
+                                );
+                                responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponseData);
+                                if (responceData.KeyValue > 0)
+                                {
+                                    if (oldDataDict!.TryGetValue(fieldName, out var updatedValue) && valuesChanged)
+                                    {
+                                        var propertyInfo = requestData.GetType().GetProperty(fieldName);
+                                        if (propertyInfo != null && updatedValue != null)
+                                        {
+                                            Type targetType = propertyInfo.PropertyType;
+                                            if (targetType.IsGenericType && targetType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                                            {
+                                                targetType = Nullable.GetUnderlyingType(targetType);
+                                            }
+                                            var convertedValue = Convert.ChangeType(updatedValue, targetType);
+                                            propertyInfo.SetValue(requestData, convertedValue);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             CustomersDto customersDto = requestData.ToMapp<AddEditCustomersBasicInformationRequest, CustomersDto>();
+            if (requestData.Base64File != null)
+            {
+                customersDto.AttachmentName = FileManager.SaveFile(
+                                requestData.Base64File!,
+                                Path.Combine(commonSettingService.ApplicationSettings.SaveFilePath!, requestData.StoragePath!),
+                                requestData.AttachmentName!);
+            }
             customersDto.CreatedBy = CurrentUserId;
             AddEditResponse responseData = await repositoryManager.customers.AddEditCustomersBasicInformation(customersDto);
 
@@ -69,7 +155,20 @@ namespace OMS.Application.Services.Customers
 
         public async Task<GetCustomersBasicInformationByIdResponse> GetCustomersBasicInformationById(int customerId)
         {
-            return await repositoryManager.customers.GetCustomersBasicInformationById(customerId);
+            GetCustomersBasicInformationByIdResponse getCustomersBasicInformationByIdResponse = new();
+            getCustomersBasicInformationByIdResponse= await repositoryManager.customers.GetCustomersBasicInformationById(customerId);
+
+            if (getCustomersBasicInformationByIdResponse.AttachmentName != null)
+            {
+                var filePath = Path.Combine(commonSettingService.ApplicationSettings.SaveFilePath!, "CustomerProfilePic"!,getCustomersBasicInformationByIdResponse.AttachmentName);
+                if (File.Exists(filePath))
+                {
+                    byte[] imageArray = await File.ReadAllBytesAsync(filePath);
+                    string base64ImageRepresentation = Convert.ToBase64String(imageArray);
+                    getCustomersBasicInformationByIdResponse.Base64File = base64ImageRepresentation;
+                }
+            }
+            return getCustomersBasicInformationByIdResponse;
         }
         public async Task<EntityList<GetCustomersResponse>> GetCustomers(GetCustomersRequest queryRequest)
         {
@@ -146,6 +245,10 @@ namespace OMS.Application.Services.Customers
         public async Task<AddEntityDto<int>> AddEditResponsibleUserForCustomer(AddEditResponsibleUserForCustomerRequest requestData, short currentUserId)
         {
             return await repositoryManager.customers.AddEditResponsibleUserForCustomer(requestData, currentUserId); ;
+        }
+        public async Task<List<GetSearchCustomersDetailsByNameEmailWebsiteResponse>> GetSearchCustomersDetailsByNameEmailWebsite(GetSearchCustomersDetailsByNameEmailWebsiteRequest requestData)
+        {
+            return await repositoryManager.customers.GetSearchCustomersDetailsByNameEmailWebsite(requestData);
         }
         #endregion
     }

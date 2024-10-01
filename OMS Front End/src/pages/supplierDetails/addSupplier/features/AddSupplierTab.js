@@ -40,19 +40,19 @@ const AddSupplierTab = () => {
   const tabContent = [
     {
       label: "Basic Information",
-      subLabel: "Enter Supplier Basic information",
+      // subLabel: "Enter Supplier Basic information",
       content: <SupplierBasicDetail isEditablePage={false} />,
       tab: CustomerSupplierTabEnum.BasicInformation,
     },
     {
       label: "Address",
-      subLabel: "Enter Supplier Address Details",
+      // subLabel: "Enter Supplier Address Details",
       content: <SuplierAddressDetails isEditablePage={false} />,
       tab: CustomerSupplierTabEnum.Address,
     },
     {
       label: "Contact",
-      subLabel: "Enter Supplier Contact Details",
+      // subLabel: "Enter Supplier Contact Details",
       content: (
         <SupplierContactDetail
           isEditablePage={false}
@@ -63,13 +63,13 @@ const AddSupplierTab = () => {
     },
     {
       label: "Financial Setting",
-      subLabel: "Enter Financial Setting Details",
+      // subLabel: "Enter Financial Setting Details",
       content: <FinancialSettings isEditablePage={false} />,
       tab: CustomerSupplierTabEnum.Setting
     },
     {
       label: "Documents",
-      subLabel: "Add Supplier Documents Details",
+      // subLabel: "Add Supplier Documents Details",
       content: <SupplierDocumentDetail isEditablePage={true} />,
       tab: CustomerSupplierTabEnum.Documents,
     },

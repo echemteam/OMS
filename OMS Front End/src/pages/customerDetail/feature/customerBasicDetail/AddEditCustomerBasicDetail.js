@@ -11,7 +11,7 @@ import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/a
 //** Service's */
 import ToastService from "../../../../services/toastService/ToastService";
 import { useLazyGetAllIncotermQuery, useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
-import { useAddEditCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useLazyGetCustomersBasicInformationByIdQuery, useLazyGetCustomersDetailsByCutomerNameQuery } from "../../../../app/services/basicdetailAPI";
+import { useAddEditCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useGetSearchCustomersDetailsByNameEmailWebsiteMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useLazyGetCustomersBasicInformationByIdQuery, useLazyGetCustomersDetailsByCutomerNameQuery } from "../../../../app/services/basicdetailAPI";
 import { FieldSettingType } from "../../../../utils/Enums/commonEnums";
 import { customerbasicData, excludingRoles } from "./config/CustomerBasicDetail.data";
 import ExistingCustomerSupplierInfo from "../../../../common/features/component/ExistingInfo/ExistingCustomerSupplierInfo";
@@ -24,6 +24,8 @@ import { validateResponsibleUserId } from "../../../../utils/ResponsibleUser/val
 import { useSelector } from "react-redux";
 import { isCustomerOrSupplierApprovedStatus } from "../../../../utils/CustomerSupplier/CustomerSupplierUtils";
 import { SuccessMessage } from "../../../../data/appMessages";
+import ValidateCustomerSupplierInfo from "../../../../common/features/component/ExistingInfo/ValidateCustomerSupplierInfo";
+import { validateNameEmailWebsiteGrid } from "../../../../common/features/component/ExistingInfo/Config/Existing.data";
 
 
 const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarClose, isEditablePage, setSubCustomer, customerStatusId }) => {
@@ -39,6 +41,8 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     const [formData, setFormData] = useState(customerbasicData);
     const [isButtonDisable, setIsButtonDisable] = useState(false);
     const [isResponsibleUser, setIsResponsibleUser] = useState(false);
+    const [validateCustomerSupplierInfoModal, setValidateCustomerSupplierInfoModal] = useState(false);
+    const [validateCustomerSupplierData, setValidateCustomerSupplierData] = useState([]);
     const { nextRef, customerId, setCustomerId, moveNextPage, setCustomerCountryId } = useContext(BasicDetailContext);
 
     //** API Call's */
@@ -53,6 +57,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     const [addEditCustomersBasicInformation, { isLoading: isAddEditCustomersBasicInformationLoading, isSuccess: isAddEditCustomersBasicInformationSuccess,
         data: isAddEditCustomersBasicInformationData }] = useAddEditCustomersBasicInformationMutation();
     const [checkExistingInformation] = useLazyGetCustomersDetailsByCutomerNameQuery();
+    const [validateCustomerNameEmailWebsite, { isSuccess: isValidateCustomerNameEmailWebsiteSucess, data: isValidateCustomerNameEmailWebsiteData, isLoading }] = useGetSearchCustomersDetailsByNameEmailWebsiteMutation();
 
     //** Security Key */
     const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICCUSTOMERDETAILS);
@@ -191,28 +196,33 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         handleAddBasicDetails,
     }));
 
+    useEffect(() => {
+        if (isValidateCustomerNameEmailWebsiteSucess && isValidateCustomerNameEmailWebsiteData) {
+            if (isValidateCustomerNameEmailWebsiteData && isValidateCustomerNameEmailWebsiteData.length > 0 && !customerId > 0) {
+                setValidateCustomerSupplierData(isValidateCustomerNameEmailWebsiteData);
+                setValidateCustomerSupplierInfoModal(true);
+            } else {
+                setValidateCustomerSupplierInfoModal(false);
+                addCustomerCountine();
+            }
+        }
+    }, [isValidateCustomerNameEmailWebsiteSucess, isValidateCustomerNameEmailWebsiteData]);
+
     const handleAddBasicDetails = async () => {
         let data = basicDetailRef.current.getFormData();
         if (data) {
             if (!isOpen) {
-                const result = await checkExistingInformation(data.name).unwrap().catch(error => {
-                    ToastService.warning('Failed to check existing information.');
-                });
-                if (result && result.length > 0) {
-                    confirm("Similar Customer Names Found?", "We've found some customers with matching names. Would you like to review them before moving forward? Simply click the magnifier button to view the existing customer details, or proceed with adding the new customer.",
-                        "Countine", 'Close and View', true).then((confirmed) => {
-                            if (confirmed) {
-                                addCustomerCountine();
-                            }
-                        });
-                } else {
-                    addCustomerCountine();
+                let req = {
+                    CustomerName: data?.name,
+                    Website: data?.website,
+                    EmailAddress: data?.emailAddress
                 }
+                await validateCustomerNameEmailWebsite(req).unwrap();
             } else {
                 addCustomerCountine();
             }
         } else {
-            ToastService.warning('Please enter customer basic information');
+            ToastService.warning('Please fill up all the required fields');
         }
     };
 
@@ -228,7 +238,10 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             countryId: data.countryId && typeof data.countryId === "object" ? data.countryId.value : data.countryId,
             responsibleUserId: data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
             customerId: keyId ? keyId : customerId,
-            customerNoteId: noteId ? noteId : 0
+            customerNoteId: noteId ? noteId : 0,
+            attachmentName: null,
+            base64File: null,
+            storagePath: 'CustomerProfilePic'
         };
         if (data.taxId === "") {
             let value = {
@@ -242,6 +255,9 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                 if (data.taxId.length >= minLength || data.taxId.length <= maxLength) {
                     let value = {
                         ...req,
+                        attachmentName: null,
+                        base64File: null,
+                        storagePath: 'CustomerProfilePic',
                         responsibleUserId: data.responsibleUserId === "" ? 0 : data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
                     }
                     addEditCustomersBasicInformation(value);
@@ -291,13 +307,18 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     };
     const handleInputFields = (data, dataField) => {
         if (dataField === 'name') {
-            const trimName = data.replace(/\s+/g, ' ').trim();
+            const newName = data.replace(/[.,]/g, '')
+            const trimName = newName.replace(/\s+/g, ' ').trim();
             setCustomerName(trimName);
+            basicDetailRef.current.updateFormFieldValue({
+                name: newName
+            });
         }
         if (dataField === 'website') {
             const trimmedUrl = data.replace(/\/$/, "");
+            const newUrl = trimmedUrl.replace(/^(https?:\/\/)?www\./, '$1');
             basicDetailRef.current.updateFormFieldValue({
-                website: trimmedUrl
+                website: newUrl
             });
         }
     }
@@ -345,6 +366,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                             onInputChange={formInputHandler}
                             handleInputGroupButton={handleInputGroupButton}
                             handleInputShowInfo={handleExistingInfo}
+
                         />
                         : <DataLoader />}
                 </div>
@@ -375,6 +397,16 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                     getExistingInfoByName={useLazyGetCustomersDetailsByCutomerNameQuery} />
                 : null}
 
+            {validateCustomerSupplierInfoModal && isValidateCustomerNameEmailWebsiteSucess ?
+                <ValidateCustomerSupplierInfo
+                    isSupplier={false}
+                    isModalOpen={validateCustomerSupplierInfoModal}
+                    gridCnfiguration={validateNameEmailWebsiteGrid}
+                    gridData={validateCustomerSupplierData}
+                    isGridLoading={isLoading}
+                    onAdd={addCustomerCountine}
+                />
+                : null}
         </div>
     );
 };

@@ -73,7 +73,7 @@ export const basicInfoData = {
                 getLableClass: getLabelClass,
             },
         },
-        
+
         {
             name: "Action",
             colStyle: {
@@ -126,6 +126,83 @@ export const OrderBasicInfoData = {
                 width: "25%",
                 textAlign: "center",
                 justifyContent: "center"
+            },
+            colType: GridColumnType.ACTION,
+            defaultAction: {
+                allowEdit: true,
+                allowDisable: false,
+            },
+        },
+    ],
+};
+
+export const validateNameEmailWebsiteGrid = {
+    columns: [
+
+        {
+            name: "Name",
+            fieldName: "name",
+            colStyle: {
+                width: "10%",
+            },
+            // allowShort: true,
+        },
+        {
+            name: "Tax Id",
+            fieldName: "taxId",
+            colStyle: {
+                width: "10%",
+            },
+            // allowShort: true,
+        },
+        {
+            name: "Website",
+            fieldName: "website",
+            colStyle: {
+                width: "10%",
+            },
+            // allowShort: true,
+        },
+        // {
+        //     name: "Country",
+        //     fieldName: "countryName",
+        //     colStyle: {
+        //         width: "15%",
+        //     },
+        // },
+
+        {
+            name: "Email",
+            fieldName: "emailAddress",
+            colStyle: {
+                width: "15%",
+            },
+        },
+        {
+            name: "Reason",
+            fieldName: "reason",
+            colStyle: {
+                width: "30%",
+            },
+        },
+        {
+            name: "Status",
+            fieldName: "status",
+            allowShort: false,
+            colType: GridColumnType.LABLE,
+            colStyle: {
+                width: "12%",
+            },
+            colSettings: {
+                valueField: "status",
+                getLableClass: getLabelClass,
+            },
+        },
+
+        {
+            name: "Action",
+            colStyle: {
+                width: "8%",
             },
             colType: GridColumnType.ACTION,
             defaultAction: {

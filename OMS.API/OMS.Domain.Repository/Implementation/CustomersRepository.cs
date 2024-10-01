@@ -32,6 +32,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETSUBCUSTOMERBYCUSTOMERID = "GetSubCustomerByCustomerId";
         const string DELETESUBCUSTOMER = "DeleteSubCustomer";
         const string ADDEDITRESPONSIBLEUSERFORCUSTOMER = "AddEditResponsibleUserForCustomer";
+        const string GETSEARCHCUSTOMERSDETAILSBYNAMEEMAILWEBSITE = "GetSearchCustomersDetailsByNameEmailWebsite";
         #endregion
 
         public CustomersRepository(DapperContext dapperContext) : base(dapperContext)
@@ -56,7 +57,8 @@ namespace OMS.Domain.Repository.Implementation
                 customers.IsBuyingForThirdParty,
                 //customers.ResponsibleUserId,
                 customers.IsSubCustomer,
-                customers.IncotermId
+                customers.IncotermId,
+                customers.AttachmentName,  
             }, CommandType.StoredProcedure);
         }
 
@@ -241,6 +243,16 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.UserId,
                 createdBy,
             }, CommandType.StoredProcedure);
+        }
+        public async Task<List<GetSearchCustomersDetailsByNameEmailWebsiteResponse>> GetSearchCustomersDetailsByNameEmailWebsite(GetSearchCustomersDetailsByNameEmailWebsiteRequest requestData)
+        {
+            List<GetSearchCustomersDetailsByNameEmailWebsiteResponse> customerDetails = await _context.GetList<GetSearchCustomersDetailsByNameEmailWebsiteResponse>(GETSEARCHCUSTOMERSDETAILSBYNAMEEMAILWEBSITE, new
+            {
+                requestData.CustomerName,
+                requestData.Website,
+                requestData.EmailAddress
+            }, CommandType.StoredProcedure);
+            return customerDetails;
         }
         #endregion
     }

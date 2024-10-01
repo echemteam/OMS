@@ -50,7 +50,7 @@ export const contactDetailFormData = {
       fieldSetting: {
         placeholder: "Select Contact Type",
         isMultiSelect: true,
-        isDisabled: false,
+       // isDisabled: false,
         isEnableOnChange: true
       },
       validation: [{ type: "require" }],

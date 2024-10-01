@@ -6,12 +6,12 @@ export const NotesData = {
   formFields: [
     {
       id: "note",
-      lable: "Add Notes :",
-      Field_Name: "Add Notes ",
+      lable: "Notes :",
+      Field_Name: "notes",
       fieldType: FormFieldTypes.CKEDITOR,
       dataField: "note",
       fieldSetting: {
-        placeholder: "Enter Notes",
+        placeholder: "Enter",
         allowSpace: true,
         maxLength: 1000,
         isDisable: false

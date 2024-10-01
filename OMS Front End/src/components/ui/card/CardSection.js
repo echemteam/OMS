@@ -55,12 +55,20 @@ function CardSection({
   selectedSortOrder,
   filtersOptions,
   selectedFilterOptions,
-  handleKeyPress
+  handleKeyPress,
+  isCenterTile,
+  CenterTitleTxt,
+  CenterBtnIcon,
+  centerBtnTitle,
+  centerBtnOnClick,
+  isTooltip,
+  tootipText,
 }) {
   return (
     <div
-      className={`card ${cardTitle ? "card-section-left" : ""}${searchInput && rightButton ? "card-section-between" : ""
-        }${rightButton ? "card-button-only" : ""}`}
+      className={`card ${cardTitle ? "card-section-left" : ""}${
+        searchInput && rightButton ? "card-section-between" : ""
+      }${rightButton ? "card-button-only" : ""}`}
     >
       {(cardTitle || rightButton || searchFilter || searchInput) && (
         <div className="card-top-title-btn responsive-grid-title">
@@ -98,6 +106,7 @@ function CardSection({
                 </div>
               </div>
             )}
+
             {searchButton && (
               <>
                 <div className="btn-right-sec">
@@ -126,7 +135,23 @@ function CardSection({
                 </div>
               </>
             )}
+            {isCenterTile && (
+              <>
+                <div className="center-title-text">
+                  <h4>{CenterTitleTxt}</h4>
+                  <Buttons
+                    isIcon={true}
+                    iconClass={CenterBtnIcon}
+                    titleText={centerBtnTitle}
+                    onClick={centerBtnOnClick}
+                    isTooltip={isTooltip}
+                    tootipText={tootipText}
+                  />
+                </div>
+              </>
+            )}
           </div>
+
           {
             // isButtonVisible &&(
             rightButton && (
@@ -141,9 +166,15 @@ function CardSection({
                 ) : (
                   ""
                 )}
-                {isShort ? <>
-                  <Shorting selectedSortOrder={selectedSortOrder} filtersOptions={filtersOptions} selectedFilterOptions={selectedFilterOptions} />
-                </> : null}
+                {isShort ? (
+                  <>
+                    <Shorting
+                      selectedSortOrder={selectedSortOrder}
+                      filtersOptions={filtersOptions}
+                      selectedFilterOptions={selectedFilterOptions}
+                    />
+                  </>
+                ) : null}
                 {multipleButton && (
                   <div className="btn-right-sec">
                     {rightButtonArray.map((button, index) => (
@@ -159,6 +190,10 @@ function CardSection({
                         imagePathBack={iconImgBack}
                         isLoading={isLoading}
                         titleText={titleText}
+                        isIcon={button.isIcon}
+                        iconClass={button.iconClass}
+                        isTooltip={button.isTooltip}
+                        tootipText={button.tootipText}
                       />
                     ))}
                   </div>
@@ -176,8 +211,9 @@ function CardSection({
                   titleText={titleText}
                   isIcon={isIcon}
                   iconClass={iconClass}
+                  isTooltip={isTooltip}
+                  tootipText={tootipText}
                 />
-
               </div>
             )
             // )

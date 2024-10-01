@@ -268,26 +268,26 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
       isGetAllSubCustomersSuccess &&
       isGetAllSubCustomersData
     ) {
-      if (isGetAllSubCustomersData.length === 0) {
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          formFields: prevFormData.formFields.filter((field) => field.dataField !== "subCustomerMainCustomerId"),
-        }));
-      } else {
-        const subcustomerOptions = isGetAllSubCustomersData.map((item) => ({
-          value: item.subCustomerId,
-          label: item.subCustomerName,
-        }));
-        setFormData((prevFormData) => {
-          const updatedFormData = { ...prevFormData };
-          const dropdownField = updatedFormData.formFields?.find((item) => item.dataField === "subCustomerMainCustomerId");
-          if (dropdownField) {
-            dropdownField.fieldSetting.options = subcustomerOptions;
-          }
-          return updatedFormData;
-        });
-      }
+      // if (isGetAllSubCustomersData.length === 0) {
+      //   setFormData((prevFormData) => ({
+      //     ...prevFormData,
+      //     formFields: prevFormData.formFields.filter((field) => field.dataField !== "subCustomerMainCustomerId"),
+      //   }));
+      // } else {
+      const subcustomerOptions = isGetAllSubCustomersData.map((item) => ({
+        value: item.subCustomerId,
+        label: item.subCustomerName,
+      }));
+      setFormData((prevFormData) => {
+        const updatedFormData = { ...prevFormData };
+        const dropdownField = updatedFormData.formFields?.find((item) => item.dataField === "subCustomerMainCustomerId");
+        if (dropdownField) {
+          dropdownField.fieldSetting.options = subcustomerOptions;
+        }
+        return updatedFormData;
+      });
     }
+    // }
   }, [
     isGetAllSubCustomersFetching,
     isGetAllSubCustomersSuccess,
@@ -303,10 +303,25 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
     }
   }, [isSubCustomerDropdownVisible]);
 
-  const handleChangeDropdownList = (data, dataField) => {
+  const handleChangeDropdownList = async (data, dataField) => {
+
+    const blockedOptionValue = "Block";
+    if (data.status === blockedOptionValue) {
+      const result = await blocked(
+        "Blocked !",
+        "The selected customer is currently blocked. Please choose a different customer",
+        "OK",
+        "Cancel"
+      );
+      if (result) {
+        return; // Exit the function if blocked
+      }
+    }
+
     if (dataField === "customerId") {
       setOrderCustomerId(data.value);
       if (data.isBuyingForThirdParty) {
+        setIsSubCustomerDropdownVisible(true);
         getAllSubCustomerByCustomerId(data.value);
         setFormData({ ...orderInformationData });
         basicInformation.current.updateFormFieldValue({
@@ -322,19 +337,6 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
       }
     }
 
-    const blockedOptionValue = "Blocked";
-    if (data.status === blockedOptionValue) {
-      blocked(
-        "Blocked !",
-        "The selected customer is currently blocked. Please choose a different customer",
-        "OK",
-        "Cancel"
-      ).then((result) => {
-        if (result) {
-          console.log("User acknowledged the blocked status alert.");
-        }
-      });
-    }
     if (data.value && dataField === "isShippingId") {
       const finalData = isGetAllShippingAddressData?.filter(
         (item) => item.addressId === data.value
@@ -386,7 +388,7 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
     } else if (id === "CustomerName" || id === "SubCustomer") {
       navigate(`/addCustomer`);
     } else {
-      ToastService.warning("Please Add Customer Name");
+      ToastService.warning("Please select customer");
     }
   };
 

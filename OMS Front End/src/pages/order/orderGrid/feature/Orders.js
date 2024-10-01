@@ -8,9 +8,10 @@ import {
   collapsibleChildGridData,
   orderListMolGridData,
 } from "../../feature/orderListDetail/config/OrderList.Data";
+import { useNavigate } from "react-router-dom";
 const Orders = () => {
   const molGridRef = useRef();
-
+const navigate=useNavigate();
   const [dataSource, setDataSource] = useState(orderListMolGridData);
   const [gridChildDataSource, setGridChildDataSource] = useState(
     collapsibleChildGridData
@@ -26,7 +27,8 @@ const Orders = () => {
   }, [orderListMolGridData, collapsibleChildGridData]);
 
   const handleEditClick = () => {
-    alert("EDIT");
+    // alert("EDIT");
+    navigate("/OrderDetails")
   };
 
   const handleDeleteClick = () => {

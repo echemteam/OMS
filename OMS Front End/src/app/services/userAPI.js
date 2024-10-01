@@ -75,6 +75,14 @@ const userAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        getUserLoginLogoutHistoryByUserId: builder.query({
+            query: (userId) => ({
+                url: encryptQueryString(`/User/GetUserLoginLogoutHistoryByUserId/?userId=${userId}`),
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse,
+        }),
     })
 })
 
@@ -83,7 +91,8 @@ export const { useGetUsersMutation,
     useUpdateUserPasswordMutation,
     useUpdateUserMutation,
     useDeleteUserMutation,
-    useLazyGetUserByUserIdQuery
+    useLazyGetUserByUserIdQuery,
+    useLazyGetUserLoginLogoutHistoryByUserIdQuery
 } = userAPI;
 
 export default userAPI;

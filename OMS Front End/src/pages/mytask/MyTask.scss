@@ -304,7 +304,7 @@
 
         .info-row {
           display: flex;
-          // justify-content: space-between;
+          justify-content: space-between;
           margin-bottom: 10px;
           align-items: center;
 
@@ -558,11 +558,11 @@
   border-radius: 5px;
   border: 1px solid #f2f4f6;
   position: absolute;
-  right : 150px;
+  right : 0;
   top: 20%;
   z-index: 1;
   box-shadow: 0px 0px 40px -9px #6a6a95;
-  height: 50%;
+  height: auto;
 
   overflow: hidden;
 
@@ -577,14 +577,14 @@
   }
   .item-value{
     font-size: var(--commonFont);
-    color: #6e839b;
+    color: var(--textColor2);
     font-weight: 600;
     min-width:250px;
   }
   .btn-item{
     display: flex;
-    padding: 20px;
-    justify-content: end;
+    padding: 0;
+    justify-content: flex-end;
   }
 }
 // Email template-style Start
@@ -619,7 +619,7 @@
         &.main-title-type {
           text-transform: uppercase;
           font-size: var(--commonFont-small);
-          color: #6e839b;
+          color: var(--textColor2);
         }
 
         &.badge {
