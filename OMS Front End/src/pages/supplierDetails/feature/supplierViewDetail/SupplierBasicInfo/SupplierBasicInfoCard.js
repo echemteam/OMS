@@ -10,7 +10,7 @@ import FormCreator from "../../../../../components/Forms/FormCreator";
 import DropDown from "../../../../../components/ui/dropdown/DropDrown";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
-import { StatusValue } from "../../../../../utils/Enums/StatusEnums";
+import { StatusValue, statusMapping } from "../../../../../utils/Enums/StatusEnums";
 import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 //** Service's */
@@ -60,6 +60,7 @@ const SupplierBasicInfoCard = ({
   const [rUserValue, setRUserValue] = useState([]);
   const [addSupplierNotes] = useAddSupplierNotesMutation();
   const [responsibleUserOptions, setResponsibleUserOptions] = useState([]);
+  const [filteredStatusOptions,setFilteredStatusOptions]=useState(StatusValue);
 
   const [
     getAllUser,
@@ -352,6 +353,18 @@ const SupplierBasicInfoCard = ({
     }
   };
 
+  useEffect(() => {
+    if (supplierData) {
+        let newStatusOptions = StatusValue;
+        if (supplierData.status === statusMapping.APPROVED) {
+            newStatusOptions = StatusValue.filter(option => option.value !== 2);
+        } 
+          else if (supplierData.status === statusMapping.PENDING) {
+            newStatusOptions = StatusValue.filter(option => option.value !== 3  )
+        }
+        setFilteredStatusOptions(newStatusOptions);
+    }
+  }, [supplierData]);
   const removeFields = () => {
     const modifyFormFields = removeFormFields(formData, ["responsibleUserId"]);
     setFormData(modifyFormFields);
@@ -517,7 +530,7 @@ const SupplierBasicInfoCard = ({
                   <b>&nbsp;:&nbsp;</b>
                   <div className={`status-dropdown ${getStatusClass()}`}>
                     <DropDown
-                      options={StatusValue}
+                      options={filteredStatusOptions}
                       value={selectedStatus}
                       onChange={handleStatusChange}
                       placeholder="Select Status"
