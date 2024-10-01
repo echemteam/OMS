@@ -462,6 +462,76 @@ const TaskDetail = ({
                 </span>
                 </> : null}
                  
+                  <div>
+                    <span className="info-label">Status : </span>
+                    <span
+                      className={`ml-2 ${getLabelClass(approvedData.status)}`}
+                    >
+                      {approvedData.status}
+                    </span>
+                  </div>
+                  <div className="d-flex">
+                    {approvedData?.eventName !=
+                    FunctionalitiesName.UPLOADCUSTOMERDOCUMENT ? (
+                      <>
+                        &nbsp;{" "}
+                        <span
+                          className="btn theme-button position-relative"
+                          onClick={() => handlebtnClick("old Value")}
+                        >
+                          Old Value
+                        </span>{" "}
+                        &nbsp;&nbsp;
+                        <span
+                          className="btn theme-button position-relative"
+                          onClick={() => handlebtnClick("new Value")}
+                        >
+                          New Value
+                        </span>
+                      </>
+                    ) : null}
+                    {isModelOpen ? (
+                      <div className="customer-task-model">
+                        <div className="customer-card-top-sec">
+                          <div className="detail-card">
+                            <div classname="detail-item">
+                              {valueTypes === "old Value" &&
+                              approvedData.oldValue ? (
+                                <div
+                                  className="html-render mb-0"
+                                  dangerouslySetInnerHTML={{
+                                    __html: approvedData.oldValue,
+                                  }}
+                                ></div>
+                              ) : valueTypes === "new Value" &&
+                                approvedData.newValue ? (
+                                <div
+                                  className="html-render mb-0"
+                                  dangerouslySetInnerHTML={{
+                                    __html: approvedData.newValue,
+                                  }}
+                                ></div>
+                              ) : (
+                                <div className="no-value">
+                                  No {valueTypes} available
+                                </div>
+                              )}
+                            </div>
+
+                            <div className="btn-item">
+                              <button
+                                type="button"
+                                className="btn dark-btn ml-5 mt-2"
+                                onClick={handleClose}
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ) : null}
+                  </div>
                 </div>
                
                 {approvedData.rejectReason && (

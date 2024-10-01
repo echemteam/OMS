@@ -145,7 +145,51 @@ export const UserGridConfig = {
         allowEdit: true,
         allowDelete: true,
       },
-
+      customAction: [
+        {
+          name: "HISTORY",
+          iconName: "iconamoon:history-bold",
+          title: "History",
+          className: ".history-btn "
+        },
+      ],
     },
   ],
+};
+export const UserHistoryGridConfig = {
+  columns: [
+    {
+      name: "Login Time",
+      fieldName: "userLoginDateTime",
+      colStyle: {
+        width: "25%",
+      },
+      allowShort: true,
+    },
+    {
+      name: "Logout Time",
+      fieldName: "userLogoutDateTime",
+      colStyle: {
+        width: "25%",
+      },
+      allowShort: true,
+    },
+    {
+      name: "IP Address",
+      fieldName: "ipAddress",
+      colStyle: {
+        width: "25%",
+      },
+      allowShort: true,
+    },
+    {
+      name: "Recorded At",
+      fieldName: "createdAt",
+      colStyle: {
+        width: "25%",
+      },
+      allowShort: true,
+    },
+    
+  ]
 };
