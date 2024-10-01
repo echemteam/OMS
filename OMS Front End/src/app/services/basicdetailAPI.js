@@ -121,6 +121,15 @@ const basicdetailAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        getSearchCustomersDetailsByNameEmailWebsite: builder.mutation({
+            query: (Details) => ({
+                url: '/Customers/GetSearchCustomersDetailsByNameEmailWebsite',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
@@ -137,7 +146,8 @@ export const {
     useCheckCustomerNameExistMutation,
     useLazyGetCustomersDetailsByCutomerNameQuery,
     useUpdateCustomerSubCustomerMutation,
-    useAddEditResponsibleUserForCustomerMutation
+    useAddEditResponsibleUserForCustomerMutation,
+    useGetSearchCustomersDetailsByNameEmailWebsiteMutation
 } = basicdetailAPI
 
 export default basicdetailAPI;

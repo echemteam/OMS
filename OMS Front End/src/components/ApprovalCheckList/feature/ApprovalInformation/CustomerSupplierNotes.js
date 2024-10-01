@@ -27,6 +27,7 @@ const CustomerSupplierNotes = ({
     },
   ] = useLazyGetDetailsbyCustomerIDQuery();
   const [openSections, setOpenSections] = useState([true]);
+  const [openNoteSections, setOpenNoteSections] = useState([true]);
   useEffect(() => {
     if (mainId) {
       getNoteById(mainId);
@@ -54,6 +55,7 @@ const CustomerSupplierNotes = ({
       setNotes(latestNote.note);
     }
   }, [isGetNotesFetching, isGetNotesSuccess, isGetNotesData]);
+
   // Toggle active section
   const toggleSection = (index) => {
     const updatedSections = [...openSections];
@@ -61,12 +63,38 @@ const CustomerSupplierNotes = ({
     setOpenSections(updatedSections);
   };
 
+  const toggleNoteSection = (index) => {
+    const updatedSections = [...openNoteSections];
+    updatedSections[index] = !updatedSections[index]; // Toggle the clicked section
+    setOpenNoteSections(updatedSections);
+  };
+
   return (
     <>
-      <div
-        className={`card-top-title ${openSections[0] ? "active" : ""}`}
-        onClick={() => toggleSection(0)}
-      >
+      {!isSupplierApproval && (
+        <div className={`card-top-title ${openSections[0] ? "active" : ""}`} onClick={() => toggleSection(0)}>
+          <div className="d-flex align-items-center mr-2">
+            <span>
+              <Iconify icon="ep:arrow-down-bold" className="open-bar" />
+            </span>
+            <h5>Invoice Submission Instruction</h5>
+          </div>
+        </div>
+      )}
+      {openSections[0] && (
+        <div className="card-info-checklist">
+          {!isSupplierApproval && (
+            <div className="pt-2">
+              <span
+                className="validation-msg"
+                dangerouslySetInnerHTML={{ __html: invoiceNote }}
+              />
+            </div>
+          )}
+        </div>
+      )}
+      <div className={`card-top-title ${openNoteSections[0] ? "active" : ""}`}
+        onClick={() => toggleNoteSection(0)}>
         <div className="d-flex align-items-center mr-2">
           <span>
             <Iconify icon="ep:arrow-down-bold" className="open-bar" />
@@ -75,22 +103,10 @@ const CustomerSupplierNotes = ({
         </div>
       </div>
       {/* This Note for only Customer */}
-      {openSections[0] && (
+      {openNoteSections[0] && (
         <>
           <div className="card-info-checklist">
-            {!isSupplierApproval && (
-              <div className="card-part border-0">
-                <h5 className="title"> Invoice Submission Instruction</h5>
-                <div class="card-part p-0 m-0"></div>
-                <span
-                  className="validation-msg"
-                  dangerouslySetInnerHTML={{ __html: invoiceNote }}
-                />
-              </div>
-            )}
-            <div className="card-part">
-              <h5 className="title"> Note:</h5>
-              <div class="card-part p-0 m-0"></div>
+            <div className="pt-2">
               <span
                 className="validation-msg"
                 dangerouslySetInnerHTML={{ __html: notes }}
