@@ -290,11 +290,10 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         CHECK_CHANGE: handleCheckboxchange
     };
     const handleInputFields = (data, dataField) => {
-        
         if (dataField === 'name') {
-            const trimName = data.replace(/\s+/g, ' ').trim();
-            const newName=trimName.replace(/[.,]/g, '')
-            setCustomerName(newName);
+            const newName=data.replace(/[.,]/g, '')
+            const trimName = newName.replace(/\s+/g, ' ').trim();
+            setCustomerName(trimName);
             basicDetailRef.current.updateFormFieldValue({
                 name: newName
             });
