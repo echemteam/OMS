@@ -472,7 +472,7 @@ const SupplierBasicInfoCard = ({
                           </div>
                         </a>
                         <span
-                          title="Copy Email Address"
+                          title="Click to Copy"
                           className="copy-icon"
                           onClick={() =>
                             CopyText(supplierData?.emailAddress, "email")
@@ -491,7 +491,7 @@ const SupplierBasicInfoCard = ({
                         <div className="info-desc">{supplierData?.website}</div>
 
                         <span
-                          title="Copy Website"
+                          title="Click to Copy"
                           className="copy-icon"
                           onClick={() =>
                             CopyText(supplierData?.website, "website")
@@ -615,9 +615,10 @@ const SupplierBasicInfoCard = ({
                         className="info-desc submission-tab d-flex gap-2 align-items-center"
                         style={{ cursor: "pointer", fontSize: "13px" }}
                         onClick={getApprovalCheckList}
+                        title="Information"
                       >
                         {approvalSuccessCount + "/" + totalCount}
-                        <Iconify icon="clarity:info-solid" className="info" />
+                        <Iconify icon="ep:info-filled" className="info" />
                       </div>
                     </>
                   )}

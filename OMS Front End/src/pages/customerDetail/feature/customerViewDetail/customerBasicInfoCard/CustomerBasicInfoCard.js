@@ -459,7 +459,7 @@ const CustomerBasicInfoCard = ({
                 {customerData?.name
                   ? customerData?.name.charAt(0).toUpperCase()
                   : ""} */}
-                  <Image imagePath={AppIcons.DummyLogo} altText="button Icon" />
+                <Image imagePath={AppIcons.DummyLogo} altText="button Icon" />
               </div>
               <div className="detail-sec">
                 <div className="customer-name">
@@ -467,7 +467,7 @@ const CustomerBasicInfoCard = ({
                     {customerData?.name}
                   </h5>
                   <div className="info-icon">
-                    <Iconify icon="clarity:info-solid" className="info" />
+                    <Iconify icon="ep:info-filled" className="info" />
                     <Tooltip text={customerData?.name} />
                   </div>
                 </div>
@@ -483,7 +483,7 @@ const CustomerBasicInfoCard = ({
                       </div>
                     </a>
                     <span
-                    title="Copy Email Address"
+                      title="Click to Copy"
                       className="copy-icon"
                       onClick={() =>
                         CopyText(customerData?.emailAddress, "email")
@@ -499,12 +499,14 @@ const CustomerBasicInfoCard = ({
                     <div className="info-desc">{customerData?.website}</div>
 
                     <span
-                      className="copy-icon"
-                      title="Copy Website"
+                      className="copy-icon tooltip-div"
                       onClick={() => CopyText(customerData?.website, "website")}
                     >
-                      {/* <Image imagePath={AppIcons.copyIcon} altText="Website Icon" /> */}
                       <Iconify icon="bitcoin-icons:copy-outline" />
+                      <div className="tooltip-show">
+                        <p>Click to Copy</p>
+                      </div>
+                      <di className="tooltip-arrow-icon"></di>
                     </span>
                   </div>
                 </div>
@@ -636,7 +638,7 @@ const CustomerBasicInfoCard = ({
                   Invoice Submission
                 </div>
                 <b>&nbsp;:&nbsp;</b>
-                <div className="checkbox-part ml-2 mt-2 eye-icon ">
+                <div className="checkbox-part ml-2 mt-2 eye-icon tooltip-div">
                   <Iconify icon="ph:eye-duotone" onClick={handleModelShow} />
                   <div className="tooltip-show">
                     <p>Add/Edit Invoice Submission</p>
@@ -654,12 +656,19 @@ const CustomerBasicInfoCard = ({
                 <>
                   <b>&nbsp;:&nbsp;</b>
                   <div
-                    className="info-desc submission-tab d-flex gap-2 align-items-center"
+                    className="submission-tab d-flex gap-2 align-items-center"
                     style={{ cursor: "pointer", fontSize: "13px" }}
                     onClick={getApprovalCheckList}
+                    title="Information"
                   >
                     {approvalSuccessCount + "/" + totalCount}
-                    <Iconify icon="clarity:info-solid" className="info" />
+                    <span className="tooltip-div">
+                      <Iconify icon="ep:info-filled" className="info" />
+                      <div className="tooltip-show">
+                        <p>Validate Customer</p>
+                      </div>
+                      <di className="tooltip-arrow-icon"></di>
+                    </span>
                   </div>
                 </>
               )}
