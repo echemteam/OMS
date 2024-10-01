@@ -68,7 +68,7 @@ const FinancialSettingsgGrid = ({ supplierId, isEditablePage, getSupplierComplet
     if (!isGetSupplierFinancialSettingsBySupplierIdFetching && isGetSupplierFinancialSettingsBySupplierIdSuccess && isGetSupplierFinancialSettingsBySupplierIdData) {
       let formData = { ...financialSettingForm };
       formData.initialState = {
-        paymentTermId: isGetSupplierFinancialSettingsBySupplierIdData.paymentTermId,
+        paymentTermId: isGetSupplierFinancialSettingsBySupplierIdData.paymentTermId ? isGetSupplierFinancialSettingsBySupplierIdData.paymentTermId : (organizationSetting.otherCharge && organizationSetting.otherCharge.defaultPaymentTerms) ? organizationSetting.otherCharge.defaultPaymentTerms : "",
         paymentMethodId: isGetSupplierFinancialSettingsBySupplierIdData.invoiceSubmissionMethod,
         poDeliveryMethodId: isGetSupplierFinancialSettingsBySupplierIdData.poDeliveryMethodId,
         supplierAccountingSettingId: isGetSupplierFinancialSettingsBySupplierIdData.supplierAccountingSettingId

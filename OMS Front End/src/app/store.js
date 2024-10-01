@@ -4,7 +4,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query/react';
 
 import authReducer from './slice/authSlice';
-import organizationReducer from './Organization/OrganizationSlice';
+import organizationReducer from './slice/OrganizationSlice';
 import authapi from './services/authAPI';
 import userAPI from './services/userAPI';
 import securityRoleAPI from './services/securityRoleAPI';

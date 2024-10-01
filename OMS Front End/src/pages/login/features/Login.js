@@ -10,7 +10,7 @@ import { authentication } from "../../../app/slice/authSlice";
 import { useUserLoginMutation } from "../../../app/services/authAPI";
 import { logUserLoginLogoutHistory } from "../../../utils/Thunk/UserHistory";
 import { useLazyGetOrganizationAccountingDetailsQuery, useLazyGetOrganizationOtherChargesQuery, useLazyGetOrganizationShippingChargesQuery } from "../../../app/services/organizationAPI";
-import { setOrganizationSettings } from "../../../app/Organization/OrganizationSlice";
+import { setOrganizationSettings } from "../../../app/slice/OrganizationSlice";
 
 const LoginForm = () => {
 
