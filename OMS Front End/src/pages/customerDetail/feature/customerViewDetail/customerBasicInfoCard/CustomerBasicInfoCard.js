@@ -508,7 +508,7 @@ useEffect(() => {
                       <div className="tooltip-show">
                         <p>Click to Copy</p>
                       </div>
-                      <di className="tooltip-arrow-icon"></di>
+                      <div className="tooltip-arrow-icon"></div>
                     </span>
                   </div>
 
@@ -524,7 +524,7 @@ useEffect(() => {
                       <div className="tooltip-show">
                         <p>Click to Copy</p>
                       </div>
-                      <di className="tooltip-arrow-icon"></di>
+                      <div className="tooltip-arrow-icon"></div>
                     </span>
                   </div>
                 </div>
@@ -661,7 +661,7 @@ useEffect(() => {
                   <div className="tooltip-show">
                     <p>Add/Edit Invoice Submission</p>
                   </div>
-                  <di className="tooltip-arrow-icon"></di>
+                  <div className="tooltip-arrow-icon"></div>
                 </div>
               </div>
             ) : null}
@@ -677,7 +677,6 @@ useEffect(() => {
                     className="submission-tab d-flex gap-2 align-items-center"
                     style={{ cursor: "pointer", fontSize: "13px" }}
                     onClick={getApprovalCheckList}
-                    title="Information"
                   >
                     {approvalSuccessCount + "/" + totalCount}
                     <span className="tooltip-div">
@@ -685,7 +684,7 @@ useEffect(() => {
                       <div className="tooltip-show">
                         <p>Click to view</p>
                       </div>
-                      <di className="tooltip-arrow-icon"></di>
+                      <div className="tooltip-arrow-icon"></div>
                     </span>
                   </div>
                 </>

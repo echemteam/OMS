@@ -485,7 +485,7 @@ const SupplierBasicInfoCard = ({
                           <div className="tooltip-show">
                             <p>Click to Copy</p>
                           </div>
-                          <di className="tooltip-arrow-icon"></di>
+                          <div className="tooltip-arrow-icon"></div>
                         </span>
                       </div>
 
@@ -503,7 +503,7 @@ const SupplierBasicInfoCard = ({
                           <div className="tooltip-show">
                             <p>Click to Copy</p>
                           </div>
-                          <di className="tooltip-arrow-icon"></di>
+                          <div className="tooltip-arrow-icon"></div>
                         </span>
                       </div>
                     </div>
@@ -617,7 +617,6 @@ const SupplierBasicInfoCard = ({
                         className="submission-tab d-flex gap-2 align-items-center pt-1 pl-1"
                         style={{ cursor: "pointer", fontSize: "13px" }}
                         onClick={getApprovalCheckList}
-                        title="Information"
                       >
                         {approvalSuccessCount + "/" + totalCount}
 
@@ -626,7 +625,7 @@ const SupplierBasicInfoCard = ({
                           <div className="tooltip-show">
                             <p>Click to view</p>
                           </div>
-                          <di className="tooltip-arrow-icon"></di>
+                          <div className="tooltip-arrow-icon"></div>
                         </span>
                       </div>
                     </>
