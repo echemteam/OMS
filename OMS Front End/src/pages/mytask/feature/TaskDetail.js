@@ -463,7 +463,7 @@ const TaskDetail = ({
                     </span>
                   </div>
                   <div className="d-flex">
-                    {approvedData?.eventName !=
+                    {approvedData?.eventName !==
                     FunctionalitiesName.UPLOADCUSTOMERDOCUMENT ? (
                       <>
                         &nbsp;{" "}

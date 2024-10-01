@@ -48,5 +48,9 @@ namespace OMS.Domain.Entities.Entity.Customers
         [Column("IncotermId")]
         public byte? IncotermId { get; set; }
         public long? CustomerNoteId { get; set; }
+        [Column("Base64File")]
+        public string? Base64File { get; set; }
+        [Column("AttachmentName")]
+        public string? AttachmentName { get; set; }
     }
 }

@@ -1,25 +1,27 @@
 import { FormFieldTypes } from "../../../../../data/formFieldType";
+import { EmailProviders } from "../../../../../utils/Enums/commonEnums";
 
-export const SMTPSettingsData = {
+
+export const SMTPSettingsFormData = {
     // name: "Email From",
-    initialState: { smtpSettingId: 0, organizationId: 0, emailProvider: "", smtpServer: "", smtpPort: "", smtpUserName: "", smtpPassword: "", useSsl: true },
+    initialState: { smtpSettingId: 0, organizationId: 0, emailProvider: "", smtpServer: "", smtpPort: "", smtpUserName: "", smtpPassword: "", useSsl: true ,clientId:"",clientSecret:"",tenantId:""},
     formFields: [
         {
             id: "emailProvider",
             lable: "Email Provider  ",
-            Field_Name: "Email Provider",
-            fieldType: FormFieldTypes.INPUT,
+            Field_Name: "Email Provider ",
+            fieldType: FormFieldTypes.SELECT,
             dataField: "emailProvider",
             fieldSetting: {
-                placeholder: "Enter Email Provider",
-                allowSpace: true,
-                maxLength: 65,
+              placeholder: "Select Email Provider ",
+              isEnableOnChange: true,
+              isDisabled: false,
             },
-            validation: [{ type: "require" } , { type: "email" }],
+            validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input",
+              containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input",
             },
-        },
+          },
         {
             id: "smtpServer",
             lable: "Server",
@@ -54,12 +56,12 @@ export const SMTPSettingsData = {
         },
         {
             id: "smtpUserName",
-            lable: "User Name",
-            Field_Name: "User Name",
+            lable: "Email",
+            Field_Name: "Email",
             fieldType: FormFieldTypes.INPUT,
             dataField: "smtpUserName",
             fieldSetting: {
-                placeholder: "Enter User Name",
+                placeholder: "Enter Email",
                 allowSpace: true,
                 maxLength:65,
             },
@@ -70,17 +72,64 @@ export const SMTPSettingsData = {
         },
         {
             id: "smtpPassword",
-            lable: "Password ",
-            Field_Name: "Password",
+            lable: "App Password ",
+            Field_Name: "App Password",
             fieldType: FormFieldTypes.PASSWORD,
             dataField: "smtpPassword",
             fieldSetting: {
-                placeholder: "Enter Your Password",
+                placeholder: "Enter Your App Password",
                 maxLength:20,
             },
             validation: [{ type: "require" }, { type: "password" }],
             style: {
                 containerCss: "col-md-6 mb-input",
+            },
+        },
+      
+        {
+            id: "clientId",
+            lable: "Client Id",
+            Field_Name: "Client Id",
+            fieldType: FormFieldTypes.INPUT,
+            dataField: "clientId",
+            fieldSetting: {
+                placeholder: "Enter Client Id",
+                allowSpace: true,
+            },
+            validation: [{ type: "require" }],
+            style: {
+                containerCss: "col-md-6 mb-3 mb-input relative",
+            },
+        }, 
+        {
+            id: "clientSecret",
+            lable: "Client Secret",
+            Field_Name: "Client Secret",
+            fieldType: FormFieldTypes.INPUT,
+            dataField: "clientSecret",
+            fieldSetting: {
+                placeholder: "Enter Client Secret",
+                allowSpace: true,
+        
+            },
+            validation: [{ type: "require" }],
+            style: {
+                containerCss: "col-md-6 mb-3 mb-input relative",
+            },
+        },
+        {
+            id: "tenantId",
+            lable: "Tenant Id",
+            Field_Name: "Tenant Id",
+            fieldType: FormFieldTypes.INPUT,
+            dataField: "tenantId",
+            fieldSetting: {
+                placeholder: "Enter Tenant Id",
+                allowSpace: true,
+            },
+            validation: [{ type: "require" }],
+            style: {
+                containerCss: "col-md-6 mb-3 mb-input relative",
             },
         },
         {
