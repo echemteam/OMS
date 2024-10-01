@@ -282,12 +282,17 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
     const handleInputFields = (data, dataField) => {
         if (dataField === 'name') {
             const trimName = data.replace(/\s+/g, ' ').trim();
-            setSupplierName(trimName);
+            const newName=trimName.replace(/[.,]/g, '')
+            setSupplierName(newName);
+            basicDetailRef.current.updateFormFieldValue({
+                name: newName
+            });
         }
         if (dataField === 'website') {
             const trimmedUrl = data.replace(/\/$/, "");
+            const newUrl=trimmedUrl.replace(/^(https?:\/\/)?www\./, '$1');
             basicDetailRef.current.updateFormFieldValue({
-                website: trimmedUrl
+                website: newUrl
             });
         }
     };

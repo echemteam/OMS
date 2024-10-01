@@ -14,7 +14,7 @@ import ToastService from "../../../../../../services/toastService/ToastService";
 import { ErrorMessage } from "../../../../../../data/appMessages";
 import { useValidateAndAddApprovalRequests } from "../../../../../../utils/CustomHook/useValidateAndAddApproval";
 import { FunctionalitiesName } from "../../../../../../utils/Enums/ApprovalFunctionalities";
-import { isCustomerOrSupplierApprovedStatus } from "../../../../../../utils/CustomerSupplier/CustomerSupplierUtils";
+import Input from "../../../../../../components/ui/inputs/input/Input";
 
 const getFileIcon = (extension) => {
   switch (extension) {
@@ -51,13 +51,14 @@ const AddMultipleDocument = ({
   addDocuments,
   documentTypes,
   isEditablePage,
-  customerStatusId
+  customerStatusId,
 }) => {
   const ref = useRef();
   const [attachment, setAttachment] = useState([]);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
-  const { ValidateRequestByApprovalRules, isApprovelLoading } = useValidateAndAddApprovalRequests();
+  const { ValidateRequestByApprovalRules, isApprovelLoading } =
+    useValidateAndAddApprovalRequests();
 
   /**
    * This hook dynamically sets the API call based on the module (customer or supplier).
@@ -80,16 +81,16 @@ const AddMultipleDocument = ({
   }, [isAddSuccess, isAddData]);
 
   const handleSave = async () => {
-    const modifyData = uploadedFiles.map((data) => {
-      const matchingAttachment = attachment.find(
-        (att) => att.fileName === data.name
-      );
+    const modifyData = uploadedFiles.map((data, index) => {
+      const matchingAttachment = attachment.find((att, ind) => ind === index);
       return {
         ...data,
         base64File: matchingAttachment ? matchingAttachment.base64Data : null,
       };
     });
-    const IsAllDetailExist = modifyData.every((data) => data.name && data.base64File && data.documentTypeId !== null);
+    const IsAllDetailExist = modifyData.every(
+      (data) => data.name && data.base64File && data.documentTypeId !== null
+    );
     if (IsAllDetailExist) {
       const requestData = {
         storagePath: isSupplier
@@ -101,7 +102,7 @@ const AddMultipleDocument = ({
       // if (!isSupplier && isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
       //   await handleApprovalRequest(requestData, null);
       // } else {
-        add(requestData);
+      add(requestData);
       // }
     } else {
       ToastService.warning(ErrorMessage.DocumentDetailMissing);
@@ -109,11 +110,15 @@ const AddMultipleDocument = ({
   };
 
   const handleApprovalRequest = async (newValue) => {
-    const request = { newValue, oldValue: null, isFunctional: true, eventName: FunctionalitiesName.UPLOADCUSTOMERDOCUMENT };
+    const request = {
+      newValue,
+      oldValue: null,
+      isFunctional: true,
+      eventName: FunctionalitiesName.UPLOADCUSTOMERDOCUMENT,
+    };
     const modifyData = await ValidateRequestByApprovalRules(request);
     if (modifyData.newValue) handleMulDocToggleModal();
   };
-
 
   const handleFileUpload = (value) => {
     const files = value.split(", ");
@@ -154,6 +159,13 @@ const AddMultipleDocument = ({
     ]);
   };
 
+  const handleFileNameChange = (index, newName) => {
+    setUploadedFiles((prevFiles) =>
+      prevFiles.map((file, i) =>
+        i === index ? { ...file, name: newName } : file
+      )
+    );
+  };
   return (
     <div className="row">
       <FormCreator
@@ -189,14 +201,31 @@ const AddMultipleDocument = ({
                     className="file-icon"
                   />
                 </td>
-                <td>{file.name}</td>
+                {/* <td
+                  contentEditable="true"
+                  onBlur={(e) =>
+                    handleFileNameChange(index, e.target.textContent)
+                  }
+                >
+                  {file.name}
+                </td> */}
+                <td>
+                  {" "}
+                  <Input
+                    type="text"
+                    value={file.name}
+                    onChange={(e) =>
+                      handleFileNameChange(index, e.target.value)
+                    }
+                  />
+                </td>
                 <td>
                   <Select
                     value={
                       file.documentTypeId
                         ? documentTypes.find(
-                          (option) => option.value === file.type
-                        )
+                            (option) => option.value === file.type
+                          )
                         : null
                     }
                     onChange={(selectedOption) =>

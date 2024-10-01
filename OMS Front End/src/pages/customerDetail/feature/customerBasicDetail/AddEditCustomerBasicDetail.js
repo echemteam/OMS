@@ -290,14 +290,20 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         CHECK_CHANGE: handleCheckboxchange
     };
     const handleInputFields = (data, dataField) => {
+        
         if (dataField === 'name') {
             const trimName = data.replace(/\s+/g, ' ').trim();
-            setCustomerName(trimName);
+            const newName=trimName.replace(/[.,]/g, '')
+            setCustomerName(newName);
+            basicDetailRef.current.updateFormFieldValue({
+                name: newName
+            });
         }
         if (dataField === 'website') {
             const trimmedUrl = data.replace(/\/$/, "");
+            const newUrl=trimmedUrl.replace(/^(https?:\/\/)?www\./, '$1');
             basicDetailRef.current.updateFormFieldValue({
-                website: trimmedUrl
+                website: newUrl
             });
         }
     }
@@ -345,6 +351,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                             onInputChange={formInputHandler}
                             handleInputGroupButton={handleInputGroupButton}
                             handleInputShowInfo={handleExistingInfo}
+                            
                         />
                         : <DataLoader />}
                 </div>
