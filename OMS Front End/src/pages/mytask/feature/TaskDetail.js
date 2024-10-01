@@ -110,7 +110,7 @@ const TaskDetail = ({
   const [supplierData, setSupplierData] = useState({});
   const [showRedirectButton, setShowRedirectButton] = useState(false);
   const [isModelOpen, setIsModelOpen] = useState(false);
-  const [valueTypes,setValueTypes]=useState("");
+  const [valueTypes, setValueTypes] = useState("");
   const [
     updateApprovalRequest,
     {
@@ -229,9 +229,14 @@ const TaskDetail = ({
   };
 
   const handleApprovalRequest = () => {
-    confirm("Confirmation?", "Would you like to approve this request?", "Yes", "Cancel").then((confirmed) => {
+    confirm(
+      "Confirmation?",
+      "Would you like to approve this request?",
+      "Yes",
+      "Cancel"
+    ).then((confirmed) => {
       if (confirmed) {
-        approvalStatus(MyTaskStatus.Accept)
+        approvalStatus(MyTaskStatus.Accept);
       }
     });
   };
@@ -374,7 +379,7 @@ const TaskDetail = ({
                       ? formatDate(approvedData.requestedDate, "MM/DD/YYYY hh:mm A")
                       : "No Date"}
                   </div> */}
-                  {showRedirectButton && (
+                  {showRedirectButton && approvedData?.moduleName && (
                     <div
                       className="view-customer"
                       onClick={handleRedirectClick}
@@ -383,7 +388,10 @@ const TaskDetail = ({
                         imagePath={AppIcons.Iicon}
                         altText="View Customer Icon"
                       />
-                      View Details
+                      <span style={{ textDecoration: "underline" }}>
+                        {approvedData?.moduleName ?? "Unknown Module"}
+                        &nbsp;Details
+                      </span>
                     </div>
                   )}
                 </div>
@@ -446,22 +454,6 @@ const TaskDetail = ({
                   </div>
                 )}
                 <div className="info-row">
-                  <span className="info-label">Status : </span>
-                  <span
-                    className={`ml-2 ${getLabelClass(approvedData.status)}`}
-                  >
-                    {approvedData.status}
-                  </span>
-                  {approvedData?.eventName !==
-                  FunctionalitiesName.UPLOADCUSTOMERDOCUMENT ? <>
-                  &nbsp; <span className="value-btn" onClick={()=>handlebtnClick("old Value")}>
-                  Old Value
-                </span> &nbsp;&nbsp;
-                <span className="value-btn" onClick={()=>handlebtnClick("new Value")}>
-                  New Value
-                </span>
-                </> : null}
-                 
                   <div>
                     <span className="info-label">Status : </span>
                     <span
@@ -471,7 +463,7 @@ const TaskDetail = ({
                     </span>
                   </div>
                   <div className="d-flex">
-                    {approvedData?.eventName !=
+                    {approvedData?.eventName !==
                     FunctionalitiesName.UPLOADCUSTOMERDOCUMENT ? (
                       <>
                         &nbsp;{" "}
@@ -533,7 +525,7 @@ const TaskDetail = ({
                     ) : null}
                   </div>
                 </div>
-               
+
                 {approvedData.rejectReason && (
                   <div className="info-row">
                     <span className="info-label">Rejection Reason : </span>
@@ -757,43 +749,6 @@ const TaskDetail = ({
                   </div>
                 </div>
               </CenterModel>
-              {isModelOpen ? (
-                <div className="customer-task-model">
-                  <div className="customer-card-top-sec">
-                    <div className="detail-card">
-                      <div classname="detail-item">
-                        {valueTypes === "old Value" && approvedData.oldValue ? (
-                          <div
-                            className="html-render mb-0"
-                            dangerouslySetInnerHTML={{
-                              __html: approvedData.oldValue,
-                            }}
-                          ></div>
-                        ) : valueTypes === "new Value" && approvedData.newValue ? (
-                          <div
-                            className="html-render mb-0"
-                            dangerouslySetInnerHTML={{
-                              __html: approvedData.newValue,
-                            }}
-                          ></div>
-                        ) :  <div className="no-value">
-                        No {valueTypes} available
-                      </div>}
-                      </div>
-
-                      <div className="btn-item">
-                        <button
-                          type="button"
-                          className="btn dark-btn ml-5 mt-2"
-                          onClick={handleClose}
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ) : null}
             </>
           ) : (
             <NoRecordFound />

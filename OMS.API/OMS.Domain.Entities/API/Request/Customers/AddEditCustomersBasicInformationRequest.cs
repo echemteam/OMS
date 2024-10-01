@@ -16,5 +16,8 @@
         public long? CustomerNoteId { get; set; }
         public bool? IsSubCustomer { get; set; }
         public byte? IncotermId { get; set; }
+        public string? Base64File { get; set; }
+        public string? AttachmentName { get; set; }
+        public string? StoragePath { get; set; }
     }
 }

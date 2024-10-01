@@ -2,11 +2,14 @@
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Domain.Entities.API.Request.Supplier;
+using OMS.Domain.Entities.API.Response.Customers;
 using OMS.Domain.Entities.API.Response.Supplier;
 using OMS.Domain.Entities.Entity.CommonEntity;
+using OMS.Domain.Entities.Entity.Customers;
 using OMS.Domain.Entities.Entity.Supplier;
 using OMS.Domain.Entities.Entity.SupplierNotes;
 using OMS.Domain.Repository;
+using OMS.FileManger.Services;
 using OMS.Shared.Entities.CommonEntity;
 using OMS.Shared.Services.Contract;
 
@@ -29,6 +32,13 @@ namespace OMS.Application.Services.Supplier
         public async Task<AddEditResponse> AddEditSupplierBasicInformation(AddEditSupplierBasicInformationRequest requestData, short CurrentUserId)
         {
             SupplierDto supplierDto = requestData.ToMapp<AddEditSupplierBasicInformationRequest, SupplierDto>();
+            if (requestData.Base64File != null)
+            {
+                supplierDto.AttachmentName = FileManager.SaveFile(
+                                requestData.Base64File!,
+                                Path.Combine(commonSettingService.ApplicationSettings.SaveFilePath!, requestData.StoragePath!),
+                                requestData.AttachmentName!);
+            }
             supplierDto.CreatedBy = CurrentUserId;
             AddEditResponse responseData = await repositoryManager.supplier.AddEditSupplierBasicInformation(supplierDto);
 
@@ -62,7 +72,19 @@ namespace OMS.Application.Services.Supplier
 
         public async Task<GetSupplierBasicInformationByIdResponse> GetSupplierBasicInformationById(int supplierId)
         {
-            return await repositoryManager.supplier.GetSupplierBasicInformationById(supplierId);
+            GetSupplierBasicInformationByIdResponse getSupplierBasicInformationByIdResponse = new();
+            getSupplierBasicInformationByIdResponse = await repositoryManager.supplier.GetSupplierBasicInformationById(supplierId);
+            if (getSupplierBasicInformationByIdResponse.AttachmentName != null)
+            {
+                var filePath = Path.Combine(commonSettingService.ApplicationSettings.SaveFilePath!, "SupplierProfilePic"!, getSupplierBasicInformationByIdResponse.AttachmentName);
+                if (File.Exists(filePath))
+                {
+                    byte[] imageArray = await File.ReadAllBytesAsync(filePath);
+                    string base64ImageRepresentation = Convert.ToBase64String(imageArray);
+                    getSupplierBasicInformationByIdResponse.Base64File = base64ImageRepresentation;
+                }
+            }
+            return getSupplierBasicInformationByIdResponse;
         }
 
         public async Task<EntityList<GetSuppliersResponse>> GetSuppliers(GetSuppliersRequest queryRequest)
