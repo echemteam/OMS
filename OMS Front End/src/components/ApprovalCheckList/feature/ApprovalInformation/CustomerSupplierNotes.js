@@ -71,7 +71,7 @@ const CustomerSupplierNotes = ({
           <span>
             <Iconify icon="ep:arrow-down-bold" className="open-bar" />
           </span>
-          <h5> Invoice Submission Instruction </h5>
+          <h5> Notes </h5>
         </div>
       </div>
       {/* This Note for only Customer */}
@@ -79,7 +79,9 @@ const CustomerSupplierNotes = ({
         <>
           <div className="card-info-checklist">
             {!isSupplierApproval && (
-              <div className="pt-2">
+              <div className="card-part border-0">
+                <h5 className="title"> Invoice Submission Instruction</h5>
+                <div class="card-part p-0 m-0"></div>
                 <span
                   className="validation-msg"
                   dangerouslySetInnerHTML={{ __html: invoiceNote }}

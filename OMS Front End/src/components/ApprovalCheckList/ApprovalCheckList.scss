@@ -132,7 +132,11 @@
           border-bottom: 0;
           padding-bottom: 0;
         }
-
+        .checkbox-part {
+          .checkbox{
+            margin-right: 10px;
+          }
+        }
         .title {
           font-weight: 700;
           color: var(--themeColor);
