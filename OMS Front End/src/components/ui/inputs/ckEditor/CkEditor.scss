@@ -35,3 +35,17 @@
 .ck-content {
   height: 170px !important;
 }
+
+
+.ckeditor-section{
+  width: 100%;
+  position: relative;
+  .ck{
+    &.ck-toolbar-dropdown > .ck-dropdown__panel{
+      max-width: 470px;
+      @media only screen and (max-width: 1400px) {
+        max-width: 400px;
+      }
+    }
+  }
+}

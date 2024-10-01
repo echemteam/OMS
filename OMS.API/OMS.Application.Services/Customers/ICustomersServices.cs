@@ -23,5 +23,6 @@ namespace OMS.Application.Services.Customers
         Task<EntityList<GetSubCustomerByCustomerIdResponse>> GetSubCustomerByCustomerId(GetSubCustomerByCustomerIdRequest requestData);
         Task<AddEntityDto<int>> DeleteSubCustomer(int subCustomerMainCustomerId, short CurrentUserId);
         Task<AddEntityDto<int>> AddEditResponsibleUserForCustomer(AddEditResponsibleUserForCustomerRequest requestData, short CurrentUserId);
+        Task<List<GetSearchCustomersDetailsByNameEmailWebsiteResponse>> GetSearchCustomersDetailsByNameEmailWebsite(GetSearchCustomersDetailsByNameEmailWebsiteRequest requestData);
     }
 }

@@ -1,6 +1,4 @@
 import { FormFieldTypes } from "../../../../../data/formFieldType";
-import { EmailProviders } from "../../../../../utils/Enums/commonEnums";
-
 
 export const SMTPSettingsFormData = {
     // name: "Email From",

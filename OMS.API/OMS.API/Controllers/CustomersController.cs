@@ -143,6 +143,17 @@ namespace OMS.API.Controllers
             var updateItem = await _serviceManager.customersServices.AddEditResponsibleUserForCustomer(requestData, CurrentUserId);
             return APISucessResponce(updateItem);
         }
+
+        [HttpPost("GetSearchCustomersDetailsByNameEmailWebsite")]
+        public async Task<IActionResult> GetSearchCustomersDetailsByNameEmailWebsite(GetSearchCustomersDetailsByNameEmailWebsiteRequest requestData)
+        {
+            if (requestData != null)
+            {
+                List<GetSearchCustomersDetailsByNameEmailWebsiteResponse> responseData = await _serviceManager.customersServices.GetSearchCustomersDetailsByNameEmailWebsite(requestData).ConfigureAwait(true);
+                return APISucessResponce<object>(responseData);
+            }
+            return APISucessResponce(requestData);
+        }
         #endregion
     }
 }

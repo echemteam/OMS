@@ -682,7 +682,7 @@ useEffect(() => {
                     <span className="tooltip-div">
                       <Iconify icon="ep:info-filled" className="info" />
                       <div className="tooltip-show">
-                        <p>Validate Customer</p>
+                        <p>Click to view</p>
                       </div>
                       <div className="tooltip-arrow-icon"></div>
                     </span>

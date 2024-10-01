@@ -50,37 +50,37 @@ const AddCustomerTab = () => {
   const tabContent = [
     {
       label: "Basic Information",
-      subLabel: "Customer Basic information",
+      // subLabel: "Customer Basic information",
       content: <CustomerBasicDetail isEditablePage={false} setSubCustomer={setSubCustomer} />,
       tab: CustomerSupplierTabEnum.BasicInformation,
     },
     {
       label: "Address",
-      subLabel: "Customer Address Details",
+      // subLabel: "Customer Address Details",
       content: <CustomerAddressDetail isEditablePage={false} />,
       tab: CustomerSupplierTabEnum.Address,
     },
     {
       label: "Contact",
-      subLabel: "Customer Contact Details",
+      // subLabel: "Customer Contact Details",
       content: <CustomerContactDetail isEditablePage={false} isSearchFilterShow={false} />,
       tab: CustomerSupplierTabEnum.Contact,
     },
     {
       label: "Financial Settings",
-      subLabel: "Customer Financial Settings",
+      // subLabel: "Customer Financial Settings",
       content: <FinancialSettings isEditablePage={false} />,
       tab: CustomerSupplierTabEnum.FinancialSetting,
     },
     {
       label: "Shipping Settings",
-      subLabel: "Customer Shipping Settings",
+      // subLabel: "Customer Shipping Settings",
       content: <ShippingSettings isEditablePage={false} />,
       tab: CustomerSupplierTabEnum.ShippingSetting,
     },
     {
       label: "Documents",
-      subLabel: "Customer Documents Details",
+      // subLabel: "Customer Documents Details",
       content: <CustomerDocumentDetail isEditablePage={true} />,
       tab: CustomerSupplierTabEnum.Documents,
     },
