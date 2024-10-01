@@ -212,7 +212,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                 addCustomerCountine();
             }
         } else {
-            ToastService.warning('Please enter customer basic information');
+            ToastService.warning('Please fill up all the required fields');
         }
     };
 
