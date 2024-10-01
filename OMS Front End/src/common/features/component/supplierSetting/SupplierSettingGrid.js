@@ -16,6 +16,7 @@ import { creditCardFormData } from "./config/CreditCardForm.data";
 import { otherFormData } from "./config/OtherForm.data";
 import ACHWireDetail from "./feature/achWireDetail/ACHWireDetail";
 import PropTypes from 'prop-types';
+import { useSelector } from "react-redux";
 
 const FinancialSettingsgGrid = ({ supplierId, isEditablePage, getSupplierCompletionCount }) => {
   const financialSettingFormRef = useRef();
@@ -24,7 +25,8 @@ const FinancialSettingsgGrid = ({ supplierId, isEditablePage, getSupplierComplet
   const [getCheckData] = useState(checkFormData)
   const [getCreditData, setGetCreditData] = useState(creditCardFormData)
   const [getOtherData, setGetOtherData] = useState(otherFormData)
-  const [activeTabIndex, setActiveTabIndex] = useState(0)
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
+  const organizationSetting = useSelector((state) => state.organization);
 
   const [getAllPaymentTerms, { isFetching: isGetAllPaymentTermsFetching, isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData }] = useLazyGetAllPaymentTermsQuery();
   const [getAllPaymentMethod, { isFetching: isGetAllPaymentMethodFetching, isSuccess: isGetAllPaymentMethodSuccess, data: isGetAllPaymentMethodData }] = useLazyGetAllPaymentMethodQuery();
@@ -66,19 +68,23 @@ const FinancialSettingsgGrid = ({ supplierId, isEditablePage, getSupplierComplet
     if (!isGetSupplierFinancialSettingsBySupplierIdFetching && isGetSupplierFinancialSettingsBySupplierIdSuccess && isGetSupplierFinancialSettingsBySupplierIdData) {
       let formData = { ...financialSettingForm };
       formData.initialState = {
-        paymentTermId: isGetSupplierFinancialSettingsBySupplierIdData.paymentTermId,
+        paymentTermId: isGetSupplierFinancialSettingsBySupplierIdData.paymentTermId ? isGetSupplierFinancialSettingsBySupplierIdData.paymentTermId : (organizationSetting.otherCharge && organizationSetting.otherCharge.defaultPaymentTerms) ? organizationSetting.otherCharge.defaultPaymentTerms : "",
         paymentMethodId: isGetSupplierFinancialSettingsBySupplierIdData.invoiceSubmissionMethod,
         poDeliveryMethodId: isGetSupplierFinancialSettingsBySupplierIdData.poDeliveryMethodId,
         supplierAccountingSettingId: isGetSupplierFinancialSettingsBySupplierIdData.supplierAccountingSettingId
       };
       setFinancialSettingForm(formData);
+    } else {
+      let formData = { ...financialSettingForm };
+      if (!isGetSupplierFinancialSettingsBySupplierIdData && !isGetSupplierFinancialSettingsBySupplierIdData?.paymentTermId) {
+        formData.initialState.paymentTermId = (organizationSetting.otherCharge && organizationSetting.otherCharge.defaultPaymentTerms) ? organizationSetting.otherCharge.defaultPaymentTerms : ""
+      }
     }
   }, [isGetSupplierFinancialSettingsBySupplierIdFetching, isGetSupplierFinancialSettingsBySupplierIdSuccess, isGetSupplierFinancialSettingsBySupplierIdData]);
 
   useEffect(() => {
     if (!isGetPaymentSettingsBySupplierIdFetching && isGetPaymentSettingsBySupplierIdSuccess && isGetPaymentSettingsBySupplierIdData) {
       let formCreditData = { ...getCreditData };
-      // let formCheckData = { ...getCheckData };
       let formOtherData = { ...getOtherData };
       if (activeTabIndex === 1 && isGetPaymentSettingsBySupplierIdData.ccNote) {
         formCreditData.initialState = {
@@ -91,7 +97,6 @@ const FinancialSettingsgGrid = ({ supplierId, isEditablePage, getSupplierComplet
         };
       }
       setGetCreditData(formCreditData);
-
       if (activeTabIndex === 3 && isGetPaymentSettingsBySupplierIdData.otherNote) {
         formOtherData.initialState = {
           supplierPaymentSettingId: isGetPaymentSettingsBySupplierIdData.supplierPaymentSettingId,

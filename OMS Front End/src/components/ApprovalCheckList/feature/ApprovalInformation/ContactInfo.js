@@ -30,9 +30,7 @@ const ContactInformation = ({
 
   useEffect(() => {
     if (isModelOpen && mainId) {
-      const type = !isSupplierApproval
-        ? [ContactType.INVOICESUBMISSION, ContactType.AP]
-        : [ContactType.ACCOUNTSRECEIVABLE];
+      const type = !isSupplierApproval ? [ContactType.INVOICESUBMISSION, ContactType.AP] : [ContactType.ACCOUNTSRECEIVABLE];
       let req = {
         id: mainId,
         searchText: "",

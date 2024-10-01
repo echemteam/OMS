@@ -9,17 +9,21 @@ import ToastService from "../../../services/toastService/ToastService";
 import { authentication } from "../../../app/slice/authSlice";
 import { useUserLoginMutation } from "../../../app/services/authAPI";
 import { logUserLoginLogoutHistory } from "../../../utils/Thunk/UserHistory";
+import { useLazyGetOrganizationAccountingDetailsQuery, useLazyGetOrganizationOtherChargesQuery, useLazyGetOrganizationShippingChargesQuery } from "../../../app/services/organizationAPI";
+import { setOrganizationSettings } from "../../../app/slice/OrganizationSlice";
 
 const LoginForm = () => {
 
   const loginFromRef = useRef();
-  const { isLogedin } = useSelector((state) => state.auth)
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [userLogin,
-    { isLoading: loginLoading,
-      isSuccess: loginSuccess,
-      data: authData }] = useUserLoginMutation();
+  const { isLogedin } = useSelector((state) => state.auth);
+  const [userLogin, { isLoading: loginLoading, isSuccess: loginSuccess, data: authData }] = useUserLoginMutation();
+
+  //**Get Organization Details  */
+  const [getOtherCharges, { isFetching: isGetOtherChargesFetching, isSuccess: isGetOtherChargesSuccess, data: isGetOtherChargesData }] = useLazyGetOrganizationOtherChargesQuery();
+  const [getAccountingDetails, { isFetching: isGetAccountingFetching, isSuccess: isGetAccountingSuccess, data: isGetAccountingData }] = useLazyGetOrganizationAccountingDetailsQuery();
+  const [getShippingCharges, { isFetching: isGetShippingChargesFetching, isSuccess: isGetShippingChargesSuccess, data: isGetShippingChargesData }] = useLazyGetOrganizationShippingChargesQuery();
 
   const handleLogin = () => {
     let authData = loginFromRef.current.getFormData();
@@ -40,6 +44,25 @@ const LoginForm = () => {
   };
 
   useEffect(() => {
+    // Check if all fetching is complete
+    if (!isGetOtherChargesFetching && isGetOtherChargesSuccess && isGetOtherChargesData &&
+      !isGetAccountingFetching && isGetAccountingSuccess && isGetAccountingData &&
+      !isGetShippingChargesFetching && isGetShippingChargesSuccess && isGetShippingChargesData) {
+      // Dispatch all settings at once
+      dispatch(setOrganizationSettings({
+        otherCharge: isGetOtherChargesData,
+        shippingSetting: isGetShippingChargesData,
+        accountingSetting: isGetAccountingData
+      }));
+    }
+  }, [
+    isGetOtherChargesFetching, isGetOtherChargesSuccess, isGetOtherChargesData,
+    isGetAccountingFetching, isGetAccountingSuccess, isGetAccountingData,
+    isGetShippingChargesFetching, isGetShippingChargesSuccess, isGetShippingChargesData,
+    dispatch
+  ]);
+
+  useEffect(() => {
     if (loginSuccess && authData) {
       if (authData.isAuthenticated === false) {
         ToastService.error(authData.message)
@@ -53,13 +76,31 @@ const LoginForm = () => {
         }));
       }
     }
-  }, [loginSuccess, authData, dispatch])
+  }, [loginSuccess, authData, dispatch]);
 
   useEffect(() => {
-    if (isLogedin) {
-      navigate("/")
+    const fetchData = async () => {
+      if (isLogedin) {
+        await Promise.all([
+          getOtherCharges(),
+          getShippingCharges(),
+          getAccountingDetails()
+        ]);
+      }
+    };
+    fetchData();
+  }, [isLogedin]);
+
+  // Check if all data has been successfully added before navigating
+  useEffect(() => {
+    const allDataFetched = !isGetOtherChargesFetching && isGetOtherChargesSuccess &&
+      !isGetAccountingFetching && isGetAccountingSuccess &&
+      !isGetShippingChargesFetching && isGetShippingChargesSuccess;
+    if (allDataFetched) {
+      navigate("/");
     }
-  }, [isLogedin])
+  }, [isGetOtherChargesFetching, isGetOtherChargesSuccess, isGetAccountingFetching, isGetAccountingSuccess,
+    isGetShippingChargesFetching, isGetShippingChargesSuccess, navigate]);
 
   return (
     <div className="login-form-section">

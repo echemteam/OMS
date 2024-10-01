@@ -14,9 +14,8 @@ import PropTypes from "prop-types";
 //** Service's */
 import ToastService from "../../../../services/toastService/ToastService";
 import { useAddEditCustomerSettingsMutation, useLazyGetAllPaymentMethodQuery, useLazyGetAllPaymentTermsQuery, useLazyGetDetailsbyCustomerIDQuery, } from "../../../../app/services/customerSettingsAPI";
-import { useValidateAndAddApprovalRequests } from "../../../../utils/CustomHook/useValidateAndAddApproval";
 import { isCustomerOrSupplierApprovedStatus } from "../../../../utils/CustomerSupplier/CustomerSupplierUtils";
-import SwalAlert from "../../../../services/swalService/SwalService";
+import { useSelector } from "react-redux";
 
 const ExemptSalesTax = { exemptSalesTax: true };
 
@@ -26,6 +25,8 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
   const [isBankFee, setIsBankFee] = useState(false);
   const [showButton, setShowButton] = useState(true);
   const [isCardCharges, setIsCardCharges] = useState(false);
+  const [exemptSalesTax, setExemptSalesTax] = useState(true);
+  const organizationSetting = useSelector((state) => state.organization);
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
   const [customerSettingFormData, setCustomerSettingFormData] = useState(SettingFormData);
   const [customerAccountingSettingId, setCustomerAccountingSettingId] = useState(0);
@@ -33,10 +34,10 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
     subCustomer, getCustomerCompletionCount } = useContext(BasicDetailContext);
 
   //** API Call's */
-  const [getAllPaymentTerms, { isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData, },] = useLazyGetAllPaymentTermsQuery();
-  const [getAllPaymentMethod, { isSuccess: isGetAllPaymentMethodSuccess, data: isGetAllPaymentMethodData, },] = useLazyGetAllPaymentMethodQuery();
-  const [GetDetailsbyCustomerID, { isFetching: isGetDetailByCustomerIDFetching, isSuccess: isGetDetailByCustomerIDSuccess, data: isGetDetailByCustomerIDData, },] = useLazyGetDetailsbyCustomerIDQuery();
-  const [addEditCustomerSettings, { isLoading: isAddEditCustomerSettingsLoading, isSuccess: isAddEditCustomerSettingsSuccess, data: isAddEditCustomerSettingsData, },] = useAddEditCustomerSettingsMutation();
+  const [getAllPaymentTerms, { isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData }] = useLazyGetAllPaymentTermsQuery();
+  const [getAllPaymentMethod, { isSuccess: isGetAllPaymentMethodSuccess, data: isGetAllPaymentMethodData }] = useLazyGetAllPaymentMethodQuery();
+  const [GetDetailsbyCustomerID, { isFetching: isGetDetailByCustomerIDFetching, isSuccess: isGetDetailByCustomerIDSuccess, data: isGetDetailByCustomerIDData }] = useLazyGetDetailsbyCustomerIDQuery();
+  const [addEditCustomerSettings, { isLoading: isAddEditCustomerSettingsLoading, isSuccess: isAddEditCustomerSettingsSuccess, data: isAddEditCustomerSettingsData }] = useAddEditCustomerSettingsMutation();
 
   const { formSetting } = SettingFormData;
   const hasAddEditPermission = hasFunctionalPermission(securityKey.ADDEDITCUSTOMERFINANCIAL);
@@ -66,7 +67,8 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
   useEffect(() => {
     if (!isEditablePage && activeTab === 3) {
       if (ExemptSalesTax.exemptSalesTax) {
-        handleCheckboxChanges(true, "exemptSalesTax")
+        handleCheckboxChanges(true, "exemptSalesTax");
+        // addRemoveBankFee();
       }
     }
   }, [activeTab])
@@ -116,14 +118,30 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
       updatedFormFields.splice(insertIndex, 0, findBankFields);
       formData.formFields = updatedFormFields;
     }
-    if (!isSalesTaxPresent) {
+    if (!isSalesTaxPresent && !exemptSalesTax) {
       const findSalesTaxFields = getFieldData(SettingFormData, 'salesTax');
       const insertIndex = formData.formFields.length - 2;
       updatedFormFields = [...formData.formFields];
       updatedFormFields.splice(insertIndex, 0, findSalesTaxFields);
       formData.formFields = updatedFormFields;
     }
+    if (exemptSalesTax) {
+      updatedFormFields = formData.formFields.filter((field) => field.dataField !== 'salesTax');
+      formData.formFields = updatedFormFields
+    }
     formData.formFields = formData.formFields.filter((field) => field.dataField !== 'cardProcessingCharges');
+    if (!isGetDetailByCustomerIDData && !isGetDetailByCustomerIDData?.creditLimit && !formData.initialState.creditLimit) {
+      formData.initialState.creditLimit = (organizationSetting.accountingSetting && organizationSetting.accountingSetting.creditLimit) ? organizationSetting.accountingSetting.creditLimit : 1000
+    }
+    if (!isGetDetailByCustomerIDData && !isGetDetailByCustomerIDData?.paymentTermId && !formData.initialState.paymentTermId) {
+      formData.initialState.paymentTermId = (organizationSetting.otherCharge && organizationSetting.otherCharge.defaultPaymentTerms) ? organizationSetting.otherCharge.defaultPaymentTerms : ""
+    }
+    if (!isGetDetailByCustomerIDData && !isGetDetailByCustomerIDData?.cardProcessingCharges && !formData.initialState.cardProcessingCharges) {
+      formData.initialState.cardProcessingCharges = (organizationSetting.otherCharge && organizationSetting.otherCharge.creditCardServiceFees) ? organizationSetting.otherCharge.creditCardServiceFees : ""
+    }
+    if (!isGetDetailByCustomerIDData && !isGetDetailByCustomerIDData?.bankWireFee && !formData.initialState.bankWireFee) {
+      formData.initialState.bankWireFee = (organizationSetting.otherCharge && organizationSetting.otherCharge.bankWireFees) ? organizationSetting.otherCharge.bankWireFees : ""
+    }
     setCustomerSettingFormData(formData);
   }
 
@@ -143,7 +161,7 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
 
   useEffect(() => {
     if (!isGetDetailByCustomerIDFetching && isGetDetailByCustomerIDSuccess && isGetDetailByCustomerIDData) {
-      if (isGetDetailByCustomerIDData) {
+      if (isGetDetailByCustomerIDData && !isGetDetailByCustomerIDFetching) {
         if (isCustomerOrSupplierApprovedStatus(customerStatusId)) {
           setFieldSetting(customerSettingFormData, 'billingCurrency', 'isDisabled', true);
         } else {
@@ -197,6 +215,9 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
           }
         }
         setCustomerSettingFormData(formData);
+        if (!isGetDetailByCustomerIDData.exemptSalesTax) {
+          setExemptSalesTax(false);
+        }
         setShouldRerenderFormCreator((prevState) => !prevState);
       }
     } else {
@@ -226,7 +247,7 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
 
   const onhandleEdit = async () => {
     const settingFormData = settingFormRef.current.getFormData();
-    const accountingSettingId = settingFormData.customerAccountingSettingId ? settingFormData.customerAccountingSettingId : customerAccountingSettingId;
+    const accountingSettingId = settingFormData && settingFormData.customerAccountingSettingId ? settingFormData.customerAccountingSettingId : customerAccountingSettingId;
     if (settingFormData && !accountingSettingId) {
       const request = {
         ...settingFormData,
@@ -239,6 +260,9 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
         exemptSalesTax: settingFormData.exemptSalesTax,
         cardProcessingCharges: settingFormData.cardProcessingCharges && isCardCharges ? settingFormData.cardProcessingCharges : null,
       };
+      if (!settingFormData.exemptSalesTax) {
+        setExemptSalesTax(false);
+      }
       addEditCustomerSettings(request);
     } else if (settingFormData && accountingSettingId) {
       const updaterequest = updateRequestObj(settingFormData, accountingSettingId);
@@ -266,8 +290,34 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
 
   const handleSalesTax = (data, dataField) => {
     if (dataField === 'exemptSalesTax' && data) {
+      let updatedFormFields;
       let formData = { ...customerSettingFormData };
       formData.formFields = formData.formFields.filter((field) => field.dataField !== 'salesTax');
+      formData.formFields = formData.formFields.filter((field) => field.dataField !== 'cardProcessingCharges');
+
+      const isBankFeePresent = formData.formFields.some((field) => field.dataField === 'bankWireFee');
+      if (customerCountryId === CountryId.USA) {
+        updatedFormFields = formData.formFields.filter((field) => field.dataField !== 'bankWireFee');
+        formData.formFields = updatedFormFields
+      } else if (customerCountryId !== CountryId.USA && !isBankFeePresent) {
+        const findBankFields = getFieldData(SettingFormData, 'bankWireFee');
+        const insertIndex = formData.formFields.length - 1;
+        updatedFormFields = [...formData.formFields];
+        updatedFormFields.splice(insertIndex, 0, findBankFields);
+        formData.formFields = updatedFormFields;
+      }
+      if (!isGetDetailByCustomerIDData && !isGetDetailByCustomerIDData?.creditLimit && !formData.initialState.creditLimit) {
+        formData.initialState.creditLimit = (organizationSetting.accountingSetting && organizationSetting.accountingSetting.creditLimit) ? organizationSetting.accountingSetting.creditLimit : 1000
+      }
+      if (!isGetDetailByCustomerIDData && !isGetDetailByCustomerIDData?.paymentTermId && !formData.initialState.paymentTermId) {
+        formData.initialState.paymentTermId = (organizationSetting.otherCharge && organizationSetting.otherCharge.defaultPaymentTerms) ? organizationSetting.otherCharge.defaultPaymentTerms : ""
+      }
+      if (!isGetDetailByCustomerIDData && !isGetDetailByCustomerIDData?.cardProcessingCharges && !formData.initialState.cardProcessingCharges) {
+        formData.initialState.cardProcessingCharges = (organizationSetting.otherCharge && organizationSetting.otherCharge.creditCardServiceFees) ? organizationSetting.otherCharge.creditCardServiceFees : ""
+      }
+      if (!isGetDetailByCustomerIDData && !isGetDetailByCustomerIDData?.bankWireFee && !formData.initialState.bankWireFee) {
+        formData.initialState.bankWireFee = (organizationSetting.otherCharge && organizationSetting.otherCharge.bankWireFees) ? organizationSetting.otherCharge.bankWireFees : ""
+      }
       setCustomerSettingFormData(formData);
     } else if (dataField === 'exemptSalesTax' && !data) {
       let updatedFormFields;
@@ -291,6 +341,18 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
         formData.formFields = updatedFormFields;
         const getFormData = settingFormRef.current.getFormDataWithoutValidation();
         formData.initialState = { ...getFormData, exemptSalesTax: data, salesTax: '' };
+        if (!isGetDetailByCustomerIDData && !isGetDetailByCustomerIDData?.creditLimit && !formData.initialState.creditLimit) {
+          formData.initialState.creditLimit = (organizationSetting.accountingSetting && organizationSetting.accountingSetting.creditLimit) ? organizationSetting.accountingSetting.creditLimit : 1000
+        }
+        if (!isGetDetailByCustomerIDData && !isGetDetailByCustomerIDData?.paymentTermId && !formData.initialState.paymentTermId) {
+          formData.initialState.paymentTermId = (organizationSetting.otherCharge && organizationSetting.otherCharge.defaultPaymentTerms) ? organizationSetting.otherCharge.defaultPaymentTerms : ""
+        }
+        if (!isGetDetailByCustomerIDData && !isGetDetailByCustomerIDData?.cardProcessingCharges && !formData.initialState.cardProcessingCharges) {
+          formData.initialState.cardProcessingCharges = (organizationSetting.otherCharge && organizationSetting.otherCharge.creditCardServiceFees) ? organizationSetting.otherCharge.creditCardServiceFees : ""
+        }
+        if (!isGetDetailByCustomerIDData && !isGetDetailByCustomerIDData?.bankWireFee && !formData.initialState.bankWireFee) {
+          formData.initialState.bankWireFee = (organizationSetting.otherCharge && organizationSetting.otherCharge.bankWireFees) ? organizationSetting.otherCharge.bankWireFees : ""
+        }
         setCustomerSettingFormData(formData);
       }
     }
@@ -318,7 +380,10 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
       formData.formFields = updatedFormFields;
     }
     const getFormData = settingFormRef.current.getFormDataWithoutValidation();
-    formData.initialState = { ...getFormData, paymentMethodId: dropdownValue, bankWireFee: '' };
+    formData.initialState = {
+      ...getFormData, paymentMethodId: dropdownValue, bankWireFee: '',
+      cardProcessingCharges: (organizationSetting.otherCharge && organizationSetting.otherCharge.creditCardServiceFees) ? organizationSetting.otherCharge.creditCardServiceFees : "",
+    };
     return formData;
   }
 
@@ -347,7 +412,10 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
       formData.formFields = formData.formFields.filter((field) => field.dataField !== 'bankWireFee');
     }
     const getFormData = settingFormRef.current.getFormDataWithoutValidation();
-    formData.initialState = { ...getFormData, paymentMethodId: dropdownValue, cardProcessingCharges: '' };
+    formData.initialState = {
+      ...getFormData, paymentMethodId: dropdownValue, cardProcessingCharges: '',
+      bankWireFee: (organizationSetting.otherCharge && organizationSetting.otherCharge.bankWireFees) ? organizationSetting.otherCharge.bankWireFees : ""
+    };
     return formData;
   }
 
