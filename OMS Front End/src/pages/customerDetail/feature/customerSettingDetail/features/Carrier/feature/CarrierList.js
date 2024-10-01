@@ -50,6 +50,18 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
         }
     }, [isUpdateSuccess, isUpdateData]);
 
+    const handleGridCheckBoxChange = (fieldName, newRowData, rowIndex) => {
+        if (fieldName === 'isPrimary') {
+            const dataSourceAccountNumber = dataSource[rowIndex]?.accountNumber;
+            const newRowDataAccountNumber = newRowData.accountNumber;
+            if (newRowData.accountNumber !== null && newRowData.accountNumber !== '') {
+                if (dataSourceAccountNumber === newRowDataAccountNumber) {
+                    handleEditClick(newRowData, rowIndex);
+                }
+            }
+        }
+    };
+
     return (
         <div className="first-card">
             <CardSection
@@ -71,6 +83,7 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
                         isLoading={isGetDataLoading}
                         onRowDataUpdate={handleEditClick}
                         onRowDataDelete={handleDeleteClick}
+                        onColumnChange={handleGridCheckBoxChange}
                     />
                 </div>
             </CardSection>
