@@ -29,6 +29,9 @@ a {
     color: var(--darkColor);
   }
 }
+.theme-color{
+  color: var(--themeColor);
+}
 
 .input-label-part {
   width: 100%;
@@ -664,7 +667,7 @@ a {
 
     .btn-right-sec {
       button {
-        margin-left: 20px;
+        margin-left: 12px;
         min-width: auto;
       }
     }

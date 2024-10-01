@@ -2,7 +2,6 @@ import React from "react";
 import "../../Order.scss";
 import CardSection from "../../../../components/ui/card/CardSection";
 import Iconify from "../../../../components/ui/iconify/Iconify";
-import Tooltip from "../../../../components/ui/tooltip/Tooltip";
 import Image from "../../../../components/image/Image";
 import { AppIcons } from "../../../../data/appIcons";
 const OrderDetails = () => {
@@ -385,7 +384,58 @@ const OrderDetails = () => {
 
         {/* Right Side Section Start */}
         <div className="col-xxl-7 col-lg-7 col-md-7 col-12">
-          <CardSection cardTitle="Order Items"></CardSection>
+          <div className="order-action-sec">
+            <CardSection
+              cardTitle="Order Items"
+              rightButton={true}
+              buttonClassName="outline-theme-btn"
+              isIcon={true}
+              iconClass="iconamoon:history-bold"
+              multipleButton={true}
+              isTooltip={true}
+              tootipText="History"
+              rightButtonArray={[
+                {
+                  isIcon: true,
+                  buttonTypeClassName: "outline-theme-btn",
+                  iconClass: "fluent-mdl2:activate-orders",
+                  isTooltip: true,
+                  tootipText: "Original PO",
+                },
+                {
+                  isIcon: true,
+                  buttonTypeClassName: "outline-theme-btn",
+                  iconClass: "icon-park-outline:transaction-order",
+                  isTooltip: true,
+                  tootipText: "Price List",
+                },
+                {
+                  isIcon: true,
+                  buttonTypeClassName: "outline-theme-btn",
+                  iconClass: "fluent-mdl2:chart",
+                  isTooltip: true,
+                  tootipText: "Order Status",
+                },
+              ]}
+            ></CardSection>
+          </div>
+          <div className="order-item-list">
+            <CardSection>
+              <div className="order-all-item-view">
+                <div className="accordian-title">
+                  <span>Catalog ID</span>
+                  <span>Cas Number</span>
+                  <span>Unit Price</span>
+                  <span>Pack Size</span>
+                  <span>Total Price</span>
+                  <span>Status</span>
+                </div>
+              </div>
+              <div className="accordian-desc">
+                
+              </div>
+            </CardSection>
+          </div>
         </div>
         {/* Right Side Section End */}
       </div>
