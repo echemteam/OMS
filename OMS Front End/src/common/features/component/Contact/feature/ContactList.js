@@ -22,6 +22,9 @@ const ContactList = forwardRef(
     selectedContactTypeId,
     search,
     isSupplier,
+    getCompletionCount,
+    isEditablePage,
+    SecurityKey
   }) => {
     const prevSelectedContactTypeIdRef = useRef();
     const [contactDetails, setContactDetails] = useState([]);
@@ -51,15 +54,9 @@ const ContactList = forwardRef(
     };
 
     useEffect(() => {
-      if (
-        !arraysAreEqual(
-          prevSelectedContactTypeIdRef.current || [],
-          selectedContactTypeId
-        )
-      ) {
+      if (!arraysAreEqual(prevSelectedContactTypeIdRef.current || [], selectedContactTypeId)) {
         onGetContactList();
-      }
-      prevSelectedContactTypeIdRef.current = selectedContactTypeId;
+      } prevSelectedContactTypeIdRef.current = selectedContactTypeId;
     }, [keyId, selectedContactTypeId]);
 
     const modalRefs = useRef([]);
@@ -127,6 +124,9 @@ const ContactList = forwardRef(
                     setOpenModalId={setOpenModalId}
                     isSupplier={isSupplier}
                     onGetContactList={onGetContactList}
+                    getCompletionCount={getCompletionCount}
+                    isEditablePage={isEditablePage}
+                    SecurityKey={SecurityKey}
                     ref={(el) => (modalRefs.current[contactItem.contactId] = el)}
                   />
                 ))}

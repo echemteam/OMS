@@ -665,6 +665,7 @@ a {
     .btn-right-sec {
       button {
         margin-left: 20px;
+        min-width: auto;
       }
     }
   }
@@ -2411,7 +2412,7 @@ a {
       margin: 0 !important;
     }
   }
-
+  .css-1wy0on6,
   .css-1hb7zxy-IndicatorsContainer {
     visibility: hidden;
   }
@@ -3908,20 +3909,20 @@ input[type="checkbox"]:disabled {
     .tab-content {
       width: 85%;
       padding: 0 0 0px 15px;
-      max-height: calc(100vh - 190px);
+      max-height: calc(100vh - 170px);
       overflow: hidden;
       overflow-y: auto;
       transition: 0.5s all;
 
       @media only screen and (max-width: 1750px) {
-        max-height: calc(100vh - 171px);
+        max-height: calc(100vh - 151px);
       }
 
       .organiazation-history .main-card {
-        max-height: calc(100vh - 198px);
+        max-height: calc(100vh - 178px);
 
         @media only screen and (max-width: 1750px) {
-          max-height: calc(100vh - 180px);
+          max-height: calc(100vh - 160px);
         }
       }
     }
@@ -4226,7 +4227,9 @@ input[type="checkbox"]:disabled {
     }
   }
 }
-
+.detail-sec{
+  width: calc(100% - 80px);
+}
 .customer-name {
   max-width: calc(100% - 20px);
   display: flex;
@@ -4369,7 +4372,7 @@ input[type="checkbox"]:disabled {
   font-size: var(--commonFont-large);
   font-weight: 700;
   color: var(--themeColor);
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   display: flex;
   align-items: center;
   padding-bottom: 8px;
@@ -4383,12 +4386,30 @@ input[type="checkbox"]:disabled {
     color:var(--textColor);
     padding: 5px 10px;
     margin-left: 10px;
-    border-radius: 10px;
+    border-radius: 5px;
     background-color: #e7e7ff75;
     .company-image{
       // height:20px;
       width: 18px;
       margin-right: 5px;
+    }
+    span{
+      line-height: normal;
+      padding-top: 4px;
+      padding-left: 3px;
+    }
+  }
+}
+
+
+.doc-view {
+  .pdf-iframe {
+    iframe {
+      height: calc(100vh - 60px) !important;
+
+      @media only screen and (max-width: 1750px) {
+        height: calc(100vh - 57px) !important;
+      }
     }
   }
 }

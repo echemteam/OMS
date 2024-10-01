@@ -15,7 +15,11 @@ const customerSecurityKey = {
 
 const CustomerAddressDetail = ({ isEditablePage, customerStatusId }) => {
 
-    const { customerId, isResponsibleUser } = useContext(BasicDetailContext);
+    const { customerId, subCustomer, isResponsibleUser, setIsAddressChange, getCustomerCompletionCount } = useContext(BasicDetailContext);
+
+    const getCompletionCount = () => {
+        getCustomerCompletionCount(customerId, subCustomer);
+    }
 
     return (
         <AddressGrid
@@ -29,6 +33,8 @@ const CustomerAddressDetail = ({ isEditablePage, customerStatusId }) => {
             updateAddress={useUpdateAddAddressMutation}
             deleteAddress={useDeleteAddressMutation}
             customerStatusId={customerStatusId}
+            setIsAddressChange={setIsAddressChange}
+            getCompletionCount={getCompletionCount}
         />
     )
 }

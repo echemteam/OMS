@@ -35,7 +35,8 @@ import { setDropDownOptionField } from "../../../../../utils/FormFields/FieldsSe
 import { useAddCustomerNotesMutation } from "../../../../../app/services/notesAPI";
 import { CustomerSupplierStatus } from "../../../../../utils/Enums/commonEnums";
 import Tooltip from "../../../../../components/ui/tooltip/Tooltip";
-import { useGetValidateCheckListMutation } from "../../../../../app/services/ApprovalAPI";
+import Image from "../../../../../components/image/Image";
+import { AppIcons } from "../../../../../data/appIcons";
 
 //** Component's */
 const CustomerApproval = React.lazy(() =>
@@ -51,12 +52,10 @@ const CustomerBasicInfoCard = ({
   isGetCustomersBasicInformationById,
   isGetCustomersBasicInformationByIdFetching,
   GetCustomersBasicInformationByIdData,
-  isShippingMethodChange
 }) => {
   const childRef = useRef();
   const reasonRef = useRef();
   const { confirm } = SwalAlert();
-  const getCheckListRef = useRef();
   const [selectedStatus, setSelectedStatus] = useState(null);
   const [formData, setFormData] = useState(reasonData);
   const [showModal, setShowModal] = useState(false);
@@ -98,13 +97,16 @@ const CustomerBasicInfoCard = ({
     },
   ] = useUpdateCustomerInActiveStatusMutation();
 
-  const [totalCount, setTotalCount] = useState();
-  const [approvalSuccessCount, setApprovalSuccessCount] = useState();
-  const [getValidateCheckList, { isSuccess: isGetCheckListSuccess, data: isGetCheckListData }] = useGetValidateCheckListMutation();
-
   const [addCustomerNotes] = useAddCustomerNotesMutation();
 
-  const { isResponsibleUser, setRejectStatusId, rejectStatusId } = useContext(BasicDetailContext);
+  const {
+    isResponsibleUser,
+    totalCount,
+    approvalSuccessCount,
+    getCustomerCompletionCount,
+    setSubCustomer,
+    subCustomer,
+  } = useContext(BasicDetailContext);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const hasEditPermission = hasFunctionalPermission(
     securityKey.EDITBASICCUSTOMERDETAILS
@@ -114,7 +116,6 @@ const CustomerBasicInfoCard = ({
     getAllUser,
     { isFetching, isSuccess: isGetAllUserSucess, data: allGetAlluserData },
   ] = useLazyGetAllUserQuery();
-
   useEffect(() => {
     if (!isResponsibleUser) {
       if (hasEditPermission && hasEditPermission.isViewOnly === true) {
@@ -126,7 +127,6 @@ const CustomerBasicInfoCard = ({
       }
     }
   }, [hasEditPermission, isResponsibleUser]);
-
   useEffect(() => {
     if (
       isSuccessUpdateCustomerInActiveStatus &&
@@ -136,22 +136,26 @@ const CustomerBasicInfoCard = ({
       handleToggleModal();
     }
   }, [isSuccessUpdateCustomerInActiveStatus, updateCustomerInActiveStatusData]);
-
   useEffect(() => {
     if (isSuccessUpdateCustomerStatus && updateCustomerStatusData) {
       ToastService.success(updateCustomerStatusData.errorMessage);
       handleToggleModal();
     }
   }, [isSuccessUpdateCustomerStatus, updateCustomerStatusData]);
-
   useEffect(() => {
-    if (GetCustomersBasicInformationByIdData && isGetCustomersBasicInformationById && !isGetCustomersBasicInformationByIdFetching) {
-      const responsibleUserIds = GetCustomersBasicInformationByIdData?.responsibleUserId
-        ?.split(",")
-        .map((id) => id.trim());
-      const responsibleUserNames = GetCustomersBasicInformationByIdData?.responsibleUserName
-        ?.split(",")
-        .map((name) => name.trim());
+    if (
+      GetCustomersBasicInformationByIdData &&
+      isGetCustomersBasicInformationById &&
+      !isGetCustomersBasicInformationByIdFetching
+    ) {
+      const responsibleUserIds =
+        GetCustomersBasicInformationByIdData?.responsibleUserId
+          ?.split(",")
+          .map((id) => id.trim());
+      const responsibleUserNames =
+        GetCustomersBasicInformationByIdData?.responsibleUserName
+          ?.split(",")
+          .map((name) => name.trim());
       const responsibleUsers = responsibleUserIds?.map((id, index) => ({
         value: id,
         label: responsibleUserNames[index] || id,
@@ -160,39 +164,24 @@ const CustomerBasicInfoCard = ({
       setRUserValue(responsibleUsers);
       setSelectedStatus(GetCustomersBasicInformationByIdData.status);
       getAllUser();
-      let request = {
-        customerId: customerId,
-        supplierId: 0,
-        isSubCustomer: customerData?.isSubCustomer ? customerData?.isSubCustomer : false
-      }
-      getValidateCheckList(request);
+      getCustomerCompletionCount(
+        customerId,
+        GetCustomersBasicInformationByIdData?.isSubCustomer
+      );
+      setSubCustomer(GetCustomersBasicInformationByIdData?.isSubCustomer);
     }
-  }, [GetCustomersBasicInformationByIdData, isGetCustomersBasicInformationById, isGetCustomersBasicInformationByIdFetching, isShippingMethodChange]);
-
-  useEffect(() => {
-    if (isGetCheckListSuccess && isGetCheckListData) {
-      if (isGetCheckListData && isGetCheckListData.length > 0) {
-        const successCheckList = isGetCheckListData.filter(data => data.isValid);
-        setApprovalSuccessCount(successCheckList.length);
-        setTotalCount(isGetCheckListData.length);
-      }
-    }
-  }, [isGetCheckListSuccess, isGetCheckListData])
-
-  // useEffect(() => {
-  //   if (rejectStatusId) {
-  //     getCustomerById()
-  //   }
-  // }, [rejectStatusId, setRejectStatusId, selectedStatus])
+  }, [
+    GetCustomersBasicInformationByIdData,
+    isGetCustomersBasicInformationById,
+    isGetCustomersBasicInformationByIdFetching,
+  ]);
 
   const rejectedCustomerFromApproval = () => {
-    getCustomerById()
+    getCustomerById();
   };
 
   useEffect(() => {
     if (!isFetching && isGetAllUserSucess && allGetAlluserData) {
-      // const finalData = responsibleUserIds?.map(option => option.value).join(',')
-      //
       const filterData = allGetAlluserData.filter((item) => {
         return (
           item.roleName === null ||
@@ -206,8 +195,8 @@ const CustomerBasicInfoCard = ({
       );
       const filteredData = responsibleUserIds
         ? uniqueData.filter(
-          (item) => !responsibleUserIds.includes(item.userId.toString())
-        )
+            (item) => !responsibleUserIds.includes(item.userId.toString())
+          )
         : uniqueData;
       const modifyUserData = filteredData.map((item) => ({
         value: item.userId,
@@ -282,7 +271,9 @@ const CustomerBasicInfoCard = ({
           childRef.current.callChildFunction(
             customerId,
             customerData.isSubCustomer ? customerData.isSubCustomer : false,
-            selectedOption.value === CustomerSupplierStatus.SUBMITTED ? false : true
+            selectedOption.value === CustomerSupplierStatus.SUBMITTED
+              ? false
+              : true
           );
         }
         setCustomerId(customerId);
@@ -321,6 +312,7 @@ const CustomerBasicInfoCard = ({
       ToastService.success(
         isAddEditResponsibleUserForCustomerData.errorMessage
       );
+      getCustomerCompletionCount(customerId, subCustomer);
     }
   }, [
     isSuccessAddEditResponsibleUserForCustomer,
@@ -343,7 +335,6 @@ const CustomerBasicInfoCard = ({
   };
 
   const handleUpdate = () => {
-
     let custData = reasonRef.current.getFormData();
     if (custData) {
       let req = {
@@ -418,11 +409,12 @@ const CustomerBasicInfoCard = ({
   };
 
   useEffect(() => {
-
     if (showModal && selectedStatus === CustomerSupplierStatus.REJECT) {
       if (responsibleUserIds) {
-        const responsibleUser = responsibleUserIds?.map((id) => Number(id.trim()));
-        const formNew = { ...formData }
+        const responsibleUser = responsibleUserIds?.map((id) =>
+          Number(id.trim())
+        );
+        const formNew = { ...formData };
         formNew.initialState = {
           ...formNew.initialState,
           responsibleUserId: responsibleUser,
@@ -436,6 +428,7 @@ const CustomerBasicInfoCard = ({
     if (isSuccessUpdateCustomerSubCustomer && isUpdateCustomerSubCustomerData) {
       ToastService.success(isUpdateCustomerSubCustomerData.errorMessage);
       getCustomerById();
+      getCustomerCompletionCount(customerId, subCustomer);
     }
   }, [isSuccessUpdateCustomerSubCustomer, isUpdateCustomerSubCustomerData]);
 
@@ -446,9 +439,14 @@ const CustomerBasicInfoCard = ({
 
   const getApprovalCheckList = () => {
     if (childRef.current) {
-      childRef.current.callChildFunction(customerId, customerData.isSubCustomer ? customerData.isSubCustomer : false, false, false);
+      childRef.current.callChildFunction(
+        customerId,
+        customerData.isSubCustomer ? customerData.isSubCustomer : false,
+        false,
+        false
+      );
     }
-  }
+  };
 
   return !isLoading ? (
     <div className="basic-customer-detail">
@@ -457,50 +455,60 @@ const CustomerBasicInfoCard = ({
           <div className="col-3 flex-column profile-icon-desc justify-content-center">
             <div className="d-flex w-100">
               <div className="profile-icon ">
-                {" "}
+                {/* {" "}
                 {customerData?.name
                   ? customerData?.name.charAt(0).toUpperCase()
-                  : ""}
+                  : ""} */}
+                  <Image imagePath={AppIcons.DummyLogo} altText="button Icon" />
               </div>
-              <div className="customer-name">
-                <h5 className="ml-0" title={customerData?.name}>
-                  {customerData?.name}
-                </h5>
-                <div className="info-icon">
-                  <Iconify icon="clarity:info-solid" className="info" />
-                  <Tooltip text={customerData?.name} />
+              <div className="detail-sec">
+                <div className="customer-name">
+                  <h5 className="ml-0" title={customerData?.name}>
+                    {customerData?.name}
+                  </h5>
+                  <div className="info-icon">
+                    <Iconify icon="clarity:info-solid" className="info" />
+                    <Tooltip text={customerData?.name} />
+                  </div>
+                </div>
+                <div>
+                  <div className="field-desc col-span-3">
+                    <i className="fa fa-envelope"></i>
+                    <a
+                      className="email-link"
+                      href={`mailto:${customerData?.emailAddress}`}
+                    >
+                      <div className="info-desc">
+                        {customerData?.emailAddress}
+                      </div>
+                    </a>
+                    <span
+                    title="Copy Email Address"
+                      className="copy-icon"
+                      onClick={() =>
+                        CopyText(customerData?.emailAddress, "email")
+                      }
+                    >
+                      {/* <Image imagePath={AppIcons.copyIcon} altText="Website Icon" /> */}
+                      <Iconify icon="bitcoin-icons:copy-outline" />
+                    </span>
+                  </div>
+
+                  <div className="field-desc ">
+                    <i className="fa fa-globe"></i>
+                    <div className="info-desc">{customerData?.website}</div>
+
+                    <span
+                      className="copy-icon"
+                      title="Copy Website"
+                      onClick={() => CopyText(customerData?.website, "website")}
+                    >
+                      {/* <Image imagePath={AppIcons.copyIcon} altText="Website Icon" /> */}
+                      <Iconify icon="bitcoin-icons:copy-outline" />
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <div className="field-desc col-span-3">
-              <i className="fa fa-envelope"></i>
-              <a
-                className="email-link"
-                href={`mailto:${customerData?.emailAddress}`}
-              >
-                <div className="info-desc">{customerData?.emailAddress}</div>
-              </a>
-              <span
-                className="copy-icon"
-                onClick={() => CopyText(customerData?.emailAddress, "email")}
-              >
-                {/* <Image imagePath={AppIcons.copyIcon} altText="Website Icon" /> */}
-                <Iconify icon="bitcoin-icons:copy-outline" />
-              </span>
-            </div>
-
-            <div className="field-desc ">
-              <i className="fa fa-globe"></i>
-              <div className="info-desc">{customerData?.website}</div>
-
-              <span
-                className="copy-icon"
-                onClick={() => CopyText(customerData?.website, "website")}
-              >
-                {/* <Image imagePath={AppIcons.copyIcon} altText="Website Icon" /> */}
-                <Iconify icon="bitcoin-icons:copy-outline" />
-              </span>
             </div>
           </div>
 
@@ -622,9 +630,11 @@ const CustomerBasicInfoCard = ({
                 </div>
               </div>
             </div>
-            {isResponsibleUser || !isButtonDisable ?
+            {isResponsibleUser || !isButtonDisable ? (
               <div className="field-desc">
-                <div className="inf-label inf-label-width submission-tab">Invoice Submission</div>
+                <div className="inf-label inf-label-width submission-tab">
+                  Invoice Submission
+                </div>
                 <b>&nbsp;:&nbsp;</b>
                 <div className="checkbox-part ml-2 mt-2 eye-icon ">
                   <Iconify icon="ph:eye-duotone" onClick={handleModelShow} />
@@ -633,19 +643,26 @@ const CustomerBasicInfoCard = ({
                   </div>
                   <di className="tooltip-arrow-icon"></di>
                 </div>
-              </div> : null}
+              </div>
+            ) : null}
 
             <div className="field-desc">
-              <div className="inf-label inf-label-width">Customer Completion</div>
-              {totalCount &&
+              <div className="inf-label inf-label-width">
+                Profile Completion
+              </div>
+              {totalCount && (
                 <>
                   <b>&nbsp;:&nbsp;</b>
-                  <div className="info-desc submission-tab d-flex gap-2 align-items-center" style={{ cursor: 'pointer', fontSize: '13px' }} onClick={getApprovalCheckList}>
+                  <div
+                    className="info-desc submission-tab d-flex gap-2 align-items-center"
+                    style={{ cursor: "pointer", fontSize: "13px" }}
+                    onClick={getApprovalCheckList}
+                  >
                     {approvalSuccessCount + "/" + totalCount}
                     <Iconify icon="clarity:info-solid" className="info" />
                   </div>
                 </>
-              }
+              )}
             </div>
           </div>
         </div>
@@ -681,7 +698,8 @@ const CustomerBasicInfoCard = ({
               </div>
             </div>
           </div>
-        </CenterModel>)}
+        </CenterModel>
+      )}
       {isInvoiceModelShow && (
         <CenterModel
           showModal={isInvoiceModelShow}
@@ -695,16 +713,17 @@ const CustomerBasicInfoCard = ({
             setIsInvoiceModelShow={setIsInvoiceModelShow}
             handleToggleModal={handleToggleModal}
           />
-        </CenterModel>)}
+        </CenterModel>
+      )}
       <CustomerApproval
         isDetailPage={true}
         childRef={childRef}
         updateCustomerApproval={updateCustomerApproval}
         responsibleUserIds={responsibleUserIds}
-        setSelectedStatus={setSelectedStatus} 
+        setSelectedStatus={setSelectedStatus}
         onRejectedCustomerFromApproval={rejectedCustomerFromApproval}
-        />
-    </div >
+      />
+    </div>
   ) : (
     <DataLoader />
   );

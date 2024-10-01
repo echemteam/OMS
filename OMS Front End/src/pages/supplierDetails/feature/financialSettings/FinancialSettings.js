@@ -4,12 +4,13 @@ import FinancialSettingsgGrid from "../../../../common/features/component/suppli
 import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 
 const FinancialSettings = ({ isEditablePage }) => {
-  const { supplierId  } = useContext(AddSupplierContext);
+  const { supplierId, getSupplierCompletionCount } = useContext(AddSupplierContext);
   return (
     <div className="financial-setting">
       <FinancialSettingsgGrid
         supplierId={supplierId || 0}
         isEditablePage={isEditablePage}
+        getSupplierCompletionCount={getSupplierCompletionCount}
       />
     </div>
   );

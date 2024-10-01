@@ -47,7 +47,7 @@ const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckL
   }, [showModal])
 
   const boldSpecificWords = (text) => {
-    const wordsToBold = ["Tax Id", "Billing Address", "Shipping Address", "Invoice Submission Contact", "Shipping Setting",
+    const wordsToBold = ["Tax Id", "Billing Address", "Shipping Address", "Invoice Submission Contact", "Shipping Setting", "Responsible User",
       "Accounts Payable Contact", "Invoice Follow-up Contact", "Delivery Method", "Delivery Carrier Method", "Payment Terms", "Payment Method",
       "Credit Limit", "Billing Currency", "Physical Address", "Remittance Address", "Primary Contact", "Purchase Order Contact", "Accounts Receivable Contact",
       "Purchase order delivery", "Credit Card Notes", "Check Mailing Address", "Financial Settings Bank Address"];

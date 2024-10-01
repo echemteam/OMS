@@ -35,8 +35,8 @@ const FormEditableSelectField = React.lazy(() =>
 const FormCustomSelectField = React.lazy(() =>
   import("./formField/FormCustomSelectField")
 );
-const FormPhoneInputField = React.lazy(() => 
-import("./formField/FormPhoneInputField")
+const FormPhoneInputField = React.lazy(() =>
+  import("./formField/FormPhoneInputField")
 );
 
 const FormFields = ({
@@ -139,13 +139,12 @@ const FormFields = ({
               formData={formData}
               changeAction={field.changeAction}
               overRideProps={overRideProps?.[field.dataField]}
-              inputButtonGroup={field.inputButtonGroup}
               inputIcon={field.inputIcon}
               handleInputGroupButton={handleInputGroupButton}
               handleInputShowInfo={handleInputShowInfo}
               inputField={onInputChange}
-              // inputshowField={onInputShowInfo}
               isRequired={isRequired}
+              inputButtonGroupConfig={field.inputButtonGroupConfig}
               {...field.fieldSetting}
             />
           </div>
@@ -409,27 +408,27 @@ const FormFields = ({
             />
           </div>
         );
-        case FormFieldTypes.PHONE:
-          return (
-            <div className={containerCss}>
-              <FormPhoneInputField
-                key={field.dataField}
-                dataField={field.dataField}
-                labelName={field.label}
-                name={field.id}
-                type={fieldTypeToInputType(field.fieldType)}
-                value={formData?.[field.dataField] || ""}
-                onChange={handleInputChange}
-                error={validState.error[field.dataField] || ""}
-                onValidation={onUpdateValidation}
-                formSetting={formSetting}
-                formData={formData}
-                changeAction={field.changeAction}
-                overRideProps={overRideProps?.[field.dataField]}
-                {...field.fieldSetting}
-              />
-            </div>
-          );
+      case FormFieldTypes.PHONE:
+        return (
+          <div className={containerCss}>
+            <FormPhoneInputField
+              key={field.dataField}
+              dataField={field.dataField}
+              labelName={field.label}
+              name={field.id}
+              type={fieldTypeToInputType(field.fieldType)}
+              value={formData?.[field.dataField] || ""}
+              onChange={handleInputChange}
+              error={validState.error[field.dataField] || ""}
+              onValidation={onUpdateValidation}
+              formSetting={formSetting}
+              formData={formData}
+              changeAction={field.changeAction}
+              overRideProps={overRideProps?.[field.dataField]}
+              {...field.fieldSetting}
+            />
+          </div>
+        );
       default:
         return null;
     }

@@ -14,7 +14,11 @@ const customerSecurityKey = {
 
 const CustomerContactDetail = ({ isEditablePage, isSearchFilterShow, contryIdCode, customerStatusId }) => {
 
-  const { customerId, isResponsibleUser } = useContext(BasicDetailContext);
+  const { customerId, subCustomer, isResponsibleUser, getCustomerCompletionCount } = useContext(BasicDetailContext);
+
+  const getCompletionCount = () => {
+    getCustomerCompletionCount(customerId, subCustomer);
+  }
 
   return (
     /**
@@ -33,6 +37,7 @@ const CustomerContactDetail = ({ isEditablePage, isSearchFilterShow, contryIdCod
         getContactById={useLazyGetCustomerContactByContactIdQuery}
         contryIdCode={contryIdCode}
         customerStatusId={customerStatusId}
+        getCompletionCount={getCompletionCount}
       />
     </div>
   );

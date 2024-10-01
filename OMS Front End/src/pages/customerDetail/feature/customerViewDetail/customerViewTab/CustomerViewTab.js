@@ -16,7 +16,7 @@ const CustomerSubCustomerDetail = React.lazy(() => import("../../customerSubCust
 
 const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode, customerStatusId }) => {
 
-  const { isResponsibleUser } = useContext(BasicDetailContext);
+  const { isResponsibleUser, setActiveTab,setActiveSubTab } = useContext(BasicDetailContext);
 
   const hasNotePermission = hasFunctionalPermission(securityKey.CUSTOMERNOTES);
   const hasAddressPermission = hasFunctionalPermission(
@@ -113,8 +113,16 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode, cust
 
   const visibleTabs = tabs.filter((tab) => tab.isVisible);
 
+
+  const handleSubTabDefaultValue = (tab) => {
+    if ([2, 3].includes(tab)) {
+      setActiveSubTab(0);
+    }
+  };
+
   return (
-    <RenderTabs tabs={customerId ? visibleTabs : null} />
+
+    <RenderTabs onTabClick={handleSubTabDefaultValue} onActiveTab={setActiveTab} tabs={customerId ? visibleTabs : null} />
   )
 }
 

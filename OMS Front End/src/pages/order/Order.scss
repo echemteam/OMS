@@ -209,9 +209,11 @@
     .card {
       height: auto;
       margin-bottom: 0;
+
       .stepper-section {
-        .stepper-content{
+        .stepper-content {
           min-height: calc(100vh - 215px);
+
           @media only screen and (max-width: 1750px) {
             min-height: calc(100vh - 165px);
           }
@@ -251,21 +253,51 @@
       table {
         tbody {
           max-height: calc(100vh - 215px);
+
           @media only screen and (max-width: 1750px) {
-          max-height: calc(100vh - 230px);
+            max-height: calc(100vh - 230px);
 
           }
+
           @media only screen and (max-width: 1650px) {
             max-height: calc(100vh - 250px);
-  
-            }
+
+          }
+
           @media only screen and (max-width: 1280px) {
             max-height: calc(100vh - 241px);
-  
-            }
+
+          }
         }
       }
     }
   }
 
 }
+
+
+// Order Review Page Start
+.order-review-section {
+  .manage-customer-dropdown {
+    justify-content: center;
+
+    .center-title-text {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      h4 {
+        font-size: var(--commonFont);
+        margin-bottom: 0;
+        font-weight: 700;
+      }
+
+      button {
+        min-width: auto;
+        color: var(--themeColor);
+      }
+    }
+  }
+}
+
+// Order Review Page End

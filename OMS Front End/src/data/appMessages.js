@@ -73,5 +73,6 @@ export const SuccessMessage = {
 	// ApprovalRequestSuccess: "Other fields are updated successfully",
 	FieldsApprovalExists: " {0} already exists in our records and, therefore, cannot be accepted.",
 	ApprovalSuccess: "We are currently reviewing your request and will respond shortly. If approved, your request will be added or updated accordingly.",
-	FinalSuccess: "We are currently reviewing your request for {0} and will respond shortly. If approved, your request will be added or updated accordingly. If any other data was included in the request, it has been successfully added or updated accordingly"
+	FinalSuccess: "We are currently reviewing your request for {0} and will respond shortly. If approved, your request will be added or updated accordingly. If any other data was included in the request, it has been successfully added or updated accordingly",
+	VerifyProduct: "Please verify the product details before proceeding."
 };
