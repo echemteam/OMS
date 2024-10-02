@@ -7,15 +7,20 @@ using MySql.Data.MySqlClient;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.Address;
 using OMS.Domain.Entities.API.Request.Organization;
+using OMS.Domain.Entities.API.Response.Customers;
 using OMS.Domain.Entities.API.Response.Organization;
 using OMS.Domain.Entities.Entity.Address;
 using OMS.Domain.Entities.Entity.CommonEntity;
+using OMS.Domain.Entities.Entity.Customers;
 using OMS.Domain.Entities.Entity.Organization;
 using OMS.Domain.Repository;
+using OMS.FileManger.Services;
 using OMS.Shared.Entities.CommonEntity;
 using OMS.Shared.Services.Contract;
 using System.Data;
 using System.Text.Json;
+using System.IO.Compression;
+using Common.Helper.Utility;
 
 namespace OMS.Application.Services.Organization
 {
@@ -36,14 +41,47 @@ namespace OMS.Application.Services.Organization
         public async Task<AddEntityDto<int>> AddEditOrganizationProfile(AddEditOrganizationProfileRequest requestData, short CurrentUserId)
         {
             OrganizationProfileDto organizationProfileDto = requestData.ToMapp<AddEditOrganizationProfileRequest, OrganizationProfileDto>();
+            if (requestData.Base64Data != null)
+            {
+                organizationProfileDto.AttachmentName = FileManager.SaveFile(
+                                requestData.Base64Data!,
+                                Path.Combine(commonSettingService.ApplicationSettings.SaveFilePath!, requestData.StoragePath!),
+                                requestData.AttachmentName!);
+            }
             organizationProfileDto.CreatedBy = CurrentUserId;
             return await repositoryManager.organization.AddEditOrganizationProfile(organizationProfileDto);
 
         }
         public async Task<GetOrganizationProfileResponse> GetOrganizationProfile()
         {
-            return await repositoryManager.organization.GetOrganizationProfile();
+            GetOrganizationProfileResponse response =  await repositoryManager.organization.GetOrganizationProfile();
+            if (response.AttachmentName != null)
+            {
+                var filePath = Path.Combine(commonSettingService.ApplicationSettings.SaveFilePath!, "OrganizationProfilePic"!, response.AttachmentName);
+                if (File.Exists(filePath))
+                {
+                    byte[] imageArray = await File.ReadAllBytesAsync(filePath);
+                    string base64ImageRepresentation = Convert.ToBase64String(imageArray);
+                    var extension = Path.GetExtension(response.AttachmentName).ToLowerInvariant();
+                    response.Base64Data = CommonUtils.GenerateBase64ImageData(base64ImageRepresentation, extension);
+                }
+            }
+            return response;
         }
+
+        public static byte[] CompressBase64(string base64String)
+        {
+            byte[] data = Convert.FromBase64String(base64String);
+            using (var memoryStream = new MemoryStream())
+            {
+                using (var gZipStream = new GZipStream(memoryStream, CompressionMode.Compress))
+                {
+                    gZipStream.Write(data, 0, data.Length);
+                }
+                return memoryStream.ToArray();
+            }
+        }
+
         public async Task<AddEntityDto<int>> AddEditSmtpSettings(AddEditSmtpSettingsRequest requestData, short CurrentUserId)
         {
             SmtpSettingsDto smtpSettingsDto = requestData.ToMapp<AddEditSmtpSettingsRequest, SmtpSettingsDto>();

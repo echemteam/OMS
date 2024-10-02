@@ -18,5 +18,8 @@
         public short? UpdatedBy { get; set; }
         public DateTime? DeletedAt { get; set; }
         public short? DeletedBy { get; set; }
+        public string? Base64Data { get; set; }
+        public string? AttachmentName { get; set; }
+        public string? StoragePath { get; set; }
     }
 }
