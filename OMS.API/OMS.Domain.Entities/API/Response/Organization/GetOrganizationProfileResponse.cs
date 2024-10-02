@@ -12,5 +12,8 @@
         public string? SOSFileNumber { get; set; }
         public string? WebFileNumber { get; set; }
         public string? TWCTaxAccountNumber { get; set; }
+        public string? Base64Data { get; set; }
+        public byte[]? Base64File { get; set; }
+        public string? AttachmentName { get; set; }
     }
 }

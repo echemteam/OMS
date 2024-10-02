@@ -17,6 +17,7 @@
     <ProjectReference Include="..\OMS.Domain.Entities\OMS.Domain.Entities.csproj" />
     <ProjectReference Include="..\OMS.Domain.Repository\OMS.Domain.Repository.csproj" />
     <ProjectReference Include="..\OMS.FileManger.Services\OMS.FileManger.Services.csproj" />
+    <ProjectReference Include="..\OMS.Shared\OMS.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
