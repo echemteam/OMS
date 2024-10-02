@@ -78,7 +78,7 @@ export const SMTPSettingsFormData = {
                 placeholder: "Enter Your App Password",
                 maxLength:20,
             },
-            validation: [{ type: "require" }, { type: "password" }],
+            validation: [{ type: "require" }],
             style: {
                 containerCss: "col-md-6 mb-input",
             },
