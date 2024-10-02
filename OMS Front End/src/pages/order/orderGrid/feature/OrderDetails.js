@@ -7,14 +7,15 @@ import { AppIcons } from "../../../../data/appIcons";
 import { Accordion } from "react-bootstrap";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
 const OrderDetails = () => {
-  const [isModelOpen, setIsModelOpen] = useState(false);
+  const [isModelOpenPDF, setIsModelOpenPDF] = useState(false);
+  const [isModelOpenShippingAddress, setIsModelOpenShippingAddress] = useState(false);
 
-  const onSidebarClose = () => {
-    setIsModelOpen(false);
+  const onSidebarClosePDF = () => {
+    isModelOpenPDF(false);
   };
 
-  const handleToggleModal = () => {
-    setIsModelOpen(true);
+  const handleToggleModalPDF = () => {
+    setIsModelOpenPDF(true);
   };
 
   return (
@@ -34,7 +35,7 @@ const OrderDetails = () => {
             CenterTitleTxt="AA123152"
             CenterBtnIcon="icomoon-free:file-pdf"
             centerBtnTitle="Purchase Order Details"
-            centerBtnOnClick={handleToggleModal}
+            centerBtnOnClick={handleToggleModalPDF}
           >
             <div className="order-summery-list">
               <div className="row">
@@ -243,7 +244,10 @@ const OrderDetails = () => {
                         <div className="right-name-btn">
                           <div className="user-name">Alex Murphy</div>
                           <div className="btn-sec">
-                            <div className="select-icon tooltip-div">
+                            <div
+                              className="select-icon tooltip-div"
+                              onClick={handleToggleModalPDF}
+                            >
                               <Iconify
                                 icon="icon-park-outline:change"
                                 className="swap-icon"
@@ -664,13 +668,22 @@ const OrderDetails = () => {
         <SidebarModel
           modalTitle="PO PDF"
           contentClass="content-50"
-          onClose={onSidebarClose}
+          onClose={onSidebarClosePDF}
           modalTitleIcon={AppIcons.AddIcon}
-          isOpen={isModelOpen}
+          isOpen={isModelOpenPDF}
           showToggle={true}
         >
           Purchase Order PDF
         </SidebarModel>
+        {/* <SidebarModel
+          modalTitle="Change Shipping Address"
+          contentClass="content-50"
+          onClose={onSidebarClose}
+          modalTitleIcon={AppIcons.AddIcon}
+          isOpen={isModelOpen}
+        >
+          Purchase Order PDF
+        </SidebarModel> */}
       </div>
     </div>
   );

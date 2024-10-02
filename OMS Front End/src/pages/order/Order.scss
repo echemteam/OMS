@@ -21,7 +21,6 @@
 }
 
 .verify-product-group {
-
   // margin-top: 36px;
   .loader-section {
     padding: 0;
@@ -223,17 +222,11 @@
   }
 }
 
-
-
 @media only screen and (max-width: 1650px) {
   .input-field {
     height: 28px;
   }
 }
-
-
-
-
 
 .order-listing {
   .card {
@@ -256,25 +249,20 @@
 
           @media only screen and (max-width: 1750px) {
             max-height: calc(100vh - 230px);
-
           }
 
           @media only screen and (max-width: 1650px) {
             max-height: calc(100vh - 250px);
-
           }
 
           @media only screen and (max-width: 1280px) {
             max-height: calc(100vh - 241px);
-
           }
         }
       }
     }
   }
-
 }
-
 
 // Order Review Page Start
 .order-review-section {
@@ -350,7 +338,6 @@
       }
 
       &.right-status-sec {
-
         .key-icon-part {
           min-width: 122px;
         }
@@ -362,9 +349,10 @@
             &.status {
               margin-left: 7px;
               display: inline-block;
-              padding: 6px 11px;
+              padding: 4px 8px;
               border-radius: 6px;
               font-weight: 600;
+              font-size: var(--commonFont-small);
 
               &.pending {
                 background-color: #ffe5cc;
@@ -429,7 +417,6 @@
     }
   }
 
-
   .document-list {
     .file-item {
       display: flex;
@@ -480,7 +467,6 @@
           }
         }
       }
-
     }
   }
 
@@ -657,7 +643,12 @@
                     max-width: 210px;
                   }
 
-                  .status-btn{
+                  .status-btn {
+                    display: inline-block;
+                    padding: 1px 8px !important;
+                    border-radius: 6px;
+                    font-weight: 600;
+                    font-size: var(--commonFont-small);
                     &.heigh-bg {
                       background-color: #ffcccc;
                       color: #dd5252;
@@ -677,7 +668,7 @@
                 .value-right-btn {
                   display: flex;
                   align-items: center;
-                  
+
                   .right-btn {
                     margin-left: 5px;
                     display: flex;
@@ -691,7 +682,7 @@
                         margin-right: 0;
                       }
                     }
-                    .info-btn{
+                    .info-btn {
                       cursor: pointer;
                       display: flex;
                       align-items: center;
@@ -699,12 +690,12 @@
                   }
                 }
               }
-              .accordian-right-full-sec{
+              .accordian-right-full-sec {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                .right-action-section{
-                  .file-actions{
+                .right-action-section {
+                  .file-actions {
                     display: flex;
                     align-items: center;
                     .btn-part {
@@ -716,25 +707,25 @@
                       align-items: center;
                       justify-content: center;
                       margin-right: 4px;
-                      .component-iconify{
+                      .component-iconify {
                         width: 19px !important;
                         height: 19px !important;
                         display: flex;
                         align-items: center;
                       }
-                      &:last-child{
+                      &:last-child {
                         margin-right: 0;
                       }
                       &.pdf-view {
                         background: #f0effc;
                         color: var(--themeColor);
                       }
-            
+
                       &.dollar-view {
                         background: #effbfc;
                         color: #42b5c0;
                       }
-            
+
                       &.delete-icon {
                         background: #fdeded;
                       }
@@ -745,10 +736,8 @@
             }
           }
         }
-
       }
     }
-
   }
 }
 
@@ -793,7 +782,6 @@
 
         .btn-sec {
           display: flex;
-          align-items: center;
           color: var(--themeColor);
           width: 45px;
           height: 20px;
@@ -816,7 +804,8 @@
           display: flex;
           align-items: center;
 
-          &.email {}
+          &.email {
+          }
 
           &.number {
             margin-top: 3px;
@@ -832,7 +821,6 @@
       }
     }
   }
-
 }
 
 // Order Review Page End
