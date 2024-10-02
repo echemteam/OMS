@@ -2,7 +2,6 @@
 {
     public class SmtpCheckConnection
     {
-        public short? SmtpSettingId { get; set; }
         public string? EmailProvider { get; set; }
         public string? SmtpServer { get; set; }
         public int? SmtpPort { get; set; }
