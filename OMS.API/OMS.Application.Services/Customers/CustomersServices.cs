@@ -1,6 +1,7 @@
 ﻿using Common.Helper.ApprovalRules;
 using Common.Helper.Enum;
 using Common.Helper.Extension;
+using Common.Helper.Utility;
 using Newtonsoft.Json;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.Customers;
@@ -171,7 +172,8 @@ namespace OMS.Application.Services.Customers
                 {
                     byte[] imageArray = await File.ReadAllBytesAsync(filePath);
                     string base64ImageRepresentation = Convert.ToBase64String(imageArray);
-                    getCustomersBasicInformationByIdResponse.Base64File = base64ImageRepresentation;
+                    var extension = Path.GetExtension(getCustomersBasicInformationByIdResponse.AttachmentName).ToLowerInvariant();
+                    getCustomersBasicInformationByIdResponse.Base64File = CommonUtils.GenerateBase64ImageData(base64ImageRepresentation, extension);
                 }
             }
             return getCustomersBasicInformationByIdResponse;

@@ -26,7 +26,6 @@ import { getTaxIdMinMaxLength } from "../../../customerDetail/feature/customerBa
 import PropTypes from 'prop-types';
 import { validateResponsibleUserId } from "../../../../utils/ResponsibleUser/validateRUser";
 import { useSelector } from "react-redux";
-import SwalAlert from "../../../../services/swalService/SwalService";
 import { validateNameEmailWebsiteGrid } from "../../../../common/features/component/ExistingInfo/Config/Existing.data";
 import ValidateCustomerSupplierInfo from "../../../../common/features/component/ExistingInfo/ValidateCustomerSupplierInfo";
 
@@ -38,7 +37,6 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
     //** State */
     const parentRef = useRef();
     const basicDetailRef = useRef();
-    const { confirm } = SwalAlert();
     const authState = useSelector((state) => state.auth);
     const [noteId, setNoteId] = useState(0);
     const { formSetting } = supplierBasicData;
@@ -54,7 +52,6 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
     const [validateCustomerSupplierData, setValidateCustomerSupplierData] = useState([]);
 
     //** API Call's */
-    const [checkExistingInformation] = useLazyGetSupplierDetailsBySupplierNameQuery();
     const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAllUserData, }] = useLazyGetAllUserQuery();
     const [getAllCountries, { isSuccess: isGetAllCountriesSucess, data: allGetAllCountriesData, }] = useLazyGetAllCountriesQuery();
     const [getAllGroupTypes, { isSuccess: isGetAllGroupTypesSucess, data: allGetAllGroupTypesData, }] = useLazyGetAllGroupTypesQuery();
@@ -259,8 +256,8 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             responsibleUserId: getIdValue(data.responsibleUserId) || 0,
             supplierId: keyId || supplierId,
             supplierNoteId: noteId || 0,
-            attachmentName: null,
-            base64File: null,
+            attachmentName: data.attachment.fileName,
+            base64File: data.attachment.base64Data,
             storagePath: 'SupplierProfilePic'
         };
         if (!data.taxId) {

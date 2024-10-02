@@ -62,7 +62,7 @@ const SupplierBasicInfoCard = ({
   const [responsibleUserOptions, setResponsibleUserOptions] = useState([]);
   const [filteredStatusOptions, setFilteredStatusOptions] = useState(StatusValue);
   const [prevRUserValue, setPrevRUserValue] = useState("");
-  
+
   const [
     getAllUser,
     {
@@ -427,7 +427,7 @@ const SupplierBasicInfoCard = ({
       addEditResponsibleUserForSupplier(req);
       setPrevRUserValue(currentValues);  // Store the current value for future comparison
     }
-    
+
   };
   const handleToggleModal = () => {
     setShowModal(false);
@@ -478,12 +478,8 @@ const SupplierBasicInfoCard = ({
               <div className="d-flex col-3 flex-column profile-icon-desc justify-content-center">
                 <div className="d-flex w-100">
                   <div className="profile-icon ">
-                    {/* {" "}
-                    {supplierData?.name
-                      ? supplierData?.name.charAt(0).toUpperCase()
-                      : ""} */}
                     <Image
-                      imagePath={AppIcons.DummyLogo}
+                      imagePath={supplierData?.base64File ? supplierData?.base64File : AppIcons.DummyLogo}
                       altText="button Icon"
                     />
                   </div>

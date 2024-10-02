@@ -6,7 +6,10 @@ import { getLabelClass } from "../../../../../utils/StatusColors/StatusColors";
 export const excludingRoles = ['Admin', 'manager']
 
 export const customerbasicData = {
-  initialState: { name: "", groupTypeId: 1, countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", isSubCustomer: false, taxId: "", isBuyingForThirdParty: false, responsibleUserId: "", customerNoteId: "", incotermId: 11 },
+  initialState: {
+    name: "", groupTypeId: 1, countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", isSubCustomer: false, taxId: "",
+    isBuyingForThirdParty: false, responsibleUserId: "", customerNoteId: "", incotermId: 11, attachment: "", base64File: "", storagePath: ""
+  },
   formFields: [
     {
       id: "name",
@@ -33,6 +36,25 @@ export const customerbasicData = {
           infoButtonTooltip: "Customer Information"
         }
       }
+    },
+    {
+      id: "attachment",
+      lable: "Attachment ",
+      Field_Name: "Attachment",
+      fieldType: FormFieldTypes.IMAGE,
+      dataField: "attachment",
+      fieldSetting: {
+        placeholder: "Upload Attachment",
+        allowSpace: true,
+        isImageUpload: true,
+        isButtonVisible: true,
+        isCustomButtonVisible: false,
+        acceptedFiles: '.png , .jpg ',
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-input mb-0 custom-file-upload-section",
+      },
     },
     {
       id: "emailAddress",
@@ -264,4 +286,3 @@ export const basicInfoData = {
     },
   ],
 };
-

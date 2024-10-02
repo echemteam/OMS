@@ -43,6 +43,25 @@ export const supplierBasicData = {
       }
     },
     {
+      id: "attachment",
+      lable: "Attachment ",
+      Field_Name: "Attachment",
+      fieldType: FormFieldTypes.IMAGE,
+      dataField: "attachment",
+      fieldSetting: {
+        placeholder: "Upload Attachment",
+        allowSpace: true,
+        isImageUpload: true,
+        isButtonVisible: true,
+        isCustomButtonVisible: false,
+        acceptedFiles: '.png , .jpg ',
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-input mb-0 custom-file-upload-section",
+      },
+    },
+    {
       id: "dbaName",
       lable: "Doing Business As Name ",
       Field_Name: "Doing Business As Name",
