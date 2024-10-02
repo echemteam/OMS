@@ -155,7 +155,7 @@ export const AccountGridConfig = {
       colSettings: {
         // allowCheckbox: true,
         // isDisabled: false
-        isDisabled: false,
+        isDisabled: true,
         allowEdit: true,
       },
       allowShort: false,

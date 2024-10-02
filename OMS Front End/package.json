@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@ckeditor/ckeditor5-build-classic": "github:ckeditor/ckeditor5-build-classic",
     "@ckeditor/ckeditor5-react": "^9.3.0",
     "@iconify/react": "^5.0.2",
     "@reduxjs/toolkit": "^2.2.1",

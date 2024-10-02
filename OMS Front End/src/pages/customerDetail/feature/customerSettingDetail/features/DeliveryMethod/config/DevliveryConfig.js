@@ -105,7 +105,7 @@ export const OurAccountGridConfig = {
                 width: "20%",
             },
             colSettings: {
-                isDisabled: false,
+                isDisabled: true,
                 allowEdit: true
             },
             allowEditColumn: true,

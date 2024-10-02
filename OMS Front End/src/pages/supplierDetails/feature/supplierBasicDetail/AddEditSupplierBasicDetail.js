@@ -247,7 +247,10 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             countryId: getIdValue(data.countryId),
             responsibleUserId: getIdValue(data.responsibleUserId) || 0,
             supplierId: keyId || supplierId,
-            supplierNoteId: noteId || 0
+            supplierNoteId: noteId || 0,
+            attachmentName: null,
+            base64File: null,
+            storagePath: 'SupplierProfilePic'
         };
         if (!data.taxId) {
             addEditSupplierBasicInformation(req);
