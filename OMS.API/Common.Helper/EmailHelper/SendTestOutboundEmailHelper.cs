@@ -226,9 +226,10 @@ namespace Common.Helper.EmailHelper
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw; // Rethrow the exception
+                return IsMailSend = false;
+                //throw ex; // Rethrow the exception
             }
 
             return IsMailSend;

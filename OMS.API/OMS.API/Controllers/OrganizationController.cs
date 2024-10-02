@@ -11,7 +11,7 @@ namespace OMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     //[CheckClientIpActionFilter]
     public class OrganizationController : BaseController
     {
