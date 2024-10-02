@@ -69,7 +69,7 @@ const supplierAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse,
         }),
-        
+
         checkSupplierNameExist: builder.mutation({
             query: (Details) => ({
                 url: '/Supplier/checkSupplierNameExist',
@@ -97,7 +97,15 @@ const supplierAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
-      
+        getSearchSuppliersDetailsByNameEmailWebsite: builder.mutation({
+            query: (Details) => ({
+                url: '/Supplier/GetSearchSuppliersDetailsByNameEmailWebsite',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        })
     })
 })
 
@@ -111,7 +119,8 @@ export const {
     useLazyGetAllSupplierTypeQuery,
     useCheckSupplierNameExistMutation,
     useLazyGetSupplierDetailsBySupplierNameQuery,
-    useAddEditResponsibleUserForSupplierMutation
+    useAddEditResponsibleUserForSupplierMutation,
+    useGetSearchSuppliersDetailsByNameEmailWebsiteMutation
 } = supplierAPI
 
 export default supplierAPI;

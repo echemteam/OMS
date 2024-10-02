@@ -37,6 +37,7 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.SOSFileNumber,
                 requestData.WebFileNumber,
                 requestData.TWCTaxAccountNumber,
+                requestData.AttachmentName,
                 requestData.CreatedBy,
             }, CommandType.StoredProcedure);
         }
