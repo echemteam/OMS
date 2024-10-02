@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../Order.scss";
 import CardSection from "../../../../components/ui/card/CardSection";
 import Iconify from "../../../../components/ui/iconify/Iconify";
 import Image from "../../../../components/image/Image";
 import { AppIcons } from "../../../../data/appIcons";
 import { Accordion } from "react-bootstrap";
+import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
 const OrderDetails = () => {
+  const [isModelOpen, setIsModelOpen] = useState(false);
+
+  const onSidebarClose = () => {
+    setIsModelOpen(false);
+  };
+
+  const handleToggleModal = () => {
+    setIsModelOpen(true);
+  };
+
   return (
     <div className="order-review-section">
       <div className="row">
@@ -23,7 +34,7 @@ const OrderDetails = () => {
             CenterTitleTxt="AA123152"
             CenterBtnIcon="icomoon-free:file-pdf"
             centerBtnTitle="Purchase Order Details"
-            // centerBtnOnClick={}
+            centerBtnOnClick={handleToggleModal}
           >
             <div className="order-summery-list">
               <div className="row">
@@ -650,6 +661,16 @@ const OrderDetails = () => {
           </div>
         </div>
         {/* Right Side Section End */}
+        <SidebarModel
+          modalTitle="PO PDF"
+          contentClass="content-50"
+          onClose={onSidebarClose}
+          modalTitleIcon={AppIcons.AddIcon}
+          isOpen={isModelOpen}
+          showToggle={true}
+        >
+          Purchase Order PDF
+        </SidebarModel>
       </div>
     </div>
   );

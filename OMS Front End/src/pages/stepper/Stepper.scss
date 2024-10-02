@@ -53,13 +53,13 @@
               line-height: 125%;
               color: var(--textColor) !important;
 
-              &.small-txt {
-                font-size: var(--commonFont-medium);
-                font-weight: normal;
-                margin-top: 2px;
-                font-weight: 400;
-                opacity: 0.8;
-              }
+              // &.small-txt {
+              //   font-size: var(--commonFont-medium);
+              //   font-weight: normal;
+              //   margin-top: 2px;
+              //   font-weight: 400;
+              //   opacity: 0.8;
+              // }
             }
           }
         }
@@ -117,11 +117,12 @@
       @media only screen and (max-width: 1750px) {
         padding: 10px 15px;
         max-height: calc(100vh - 155px);
+        min-height: calc(100vh - 160px);
       }
 
       @media only screen and (max-width: 1650px) {
         max-height: calc(100vh - 145px);
-        padding-bottom: 15px ;
+        padding-bottom: 15px;
       }
       @media only screen and (max-width: 1450px) {
         max-height: calc(100vh - 165px);
@@ -231,7 +232,6 @@
 
       .card {
         max-height: calc(100vh - 260px);
-        
 
         @media only screen and (max-width: 1280px) {
           max-height: calc(100vh - 45px);
@@ -250,7 +250,6 @@
     }
   }
 }
-
 
 @media only screen and (max-width: 1750px) {
   .stepper-view {
@@ -272,7 +271,6 @@
       }
     }
   }
-  
 
   .stepper-view-supplier {
     .card {
@@ -296,7 +294,7 @@
 @media only screen and (max-width: 1566px) {
   .stepper-view {
     .stepper-section {
-      .stepper-content{
+      .stepper-content {
         max-height: calc(100vh - 165px);
       }
     }
@@ -305,7 +303,7 @@
         max-height: unset;
         margin-bottom: 0;
 
-        .card{
+        .card {
           max-height: unset;
           margin-bottom: 0;
         }
@@ -349,7 +347,6 @@
       }
     }
   }
-
 }
 
 @media only screen and (max-width: 1280px) {
@@ -393,7 +390,7 @@
 
         .tab-content {
           padding-bottom: 85px;
-          
+
           @media only screen and (max-width: 1750px) {
             max-height: calc(100vh - 350px);
             padding-bottom: 22px;
@@ -411,9 +408,7 @@
   }
 }
 
-
 // Responsive CSS
-
 
 @media only screen and (max-width: 1272px) {
   .stepper-card {
@@ -438,7 +433,5 @@
         background: var(--gradient-theme);
       }
     }
-
   }
-
 }
