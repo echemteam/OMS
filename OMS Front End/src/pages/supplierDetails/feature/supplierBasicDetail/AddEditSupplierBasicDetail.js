@@ -16,7 +16,7 @@ import ToastService from "../../../../services/toastService/ToastService";
 import { useLazyGetAllIncotermQuery, useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
 import { useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery } from "../../../../app/services/basicdetailAPI";
 import {
-    useAddEditSupplierBasicInformationMutation, useCheckSupplierNameExistMutation, useLazyGetAllSupplierTypeQuery, useLazyGetSupplierBasicInformationByIdQuery,
+    useAddEditSupplierBasicInformationMutation, useCheckSupplierNameExistMutation, useGetSearchSuppliersDetailsByNameEmailWebsiteMutation, useLazyGetAllSupplierTypeQuery, useLazyGetSupplierBasicInformationByIdQuery,
     useLazyGetSupplierDetailsBySupplierNameQuery
 } from "../../../../app/services/supplierAPI";
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
@@ -27,6 +27,8 @@ import PropTypes from 'prop-types';
 import { validateResponsibleUserId } from "../../../../utils/ResponsibleUser/validateRUser";
 import { useSelector } from "react-redux";
 import SwalAlert from "../../../../services/swalService/SwalService";
+import { validateNameEmailWebsiteGrid } from "../../../../common/features/component/ExistingInfo/Config/Existing.data";
+import ValidateCustomerSupplierInfo from "../../../../common/features/component/ExistingInfo/ValidateCustomerSupplierInfo";
 
 //** Compoent's */
 const ExistingCustomerSupplierInfo = React.lazy(() => import("../../../../common/features/component/ExistingInfo/ExistingCustomerSupplierInfo"));
@@ -48,6 +50,9 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
     const [isRemoveFields, setIsRemoveFields] = useState(false);
     const { nextStepRef, setSupplierId, moveNextPage, supplierId } = useContext(AddSupplierContext);
 
+    const [validateCustomerSupplierInfoModal, setValidateCustomerSupplierInfoModal] = useState(false);
+    const [validateCustomerSupplierData, setValidateCustomerSupplierData] = useState([]);
+
     //** API Call's */
     const [checkExistingInformation] = useLazyGetSupplierDetailsBySupplierNameQuery();
     const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAllUserData, }] = useLazyGetAllUserQuery();
@@ -61,6 +66,8 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
     const [addEditSupplierBasicInformation, { isLoading: isAddEditSupplierBasicInformationLoading, isSuccess: isAddEditSupplierBasicInformationSuccess,
         data: isAddEditSupplierBasicInformationData }] = useAddEditSupplierBasicInformationMutation();
     const [getAllIncoterm, { isSuccess: isGetAllIncotermSucess, data: allGetAllIncotermData }] = useLazyGetAllIncotermQuery();
+    const [validateSupplierNameEmailWebsite, { isSuccess: isValidateSupplierNameEmailWebsiteSucess, data: isValidateSupplierNameEmailWebsiteData, isLoading }]
+        = useGetSearchSuppliersDetailsByNameEmailWebsiteMutation();
 
     //** Security Key */
     const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICSUPPLIERDETAILS);
@@ -125,6 +132,17 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
         fetchData();
     }, [keyId, isOpen]);
 
+    useEffect(() => {
+        if (isValidateSupplierNameEmailWebsiteSucess && isValidateSupplierNameEmailWebsiteData) {
+            if (isValidateSupplierNameEmailWebsiteData && isValidateSupplierNameEmailWebsiteData.length > 0 && !supplierId > 0) {
+                setValidateCustomerSupplierData(isValidateSupplierNameEmailWebsiteData);
+                setValidateCustomerSupplierInfoModal(true);
+            } else {
+                setValidateCustomerSupplierInfoModal(false);
+                addSupplierCountine();
+            }
+        }
+    }, [isValidateSupplierNameEmailWebsiteSucess, isValidateSupplierNameEmailWebsiteData]);
 
     useEffect(() => {
         if (isOpen) {
@@ -215,19 +233,12 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             return;
         }
         if (!isOpen) {
-            const result = await checkExistingInformation(data.name).unwrap().catch(error => {
-                ToastService.warning('Failed to check existing information.');
-            });
-            if (result && result.length > 0) {
-                confirm("Similar Supplier Names Found?", "We've found some supplier with matching names. Would you like to review them before moving forward? Simply click the magnifier button to view the existing supplier details, or proceed with adding the new supplier.",
-                    "Countine", 'Close and View', true).then((confirmed) => {
-                        if (confirmed) {
-                            addSupplierCountine();
-                        }
-                    });
-            } else {
-                addSupplierCountine();
+            let req = {
+                supplierName: data?.name,
+                website: data?.website,
+                emailAddress: data?.emailAddress
             }
+            await validateSupplierNameEmailWebsite(req).unwrap();
         } else {
             addSupplierCountine();
         }
@@ -372,6 +383,16 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             {!isOpen &&
                 <ExistingCustomerSupplierInfo parentRef={parentRef} isOrderManage={false} isSupplier={true} getExistingInfoByName={useLazyGetSupplierDetailsBySupplierNameQuery} />
             }
+            {validateCustomerSupplierInfoModal && isValidateSupplierNameEmailWebsiteSucess ?
+                <ValidateCustomerSupplierInfo
+                    isSupplier={true}
+                    isModalOpen={validateCustomerSupplierInfoModal}
+                    gridCnfiguration={validateNameEmailWebsiteGrid}
+                    gridData={validateCustomerSupplierData}
+                    isGridLoading={isLoading}
+                    onAdd={addSupplierCountine}
+                />
+                : null}
         </React.Fragment>
     );
 }

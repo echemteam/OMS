@@ -9,6 +9,7 @@ import SwalAlert from "../../../../../services/swalService/SwalService";
 import { useLazyGetAllUserQuery } from "../../../../../app/services/commonAPI";
 import {
   useAddEditResponsibleUserForCustomerMutation,
+  useLazyDownloadQuery,
   useUpdateCustomerInActiveStatusMutation,
   useUpdateCustomerStatusMutation,
   useUpdateCustomerSubCustomerMutation,
@@ -77,6 +78,14 @@ const CustomerBasicInfoCard = ({
   ] = useUpdateCustomerSubCustomerMutation();
 
   const [
+    downalodImage,
+    {
+      isSuccess: isSuccessDownalod,
+      data: isDownalodData,
+    },
+  ] = useLazyDownloadQuery();
+
+  const [
     addEditResponsibleUserForCustomer,
     {
       isSuccess: isSuccessAddEditResponsibleUserForCustomer,
@@ -138,6 +147,16 @@ const CustomerBasicInfoCard = ({
       handleToggleModal();
     }
   }, [isSuccessUpdateCustomerInActiveStatus, updateCustomerInActiveStatusData]);
+
+  useEffect(() => {
+    if (isSuccessDownalod && isDownalodData) {
+      const fileData = isDownalodData.fileData;
+      const blob = new Blob([fileData], { type: fileData.type });
+      const fileURL = URL.createObjectURL(blob);
+      console.log(fileURL);
+    }
+  }, [isSuccessDownalod, isDownalodData]);
+
   useEffect(() => {
     if (isSuccessUpdateCustomerStatus && updateCustomerStatusData) {
       ToastService.success(updateCustomerStatusData.errorMessage);

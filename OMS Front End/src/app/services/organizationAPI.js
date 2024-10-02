@@ -191,6 +191,15 @@ const organizationAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        sendTestOutboundEmails: builder.mutation({
+            query: (details) => ({
+                url: '/Organization/SendTestOutboundEmails',
+                method: 'POST',
+                body: transformRequest(details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        })
     })
 })
 
@@ -216,6 +225,7 @@ export const {
     useLazyGetOrganizationOtherChargesQuery,
     useAddEditBusinessAddressesMutation,
     useLazyGetOrganizationBusinessAddressesQuery,
+    useSendTestOutboundEmailsMutation
 } = organizationAPI
 
 export default organizationAPI;

@@ -63,7 +63,7 @@ export const SMTPSettingsFormData = {
                 allowSpace: true,
                 maxLength:65,
             },
-            validation: [{ type: "require" }],
+            validation: [{ type: "require" },{ type: "email" }],
             style: {
                 containerCss: "col-md-6 mb-3 mb-input relative",
             },
@@ -78,7 +78,7 @@ export const SMTPSettingsFormData = {
                 placeholder: "Enter Your App Password",
                 maxLength:20,
             },
-            validation: [{ type: "require" }, { type: "password" }],
+            validation: [{ type: "require" }],
             style: {
                 containerCss: "col-md-6 mb-input",
             },
@@ -148,4 +148,61 @@ export const SMTPSettingsFormData = {
     formSetting: {
         isViewOnly: false
     }
+};
+
+export const TestEmailConfig = {
+    name: "Test Email",
+    initialState: {
+        emailTo: "Test@gmail.com",
+        subject: "Test",
+        body:"TestEmail"
+    },
+    formFields: [
+        {
+            id: "emailTo",
+            lable: "Email To",
+            Field_Name: "Email To",
+            fieldType: FormFieldTypes.INPUT,
+            dataField: "emailTo",
+            fieldSetting: {
+                placeholder: "Enter Email To",
+                allowSpace: false,
+            },
+            validation: [{ type: "require" }],
+            style: {
+                containerCss: "col-md-6 mb-3 mt-3",
+            },
+        },
+        {
+            id: "subject",
+            lable: "Subject",
+            Field_Name: "Subject",
+            fieldType: FormFieldTypes.INPUT,
+            dataField: "subject",
+            fieldSetting: {
+                placeholder: "Enter Subject",
+                allowSpace: false,
+            },
+            validation: [{ type: "require" }],
+            style: {
+                containerCss: "col-md-6 mb-3 mt-3",
+            },
+        },
+        {
+            id: "body",
+            lable: "Body",
+            Field_Name: "Body",
+            fieldType: FormFieldTypes.CKEDITOR,
+            dataField: "body",
+            fieldSetting: {
+                placeholder: "Enter Body",
+                allowSpace: false,
+            },
+            validation: [{ type: "require" }],
+            style: {
+                containerCss: "col-md-12 mb-3 mt-3",
+            },
+        }
+    ],
+
 };
