@@ -1,4 +1,9 @@
-﻿using Common.Helper.Extension;
+﻿using Common.Helper.EmailHelper;
+using Common.Helper.Extension;
+using Microsoft.Data.SqlClient;
+using MongoDB.Bson;
+using MongoDB.Driver;
+using MySql.Data.MySqlClient;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.Address;
 using OMS.Domain.Entities.API.Request.Organization;
@@ -9,6 +14,8 @@ using OMS.Domain.Entities.Entity.Organization;
 using OMS.Domain.Repository;
 using OMS.Shared.Entities.CommonEntity;
 using OMS.Shared.Services.Contract;
+using System.Data;
+using System.Text.Json;
 
 namespace OMS.Application.Services.Organization
 {
@@ -210,6 +217,26 @@ namespace OMS.Application.Services.Organization
         {
             return await repositoryManager.organization.GetOrganizationHistorys(requestData);
         }
+
+        public async Task<AddEntityDto<int>> SendTestOutboundEmails(SmtpCheckConnection requestData)
+        {
+            AddEntityDto<int> response = new();
+
+            bool isSentEmail = await SendTestOutboundEmailHelper.SendEmail(requestData);
+
+            if (isSentEmail)
+            {
+                response.KeyValue = 1;
+                response.ErrorMessage = "SMTP Configuration Test Successful";
+            }
+            else
+            {
+                response.KeyValue = 0;
+                response.ErrorMessage = "Failed to SMTP Configuration. Check your SMTP configuration.";
+            }
+            return response;
+        }
+
         #endregion
     }
 }
