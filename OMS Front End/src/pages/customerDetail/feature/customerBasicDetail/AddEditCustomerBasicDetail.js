@@ -43,6 +43,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     const [isResponsibleUser, setIsResponsibleUser] = useState(false);
     const [validateCustomerSupplierInfoModal, setValidateCustomerSupplierInfoModal] = useState(false);
     const [validateCustomerSupplierData, setValidateCustomerSupplierData] = useState([]);
+    const [isRemoveFields, setIsRemoveFields] = useState(false);
     const { nextRef, customerId, setCustomerId, moveNextPage, setCustomerCountryId } = useContext(BasicDetailContext);
 
     //** API Call's */
@@ -102,11 +103,13 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             if (!isOpen) {
                 const modifyFormFields = removeFormFields(formData, ['responsibleUserId']);
                 setFormData(modifyFormFields);
+                setIsRemoveFields(true);
                 setFieldSetting(customerbasicData, 'name', FieldSettingType.ISINFOBUTTONVISIBLE, true);
             }
         };
         fetchData();
     }, [keyId, isOpen]);
+
     useEffect(() => {
         if (isOpen) {
             if (customerId > 0) {
@@ -139,6 +142,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         }
     }, [isGetAllGroupTypesSucess, allGetAllGroupTypesData, isGetAllUserSucess, allGetAllUserData, isGetAllCountriesSucess, allGetAllCountriesData,
         isGetAllTerritoriesSucess, allGetAllTerritoriesData, isGetAllIncotermSucess, allGetAllIncotermData]);
+
     useEffect(() => {
         if (isAddEditCustomersBasicInformationSuccess && isAddEditCustomersBasicInformationData) {
             if (isAddEditCustomersBasicInformationData.errorMessage.includes('exists')) {
@@ -161,12 +165,14 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             }
         }
     }, [isAddEditCustomersBasicInformationSuccess, isAddEditCustomersBasicInformationData]);
+
     const onreset = () => {
         onSidebarClose()
         let restData = { ...customerbasicData };
         restData.initialState = { ...formData };
         setFormData(restData);
     }
+
     useEffect(() => {
         if (isGetCustomersBasicInformationById && GetCustomersBasicInformationByIdData && !isGetCustomersBasicInformationByIdFetching) {
             if (isCustomerOrSupplierApprovedStatus(GetCustomersBasicInformationByIdData.statusId)) {
@@ -192,6 +198,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             customerId && getCustomersBasicInformationById(customerId);
         }
     }, [isOpen]);
+
     useImperativeHandle(nextRef, () => ({
         handleAddBasicDetails,
     }));
@@ -301,7 +308,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     };
     const handleInputFields = (data, dataField) => {
         if (dataField === 'name') {
-            const newName=data.replace(/[.,]/g, '')
+            const newName = data.replace(/[.,]/g, '')
             const trimName = newName.replace(/\s+/g, ' ').trim();
             setCustomerName(trimName);
             basicDetailRef.current.updateFormFieldValue({
@@ -350,7 +357,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         <div className="basic-info-sec half-sec">
             <CardSection buttonClassName="theme-button">
                 <div className="row basic-info-step">
-                    {!isGetCustomersBasicInformationByIdFetching ?
+                    {!isGetCustomersBasicInformationByIdFetching && isRemoveFields ?
                         <FormCreator
                             config={formData}
                             ref={basicDetailRef}

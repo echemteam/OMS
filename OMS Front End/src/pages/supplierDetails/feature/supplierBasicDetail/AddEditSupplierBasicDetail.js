@@ -45,10 +45,11 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
     const [isResponsibleUser, setIsResponsibleUser] = useState(false);
     const [isButtonDisable, setIsButtonDisable] = useState(false);
     // const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
+    const [isRemoveFields, setIsRemoveFields] = useState(false);
     const { nextStepRef, setSupplierId, moveNextPage, supplierId } = useContext(AddSupplierContext);
-    const [checkExistingInformation] = useLazyGetSupplierDetailsBySupplierNameQuery();
 
     //** API Call's */
+    const [checkExistingInformation] = useLazyGetSupplierDetailsBySupplierNameQuery();
     const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAllUserData, }] = useLazyGetAllUserQuery();
     const [getAllCountries, { isSuccess: isGetAllCountriesSucess, data: allGetAllCountriesData, }] = useLazyGetAllCountriesQuery();
     const [getAllGroupTypes, { isSuccess: isGetAllGroupTypesSucess, data: allGetAllGroupTypesData, }] = useLazyGetAllGroupTypesQuery();
@@ -116,6 +117,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             if (!isOpen) {
                 const modifyFormFields = removeFormFields(formData, ['responsibleUserId']);
                 setFormData(modifyFormFields);
+                setIsRemoveFields(true);
                 // setFieldSetting(formData, 'name', FieldSettingType.INPUTBUTTON, true);
             }
         };
@@ -281,9 +283,9 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
 
     const handleInputFields = (data, dataField) => {
         if (dataField === 'name') {
-            const newName=data.replace(/[.,]/g, '')
+            const newName = data.replace(/[.,]/g, '')
             const trimName = newName.replace(/\s+/g, ' ').trim();
-            
+
             setSupplierName(trimName);
             basicDetailRef.current.updateFormFieldValue({
                 name: newName
@@ -291,7 +293,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
         }
         if (dataField === 'website') {
             const trimmedUrl = data.replace(/\/$/, "");
-            const newUrl=trimmedUrl.replace(/^(https?:\/\/)?www\./, '$1');
+            const newUrl = trimmedUrl.replace(/^(https?:\/\/)?www\./, '$1');
             basicDetailRef.current.updateFormFieldValue({
                 website: newUrl
             });
@@ -332,7 +334,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
     return (
         <React.Fragment>
             <div className="row basic-info-step">
-                {!isGetSupplierBasicInformationByIdFetching ?
+                {!isGetSupplierBasicInformationByIdFetching && isRemoveFields ?
                     <FormCreator
                         config={formData}
                         ref={basicDetailRef}
