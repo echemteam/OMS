@@ -54,7 +54,7 @@ const OrderSummary = ({ orderDetails }) => {
                   <div className="info-icon info-user">
                     <Iconify icon="ep:info-filled" className="info" />
                     {/* Customer Detail Model Start */}
-                    <CustomerDetailsModel />
+                    <CustomerDetailsModel customerId={orderDetails?.customerId} />
                     {/* Customer Detail Model End */}
                   </div>
                 </div>
@@ -85,7 +85,7 @@ const OrderSummary = ({ orderDetails }) => {
                 </div>
                 <div className="desc-detail">
                   {/* &nbsp;:&nbsp;<span>123-654</span> */}
-                  &nbsp;:&nbsp;<span>{ordersummaryDetails?.referenceNumber || "-"}</span>
+                  &nbsp;:&nbsp;<span>{ordersummaryDetails?.referenceNumber || "N/A"}</span>
                 </div>
               </div>
             </div>
@@ -98,7 +98,7 @@ const OrderSummary = ({ orderDetails }) => {
                 <div className="desc-detail">
                   &nbsp;:&nbsp;
                   {/* <span className="status pending">Pending</span> */}
-                  <span className="status pending">{ordersummaryDetails?.status || "---"}</span>
+                  <span className="status pending">{ordersummaryDetails?.status}</span>
                 </div>
               </div>
               <div className="desc-section right-status-sec">
@@ -109,7 +109,7 @@ const OrderSummary = ({ orderDetails }) => {
                 <div className="desc-detail">
                   &nbsp;:&nbsp;
                   {/* <span className="status in-transit">In Transit</span> */}
-                  <span className="status in-transit">{ordersummaryDetails?.subStatus || "---"}</span>
+                  <span className="status in-transit">{ordersummaryDetails?.subStatus}</span>
                 </div>
               </div>
               <div className="desc-section right-status-sec">

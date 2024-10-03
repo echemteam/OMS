@@ -1,17 +1,42 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
 import Iconify from "../../../../../../components/ui/iconify/Iconify";
+import { useLazyGetCustomersInfoByIdQuery } from "../../../../../../app/services/ApprovalAPI";
 
-const CustomerDetailsModel = () => {
+const CustomerDetailsModel = ({ customerId }) => {
+
+  const [customerBasicDetails, setCustomerBasicDetails] = useState(null);
+
+  const [getCustomerDetailsByCustomerId, {
+    isFetching: isCustomerFetching,
+    isSuccess: isCustomerFetched,
+    data: customerByIdData
+  }] = useLazyGetCustomersInfoByIdQuery();
+
+  const getInitials = (firstName, lastName) => {
+    return (firstName?.[0] || '').toUpperCase() + (lastName?.[0] || '').toUpperCase();
+  }
+
+  useEffect(() => {
+    if (customerId) {
+      getCustomerDetailsByCustomerId(customerId)
+    }
+  }, [customerId]);
+
+  useEffect(() => {
+    if (!isCustomerFetching && isCustomerFetched && customerByIdData) {
+      setCustomerBasicDetails(customerByIdData);
+    }
+  }, [isCustomerFetching, isCustomerFetched, customerByIdData]);
+
   return (
     <>
       <div className="customer-popup-sec">
         <div className="popup-body-sec">
           <div className="name-icon-status">
-            <div className="icon-sec">AB</div>
-            <div className="name-status">
-              <div className="name-sec">Arcus Bioscience Inc.</div>
-              <div className="status-sec pending">Pending</div>
-            </div>
+            <div className="icon-sec">{getInitials(customerBasicDetails?.name, customerBasicDetails?.name)}</div>
+            <div className="name-sec">{customerBasicDetails?.name}</div>
+            <div className="status-sec pending">{customerBasicDetails?.status}</div>
           </div>
           <div className="desc-sec-bottom">
             {/* Email Start */}
@@ -20,7 +45,7 @@ const CustomerDetailsModel = () => {
                 <Iconify icon="ic:round-email" />
               </span>
               <span className="info-part">
-                <div class="values">alexmurphy@gmail.com</div>
+                <div class="values">{customerBasicDetails?.emailAddress}</div>
                 {/* <span class="primary-email"></span> */}
               </span>
             </div>
@@ -41,8 +66,8 @@ const CustomerDetailsModel = () => {
               <span className="icon-part web-icon">
                 <Iconify icon="mdi:web" />
               </span>
-              <span className="info-part ">
-                <div class="values">www.google.com</div>
+              <span className="info-part">
+                <div class="values">{customerBasicDetails?.website}</div>
               </span>
             </div>
             {/* Web End */}
@@ -50,19 +75,19 @@ const CustomerDetailsModel = () => {
           <div className="customer-detail">
             <div className="key-value">
               <div className="key-part">R-User</div>
-              <div className="value-part">&nbsp;:&nbsp; Alex Murphy</div>
+              <div className="value-part">&nbsp;:&nbsp; {customerBasicDetails?.responsibleUserName}</div>
             </div>
             <div className="key-value">
               <div className="key-part">Country</div>
-              <div className="value-part">&nbsp;:&nbsp; United States</div>
+              <div className="value-part">&nbsp;:&nbsp; {customerBasicDetails?.countryName}</div>
             </div>
             <div className="key-value">
               <div className="key-part">tax Id</div>
-              <div className="value-part">&nbsp;:&nbsp; 45525452</div>
+              <div className="value-part">&nbsp;:&nbsp; {customerBasicDetails?.taxId}</div>
             </div>
             <div className="key-value">
               <div className="key-part">Group Type</div>
-              <div className="value-part">&nbsp;:&nbsp; Commercial</div>
+              <div className="value-part">&nbsp;:&nbsp; {customerBasicDetails?.type}</div>
             </div>
           </div>
         </div>
