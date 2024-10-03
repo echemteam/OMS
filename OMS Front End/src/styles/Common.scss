@@ -4112,6 +4112,7 @@ input[type="checkbox"]:disabled {
   }
 
   table {
+    overflow: unset;
     tbody {
       overflow: unset;
       max-height: unset;
