@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
 import { AppIcons } from "../../../../../data/appIcons";
 import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel";
 
-const OrderInformation = () => {
-  const [isModelOpenShippingAddress, setIsModelOpenShippingAddress] =
-    useState(false);
+const OrderInformation = ({ orderDetails }) => {
+
+  const [orderInfo, setOrderInfo] = useState(null);
+  const [orderAddressDetails, setOrderAddressDetails] = useState(null);
+
+  const [isModelOpenShippingAddress, setIsModelOpenShippingAddress] = useState(false);
 
   const onSidebarCloseShippingAddress = () => {
     setIsModelOpenShippingAddress(false);
@@ -16,6 +19,20 @@ const OrderInformation = () => {
     setIsModelOpenShippingAddress(true);
   };
 
+  useEffect(() => {
+    if (orderDetails) {
+      setOrderInfo(orderDetails);
+
+      if (orderDetails.orderAddressInformation) {
+        const { billingAddress, shippingAddress } = orderDetails.orderAddressInformation;
+
+        const addressArray = [billingAddress, shippingAddress];
+
+        setOrderAddressDetails(addressArray);
+      }
+    }
+  }, [orderDetails]);
+
   return (
     <div>
       <CardSection cardTitle="Order Information">
@@ -24,78 +41,45 @@ const OrderInformation = () => {
             <div className="col-xxl-12 col-lg-12 col-md-12 col-12">
               <div className="order-title">
                 <span>Order Method &nbsp;:&nbsp;</span>
-                <span className="desc">Mail</span>
+                {/* <span className="desc">Mail</span> */}
+                <span className="desc">{orderInfo?.orderMethod}</span>
               </div>
             </div>
           </div>
           <div className="row mt-2">
-            <div className="col-xxl-6 col-lg-6 col-md-6 col-12">
-              <div className="order-title">
-                <span>Billing Address &nbsp;:&nbsp;</span>
-              </div>
-              <div className="address-card">
-                <div className="title-swap-btn">
-                  <span>Chemistry Research Laboratory</span>
-                  {/* Address Line 1 */}
-                  <span
-                    className="swap-btn tooltip-div"
-                    onClick={handleToggleModalShippingAddress}
-                  >
-                    {" "}
-                    {/* When click on this button to all addresses display on sidebar */}
-                    <Iconify
-                      icon="icon-park-outline:change"
-                      className="swap-icon"
-                    />
-                    <div className="tooltip-show">
-                      <p>Change Address</p>
-                    </div>
-                    <div className="tooltip-arrow-icon"></div>
-                  </span>
+            {orderAddressDetails?.map((address) => (
+              <div className="col-xxl-6 col-lg-6 col-md-6 col-12">
+                <div className="order-title">
+                  <span>{address.type} Address &nbsp;:&nbsp;</span>
                 </div>
-                <div className="desc-add-sec">
-                  <span>Mansfield Road</span>
-                  {/* Address Line 2 */}
-                  <span>Oxford</span>
-                  {/* Address Line 3 */}
-                  <span>United Kingdom, Oxfordshire OX1 3TA</span>
-                  {/* Address Line 4 */}
+                <div className="address-card">
+                  <div className="title-swap-btn">
+                    <span>{address.addressLine1}</span>
+                    <span
+                      className="swap-btn tooltip-div"
+                      onClick={handleToggleModalShippingAddress}
+                    >
+                      <Iconify
+                        icon="icon-park-outline:change"
+                        className="swap-icon"
+                      />
+                      <div className="tooltip-show">
+                        <p>Change Address</p>
+                      </div>
+                      <div className="tooltip-arrow-icon"></div>
+                    </span>
+                  </div>
+                  <div className="desc-add-sec">
+                    <span>{address?.addressLine2}</span>
+                    <span>{address?.cityName}</span>
+                    <span>{address?.cityName}, {address?.stateName}, {address?.zipCode}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="col-xxl-6 col-lg-6 col-md-6 col-12">
-              <div className="order-title">
-                <span>Shipping Address &nbsp;:&nbsp;</span>
-              </div>
-              <div className="address-card">
-                <div className="title-swap-btn">
-                  <span>Chemistry Research Laboratory</span>
-                  {/* Address Line 1 */}
-                  <span className="swap-btn tooltip-div">
-                    {" "}
-                    {/* When click on this button to all addresses display on s idebar */}
-                    <Iconify
-                      icon="icon-park-outline:change"
-                      className="swap-icon"
-                    />
-                    <div className="tooltip-show">
-                      <p>Change Address</p>
-                    </div>
-                    <div className="tooltip-arrow-icon"></div>
-                  </span>
-                </div>
-                <div className="desc-add-sec">
-                  <span>Mansfield Road</span>
-                  {/* Address Line 2 */}
-                  <span>Oxford</span>
-                  {/* Address Line 3 */}
-                  <span>United Kingdom, Oxfordshire OX1 3TA</span>
-                  {/* Address Line 4 */}
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
-          <div className="row mt-2">
+
+          <div div className="row mt-2" >
             <div className="col-xxl-6 col-lg-6 col-md-6 col-12">
               <div className="order-title">
                 <span>End User &nbsp;:&nbsp;</span>
