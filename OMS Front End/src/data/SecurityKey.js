@@ -70,7 +70,7 @@ export const securityKey = {
      //** Customer History */
      CUSTOMERHISTORY: "Customer History",
 
-     CUSTOMERSUBCUSTOMER: "Customer Sub-Customer",
+     LINKSUBCUSTOMER: "Link Sub-Customer",
 
 
      //** SUPPLIER */
@@ -130,6 +130,6 @@ export const securityKey = {
      THIRDPARTYAPI: "Third Party Api",
 
      ORGANIZATION: "Organization",
-     DICTIONARY:"Dictionary"
+     DICTIONARY: "Dictionary"
 
 };

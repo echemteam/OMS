@@ -10,6 +10,7 @@ using OMS.Domain.Entities.Entity.OrderItems;
 using OMS.Domain.Entities.Entity.Orders;
 using OMS.Domain.Repository;
 using OMS.FileManger.Services;
+using OMS.Shared.Entities.CommonEntity;
 using OMS.Shared.Services.Contract;
 using System.Data;
 
@@ -105,6 +106,12 @@ namespace OMS.Application.Services.Order
                 }
             }
             return responseData;
+        }
+
+        public async Task<EntityList<GetOrderResponse>> GetOrders(GetOrderRequest request)
+        {
+            var customersDetails = await repositoryManager.order.GetOrders(request);
+            return customersDetails!;
         }
         #endregion
     }
