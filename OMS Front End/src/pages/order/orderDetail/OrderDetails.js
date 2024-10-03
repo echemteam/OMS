@@ -1,32 +1,63 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { lazy, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
+/** Common Services & Data files */
+import { decryptUrlData } from "../../../services/CryptoService";
+
+/** RTK Query */
+// import { useLazyGetOrderDetailByOrderIdQuery } from "../../../app/services/orderAPI";
+
+/** CSS Files */
 import "../Order.scss";
-import CardSection from "../../../components/ui/card/CardSection";
-import Iconify from "../../../components/ui/iconify/Iconify";
-import Image from "../../../components/image/Image";
-import { AppIcons } from "../../../data/appIcons";
-import { Accordion } from "react-bootstrap";
-import SidebarModel from "../../../components/ui/sidebarModel/SidebarModel";
-import OrderSummary from "./feature/ordersummary/OrderSummary";
-import OrderInformation from "./feature/orderinformation/OrderInformation";
-import OrderDocument from "./feature/orderdocument/OrderDocument";
-import OrderAction from "./feature/orderaction/OrderAction";
-import OrderItemList from "./feature/orderitemlist/OrderItemList";
+
+/** Lazily Loaded Components */
+const OrderAction = lazy(() => import("./feature/orderaction/OrderAction"));
+const OrderSummary = lazy(() => import("./feature/ordersummary/OrderSummary"));
+const OrderItemList = lazy(() => import("./feature/orderitemlist/OrderItemList"));
+const OrderDocument = lazy(() => import("./feature/orderdocument/OrderDocument"));
+const OrderInformation = lazy(() => import("./feature/orderinformation/OrderInformation"));
+
 const OrderDetails = () => {
+
+  const { id } = useParams();
+  const orderId = id ? decryptUrlData(id) : 0;
+
+  const [orderDetails, setOrderDetails] = useState();
+
+  // const [getOrderDetailByOrderId, {
+  //   isFetching: isOrderDetailsFetching,
+  //   isSuccess: isOrderDetailsFetched,
+  //   data: orderByOrderIdDetails
+  // }] = useLazyGetOrderDetailByOrderIdQuery();
+
+  // useEffect(() => {
+  //   if (orderId) {
+  //     getOrderDetailByOrderId(orderId);
+  //   }
+  // }, [orderId]);
+
+  // useEffect(() => {
+  //   if (!isOrderDetailsFetching && isOrderDetailsFetched && orderByOrderIdDetails) {
+  //     setOrderDetails(orderByOrderIdDetails)
+  //   }
+  // }, [isOrderDetailsFetching, isOrderDetailsFetched, orderByOrderIdDetails]);
+
   return (
     <div className="order-review-section">
       <div className="row">
         {/* Left Side Section Start */}
         <div className="col-xxl-5 col-lg-5 col-md-5 col-12">
           {/* Order Summery Start */}
-          <OrderSummary />
+          <OrderSummary orderDetails={orderDetails} />
           {/* Order Summery End */}
 
           {/* Order Information Start */}
-          <OrderInformation />
+          <OrderInformation orderDetails={orderDetails} />
           {/* Order Information End */}
 
           {/* Order Document Start */}
-          <OrderDocument />
+          <OrderDocument orderDetails={orderDetails} />
           {/* Order Document End */}
         </div>
         {/* Left Side Section End */}
