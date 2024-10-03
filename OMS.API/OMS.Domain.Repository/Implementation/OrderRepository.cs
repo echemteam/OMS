@@ -17,6 +17,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETPONUMBERDETAILSBYPONUMBER = "GetPoNumberDetailsByPoNumber";
         const string ADDORDER = "AddOrder";
         const string GETORDERS = "GetOrders";
+        const string GETORDERITEMSBYORDERID="GetOrderItemsByOrderId";
         const string GETORDERDETAILBYORDERID = "GetOrderDetailByOrderId";
         const string GETORDERADDRESSESBYORDERID = "GetOrderAddressesByOrderId";
         const string GETORDERCONTACTBYORDERID = "GetOrderContactByOrderId";
@@ -76,6 +77,14 @@ namespace OMS.Domain.Repository.Implementation
                 request.Filters?.SearchText,
                 request.SortString
             }, true);
+        }
+        public async Task<List<GetOrderItemsByOrderIdResponse>> GetOrderItemsByOrderId(int orderId)
+        {
+            List<GetOrderItemsByOrderIdResponse> orderItemDetails = await _context.GetList<GetOrderItemsByOrderIdResponse>(GETORDERITEMSBYORDERID, new
+            {
+                orderId
+            }, CommandType.StoredProcedure);
+            return orderItemDetails;
         }
 
         public async Task<GetOrderDetailByOrderIdResponse> GetOrderDetailByOrderId(int orderId)
