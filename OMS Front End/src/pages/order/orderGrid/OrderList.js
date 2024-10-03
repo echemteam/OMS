@@ -4,6 +4,7 @@ import CardSection from '../../../components/ui/card/CardSection';
 import InApprovalOrdersTab from './feature/InApprovalOrdersTab';
 import PendingOrdersTab from './feature/PendingOrdersTab';
 import ReviewOrdersTab from './feature/ReviewOrdersTab';
+import { OrderStatusEnums } from '../../../utils/Enums/StatusEnums';
 
 
 const OrderList = () => {
@@ -18,7 +19,9 @@ const OrderList = () => {
           sMenuItemCaption: " Pending Order",
           component: (
             <div className="mt-2 customer-list-all">
-            <PendingOrdersTab />
+            <PendingOrdersTab 
+            statusId={OrderStatusEnums.PendingOrder} 
+            />
             </div>
           ),
         },
@@ -26,7 +29,9 @@ const OrderList = () => {
           sMenuItemCaption: " Review Order ",
           component: (
             <div className="mt-2 customer-list-all">
-                     <ReviewOrdersTab/>        
+                     <ReviewOrdersTab 
+                     statusId={OrderStatusEnums.ReviewOrder}
+                     />        
             </div>
           ),
         },
@@ -34,7 +39,9 @@ const OrderList = () => {
           sMenuItemCaption: "In Approval ",
           component: (
             <div className="mt-2 customer-list-submitted customer-list-all">
-             <InApprovalOrdersTab/>
+             <InApprovalOrdersTab
+              statusId={OrderStatusEnums.InApproval}
+             />
               
             </div>
           ),

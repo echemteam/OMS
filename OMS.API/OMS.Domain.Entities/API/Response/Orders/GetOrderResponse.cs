@@ -11,7 +11,7 @@
         public string? SubCustomerName { get; set; }
         public string? PoNumber { get; set; }
         public DateTime? OrderReceivedDate { get; set; }
-        public byte? TotalItems { get; set; }
-        public decimal? TotalItemsPrice { get; set; }
+        public byte? Items { get; set; }
+        public decimal? ItemsTotal { get; set; }
     }
 }
