@@ -1,36 +1,48 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
-import CardSection from "../../../../components/ui/card/CardSection";
-import { AppIcons } from "../../../../data/appIcons";
-import "../../Order.scss";
-import FinalMolGrid from "../../../../components/FinalMolGrid/FinalMolGrid";
-import { orderListMolGridConfig } from "../../feature/orderListDetail/config/OrderListConfig";
-import {
-  collapsibleChildGridData,
-  orderListMolGridData,
-} from "../../feature/orderListDetail/config/OrderList.Data";
 import { useNavigate } from "react-router-dom";
+
+/** Common Components */
+import CardSection from "../../../../components/ui/card/CardSection";
+import FinalMolGrid from "../../../../components/FinalMolGrid/FinalMolGrid";
+
+/** Common Services & Data files */
+import { AppIcons } from "../../../../data/appIcons";
+import { encryptUrlData } from "../../../../services/CryptoService";
+
+/** Configuration files */
+import { orderListMolGridConfig } from "../../feature/orderListDetail/config/OrderListConfig";
+import { collapsibleChildGridData, orderListMolGridData, } from "../../feature/orderListDetail/config/OrderList.Data";
+
+/** RTK Query */
 import { useGetOrdersMutation } from "../../../../app/services/orderAPI";
 
+/** CSS Files */
+import "../../Order.scss";
 
-const Orders = ({orderStatusId,orderSubStatusId,orderItemStatusId}) => {
+const Orders = ({ orderStatusId, orderSubStatusId, orderItemStatusId }) => {
+
   const molGridRef = useRef();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
+
   const [dataSource, setDataSource] = useState([]);
   const [totalRowCount, setTotalRowCount] = useState(0);
- // const { confirm } = SwalAlert();
   const [gridChildDataSource, setGridChildDataSource] = useState(collapsibleChildGridData);
-  const [getOrders,{ isLoading: isGetOrderListLoading, isSuccess: isGetOrderListSuccess, data: isGetOrderListData }] = useGetOrdersMutation();
-  
+
+  // const { confirm } = SwalAlert();
+
+  const [getOrders, { isLoading: isGetOrderListLoading, isSuccess: isGetOrderListSuccess, data: isGetOrderListData }] = useGetOrdersMutation();
+
   useEffect(() => {
     onGetData()
-  }, [orderStatusId, orderSubStatusId,orderItemStatusId]);
+  }, [orderStatusId, orderSubStatusId, orderItemStatusId]);
 
   useEffect(() => {
     if (isGetOrderListSuccess && isGetOrderListData) {
-      
+
       if (isGetOrderListData) {
         setDataSource(isGetOrderListData.dataSource);
-       // handleListData(isGetOrderListData.dataSource.length)
+        // handleListData(isGetOrderListData.dataSource.length)
 
       }
       if (isGetOrderListData.totalRecord) {
@@ -38,8 +50,8 @@ const Orders = ({orderStatusId,orderSubStatusId,orderItemStatusId}) => {
       }
     }
   }, [isGetOrderListSuccess, isGetOrderListData]);
-  const getLists = (pageObject, sortingString) => {
 
+  const getLists = (pageObject, sortingString) => {
     const request = {
       pagination: {
         pageNumber: pageObject.pageNumber,
@@ -47,9 +59,9 @@ const Orders = ({orderStatusId,orderSubStatusId,orderItemStatusId}) => {
       },
       filters: { searchText: "" },
       sortString: sortingString,
-      orderStatusId: orderStatusId ,
-      orderSubStatusId:orderSubStatusId ? orderSubStatusId : 0,
-      orderItemStatusId:orderItemStatusId ? orderItemStatusId :0,
+      orderStatusId: orderStatusId,
+      orderSubStatusId: orderSubStatusId ? orderSubStatusId : 0,
+      orderItemStatusId: orderItemStatusId ? orderItemStatusId : 0,
     };
     getOrders(request);
   };
@@ -79,10 +91,9 @@ const Orders = ({orderStatusId,orderSubStatusId,orderItemStatusId}) => {
   //   }
   // }, [orderListMolGridData, collapsibleChildGridData]);
 
-
-  const handleEditClick = () => {
-    // alert("EDIT");
-    navigate("/OrderDetails")
+  const handleEditClick = (data) => {
+    const orderId = data.orderId;
+    navigate(`/OrderDetails/${encryptUrlData(orderId)}`)
   };
 
   const handleDeleteClick = () => {
@@ -133,7 +144,7 @@ const Orders = ({orderStatusId,orderSubStatusId,orderItemStatusId}) => {
                   currentPage: 1,
                 }}
                 onActionChange={actionHandler}
-                
+
               />
             </CardSection>
           </div>

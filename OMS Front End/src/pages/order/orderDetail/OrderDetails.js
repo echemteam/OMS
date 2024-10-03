@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { decryptUrlData } from "../../../services/CryptoService";
 
 /** RTK Query */
-// import { useLazyGetOrderDetailByOrderIdQuery } from "../../../app/services/orderAPI";
+import { useLazyGetOrderDetailByOrderIdQuery } from "../../../app/services/orderAPI";
 
 /** CSS Files */
 import "../Order.scss";
@@ -25,23 +25,23 @@ const OrderDetails = () => {
 
   const [orderDetails, setOrderDetails] = useState();
 
-  // const [getOrderDetailByOrderId, {
-  //   isFetching: isOrderDetailsFetching,
-  //   isSuccess: isOrderDetailsFetched,
-  //   data: orderByOrderIdDetails
-  // }] = useLazyGetOrderDetailByOrderIdQuery();
+  const [getOrderDetailByOrderId, {
+    isFetching: isOrderDetailsFetching,
+    isSuccess: isOrderDetailsFetched,
+    data: orderByOrderIdDetails
+  }] = useLazyGetOrderDetailByOrderIdQuery();
 
-  // useEffect(() => {
-  //   if (orderId) {
-  //     getOrderDetailByOrderId(orderId);
-  //   }
-  // }, [orderId]);
+  useEffect(() => {
+    if (orderId) {
+      getOrderDetailByOrderId(orderId);
+    }
+  }, [orderId]);
 
-  // useEffect(() => {
-  //   if (!isOrderDetailsFetching && isOrderDetailsFetched && orderByOrderIdDetails) {
-  //     setOrderDetails(orderByOrderIdDetails)
-  //   }
-  // }, [isOrderDetailsFetching, isOrderDetailsFetched, orderByOrderIdDetails]);
+  useEffect(() => {
+    if (!isOrderDetailsFetching && isOrderDetailsFetched && orderByOrderIdDetails) {
+      setOrderDetails(orderByOrderIdDetails)
+    }
+  }, [isOrderDetailsFetching, isOrderDetailsFetched, orderByOrderIdDetails]);
 
   return (
     <div className="order-review-section">
