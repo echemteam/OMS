@@ -37,10 +37,28 @@ const orderAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        getOrders: builder.mutation({
+            query: (userQuery) => ({
+                url: '/Order/GetOrders',
+                method: 'POST',
+                body: transformRequest(userQuery)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+
+        getOrderDetailByOrderId: builder.query({
+            query: (orderId) => ({
+                url: encryptQueryString(`Order/GetOrderDetailByOrderId?orderId=${orderId}`),
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse,
+        }),
     })
 })
 
 export const { useCheckPoNumberExistOrNotMutation, useLazyGetPoNumberDetailsByPoNumberQuery,
-    useAddOrderMutation } = orderAPI;
+    useAddOrderMutation ,useGetOrdersMutation,  useLazyGetOrderDetailByOrderIdQuery, } = orderAPI;
 
 export default orderAPI;
