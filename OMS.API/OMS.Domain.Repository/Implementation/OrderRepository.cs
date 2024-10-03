@@ -1,6 +1,4 @@
-﻿using OMS.Domain.Entities.API.Request.Customers;
-using OMS.Domain.Entities.API.Request.Orders;
-using OMS.Domain.Entities.API.Response.Customers;
+﻿using OMS.Domain.Entities.API.Request.Orders;
 using OMS.Domain.Entities.API.Response.Orders;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Orders;
@@ -19,6 +17,10 @@ namespace OMS.Domain.Repository.Implementation
         const string GETPONUMBERDETAILSBYPONUMBER = "GetPoNumberDetailsByPoNumber";
         const string ADDORDER = "AddOrder";
         const string GETORDERS = "GetOrders";
+        const string GETORDERDETAILBYORDERID = "GetOrderDetailByOrderId";
+        const string GETORDERADDRESSESBYORDERID = "GetOrderAddressesByOrderId";
+        const string GETORDERCONTACTBYORDERID = "GetOrderContactByOrderId";
+        const string GETORDERDOCUMENTBYORDERID = "GetOrderDocumentByOrderId";
         #endregion
 
         public OrderRepository(DapperContext dapperContext) : base(dapperContext)
@@ -68,11 +70,48 @@ namespace OMS.Domain.Repository.Implementation
             {
                 request.OrderStatusId,
                 request.OrderSubStatusId,
+                request.OrderItemStatusId,
                 request.Pagination!.PageNumber,
                 request.Pagination.PageSize,
                 request.Filters?.SearchText,
                 request.SortString
             }, true);
+        }
+
+        public async Task<GetOrderDetailByOrderIdResponse> GetOrderDetailByOrderId(int orderId)
+        {
+            GetOrderDetailByOrderIdResponse orderDetails = await _context.GetFrist<GetOrderDetailByOrderIdResponse>(GETORDERDETAILBYORDERID, new
+            {
+                orderId
+            }, commandType: CommandType.StoredProcedure);
+            return orderDetails;
+        }
+
+        public async Task<AddressResponse> GetOrderAddressesByOrderId(int addressId)
+        {
+            AddressResponse addressDetails = await _context.GetFrist<AddressResponse>(GETORDERADDRESSESBYORDERID, new
+            {
+                addressId
+            }, commandType: CommandType.StoredProcedure);
+            return addressDetails;
+        }
+
+        public async Task<List<GetOrderContactByOrderIdResponse>> GetOrderContactByOrderId(int orderId)
+        {
+            List<GetOrderContactByOrderIdResponse> contactDetails = await _context.GetList<GetOrderContactByOrderIdResponse> (GETORDERCONTACTBYORDERID, new
+            {
+                orderId
+            }, CommandType.StoredProcedure);
+            return contactDetails;
+        }
+
+        public async Task<List<GetOrderDocumentByOrderIdResponse>> GetOrderDocumentByOrderId(int orderId)
+        {
+            List<GetOrderDocumentByOrderIdResponse> contactDetails = await _context.GetList<GetOrderDocumentByOrderIdResponse>(GETORDERDOCUMENTBYORDERID, new
+            {
+                orderId
+            }, CommandType.StoredProcedure);
+            return contactDetails;
         }
 
         #endregion

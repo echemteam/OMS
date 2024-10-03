@@ -95,16 +95,16 @@ export const ComponentNavigation = [
   },
   {
     id: "orderDetails",
-    path: "/orderDetails",
+    path: "/orderDetails/:id",
     exact: true,
     title: '',
     component: OrderDetails,
-    hasParams: false,
+    hasParams: true,
     text: 'OrderDetails',
     securityKey: securityKey.ADDORDER
   },
 
-  
+
 
   {
     id: 'demoForm',

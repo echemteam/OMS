@@ -91,7 +91,7 @@ export const collapsibleChildGridData = [
     price: "12521",
     status: "Complete",
     deliveryMeter: "fkj kdsfksdh fksdfhskjd f",
-    action:""
+    action: ""
   },
   {
     id: 2,
@@ -101,7 +101,7 @@ export const collapsibleChildGridData = [
     price: "12521",
     status: "Complete",
     deliveryMeter: "fkj kdsfksdh fksdfhskjd f",
-    action:""
+    action: ""
   },
   {
     id: 3,
@@ -111,7 +111,7 @@ export const collapsibleChildGridData = [
     price: "12521",
     status: "Complete",
     deliveryMeter: "fkj kdsfksdh fksdfhskjd f",
-    action:""
+    action: ""
   },
   {
     id: 4,
@@ -121,7 +121,7 @@ export const collapsibleChildGridData = [
     price: "12521",
     status: "Complete",
     deliveryMeter: "fkj kdsfksdh fksdfhskjd f",
-    action:""
+    action: ""
   },
   {
     id: 5,
@@ -131,7 +131,7 @@ export const collapsibleChildGridData = [
     price: "12521",
     status: "Complete",
     deliveryMeter: "fkj kdsfksdh fksdfhskjd f",
-    action:""
+    action: ""
   },
   {
     id: 6,
@@ -141,7 +141,7 @@ export const collapsibleChildGridData = [
     price: "12521",
     status: "Complete",
     deliveryMeter: "fkj kdsfksdh fksdfhskjd f",
-    action:""
+    action: ""
   },
   {
     id: 7,
@@ -151,7 +151,7 @@ export const collapsibleChildGridData = [
     price: "12521",
     status: "Complete",
     deliveryMeter: "fkj kdsfksdh fksdfhskjd f",
-    action:""
+    action: ""
   },
   {
     id: 8,
@@ -161,7 +161,7 @@ export const collapsibleChildGridData = [
     price: "12521",
     status: "Complete",
     deliveryMeter: "fkj kdsfksdh fksdfhskjd f",
-    action:""
+    action: ""
   },
 
 ];

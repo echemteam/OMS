@@ -47,3 +47,21 @@ export const statusMapping = {
     DISABLE: "Disable",
     REJECT: "Reject"
   };
+
+  export const OrderStatusEnums={
+    PendingOrder :1,
+    ReviewOrder:2,
+    InApproval:3,
+  };
+
+  export const OrderSubStatusEnums={
+    CustomerNotValid:1,
+    BillingAddressPendingApproval:2,
+    ReviewPending:3,  
+  };
+
+  export const OrderItemStatusEnum={
+    PriceVerification :2,
+    StockVerifiaction:3,
+
+  };

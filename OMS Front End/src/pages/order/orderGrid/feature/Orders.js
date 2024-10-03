@@ -1,34 +1,99 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
-import CardSection from "../../../../components/ui/card/CardSection";
-import { AppIcons } from "../../../../data/appIcons";
-import "../../Order.scss";
-import FinalMolGrid from "../../../../components/FinalMolGrid/FinalMolGrid";
-import { orderListMolGridConfig } from "../../feature/orderListDetail/config/OrderListConfig";
-import {
-  collapsibleChildGridData,
-  orderListMolGridData,
-} from "../../feature/orderListDetail/config/OrderList.Data";
 import { useNavigate } from "react-router-dom";
-const Orders = () => {
+
+/** Common Components */
+import CardSection from "../../../../components/ui/card/CardSection";
+import FinalMolGrid from "../../../../components/FinalMolGrid/FinalMolGrid";
+
+/** Common Services & Data files */
+import { AppIcons } from "../../../../data/appIcons";
+import { encryptUrlData } from "../../../../services/CryptoService";
+
+/** Configuration files */
+import { orderListMolGridConfig } from "../../feature/orderListDetail/config/OrderListConfig";
+import { collapsibleChildGridData, orderListMolGridData, } from "../../feature/orderListDetail/config/OrderList.Data";
+
+/** RTK Query */
+import { useGetOrdersMutation } from "../../../../app/services/orderAPI";
+
+/** CSS Files */
+import "../../Order.scss";
+
+const Orders = ({ orderStatusId, orderSubStatusId, orderItemStatusId }) => {
+
   const molGridRef = useRef();
-const navigate=useNavigate();
-  const [dataSource, setDataSource] = useState(orderListMolGridData);
-  const [gridChildDataSource, setGridChildDataSource] = useState(
-    collapsibleChildGridData
-  );
+  const navigate = useNavigate();
+
+  const [dataSource, setDataSource] = useState([]);
+  const [totalRowCount, setTotalRowCount] = useState(0);
+  const [gridChildDataSource, setGridChildDataSource] = useState(collapsibleChildGridData);
+
+  // const { confirm } = SwalAlert();
+
+  const [getOrders, { isLoading: isGetOrderListLoading, isSuccess: isGetOrderListSuccess, data: isGetOrderListData }] = useGetOrdersMutation();
 
   useEffect(() => {
-    if (orderListMolGridData) {
-      setDataSource(orderListMolGridData);
-    }
-    if (collapsibleChildGridData) {
-      setGridChildDataSource(collapsibleChildGridData);
-    }
-  }, [orderListMolGridData, collapsibleChildGridData]);
+    onGetData()
+  }, [orderStatusId, orderSubStatusId, orderItemStatusId]);
 
-  const handleEditClick = () => {
-    // alert("EDIT");
-    navigate("/OrderDetails")
+  useEffect(() => {
+    if (isGetOrderListSuccess && isGetOrderListData) {
+
+      if (isGetOrderListData) {
+        setDataSource(isGetOrderListData.dataSource);
+        // handleListData(isGetOrderListData.dataSource.length)
+
+      }
+      if (isGetOrderListData.totalRecord) {
+        setTotalRowCount(isGetOrderListData.totalRecord);
+      }
+    }
+  }, [isGetOrderListSuccess, isGetOrderListData]);
+
+  const getLists = (pageObject, sortingString) => {
+    const request = {
+      pagination: {
+        pageNumber: pageObject.pageNumber,
+        pageSize: pageObject.pageSize,
+      },
+      filters: { searchText: "" },
+      sortString: sortingString,
+      orderStatusId: orderStatusId,
+      orderSubStatusId: orderSubStatusId ? orderSubStatusId : 0,
+      orderItemStatusId: orderItemStatusId ? orderItemStatusId : 0,
+    };
+    getOrders(request);
+  };
+
+  const handlePageChange = (page) => {
+    getLists(page, molGridRef.current.generateSortingString());
+  };
+
+  const handleSorting = (shortString) => {
+    getLists(molGridRef.current.getCurrentPageObject(), shortString);
+  }
+  const onGetData = () => {
+
+    if (molGridRef.current) {
+      const defaultPageObject = molGridRef.current.getCurrentPageObject();
+      getLists(defaultPageObject, molGridRef.current.generateSortingString());
+    }
+  }
+
+
+  // useEffect(() => {
+  //   if (orderListMolGridData) {
+  //     setDataSource(orderListMolGridData);
+  //   }
+  //   if (collapsibleChildGridData) {
+  //     setGridChildDataSource(collapsibleChildGridData);
+  //   }
+  // }, [orderListMolGridData, collapsibleChildGridData]);
+
+  const handleEditClick = (data) => {
+    const orderId = data.orderId;
+    navigate(`/OrderDetails/${encryptUrlData(orderId)}`)
   };
 
   const handleDeleteClick = () => {
@@ -70,8 +135,16 @@ const navigate=useNavigate();
                 childTableDataSource={gridChildDataSource}
                 dataSource={dataSource}
                 // dataSource={collapsibleMolGridData}
+                onPageChange={handlePageChange}
                 allowPagination={true}
+                onSorting={handleSorting}
+                pagination={{
+                  totalCount: totalRowCount,
+                  pageSize: 20,
+                  currentPage: 1,
+                }}
                 onActionChange={actionHandler}
+
               />
             </CardSection>
           </div>

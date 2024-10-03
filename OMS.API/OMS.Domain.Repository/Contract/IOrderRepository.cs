@@ -12,5 +12,9 @@ namespace OMS.Domain.Repository.Contract
         Task<List<GetPoNumberDetailsByPoNumberResponse>> GetPoNumberDetailsByPoNumber(string poNumber);
         Task<AddEntityDto<int>> AddOrder(OrderDto requestData);
         Task<EntityList<GetOrderResponse>> GetOrders(GetOrderRequest request);
+        Task<GetOrderDetailByOrderIdResponse> GetOrderDetailByOrderId(int orderId);
+        Task<AddressResponse> GetOrderAddressesByOrderId(int addressId);
+        Task<List<GetOrderContactByOrderIdResponse>> GetOrderContactByOrderId(int orderId);
+        Task<List<GetOrderDocumentByOrderIdResponse>> GetOrderDocumentByOrderId(int orderId);
     }
 }
