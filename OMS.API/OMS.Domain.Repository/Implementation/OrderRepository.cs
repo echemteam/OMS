@@ -19,6 +19,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETPONUMBERDETAILSBYPONUMBER = "GetPoNumberDetailsByPoNumber";
         const string ADDORDER = "AddOrder";
         const string GETORDERS = "GetOrders";
+        const string GETORDERITEMSBYORDERID="GetOrderItemsByOrderId";
         #endregion
 
         public OrderRepository(DapperContext dapperContext) : base(dapperContext)
@@ -75,7 +76,14 @@ namespace OMS.Domain.Repository.Implementation
                 request.SortString
             }, true);
         }
-
+        public async Task<List<GetOrderItemsByOrderIdResponse>> GetOrderItemsByOrderId(int orderId)
+        {
+            List<GetOrderItemsByOrderIdResponse> orderItemDetails = await _context.GetList<GetOrderItemsByOrderIdResponse>(GETORDERITEMSBYORDERID, new
+            {
+                orderId
+            }, CommandType.StoredProcedure);
+            return orderItemDetails;
+        }
         #endregion
     }
 }
