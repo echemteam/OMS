@@ -51,7 +51,7 @@ const OrderSummary = ({ orderDetails }) => {
                 <div className="desc-detail">
                   {/* &nbsp;:&nbsp;<span>Arcus Bioscience Inc.</span> */}
                   &nbsp;:&nbsp;<span>{ordersummaryDetails?.customerName || "---"}</span>
-                  <div className="info-icon">
+                  <div className="info-icon info-user">
                     <Iconify icon="ep:info-filled" className="info" />
                     {/* Customer Detail Model Start */}
                     <CustomerDetailsModel />
@@ -67,7 +67,7 @@ const OrderSummary = ({ orderDetails }) => {
                 <div className="desc-detail">
                   {/* &nbsp;:&nbsp;<span>Exelixis Inc.</span> */}
                   &nbsp;:&nbsp;<span>{ordersummaryDetails?.subCustomerName || "-"}</span>
-                  <div className="info-icon">
+                  <div className="info-icon info-user">
                     <Iconify icon="ep:info-filled" className="info" />
                     {/* Customer Detail Model Start */}
                     <CustomerDetailsModel />

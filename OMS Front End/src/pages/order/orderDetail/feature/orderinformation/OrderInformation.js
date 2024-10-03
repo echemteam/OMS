@@ -4,18 +4,17 @@ import Iconify from "../../../../../components/ui/iconify/Iconify";
 import { AppIcons } from "../../../../../data/appIcons";
 import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel";
 import OrderInfoAddressModel from "./feature/OrderInfoAddressModel";
+import UserDetailsModel from "./feature/UserDetailsModel";
+import UserCardDetail from "./feature/UserCardDetail";
 
 const OrderInformation = ({ orderDetails }) => {
-
   const [orderInfo, setOrderInfo] = useState(null);
   const [orderAddressDetails, setOrderAddressDetails] = useState(null);
   const [orderContactDetails, setOrderContactDetails] = useState(null);
 
-  const [isModelOpenShippingAddress, setIsModelOpenShippingAddress] = useState(false);
-
-  const getInitials = (firstName, lastName) => {
-    return (firstName?.[0] || '').toUpperCase() + (lastName?.[0] || '').toUpperCase();
-  }
+  const [isModelOpenShippingAddress, setIsModelOpenShippingAddress] =
+    useState(false);
+  const [isModelOpenUsers, setIsModelOpenUsers] = useState(false);
 
   const onSidebarCloseShippingAddress = () => {
     setIsModelOpenShippingAddress(false);
@@ -25,12 +24,21 @@ const OrderInformation = ({ orderDetails }) => {
     setIsModelOpenShippingAddress(true);
   };
 
+  const onSidebarCloseUsers = () => {
+    setIsModelOpenUsers(false);
+  };
+
+  const handleToggleModalUsers = () => {
+    setIsModelOpenUsers(true);
+  };
+
   useEffect(() => {
     if (orderDetails) {
       setOrderInfo(orderDetails);
 
       if (orderDetails.orderAddressInformation) {
-        const { billingAddress, shippingAddress } = orderDetails.orderAddressInformation;
+        const { billingAddress, shippingAddress } =
+          orderDetails.orderAddressInformation;
         const addressArray = [billingAddress, shippingAddress];
         setOrderAddressDetails(addressArray);
       }
@@ -79,7 +87,13 @@ const OrderInformation = ({ orderDetails }) => {
                   </div>
                   <div className="desc-add-sec">
                     <span>{address?.addressLine2}</span>
-                    <span>{address?.cityName}, {address.stateCode ? address.stateCode : address.stateName}{" "} {address?.zipCode}</span>
+                    <span>
+                      {address?.cityName},{" "}
+                      {address.stateCode
+                        ? address.stateCode
+                        : address.stateName}{" "}
+                      {address?.zipCode}
+                    </span>
                     <span>{address?.countryName}</span>
                   </div>
                 </div>
@@ -94,190 +108,15 @@ const OrderInformation = ({ orderDetails }) => {
                 <div className="order-title">
                   <span>{contact?.contactType} &nbsp;:&nbsp;</span>
                 </div>
-                <div className="contact-card">
-                  <div className="profile-name-btn">
-                    <div className="profile-icon-sec">{getInitials(contact?.firstName, contact?.lastName)}</div>
-                    <div className="right-info">
-                      <div className="right-name-btn">
-                        <div className="user-name">{contact?.firstName} {contact?.lastName}</div>
-                        <div className="btn-sec">
-                          <div className="select-icon tooltip-div">
-                            <Iconify
-                              icon="icon-park-outline:change"
-                              className="swap-icon"
-                            />
-                            <div className="tooltip-show">
-                              <p>Change Customer</p>
-                            </div>
-                            <div className="tooltip-arrow-icon"></div>
-                          </div>
-                          <div className="info-display tooltip-div">
-                            <Iconify icon="ep:info-filled" className="info" />
-                            <div className="tooltip-show">
-                              <p>Customer Details</p>
-                            </div>
-                            <div className="tooltip-arrow-icon"></div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="user-details">
-                        <div className="email">
-                          <Iconify icon="ic:round-email" />
-                          <span>
-                            {contact?.emailAddressList?.find((email) => email.isPrimary)?.emailAddress}
-                          </span>
-                        </div>
-                        <div className="number">
-                          <Iconify icon="mingcute:phone-fill" />
-                          <span>
-                            {/* {contact?.phoneNumberList?.find((number) => number.isPrimary)?.phoneNumber} */}
-                            {contact?.phoneNumberList
-                              ?.find((number) => number.isPrimary)
-                              ? `${contact.phoneNumberList.find((number) => number.isPrimary)?.phoneCode} ${contact.phoneNumberList.find((number) => number.isPrimary)?.phoneNumber}`
-                              : ''}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+
+                <UserCardDetail
+                  contact={contact}
+                  handleToggleModalUsers={handleToggleModalUsers}
+                  
+                />
               </div>
             ))}
           </div>
-          {/* <div div className="row mt-2" >
-            <div className="col-xxl-6 col-lg-6 col-md-6 col-12">
-              <div className="order-title">
-                <span>End User &nbsp;:&nbsp;</span>
-              </div>
-              <div className="contact-card">
-                <div className="profile-name-btn">
-                  <div className="profile-icon-sec">AM</div>
-                  <div className="right-info">
-                    <div className="right-name-btn">
-                      <div className="user-name">Alex Murphy</div>
-                      <div className="btn-sec">
-                        <div className="select-icon tooltip-div">
-                          <Iconify
-                            icon="icon-park-outline:change"
-                            className="swap-icon"
-                          />
-                          <div className="tooltip-show">
-                            <p>Change Customer</p>
-                          </div>
-                          <div className="tooltip-arrow-icon"></div>
-                        </div>
-                        <div className="info-display tooltip-div">
-                          <Iconify icon="ep:info-filled" className="info" />
-                          <div className="tooltip-show">
-                            <p>Customer Details</p>
-                          </div>
-                          <div className="tooltip-arrow-icon"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="user-details">
-                      <div className="email">
-                        <Iconify icon="ic:round-email" />
-                        <span>alexmurphy@gmail.com</span>
-                      </div>
-                      <div className="number">
-                        <Iconify icon="mingcute:phone-fill" />
-                        <span>+91 9173010672</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-xxl-6 col-lg-6 col-md-6 col-12">
-              <div className="order-title">
-                <span>Invoice Submission&nbsp;:&nbsp;</span>
-              </div>
-              <div className="contact-card">
-                <div className="profile-name-btn">
-                  <div className="profile-icon-sec">AM</div>
-                  <div className="right-info">
-                    <div className="right-name-btn">
-                      <div className="user-name">Alex Murphy</div>
-                      <div className="btn-sec">
-                        <div className="select-icon tooltip-div">
-                          <Iconify
-                            icon="icon-park-outline:change"
-                            className="swap-icon"
-                          />
-                          <div className="tooltip-show">
-                            <p>Change Customer</p>
-                          </div>
-                          <div className="tooltip-arrow-icon"></div>
-                        </div>
-                        <div className="info-display tooltip-div">
-                          <Iconify icon="ep:info-filled" className="info" />
-                          <div className="tooltip-show">
-                            <p>Customer Details</p>
-                          </div>
-                          <div className="tooltip-arrow-icon"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="user-details">
-                      <div className="email">
-                        <Iconify icon="ic:round-email" />
-                        <span>alexmurphy@gmail.com</span>
-                      </div>
-                      <div className="number">
-                        <Iconify icon="mingcute:phone-fill" />
-                        <span>+91 9173010672</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-xxl-6 col-lg-6 col-md-6 col-12 mt-2">
-              <div className="order-title">
-                <span>Purchasing&nbsp;:&nbsp;</span>
-              </div>
-              <div className="contact-card">
-                <div className="profile-name-btn">
-                  <div className="profile-icon-sec">AM</div>
-                  <div className="right-info">
-                    <div className="right-name-btn">
-                      <div className="user-name">Alex Murphy</div>
-                      <div className="btn-sec">
-                        <div className="select-icon tooltip-div">
-                          <Iconify
-                            icon="icon-park-outline:change"
-                            className="swap-icon"
-                          />
-                          <div className="tooltip-show">
-                            <p>Change Customer</p>
-                          </div>
-                          <div className="tooltip-arrow-icon"></div>
-                        </div>
-                        <div className="info-display tooltip-div">
-                          <Iconify icon="ep:info-filled" className="info" />
-                          <div className="tooltip-show">
-                            <p>Customer Details</p>
-                          </div>
-                          <div className="tooltip-arrow-icon"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="user-details">
-                      <div className="email">
-                        <Iconify icon="ic:round-email" />
-                        <span>alexmurphy@gmail.com</span>
-                      </div>
-                      <div className="number">
-                        <Iconify icon="mingcute:phone-fill" />
-                        <span>+91 9173010672</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> */}
         </div>
       </CardSection>
       <SidebarModel
@@ -288,6 +127,16 @@ const OrderInformation = ({ orderDetails }) => {
         isOpen={isModelOpenShippingAddress}
       >
         <OrderInfoAddressModel />
+      </SidebarModel>
+
+      <SidebarModel
+        modalTitle="Change Users"
+        contentClass="content-50"
+        onClose={onSidebarCloseUsers}
+        modalTitleIcon={AppIcons.AddIcon}
+        isOpen={isModelOpenUsers}
+      >
+        Contact card
       </SidebarModel>
     </div>
   );

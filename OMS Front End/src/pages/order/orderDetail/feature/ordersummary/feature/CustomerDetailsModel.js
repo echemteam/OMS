@@ -8,8 +8,10 @@ const CustomerDetailsModel = () => {
         <div className="popup-body-sec">
           <div className="name-icon-status">
             <div className="icon-sec">AB</div>
-            <div className="name-sec">Arcus Bioscience Inc.</div>
-            <div className="status-sec pending">Pending</div>
+            <div className="name-status">
+              <div className="name-sec">Arcus Bioscience Inc.</div>
+              <div className="status-sec pending">Pending</div>
+            </div>
           </div>
           <div className="desc-sec-bottom">
             {/* Email Start */}
@@ -25,10 +27,10 @@ const CustomerDetailsModel = () => {
             {/* Email End */}
             {/* Phone Start */}
             <div className="icon-detail">
-              <span className="icon-part">
+              <span className="icon-part contact-icon">
                 <Iconify icon="ic:round-phone" />
               </span>
-              <span className="info-part">
+              <span className="info-part contact-info ">
                 <div class="values">+91 9173010672</div>
                 {/* <span class="primary-email"></span> */}
               </span>
@@ -36,10 +38,10 @@ const CustomerDetailsModel = () => {
             {/* Phone End */}
             {/* Web Start */}
             <div className="icon-detail">
-              <span className="icon-part">
+              <span className="icon-part web-icon">
                 <Iconify icon="mdi:web" />
               </span>
-              <span className="info-part">
+              <span className="info-part ">
                 <div class="values">www.google.com</div>
               </span>
             </div>
