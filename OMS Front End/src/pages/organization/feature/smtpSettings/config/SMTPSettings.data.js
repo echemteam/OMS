@@ -2,7 +2,7 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 export const SMTPSettingsFormData = {
     // name: "Email From",
-    initialState: { smtpSettingId: 0, organizationId: 0, emailProvider: "", smtpServer: "", smtpPort: "", smtpUserName: "", smtpPassword: "", useSsl: true ,clientId:"",clientSecret:"",tenantId:""},
+    initialState: { smtpSettingId: 0, organizationId: 0, emailProvider: "", smtpServer: "", smtpPort: "", smtpUserName: "", smtpPassword: "", useSsl: true, clientId: "", clientSecret: "", tenantId: "" },
     formFields: [
         {
             id: "emailProvider",
@@ -11,15 +11,15 @@ export const SMTPSettingsFormData = {
             fieldType: FormFieldTypes.SELECT,
             dataField: "emailProvider",
             fieldSetting: {
-              placeholder: "Select Email Provider ",
-              isEnableOnChange: true,
-              isDisabled: false,
+                placeholder: "Select Email Provider ",
+                isEnableOnChange: true,
+                isDisabled: false,
             },
             validation: [{ type: "require" }],
             style: {
-              containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input",
+                containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input",
             },
-          },
+        },
         {
             id: "smtpServer",
             lable: "Server",
@@ -61,9 +61,9 @@ export const SMTPSettingsFormData = {
             fieldSetting: {
                 placeholder: "Enter Email",
                 allowSpace: true,
-                maxLength:65,
+                maxLength: 65,
             },
-            validation: [{ type: "require" },{ type: "email" }],
+            validation: [{ type: "require" }, { type: "email" }],
             style: {
                 containerCss: "col-md-6 mb-3 mb-input relative",
             },
@@ -76,14 +76,14 @@ export const SMTPSettingsFormData = {
             dataField: "smtpPassword",
             fieldSetting: {
                 placeholder: "Enter Your App Password",
-                maxLength:20,
+                maxLength: 20,
             },
             validation: [{ type: "require" }],
             style: {
                 containerCss: "col-md-6 mb-input",
             },
         },
-      
+
         {
             id: "clientId",
             lable: "Client Id",
@@ -98,7 +98,7 @@ export const SMTPSettingsFormData = {
             style: {
                 containerCss: "col-md-6 mb-3 mb-input relative",
             },
-        }, 
+        },
         {
             id: "clientSecret",
             lable: "Client Secret",
@@ -108,7 +108,7 @@ export const SMTPSettingsFormData = {
             fieldSetting: {
                 placeholder: "Enter Client Secret",
                 allowSpace: true,
-        
+
             },
             validation: [{ type: "require" }],
             style: {
@@ -153,9 +153,9 @@ export const SMTPSettingsFormData = {
 export const TestEmailConfig = {
     name: "Test Email",
     initialState: {
-        emailTo: "Test@gmail.com",
-        subject: "Test",
-        body:"TestEmail"
+        emailTo: "",
+        subject: "SMTP Configuration Test Successful",
+        body: "Dear Team, This confirms that the SMTP configuration has been successfully validated. The outbound email settings are functioning as expected. Please note that there is no need to reply to this message."
     },
     formFields: [
         {

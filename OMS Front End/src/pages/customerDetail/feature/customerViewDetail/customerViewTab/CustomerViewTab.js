@@ -35,7 +35,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode, cust
     securityKey.CUSTOMERDOCUMENT
   );
   const hasSubCustomerPermission = hasFunctionalPermission(
-    securityKey.CUSTOMERSUBCUSTOMER
+    securityKey.LINKSUBCUSTOMER
   );
 
   const tabs = [

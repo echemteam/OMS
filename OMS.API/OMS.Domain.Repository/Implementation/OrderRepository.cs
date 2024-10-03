@@ -1,9 +1,13 @@
-﻿using OMS.Domain.Entities.API.Response.Orders;
+﻿using OMS.Domain.Entities.API.Request.Customers;
+using OMS.Domain.Entities.API.Request.Orders;
+using OMS.Domain.Entities.API.Response.Customers;
+using OMS.Domain.Entities.API.Response.Orders;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Orders;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
+using OMS.Shared.Entities.CommonEntity;
 using System.Data;
 
 namespace OMS.Domain.Repository.Implementation
@@ -14,6 +18,7 @@ namespace OMS.Domain.Repository.Implementation
         const string CHECKPONUMBEREXISTORNOT = "CheckPoNumberExistOrNot";
         const string GETPONUMBERDETAILSBYPONUMBER = "GetPoNumberDetailsByPoNumber";
         const string ADDORDER = "AddOrder";
+        const string GETORDERS = "GetOrders";
         #endregion
 
         public OrderRepository(DapperContext dapperContext) : base(dapperContext)
@@ -56,7 +61,20 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.CreatedBy,
             }, CommandType.StoredProcedure);
         }
-      
+
+        public async Task<EntityList<GetOrderResponse>> GetOrders(GetOrderRequest request)
+        {
+            return await _context.GetListSP<GetOrderResponse>(GETORDERS, new
+            {
+                request.OrderStatusId,
+                request.OrderSubStatusId,
+                request.Pagination!.PageNumber,
+                request.Pagination.PageSize,
+                request.Filters?.SearchText,
+                request.SortString
+            }, true);
+        }
+
         #endregion
     }
 }

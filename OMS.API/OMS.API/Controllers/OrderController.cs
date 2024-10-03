@@ -1,5 +1,4 @@
-﻿using ClientIPAuthentication;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Orders;
@@ -49,6 +48,14 @@ namespace OMS.API.Controllers
             var addItem = await _serviceManager.orderServices.AddOrder(requestData, CurrentUserId);
             return APISucessResponce(addItem);
         }
+
+        [HttpPost("GetOrders")]
+        public async Task<IActionResult> GetOrders(GetOrderRequest request)
+        {
+            var list = await _serviceManager.orderServices.GetOrders(request);
+            return APISucessResponce<object>(list);
+        }
+
         #endregion
     }
 }
