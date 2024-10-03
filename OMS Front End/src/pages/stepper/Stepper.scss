@@ -53,13 +53,13 @@
               line-height: 125%;
               color: var(--textColor) !important;
 
-              // &.small-txt {
-              //   font-size: var(--commonFont-medium);
-              //   font-weight: normal;
-              //   margin-top: 2px;
-              //   font-weight: 400;
-              //   opacity: 0.8;
-              // }
+              &.small-txt {
+                font-size: var(--commonFont-medium);
+                font-weight: normal;
+                margin-top: 2px;
+                font-weight: 400;
+                opacity: 0.8;
+              }
             }
           }
         }

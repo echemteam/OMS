@@ -13,7 +13,7 @@ const ContactDetails = React.lazy(() =>
   import("../../feature/contactDetail/ContactDetails")
 );
 const OrderDetails = React.lazy(() =>
-  import("../../feature/orderDetail/OrderDetails")
+  import("../../feature/addOrderBasic/AddOrderBasicInformation")
 );
 const OrderItemDetail = React.lazy(() =>
   import("../../feature/orderItemDetail/OrderItemDetail")
