@@ -20,6 +20,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETORDERDETAILBYORDERID = "GetOrderDetailByOrderId";
         const string GETORDERADDRESSESBYORDERID = "GetOrderAddressesByOrderId";
         const string GETORDERCONTACTBYORDERID = "GetOrderContactByOrderId";
+        const string GETORDERDOCUMENTBYORDERID = "GetOrderDocumentByOrderId";
         #endregion
 
         public OrderRepository(DapperContext dapperContext) : base(dapperContext)
@@ -98,6 +99,15 @@ namespace OMS.Domain.Repository.Implementation
         public async Task<List<GetOrderContactByOrderIdResponse>> GetOrderContactByOrderId(int orderId)
         {
             List<GetOrderContactByOrderIdResponse> contactDetails = await _context.GetList<GetOrderContactByOrderIdResponse> (GETORDERCONTACTBYORDERID, new
+            {
+                orderId
+            }, CommandType.StoredProcedure);
+            return contactDetails;
+        }
+
+        public async Task<List<GetOrderDocumentByOrderIdResponse>> GetOrderDocumentByOrderId(int orderId)
+        {
+            List<GetOrderDocumentByOrderIdResponse> contactDetails = await _context.GetList<GetOrderDocumentByOrderIdResponse>(GETORDERDOCUMENTBYORDERID, new
             {
                 orderId
             }, CommandType.StoredProcedure);

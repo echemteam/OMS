@@ -147,8 +147,11 @@ namespace OMS.Application.Services.Order
                 contact.EmailAddressList = emailAddresses;
                 contact.PhoneNumberList = phoneNumbers;
             });
-
             await Task.WhenAll(tasks);
+
+            // Get Document Information
+            orderDetails.OrderDocumentList = await repositoryManager.order.GetOrderDocumentByOrderId(orderId);
+
 
             return orderDetails!;
         }
