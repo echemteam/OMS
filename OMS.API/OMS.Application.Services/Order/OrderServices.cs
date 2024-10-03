@@ -114,7 +114,10 @@ namespace OMS.Application.Services.Order
             var customersDetails = await repositoryManager.order.GetOrders(request);
             return customersDetails!;
         }
-
+        public async Task<List<GetOrderItemsByOrderIdResponse>> GetOrderItemsByOrderId(int orderId)
+        {
+            return await repositoryManager.order.GetOrderItemsByOrderId(orderId);
+        }
         public async Task<GetOrderDetailByOrderIdResponse> GetOrderDetailByOrderId(int orderId)
         {
             var orderDetails = await repositoryManager.order.GetOrderDetailByOrderId(orderId);

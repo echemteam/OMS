@@ -55,7 +55,16 @@ namespace OMS.API.Controllers
             var list = await _serviceManager.orderServices.GetOrders(request);
             return APISucessResponce<object>(list);
         }
-
+        [HttpGet("GetOrderItemsByOrderId")]
+        public async Task<IActionResult> GetOrderItemsByOrderId(int orderId)
+        {
+            if (orderId != null)
+            {
+                List<GetOrderItemsByOrderIdResponse> responseData = await _serviceManager.orderServices.GetOrderItemsByOrderId(orderId).ConfigureAwait(true);
+                return APISucessResponce<object>(responseData);
+            }
+            return APISucessResponce(orderId);
+        }
         [HttpGet("GetOrderDetailByOrderId")]
         public async Task<IActionResult> GetOrderDetailByOrderId(int orderId)
         {
