@@ -3,6 +3,7 @@ import CardSection from "../../../../../components/ui/card/CardSection";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
 import { AppIcons } from "../../../../../data/appIcons";
 import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel";
+import OrderInfoAddressModel from "./feature/OrderInfoAddressModel";
 
 const OrderInformation = ({ orderDetails }) => {
 
@@ -71,8 +72,8 @@ const OrderInformation = ({ orderDetails }) => {
                   </div>
                   <div className="desc-add-sec">
                     <span>{address?.addressLine2}</span>
-                    <span>{address?.cityName}</span>
-                    <span>{address?.cityName}, {address?.stateName}, {address?.zipCode}</span>
+                    <span>{address?.cityName}, {address.stateCode ? address.stateCode : address.stateName}{" "} {address?.zipCode}</span>
+                    <span>{address?.countryName}</span>
                   </div>
                 </div>
               </div>
@@ -222,7 +223,7 @@ const OrderInformation = ({ orderDetails }) => {
         modalTitleIcon={AppIcons.AddIcon}
         isOpen={isModelOpenShippingAddress}
       >
-        Change Shipping Address
+        <OrderInfoAddressModel />
       </SidebarModel>
     </div>
   );

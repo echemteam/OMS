@@ -114,7 +114,10 @@ namespace OMS.Application.Services.Order
             var customersDetails = await repositoryManager.order.GetOrders(request);
             return customersDetails!;
         }
-
+        public async Task<List<GetOrderItemsByOrderIdResponse>> GetOrderItemsByOrderId(int orderId)
+        {
+            return await repositoryManager.order.GetOrderItemsByOrderId(orderId);
+        }
         public async Task<GetOrderDetailByOrderIdResponse> GetOrderDetailByOrderId(int orderId)
         {
             var orderDetails = await repositoryManager.order.GetOrderDetailByOrderId(orderId);
@@ -123,6 +126,7 @@ namespace OMS.Application.Services.Order
                 return orderDetails!;
             }
 
+            // Get Address Information
             AddressResponse orderBillingAddresses = await repositoryManager.order.GetOrderAddressesByOrderId(orderDetails.BillingAddressId);
             AddressResponse orderShippingAddresses = await repositoryManager.order.GetOrderAddressesByOrderId(orderDetails.ShippingAddressId);
 
@@ -132,20 +136,25 @@ namespace OMS.Application.Services.Order
                 ShippingAddress = orderShippingAddresses
             };
 
-            //var ownerTypeId = (short)OwnerType.SupplierContact;
-            //var tasks = contactList.Select(async contact =>
-            //{
-            //    var emailTask = repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId, ownerTypeId);
-            //    var phoneTask = repositoryManager.phoneNumber.GetPhoneByContactId(contact.ContactId);
+            // Get Contact Information
+            orderDetails.OrderContactList = await repositoryManager.order.GetOrderContactByOrderId(orderId);
+            var ownerTypeId = (short)OwnerType.CustomerContact;
+            var tasks = orderDetails.OrderContactList.Select(async contact =>
+            {
+                var emailTask = repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId, ownerTypeId);
+                var phoneTask = repositoryManager.phoneNumber.GetPhoneByContactId(contact.ContactId);
 
-            //    var emailAddresses = await emailTask;
-            //    var phoneNumbers = await phoneTask;
+                var emailAddresses = await emailTask;
+                var phoneNumbers = await phoneTask;
 
-            //    contact.EmailAddressList = emailAddresses;
-            //    contact.PhoneNumberList = phoneNumbers;
-            //});
+                contact.EmailAddressList = emailAddresses;
+                contact.PhoneNumberList = phoneNumbers;
+            });
+            await Task.WhenAll(tasks);
 
-            //await Task.WhenAll(tasks);
+            // Get Document Information
+            orderDetails.OrderDocumentList = await repositoryManager.order.GetOrderDocumentByOrderId(orderId);
+
 
             return orderDetails!;
         }

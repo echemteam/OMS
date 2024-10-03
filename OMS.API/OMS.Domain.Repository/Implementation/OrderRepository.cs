@@ -17,8 +17,11 @@ namespace OMS.Domain.Repository.Implementation
         const string GETPONUMBERDETAILSBYPONUMBER = "GetPoNumberDetailsByPoNumber";
         const string ADDORDER = "AddOrder";
         const string GETORDERS = "GetOrders";
+        const string GETORDERITEMSBYORDERID="GetOrderItemsByOrderId";
         const string GETORDERDETAILBYORDERID = "GetOrderDetailByOrderId";
         const string GETORDERADDRESSESBYORDERID = "GetOrderAddressesByOrderId";
+        const string GETORDERCONTACTBYORDERID = "GetOrderContactByOrderId";
+        const string GETORDERDOCUMENTBYORDERID = "GetOrderDocumentByOrderId";
         #endregion
 
         public OrderRepository(DapperContext dapperContext) : base(dapperContext)
@@ -75,6 +78,14 @@ namespace OMS.Domain.Repository.Implementation
                 request.SortString
             }, true);
         }
+        public async Task<List<GetOrderItemsByOrderIdResponse>> GetOrderItemsByOrderId(int orderId)
+        {
+            List<GetOrderItemsByOrderIdResponse> orderItemDetails = await _context.GetList<GetOrderItemsByOrderIdResponse>(GETORDERITEMSBYORDERID, new
+            {
+                orderId
+            }, CommandType.StoredProcedure);
+            return orderItemDetails;
+        }
 
         public async Task<GetOrderDetailByOrderIdResponse> GetOrderDetailByOrderId(int orderId)
         {
@@ -92,6 +103,24 @@ namespace OMS.Domain.Repository.Implementation
                 addressId
             }, commandType: CommandType.StoredProcedure);
             return addressDetails;
+        }
+
+        public async Task<List<GetOrderContactByOrderIdResponse>> GetOrderContactByOrderId(int orderId)
+        {
+            List<GetOrderContactByOrderIdResponse> contactDetails = await _context.GetList<GetOrderContactByOrderIdResponse> (GETORDERCONTACTBYORDERID, new
+            {
+                orderId
+            }, CommandType.StoredProcedure);
+            return contactDetails;
+        }
+
+        public async Task<List<GetOrderDocumentByOrderIdResponse>> GetOrderDocumentByOrderId(int orderId)
+        {
+            List<GetOrderDocumentByOrderIdResponse> contactDetails = await _context.GetList<GetOrderDocumentByOrderIdResponse>(GETORDERDOCUMENTBYORDERID, new
+            {
+                orderId
+            }, CommandType.StoredProcedure);
+            return contactDetails;
         }
 
         #endregion
