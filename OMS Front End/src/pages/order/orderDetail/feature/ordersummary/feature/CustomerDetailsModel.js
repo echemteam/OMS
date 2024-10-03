@@ -19,7 +19,7 @@ const CustomerDetailsModel = () => {
               </span>
               <span className="info-part">
                 <div class="values">alexmurphy@gmail.com</div>
-                <span class="primary-email"></span>
+                {/* <span class="primary-email"></span> */}
               </span>
             </div>
             {/* Email End */}
@@ -30,7 +30,7 @@ const CustomerDetailsModel = () => {
               </span>
               <span className="info-part">
                 <div class="values">+91 9173010672</div>
-                <span class="primary-email"></span>
+                {/* <span class="primary-email"></span> */}
               </span>
             </div>
             {/* Phone End */}
@@ -41,7 +41,6 @@ const CustomerDetailsModel = () => {
               </span>
               <span className="info-part">
                 <div class="values">www.google.com</div>
-                <span class="primary-email"></span>
               </span>
             </div>
             {/* Web End */}
