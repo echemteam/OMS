@@ -9,8 +9,13 @@ const OrderInformation = ({ orderDetails }) => {
 
   const [orderInfo, setOrderInfo] = useState(null);
   const [orderAddressDetails, setOrderAddressDetails] = useState(null);
+  const [orderContactDetails, setOrderContactDetails] = useState(null);
 
   const [isModelOpenShippingAddress, setIsModelOpenShippingAddress] = useState(false);
+
+  const getInitials = (firstName, lastName) => {
+    return (firstName?.[0] || '').toUpperCase() + (lastName?.[0] || '').toUpperCase();
+  }
 
   const onSidebarCloseShippingAddress = () => {
     setIsModelOpenShippingAddress(false);
@@ -26,10 +31,11 @@ const OrderInformation = ({ orderDetails }) => {
 
       if (orderDetails.orderAddressInformation) {
         const { billingAddress, shippingAddress } = orderDetails.orderAddressInformation;
-
         const addressArray = [billingAddress, shippingAddress];
-
         setOrderAddressDetails(addressArray);
+      }
+      if (orderDetails.orderContactList) {
+        setOrderContactDetails(orderDetails.orderContactList);
       }
     }
   }, [orderDetails]);
@@ -47,6 +53,7 @@ const OrderInformation = ({ orderDetails }) => {
               </div>
             </div>
           </div>
+          {/* Address Details */}
           <div className="row mt-2">
             {orderAddressDetails?.map((address) => (
               <div className="col-xxl-6 col-lg-6 col-md-6 col-12">
@@ -80,7 +87,64 @@ const OrderInformation = ({ orderDetails }) => {
             ))}
           </div>
 
-          <div div className="row mt-2" >
+          {/* Contact Details */}
+          <div className="row mt-2">
+            {orderContactDetails?.map((contact) => (
+              <div className="col-xxl-6 col-lg-6 col-md-6 col-12">
+                <div className="order-title">
+                  <span>{contact?.contactType} &nbsp;:&nbsp;</span>
+                </div>
+                <div className="contact-card">
+                  <div className="profile-name-btn">
+                    <div className="profile-icon-sec">{getInitials(contact?.firstName, contact?.lastName)}</div>
+                    <div className="right-info">
+                      <div className="right-name-btn">
+                        <div className="user-name">{contact?.firstName} {contact?.lastName}</div>
+                        <div className="btn-sec">
+                          <div className="select-icon tooltip-div">
+                            <Iconify
+                              icon="icon-park-outline:change"
+                              className="swap-icon"
+                            />
+                            <div className="tooltip-show">
+                              <p>Change Customer</p>
+                            </div>
+                            <div className="tooltip-arrow-icon"></div>
+                          </div>
+                          <div className="info-display tooltip-div">
+                            <Iconify icon="ep:info-filled" className="info" />
+                            <div className="tooltip-show">
+                              <p>Customer Details</p>
+                            </div>
+                            <div className="tooltip-arrow-icon"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="user-details">
+                        <div className="email">
+                          <Iconify icon="ic:round-email" />
+                          <span>
+                            {contact?.emailAddressList?.find((email) => email.isPrimary)?.emailAddress}
+                          </span>
+                        </div>
+                        <div className="number">
+                          <Iconify icon="mingcute:phone-fill" />
+                          <span>
+                            {/* {contact?.phoneNumberList?.find((number) => number.isPrimary)?.phoneNumber} */}
+                            {contact?.phoneNumberList
+                              ?.find((number) => number.isPrimary)
+                              ? `${contact.phoneNumberList.find((number) => number.isPrimary)?.phoneCode} ${contact.phoneNumberList.find((number) => number.isPrimary)?.phoneNumber}`
+                              : ''}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* <div div className="row mt-2" >
             <div className="col-xxl-6 col-lg-6 col-md-6 col-12">
               <div className="order-title">
                 <span>End User &nbsp;:&nbsp;</span>
@@ -213,7 +277,7 @@ const OrderInformation = ({ orderDetails }) => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </CardSection>
       <SidebarModel
