@@ -6,5 +6,7 @@ namespace OMS.Domain.Entities.API.Request.Orders
     {
         public byte? OrderStatusId { get; set; }
         public byte? OrderSubStatusId { get; set; }
+        public byte? OrderItemStatusId {  get; set; }
+
     }
 }
