@@ -2,7 +2,7 @@ import React from "react";
 import Iconify from "../../../../../../components/ui/iconify/Iconify";
 import UserDetailsModel from "./UserDetailsModel";
 
-const UserCardDetail = (contact, handleToggleModalUsers1) => {
+const UserCardDetail = ({ contact, handleToggleModalUsers }) => {
 
   const getInitials = (firstName, lastName) => {
     return (
@@ -15,19 +15,19 @@ const UserCardDetail = (contact, handleToggleModalUsers1) => {
       <div className="contact-card">
         <div className="profile-name-btn">
           <div className="profile-icon-sec">
-            {getInitials(contact.contact?.firstName, contact.contact?.lastName)}
+            {getInitials(contact?.firstName, contact?.lastName)}
           </div>
           <div className="right-info">
             <div className="right-name-btn">
               <div className="user-name">
-                {contact.contact?.firstName} {contact.contact?.lastName}
+                {contact?.firstName} {contact?.lastName}
               </div>
               <div className="btn-sec">
-                <div className="select-icon tooltip-div" onClick={handleToggleModalUsers1}>
+                <div className="select-icon tooltip-div" onClick={handleToggleModalUsers}>
                   <Iconify
                     icon="icon-park-outline:change"
                     className="swap-icon"
-                    
+
                   />
                   <div className="tooltip-show">
                     <p>Change Customer</p>
@@ -45,7 +45,7 @@ const UserCardDetail = (contact, handleToggleModalUsers1) => {
                 <Iconify icon="ic:round-email" />
                 <span>
                   {
-                    contact.contact?.emailAddressList?.find((email) => email.isPrimary)
+                    contact?.emailAddressList?.find((email) => email.isPrimary)
                       ?.emailAddress
                   }
                 </span>
@@ -53,17 +53,15 @@ const UserCardDetail = (contact, handleToggleModalUsers1) => {
               <div className="number">
                 <Iconify icon="mingcute:phone-fill" />
                 <span>
-                  {/* {contact.contact?.phoneNumberList?.find((number) => number.isPrimary)?.phoneNumber} */}
-                  {contact.contact?.phoneNumberList?.find((number) => number.isPrimary)
-                    ? `${
-                        contact.contact.phoneNumberList.find(
-                          (number) => number.isPrimary
-                        )?.phoneCode
-                      } ${
-                        contact.contact.phoneNumberList.find(
-                          (number) => number.isPrimary
-                        )?.phoneNumber
-                      }`
+                  {/* {contact?.phoneNumberList?.find((number) => number.isPrimary)?.phoneNumber} */}
+                  {contact?.phoneNumberList?.find((number) => number.isPrimary)
+                    ? `${contact?.phoneNumberList.find(
+                      (number) => number.isPrimary
+                    )?.phoneCode
+                    } ${contact?.phoneNumberList.find(
+                      (number) => number.isPrimary
+                    )?.phoneNumber
+                    }`
                     : ""}
                 </span>
               </div>
@@ -71,7 +69,7 @@ const UserCardDetail = (contact, handleToggleModalUsers1) => {
           </div>
         </div>
       </div>
-      
+
     </>
   );
 };

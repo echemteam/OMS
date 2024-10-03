@@ -28,7 +28,7 @@ const OrderInformation = ({ orderDetails }) => {
     setIsModelOpenUsers(false);
   };
 
-  const handleToggleModalUsers = () => {
+  const handleToggleModalUsers = (contact, index) => {
     setIsModelOpenUsers(true);
   };
 
@@ -103,7 +103,7 @@ const OrderInformation = ({ orderDetails }) => {
 
           {/* Contact Details */}
           <div className="row mt-2">
-            {orderContactDetails?.map((contact) => (
+            {orderContactDetails?.map((contact, index) => (
               <div className="col-xxl-6 col-lg-6 col-md-6 col-12">
                 <div className="order-title">
                   <span>{contact?.contactType} &nbsp;:&nbsp;</span>
@@ -111,8 +111,10 @@ const OrderInformation = ({ orderDetails }) => {
 
                 <UserCardDetail
                   contact={contact}
+                  index={index}
+                  // handleToggleModalUsers={handleToggleModalUsers}
                   handleToggleModalUsers={handleToggleModalUsers}
-                  
+
                 />
               </div>
             ))}
