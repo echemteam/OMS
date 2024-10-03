@@ -68,6 +68,7 @@ namespace OMS.Domain.Repository.Implementation
             {
                 request.OrderStatusId,
                 request.OrderSubStatusId,
+                request.OrderItemStatusId,
                 request.Pagination!.PageNumber,
                 request.Pagination.PageSize,
                 request.Filters?.SearchText,

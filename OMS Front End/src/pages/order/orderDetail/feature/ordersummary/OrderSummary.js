@@ -3,6 +3,7 @@ import CardSection from "../../../../../components/ui/card/CardSection";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
 import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel";
 import { AppIcons } from "../../../../../data/appIcons";
+import CustomerDetailsModel from "./feature/CustomerDetailsModel";
 
 const OrderSummary = () => {
   const [isModelOpenPDF, setIsModelOpenPDF] = useState(false);
@@ -42,6 +43,9 @@ const OrderSummary = () => {
                   &nbsp;:&nbsp;<span>Arcus Bioscience Inc.</span>
                   <div className="info-icon">
                     <Iconify icon="ep:info-filled" className="info" />
+                    {/* Customer Detail Model Start */}
+                    <CustomerDetailsModel />
+                    {/* Customer Detail Model End */}
                   </div>
                 </div>
               </div>
@@ -54,6 +58,9 @@ const OrderSummary = () => {
                   &nbsp;:&nbsp;<span>Exelixis Inc.</span>
                   <div className="info-icon">
                     <Iconify icon="ep:info-filled" className="info" />
+                    {/* Customer Detail Model Start */}
+                    <CustomerDetailsModel />
+                    {/* Customer Detail Model End */}
                   </div>
                 </div>
               </div>
