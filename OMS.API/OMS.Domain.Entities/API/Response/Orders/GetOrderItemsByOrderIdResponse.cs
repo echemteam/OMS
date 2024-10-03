@@ -14,5 +14,6 @@ namespace OMS.Domain.Entities.API.Response.Orders
         public byte? OrderItemStatusId {  get; set; }
         public string? ItemStatus { get; set; }
         public decimal? PackSize {  get; set; }
+        public decimal? SubTotalPrice {  get; set; }
     }
 }
