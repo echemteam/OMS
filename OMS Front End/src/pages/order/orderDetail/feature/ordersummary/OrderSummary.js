@@ -54,7 +54,7 @@ const OrderSummary = ({ orderDetails }) => {
                   <div className="info-icon">
                     <Iconify icon="ep:info-filled" className="info" />
                     {/* Customer Detail Model Start */}
-                    <CustomerDetailsModel />
+                    <CustomerDetailsModel customerId={orderDetails?.customerId} />
                     {/* Customer Detail Model End */}
                   </div>
                 </div>
@@ -71,7 +71,7 @@ const OrderSummary = ({ orderDetails }) => {
                     <div className="info-icon">
                       <Iconify icon="ep:info-filled" className="info" />
                       {/* Customer Detail Model Start */}
-                      <CustomerDetailsModel />
+                      <CustomerDetailsModel customerId={orderDetails?.subCustomerId} />
                       {/* Customer Detail Model End */}
                     </div>
                     : null
