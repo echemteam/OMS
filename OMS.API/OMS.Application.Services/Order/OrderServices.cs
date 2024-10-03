@@ -1,4 +1,5 @@
-﻿using Common.Helper.Export;
+﻿using Common.Helper.Enum;
+using Common.Helper.Export;
 using Common.Helper.Extension;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.Orders;
@@ -116,6 +117,46 @@ namespace OMS.Application.Services.Order
         public async Task<List<GetOrderItemsByOrderIdResponse>> GetOrderItemsByOrderId(int orderId)
         {
             return await repositoryManager.order.GetOrderItemsByOrderId(orderId);
+        }
+        public async Task<GetOrderDetailByOrderIdResponse> GetOrderDetailByOrderId(int orderId)
+        {
+            var orderDetails = await repositoryManager.order.GetOrderDetailByOrderId(orderId);
+            if (orderDetails == null)
+            {
+                return orderDetails!;
+            }
+
+            // Get Address Information
+            AddressResponse orderBillingAddresses = await repositoryManager.order.GetOrderAddressesByOrderId(orderDetails.BillingAddressId);
+            AddressResponse orderShippingAddresses = await repositoryManager.order.GetOrderAddressesByOrderId(orderDetails.ShippingAddressId);
+
+            orderDetails.OrderAddressInformation = new GetOrderAddressByOrderIdResponse
+            {
+                BillingAddress = orderBillingAddresses,
+                ShippingAddress = orderShippingAddresses
+            };
+
+            // Get Contact Information
+            orderDetails.OrderContactList = await repositoryManager.order.GetOrderContactByOrderId(orderId);
+            var ownerTypeId = (short)OwnerType.CustomerContact;
+            var tasks = orderDetails.OrderContactList.Select(async contact =>
+            {
+                var emailTask = repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId, ownerTypeId);
+                var phoneTask = repositoryManager.phoneNumber.GetPhoneByContactId(contact.ContactId);
+
+                var emailAddresses = await emailTask;
+                var phoneNumbers = await phoneTask;
+
+                contact.EmailAddressList = emailAddresses;
+                contact.PhoneNumberList = phoneNumbers;
+            });
+            await Task.WhenAll(tasks);
+
+            // Get Document Information
+            orderDetails.OrderDocumentList = await repositoryManager.order.GetOrderDocumentByOrderId(orderId);
+
+
+            return orderDetails!;
         }
         #endregion
     }

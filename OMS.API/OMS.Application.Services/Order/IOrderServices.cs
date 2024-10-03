@@ -12,5 +12,6 @@ namespace OMS.Application.Services.Order
         Task<AddEntityDto<int>> AddOrder(AddOrderRequest requestData, short CurrentUserId);
         Task<EntityList<GetOrderResponse>> GetOrders(GetOrderRequest request);
         Task<List<GetOrderItemsByOrderIdResponse>> GetOrderItemsByOrderId(int orderId);
+        Task<GetOrderDetailByOrderIdResponse> GetOrderDetailByOrderId(int orderId);
     }
 }

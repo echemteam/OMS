@@ -65,6 +65,12 @@ namespace OMS.API.Controllers
             }
             return APISucessResponce(orderId);
         }
+        [HttpGet("GetOrderDetailByOrderId")]
+        public async Task<IActionResult> GetOrderDetailByOrderId(int orderId)
+        {
+            GetOrderDetailByOrderIdResponse responseData = await _serviceManager.orderServices.GetOrderDetailByOrderId(orderId).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
         #endregion
     }
 }

@@ -3,6 +3,7 @@ import CardSection from "../../../../../components/ui/card/CardSection";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
 import { AppIcons } from "../../../../../data/appIcons";
 import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel";
+import OrderInfoAddressModel from "./feature/OrderInfoAddressModel";
 
 const OrderInformation = () => {
   const [isModelOpenShippingAddress, setIsModelOpenShippingAddress] =
@@ -71,7 +72,10 @@ const OrderInformation = () => {
                 <div className="title-swap-btn">
                   <span>Chemistry Research Laboratory</span>
                   {/* Address Line 1 */}
-                  <span className="swap-btn tooltip-div">
+                  <span
+                    className="swap-btn tooltip-div"
+                    onClick={handleToggleModalShippingAddress}
+                  >
                     {" "}
                     {/* When click on this button to all addresses display on s idebar */}
                     <Iconify
@@ -238,7 +242,7 @@ const OrderInformation = () => {
         modalTitleIcon={AppIcons.AddIcon}
         isOpen={isModelOpenShippingAddress}
       >
-        Change Shipping Address
+        <OrderInfoAddressModel />
       </SidebarModel>
     </div>
   );
