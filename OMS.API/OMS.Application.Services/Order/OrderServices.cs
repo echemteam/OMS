@@ -123,6 +123,7 @@ namespace OMS.Application.Services.Order
                 return orderDetails!;
             }
 
+            // Get Address Information
             AddressResponse orderBillingAddresses = await repositoryManager.order.GetOrderAddressesByOrderId(orderDetails.BillingAddressId);
             AddressResponse orderShippingAddresses = await repositoryManager.order.GetOrderAddressesByOrderId(orderDetails.ShippingAddressId);
 
@@ -132,20 +133,22 @@ namespace OMS.Application.Services.Order
                 ShippingAddress = orderShippingAddresses
             };
 
-            //var ownerTypeId = (short)OwnerType.SupplierContact;
-            //var tasks = contactList.Select(async contact =>
-            //{
-            //    var emailTask = repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId, ownerTypeId);
-            //    var phoneTask = repositoryManager.phoneNumber.GetPhoneByContactId(contact.ContactId);
+            // Get Contact Information
+            orderDetails.OrderContactList = await repositoryManager.order.GetOrderContactByOrderId(orderId);
+            var ownerTypeId = (short)OwnerType.CustomerContact;
+            var tasks = orderDetails.OrderContactList.Select(async contact =>
+            {
+                var emailTask = repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId, ownerTypeId);
+                var phoneTask = repositoryManager.phoneNumber.GetPhoneByContactId(contact.ContactId);
 
-            //    var emailAddresses = await emailTask;
-            //    var phoneNumbers = await phoneTask;
+                var emailAddresses = await emailTask;
+                var phoneNumbers = await phoneTask;
 
-            //    contact.EmailAddressList = emailAddresses;
-            //    contact.PhoneNumberList = phoneNumbers;
-            //});
+                contact.EmailAddressList = emailAddresses;
+                contact.PhoneNumberList = phoneNumbers;
+            });
 
-            //await Task.WhenAll(tasks);
+            await Task.WhenAll(tasks);
 
             return orderDetails!;
         }

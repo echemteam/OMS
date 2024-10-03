@@ -19,7 +19,7 @@
         public int BillingAddressId { get; set; }
         public int ShippingAddressId { get; set; }
         public GetOrderAddressByOrderIdResponse OrderAddressInformation { get; set; }
-        public List<GetOrderContactByOrderIdResponse>? OrderContactList { get; set; }
+        public List<GetOrderContactByOrderIdResponse> OrderContactList { get; set; }
         public List<GetOrderDocumentByOrderIdResponse>? OrderDocumentList { get; set; }
     }
 }

@@ -14,5 +14,6 @@ namespace OMS.Domain.Repository.Contract
         Task<EntityList<GetOrderResponse>> GetOrders(GetOrderRequest request);
         Task<GetOrderDetailByOrderIdResponse> GetOrderDetailByOrderId(int orderId);
         Task<AddressResponse> GetOrderAddressesByOrderId(int addressId);
+        Task<List<GetOrderContactByOrderIdResponse>> GetOrderContactByOrderId(int orderId);
     }
 }
