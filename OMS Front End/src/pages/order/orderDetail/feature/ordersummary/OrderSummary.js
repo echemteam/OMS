@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
 import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel";
 import { AppIcons } from "../../../../../data/appIcons";
 import CustomerDetailsModel from "./feature/CustomerDetailsModel";
+import formatDate from "../../../../../components/FinalMolGrid/libs/formatDate";
 
-const OrderSummary = () => {
+const OrderSummary = ({ orderDetails }) => {
+
   const [isModelOpenPDF, setIsModelOpenPDF] = useState(false);
+  const [ordersummaryDetails, setOrderSummaryDetails] = useState(null);
 
   const handleToggleModalPDF = () => {
     setIsModelOpenPDF(true);
@@ -15,6 +18,12 @@ const OrderSummary = () => {
   const onSidebarClosePDF = () => {
     setIsModelOpenPDF(false);
   };
+
+  useEffect(() => {
+    if (orderDetails) {
+      setOrderSummaryDetails(orderDetails);
+    }
+  }, [orderDetails]);
 
   return (
     <div>
@@ -26,7 +35,7 @@ const OrderSummary = () => {
         iconClass="wpf:edit"
         // titleButtonClick={}
         isCenterTile={true}
-        CenterTitleTxt="AA123152"
+        CenterTitleTxt={ordersummaryDetails?.poNumber}
         CenterBtnIcon="icomoon-free:file-pdf"
         centerBtnTitle="Purchase Order Details"
         centerBtnOnClick={handleToggleModalPDF}
@@ -40,7 +49,8 @@ const OrderSummary = () => {
                   <span>Cust. Name</span>
                 </div>
                 <div className="desc-detail">
-                  &nbsp;:&nbsp;<span>Arcus Bioscience Inc.</span>
+                  {/* &nbsp;:&nbsp;<span>Arcus Bioscience Inc.</span> */}
+                  &nbsp;:&nbsp;<span>{ordersummaryDetails?.customerName || "---"}</span>
                   <div className="info-icon">
                     <Iconify icon="ep:info-filled" className="info" />
                     {/* Customer Detail Model Start */}
@@ -55,7 +65,8 @@ const OrderSummary = () => {
                   <span>Sub-Cust. Name</span>
                 </div>
                 <div className="desc-detail">
-                  &nbsp;:&nbsp;<span>Exelixis Inc.</span>
+                  {/* &nbsp;:&nbsp;<span>Exelixis Inc.</span> */}
+                  &nbsp;:&nbsp;<span>{ordersummaryDetails?.subCustomerName || "-"}</span>
                   <div className="info-icon">
                     <Iconify icon="ep:info-filled" className="info" />
                     {/* Customer Detail Model Start */}
@@ -73,7 +84,8 @@ const OrderSummary = () => {
                   <span>Reference No</span>
                 </div>
                 <div className="desc-detail">
-                  &nbsp;:&nbsp;<span>123-654</span>
+                  {/* &nbsp;:&nbsp;<span>123-654</span> */}
+                  &nbsp;:&nbsp;<span>{ordersummaryDetails?.referenceNumber || "-"}</span>
                 </div>
               </div>
             </div>
@@ -85,7 +97,8 @@ const OrderSummary = () => {
                 </div>
                 <div className="desc-detail">
                   &nbsp;:&nbsp;
-                  <span className="status pending">Pending</span>
+                  {/* <span className="status pending">Pending</span> */}
+                  <span className="status pending">{ordersummaryDetails?.status || "---"}</span>
                 </div>
               </div>
               <div className="desc-section right-status-sec">
@@ -95,7 +108,8 @@ const OrderSummary = () => {
                 </div>
                 <div className="desc-detail">
                   &nbsp;:&nbsp;
-                  <span className="status in-transit">In Transit</span>
+                  {/* <span className="status in-transit">In Transit</span> */}
+                  <span className="status in-transit">{ordersummaryDetails?.subStatus || "---"}</span>
                 </div>
               </div>
               <div className="desc-section right-status-sec">
@@ -104,7 +118,8 @@ const OrderSummary = () => {
                   <span>Received Date</span>
                 </div>
                 <div className="desc-detail">
-                  &nbsp;:&nbsp;<span>26 Oct 2024</span>
+                  {/* &nbsp;:&nbsp;<span>26 Oct 2024</span> */}
+                  &nbsp;:&nbsp;<span>{formatDate(ordersummaryDetails?.orderReceivedDate, "MM/DD/YYYY")}</span>
                 </div>
               </div>
             </div>
