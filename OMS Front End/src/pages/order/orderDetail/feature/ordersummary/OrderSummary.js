@@ -6,9 +6,9 @@ import { AppIcons } from "../../../../../data/appIcons";
 import CustomerDetailsModel from "./feature/CustomerDetailsModel";
 import formatDate from "../../../../../components/FinalMolGrid/libs/formatDate";
 import { useLazyDownloadDocumentQuery } from "../../../../../app/services/orderAPI";
-import { FileViewer } from "react-file-viewer";
 import ToastService from "../../../../../services/toastService/ToastService";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
+import FileViewer from "react-file-viewer";
 
 const OrderSummary = ({ orderDetails }) => {
   const [isModelOpenPDF, setIsModelOpenPDF] = useState(false);

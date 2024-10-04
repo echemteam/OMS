@@ -88,7 +88,7 @@ const OrderItemDetail = ({ onhandleAddOrderData }) => {
       documentName: documentData?.attachment?.fileName ? documentData?.attachment?.fileName : "",
       documentType: 0,
       base64File: documentData?.attachment?.base64Data ? documentData?.attachment?.base64Data : "",
-      storagePath: "",
+      storagePath: "Order",
     };
     onhandleAddOrderData(requestBody)
     setIsDocumentData(true)
