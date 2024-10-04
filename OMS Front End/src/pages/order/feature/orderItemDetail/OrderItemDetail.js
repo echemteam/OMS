@@ -67,7 +67,7 @@ const OrderItemDetail = ({ onhandleAddOrderData }) => {
       orderItemSubStatusId: item.orderItemSubStatusId || 0,
       quantity: item.quantity || 0,
       packSize: Number(item.Size) || 0,
-      unitid: item.unitid || 0,
+      unit: item.Unit || 0,
       itemUnitPrice: item.Price || 0,
       poItemUnitPrice: item.poItemUnitPrice || 0,
       subTotalPrice: item.subTotalPrice || 0,
