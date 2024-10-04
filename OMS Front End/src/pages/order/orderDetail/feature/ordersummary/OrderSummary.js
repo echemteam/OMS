@@ -89,7 +89,7 @@ const OrderSummary = ({ orderDetails }) => {
         return null;
     }
   };
-  
+
   return (
     <div>
       <CardSection
@@ -138,15 +138,15 @@ const OrderSummary = ({ orderDetails }) => {
                   <div className="desc-detail">
                     {/* &nbsp;:&nbsp;<span>Exelixis Inc.</span> */}
                     &nbsp;:&nbsp;
-                    <span className="name-ellipsis">
-                      {ordersummaryDetails?.subCustomerName || "-"}
-                    </span>
-                    <div className="info-icon info-user">
-                      <Iconify icon="ep:info-filled" className="info" />
-                      {/* Customer Detail Model Start */}
-                      <CustomerDetailsModel />
-                      {/* Customer Detail Model End */}
-                    </div>
+                    <span className="name-ellipsis">{ordersummaryDetails?.subCustomerName || "N/A"}</span>
+                    {ordersummaryDetails?.subCustomerId ? (
+                      <div className="info-icon info-user">
+                        <Iconify icon="ep:info-filled" className="info" />
+                        {/* Customer Detail Model Start */}
+                        <CustomerDetailsModel />
+                        {/* Customer Detail Model End */}
+                      </div>)
+                      : null}
                   </div>
                 </div>
                 <div className="desc-section">
@@ -165,23 +165,6 @@ const OrderSummary = ({ orderDetails }) => {
                 </div>
               </div>
               <div className="desc-section">
-                <div className="key-icon-part">
-                  <Iconify icon="ph:users" className="open-bar" />
-                  <span>Sub-Cust.</span>
-                </div>
-                <div className="desc-detail">
-                  {/* &nbsp;:&nbsp;<span>Exelixis Inc.</span> */}
-                  &nbsp;:&nbsp;
-                  <span className="name-ellipsis">{ordersummaryDetails?.subCustomerName || "N/A"}</span>
-                  {ordersummaryDetails?.subCustomerId ? (
-                    <div className="info-icon info-user">
-                      <Iconify icon="ep:info-filled" className="info" />
-                      {/* Customer Detail Model Start */}
-                      <CustomerDetailsModel />
-                      {/* Customer Detail Model End */}
-                    </div>)
-                    : null}
-                </div>
                 <div className="desc-section right-status-sec">
                   <div className="key-icon-part">
                     <Iconify icon="f7:status" className="open-bar" />
@@ -251,3 +234,16 @@ const OrderSummary = ({ orderDetails }) => {
 };
 
 export default OrderSummary;
+
+
+{/* <span className="name-ellipsis">{ordersummaryDetails?.subCustomerName || "N/A"}</span> */ }
+// {
+//   ordersummaryDetails?.subCustomerId ? (
+//     <div className="info-icon info-user">
+//       <Iconify icon="ep:info-filled" className="info" />
+//       {/* Customer Detail Model Start */}
+//       <CustomerDetailsModel />
+//       {/* Customer Detail Model End */}
+//     </div>)
+//   : null
+// }

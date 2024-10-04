@@ -32,6 +32,10 @@ const OrderDocument = ({ orderDetails, onRefreshOrderDetails }) => {
     setIsModalOpen(true);
   }
 
+  const handleViewClick = () => {
+    
+   }
+
   const handleDeleteDocumentClick = () => { }
 
   return (
@@ -58,7 +62,7 @@ const OrderDocument = ({ orderDetails, onRefreshOrderDetails }) => {
                         </div>
                       </div>
                       <div class="file-actions">
-                        <div className="btn-part pdf-view">
+                        <div onClick={handleViewClick} className="btn-part pdf-view">
                           <Iconify
                             icon="icomoon-free:file-pdf"
                             className="swap-icon"
