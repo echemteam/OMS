@@ -1,8 +1,11 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 using ThirdPartyAPILibrary.Enums;
+using ThirdPartyAPILibrary.Helper;
 using ThirdPartyAPILibrary.Model;
 
 namespace ThirdPartyAPILibrary.ThirdPartyResponseProvider
@@ -13,6 +16,10 @@ namespace ThirdPartyAPILibrary.ThirdPartyResponseProvider
 
         public static async Task<APIResponse> GetMethod(string url, string token, List<APIRequiredFields> getRequiredField)
         {
+            var configuration = new ConfigurationBuilder().AddJsonFile("APIClientAppSettings.json").Build();
+            string OMSConnection = configuration["ConnectionStrings:OMS"] ?? "";
+            ImportHelper helper = new(new APIClientDapperContext(OMSConnection));
+
             APIResponse results = new();
             try
             {
@@ -68,6 +75,7 @@ namespace ThirdPartyAPILibrary.ThirdPartyResponseProvider
         public static async Task<APIResponse> PostMethod(string url, string token, string postData, List<APIRequiredFields> getRequiredField)
         {
             APIResponse results = new();
+            token = string.Empty;
             try
             {
                 if (postData == null)
