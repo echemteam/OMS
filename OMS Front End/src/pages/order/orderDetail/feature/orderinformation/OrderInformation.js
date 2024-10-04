@@ -7,6 +7,7 @@ import OrderInfoAddressModel from "./feature/OrderInfoAddressModel";
 import UserDetailsModel from "./feature/UserDetailsModel";
 import UserCardDetail from "./feature/UserCardDetail";
 import UsercardModel from "./feature/UsercardModel";
+import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 
 const OrderInformation = ({ orderDetails }) => {
   const [orderInfo, setOrderInfo] = useState(null);
@@ -51,11 +52,14 @@ const OrderInformation = ({ orderDetails }) => {
   }, [orderDetails]);
 
   return (
+    
     <div>
       <CardSection cardTitle="Order Information">
+        {orderDetails ?(
         <div className="order-info-list">
           <div className="row">
             <div className="col-xxl-12 col-lg-12 col-md-12 col-12">
+              
               <div className="order-title">
                 <span>Order Method &nbsp;:&nbsp;</span>
                 <span className="desc">{orderInfo?.orderMethod}</span>
@@ -119,6 +123,7 @@ const OrderInformation = ({ orderDetails }) => {
             ))}
           </div>
         </div>
+        ):<DataLoader/>}
       </CardSection>
       <SidebarModel
         modalTitle="Change Shipping Address"

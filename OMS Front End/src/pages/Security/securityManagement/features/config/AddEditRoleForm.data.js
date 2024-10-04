@@ -53,7 +53,7 @@ export const SecurityRoleGridConfig = {
       customAction: [
         {
           name: "USER",
-          title: "User",
+          title: "Assign User",
           iconName: "mi:user",
           className: "disable-icon"
         },
