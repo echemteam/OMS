@@ -192,6 +192,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             newFrom.formFields = formFields;
             newFrom.initialState = { ...GetSupplierBasicInformationByIdData };
             newFrom.formFields = supplierBasicData.formFields.filter(field => field.dataField !== "note");
+            newFrom.formFields = newFrom.formFields.filter((field) => field.dataField !== 'attachment' && field.dataField !== '');
             setFormData(newFrom);
             setIsResponsibleUser(validateResponsibleUserId(GetSupplierBasicInformationByIdData.responsibleUserId, authState?.user?.userID));
 
@@ -264,8 +265,8 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             responsibleUserId: getIdValue(data.responsibleUserId) || 0,
             supplierId: keyId || supplierId,
             supplierNoteId: noteId || 0,
-            attachmentName: data.attachment.fileName,
-            base64File: data.attachment.base64Data,
+            attachmentName: data.attachment ? data.attachment?.fileName : null,
+            base64File: data.attachment ? data.attachment?.base64Data : null,
             storagePath: 'SupplierProfilePic'
         };
         if (!data.taxId) {
