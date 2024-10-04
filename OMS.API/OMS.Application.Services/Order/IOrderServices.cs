@@ -10,7 +10,7 @@ namespace OMS.Application.Services.Order
         Task<AddEntityDto<int>> CheckPoNumberExistOrNot(CheckPoNumberExistOrNotRequest requestData);
         Task<List<GetPoNumberDetailsByPoNumberResponse>> GetPoNumberDetailsByPoNumber(string poNumber);
         Task<AddEntityDto<int>> AddOrder(AddOrderRequest requestData, short CurrentUserId);
-        Task<EntityList<GetOrderResponse>> GetOrders(GetOrderRequest request);
+        Task<GetOrderResponse> GetOrders(GetOrderRequest request);
         Task<List<GetOrderItemsByOrderIdResponse>> GetOrderItemsByOrderId(int orderId);
         Task<GetOrderDetailByOrderIdResponse> GetOrderDetailByOrderId(int orderId);
         Task<AddEntityDto<int>> DeleteOrder(int orderId, int deletedBy);
