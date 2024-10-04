@@ -46,7 +46,7 @@ export const orderListMolGridConfig = {
         width: "10%",
       },
     },
-    
+
     {
       name: "Price",
       fieldName: "itemsTotal",
@@ -85,16 +85,20 @@ export const orderListMolGridConfig = {
       allowShort: false,
       colStyle: {
         width: "15%",
-        
+
       },
     },
     {
       name: "Unit/Size",
       fieldName: "itemUnitPrice",
       allowShort: false,
+      colType: GridColumnType.CUSTOM,
       colStyle: {
         width: "10%",
       },
+      renderCustomCol: (rowData) => {
+        return `${rowData?.["packSize"]} ${rowData?.["unit"]}`;
+      }
     },
     {
       name: "Price",
