@@ -2,8 +2,31 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 export const OrganizationProfileManagementdata = {
     // name: "Email From"
-    initialState: { registeredName:"" , dBAName: "", dateIncorporated:"", nAICSCode: "", eIN: "", tXTaxpayerNumber: "", sOSFileNumber: "", webFileNumber: "",tWCTaxAccountNumber:""},
+    initialState: {
+        registeredName: "", dBAName: "", dateIncorporated: "", nAICSCode: "", eIN: "", tXTaxpayerNumber: "", sOSFileNumber: "",
+        webFileNumber: "", tWCTaxAccountNumber: "",
+        attachmentName: "", base64Data: "",
+    },
     formFields: [
+        {
+            id: "attachment",
+            lable: "attachment ",
+            Field_Name: "attachment",
+            fieldType: FormFieldTypes.IMAGE,
+            dataField: "attachment",
+            fieldSetting: {
+                placeholder: "Upload Attachment",
+                allowSpace: true,
+                isImageUpload: true,
+                isButtonVisible: true,
+                isCustomButtonVisible: false,
+                acceptedFiles: '.png , .jpg ',
+            },
+            validation: [{ type: "require" }],
+            style: {
+                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-input mb-0 custom-file-upload-section",
+            },
+        },
         {
             id: "registeredName",
             lable: "Registered Name ",
@@ -64,7 +87,7 @@ export const OrganizationProfileManagementdata = {
                 placeholder: "Select Date Incorporated",
                 allowSpace: true,
             },
-             validation: [{ type: "require" }],
+            validation: [{ type: "require" }],
             style: {
                 containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
             },
@@ -78,7 +101,7 @@ export const OrganizationProfileManagementdata = {
             fieldSetting: {
                 placeholder: "Select NAICS Code",
                 allowSpace: true,
-                maxLength:6
+                maxLength: 6
             },
             validation: [{ type: "require" }],
             style: {
@@ -110,7 +133,7 @@ export const OrganizationProfileManagementdata = {
             fieldSetting: {
                 placeholder: "Select TXTaxpayer Number",
                 allowSpace: true,
-                maxLength:20,
+                maxLength: 20,
             },
             validation: [{ type: "require" }],
             style: {
@@ -126,8 +149,8 @@ export const OrganizationProfileManagementdata = {
             fieldSetting: {
                 placeholder: "Enter SOS File Number",
                 allowSpace: true,
-                maxLength:20,
-             },
+                maxLength: 20,
+            },
             validation: [{ type: "require" }],
             style: {
                 containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
@@ -142,7 +165,7 @@ export const OrganizationProfileManagementdata = {
             fieldSetting: {
                 placeholder: "Enter Web File Number",
                 allowSpace: true,
-                maxLength:20,
+                maxLength: 20,
             },
             validation: [{ type: "require" }],
             style: {
@@ -158,7 +181,7 @@ export const OrganizationProfileManagementdata = {
             fieldSetting: {
                 placeholder: "Enter TWC Tax Account Number",
                 allowSpace: true,
-                maxLength:20,
+                maxLength: 20,
             },
             validation: [{ type: "require" }],
             style: {

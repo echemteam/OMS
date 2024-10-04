@@ -16,5 +16,8 @@
        // public short? ResponsibleUserId { get; set; }
         public long? SupplierNoteId { get; set; }
         public byte? IncotermId { get; set; }
+        public string? Base64File { get; set; }
+        public string? AttachmentName { get; set; }
+        public string? StoragePath { get; set; }
     }
 }

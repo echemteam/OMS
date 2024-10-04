@@ -1,5 +1,4 @@
-﻿using ClientIPAuthentication;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Orders;
@@ -48,6 +47,29 @@ namespace OMS.API.Controllers
         {
             var addItem = await _serviceManager.orderServices.AddOrder(requestData, CurrentUserId);
             return APISucessResponce(addItem);
+        }
+
+        [HttpPost("GetOrders")]
+        public async Task<IActionResult> GetOrders(GetOrderRequest request)
+        {
+            var list = await _serviceManager.orderServices.GetOrders(request);
+            return APISucessResponce<object>(list);
+        }
+        [HttpGet("GetOrderItemsByOrderId")]
+        public async Task<IActionResult> GetOrderItemsByOrderId(int orderId)
+        {
+            if (orderId != null)
+            {
+                List<GetOrderItemsByOrderIdResponse> responseData = await _serviceManager.orderServices.GetOrderItemsByOrderId(orderId).ConfigureAwait(true);
+                return APISucessResponce<object>(responseData);
+            }
+            return APISucessResponce(orderId);
+        }
+        [HttpGet("GetOrderDetailByOrderId")]
+        public async Task<IActionResult> GetOrderDetailByOrderId(int orderId)
+        {
+            GetOrderDetailByOrderIdResponse responseData = await _serviceManager.orderServices.GetOrderDetailByOrderId(orderId).ConfigureAwait(true);
+            return APISucessResponce(responseData);
         }
         #endregion
     }

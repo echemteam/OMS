@@ -1,8 +1,9 @@
 import { useState } from "react";
 import Orders from "./Orders";
 import CardSection from "../../../../components/ui/card/CardSection";
+import { OrderItemStatusEnum } from "../../../../utils/Enums/StatusEnums";
 
-const ReviewOrdersTab=()=>{
+const ReviewOrdersTab=({statusId})=>{
     const [activeTab, setActiveTab] = useState("0");
     const handleTabClick = (tabIndex) => {
         setActiveTab(tabIndex.toString());
@@ -13,7 +14,7 @@ const ReviewOrdersTab=()=>{
           sMenuItemCaption: " Price Verification",
           component: (
             <div className="mt-2">
-              <Orders
+              <Orders  orderStatusId={statusId} orderItemStatusId={OrderItemStatusEnum.PriceVerification}
               
               />
             </div>
@@ -23,7 +24,7 @@ const ReviewOrdersTab=()=>{
           sMenuItemCaption: "Stock Verifiaction",
           component: (
             <div className="mt-2">
-              <Orders
+              <Orders  orderStatusId={statusId} orderItemStatusId={OrderItemStatusEnum.StockVerifiaction}
                 
               />
             </div>

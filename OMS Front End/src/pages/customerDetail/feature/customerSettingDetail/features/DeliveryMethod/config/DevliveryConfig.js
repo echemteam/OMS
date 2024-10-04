@@ -131,6 +131,7 @@ export const OurAccountGridConfig = {
         },
     ],
     editSettings: {
+        defualtEditableView: false,
         buttons: {
             save: true,
             cancel: true

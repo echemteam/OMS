@@ -121,6 +121,24 @@ const basicdetailAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        getSearchCustomersDetailsByNameEmailWebsite: builder.mutation({
+            query: (Details) => ({
+                url: '/Customers/GetSearchCustomersDetailsByNameEmailWebsite',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        download: builder.query({
+            query: (requestData) => ({
+                url: encryptQueryString(`/Common/Download/?folderName=${requestData.folderName}&fileName=${requestData.fileName}`),
+                Method: 'GET',
+                responseHandler: (response) => response.blob()
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
@@ -137,7 +155,9 @@ export const {
     useCheckCustomerNameExistMutation,
     useLazyGetCustomersDetailsByCutomerNameQuery,
     useUpdateCustomerSubCustomerMutation,
-    useAddEditResponsibleUserForCustomerMutation
+    useAddEditResponsibleUserForCustomerMutation,
+    useGetSearchCustomersDetailsByNameEmailWebsiteMutation,
+    useLazyDownloadQuery
 } = basicdetailAPI
 
 export default basicdetailAPI;

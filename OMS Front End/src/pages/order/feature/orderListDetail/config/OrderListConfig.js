@@ -20,7 +20,7 @@ export const orderListMolGridConfig = {
     },
     {
       name: "Entry Date",
-      fieldName: "entryDatePODate",
+      fieldName: "orderReceivedDate",
       colType: GridColumnType.DATE,
       colSettings: {
         format: "MM/DD/YYYY",
@@ -32,7 +32,7 @@ export const orderListMolGridConfig = {
     },
     {
       name: "Method/Terms",
-      fieldName: "paymentMethodTerms",
+      fieldName: "orderMethod",
       allowShort: false,
       colStyle: {
         width: "25%",
@@ -40,7 +40,7 @@ export const orderListMolGridConfig = {
     },
     {
       name: "Items ",
-      fieldName: "noItems",
+      fieldName: "items",
       allowShort: false,
       colStyle: {
         width: "5%",
@@ -49,7 +49,7 @@ export const orderListMolGridConfig = {
     
     {
       name: "Price",
-      fieldName: "totalPrice",
+      fieldName: "itemsTotal",
       allowShort: false,
       colStyle: {
         width: "10%",

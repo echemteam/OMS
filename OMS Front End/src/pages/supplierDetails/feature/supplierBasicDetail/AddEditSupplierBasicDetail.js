@@ -16,7 +16,7 @@ import ToastService from "../../../../services/toastService/ToastService";
 import { useLazyGetAllIncotermQuery, useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
 import { useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery } from "../../../../app/services/basicdetailAPI";
 import {
-    useAddEditSupplierBasicInformationMutation, useCheckSupplierNameExistMutation, useLazyGetAllSupplierTypeQuery, useLazyGetSupplierBasicInformationByIdQuery,
+    useAddEditSupplierBasicInformationMutation, useCheckSupplierNameExistMutation, useGetSearchSuppliersDetailsByNameEmailWebsiteMutation, useLazyGetAllSupplierTypeQuery, useLazyGetSupplierBasicInformationByIdQuery,
     useLazyGetSupplierDetailsBySupplierNameQuery
 } from "../../../../app/services/supplierAPI";
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
@@ -27,6 +27,8 @@ import PropTypes from 'prop-types';
 import { validateResponsibleUserId } from "../../../../utils/ResponsibleUser/validateRUser";
 import { useSelector } from "react-redux";
 import SwalAlert from "../../../../services/swalService/SwalService";
+import { validateNameEmailWebsiteGrid } from "../../../../common/features/component/ExistingInfo/Config/Existing.data";
+import ValidateCustomerSupplierInfo from "../../../../common/features/component/ExistingInfo/ValidateCustomerSupplierInfo";
 
 //** Compoent's */
 const ExistingCustomerSupplierInfo = React.lazy(() => import("../../../../common/features/component/ExistingInfo/ExistingCustomerSupplierInfo"));
@@ -45,10 +47,14 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
     const [isResponsibleUser, setIsResponsibleUser] = useState(false);
     const [isButtonDisable, setIsButtonDisable] = useState(false);
     // const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
+    const [isRemoveFields, setIsRemoveFields] = useState(false);
     const { nextStepRef, setSupplierId, moveNextPage, supplierId } = useContext(AddSupplierContext);
-    const [checkExistingInformation] = useLazyGetSupplierDetailsBySupplierNameQuery();
+
+    const [validateCustomerSupplierInfoModal, setValidateCustomerSupplierInfoModal] = useState(false);
+    const [validateCustomerSupplierData, setValidateCustomerSupplierData] = useState([]);
 
     //** API Call's */
+    const [checkExistingInformation] = useLazyGetSupplierDetailsBySupplierNameQuery();
     const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAllUserData, }] = useLazyGetAllUserQuery();
     const [getAllCountries, { isSuccess: isGetAllCountriesSucess, data: allGetAllCountriesData, }] = useLazyGetAllCountriesQuery();
     const [getAllGroupTypes, { isSuccess: isGetAllGroupTypesSucess, data: allGetAllGroupTypesData, }] = useLazyGetAllGroupTypesQuery();
@@ -60,6 +66,8 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
     const [addEditSupplierBasicInformation, { isLoading: isAddEditSupplierBasicInformationLoading, isSuccess: isAddEditSupplierBasicInformationSuccess,
         data: isAddEditSupplierBasicInformationData }] = useAddEditSupplierBasicInformationMutation();
     const [getAllIncoterm, { isSuccess: isGetAllIncotermSucess, data: allGetAllIncotermData }] = useLazyGetAllIncotermQuery();
+    const [validateSupplierNameEmailWebsite, { isSuccess: isValidateSupplierNameEmailWebsiteSucess, data: isValidateSupplierNameEmailWebsiteData, isLoading }]
+        = useGetSearchSuppliersDetailsByNameEmailWebsiteMutation();
 
     //** Security Key */
     const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICSUPPLIERDETAILS);
@@ -116,6 +124,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             if (!isOpen) {
                 const modifyFormFields = removeFormFields(formData, ['responsibleUserId']);
                 setFormData(modifyFormFields);
+                setIsRemoveFields(true);
                 // setFieldSetting(formData, 'name', FieldSettingType.INPUTBUTTON, true);
             }
         };
@@ -123,6 +132,17 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
         fetchData();
     }, [keyId, isOpen]);
 
+    useEffect(() => {
+        if (isValidateSupplierNameEmailWebsiteSucess && isValidateSupplierNameEmailWebsiteData) {
+            if (isValidateSupplierNameEmailWebsiteData && isValidateSupplierNameEmailWebsiteData.length > 0 && !supplierId > 0) {
+                setValidateCustomerSupplierData(isValidateSupplierNameEmailWebsiteData);
+                setValidateCustomerSupplierInfoModal(true);
+            } else {
+                setValidateCustomerSupplierInfoModal(false);
+                addSupplierCountine();
+            }
+        }
+    }, [isValidateSupplierNameEmailWebsiteSucess, isValidateSupplierNameEmailWebsiteData]);
 
     useEffect(() => {
         if (isOpen) {
@@ -209,23 +229,16 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
     const handleAddEditSupplier = async () => {
         let data = basicDetailRef.current.getFormData();
         if (!data) {
-            ToastService.warning('Please enter supplier basic information');
+            ToastService.warning('Please fill up all the required fields');
             return;
         }
         if (!isOpen) {
-            const result = await checkExistingInformation(data.name).unwrap().catch(error => {
-                ToastService.warning('Failed to check existing information.');
-            });
-            if (result && result.length > 0) {
-                confirm("Similar Supplier Names Found?", "We've found some supplier with matching names. Would you like to review them before moving forward? Simply click the magnifier button to view the existing supplier details, or proceed with adding the new supplier.",
-                    "Countine", 'Close and View', true).then((confirmed) => {
-                        if (confirmed) {
-                            addSupplierCountine();
-                        }
-                    });
-            } else {
-                addSupplierCountine();
+            let req = {
+                supplierName: data?.name,
+                website: data?.website,
+                emailAddress: data?.emailAddress
             }
+            await validateSupplierNameEmailWebsite(req).unwrap();
         } else {
             addSupplierCountine();
         }
@@ -245,7 +258,10 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             countryId: getIdValue(data.countryId),
             responsibleUserId: getIdValue(data.responsibleUserId) || 0,
             supplierId: keyId || supplierId,
-            supplierNoteId: noteId || 0
+            supplierNoteId: noteId || 0,
+            attachmentName: null,
+            base64File: null,
+            storagePath: 'SupplierProfilePic'
         };
         if (!data.taxId) {
             addEditSupplierBasicInformation(req);
@@ -281,13 +297,19 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
 
     const handleInputFields = (data, dataField) => {
         if (dataField === 'name') {
-            const trimName = data.replace(/\s+/g, ' ').trim();
+            const newName = data.replace(/[.,]/g, '')
+            const trimName = newName.replace(/\s+/g, ' ').trim();
+
             setSupplierName(trimName);
+            basicDetailRef.current.updateFormFieldValue({
+                name: newName
+            });
         }
         if (dataField === 'website') {
             const trimmedUrl = data.replace(/\/$/, "");
+            const newUrl = trimmedUrl.replace(/^(https?:\/\/)?www\./, '$1');
             basicDetailRef.current.updateFormFieldValue({
-                website: trimmedUrl
+                website: newUrl
             });
         }
     };
@@ -326,7 +348,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
     return (
         <React.Fragment>
             <div className="row basic-info-step">
-                {!isGetSupplierBasicInformationByIdFetching ?
+                {!isGetSupplierBasicInformationByIdFetching && isRemoveFields ?
                     <FormCreator
                         config={formData}
                         ref={basicDetailRef}
@@ -361,6 +383,16 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             {!isOpen &&
                 <ExistingCustomerSupplierInfo parentRef={parentRef} isOrderManage={false} isSupplier={true} getExistingInfoByName={useLazyGetSupplierDetailsBySupplierNameQuery} />
             }
+            {validateCustomerSupplierInfoModal && isValidateSupplierNameEmailWebsiteSucess ?
+                <ValidateCustomerSupplierInfo
+                    isSupplier={true}
+                    isModalOpen={validateCustomerSupplierInfoModal}
+                    gridCnfiguration={validateNameEmailWebsiteGrid}
+                    gridData={validateCustomerSupplierData}
+                    isGridLoading={isLoading}
+                    onAdd={addSupplierCountine}
+                />
+                : null}
         </React.Fragment>
     );
 }

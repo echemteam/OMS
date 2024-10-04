@@ -10,7 +10,10 @@ using OMS.Domain.Entities.API.Response.Supplier;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.CustomerNotes;
 using OMS.Domain.Entities.Entity.Customers;
+using OMS.Domain.Entities.Entity.User;
 using OMS.Domain.Repository;
+using OMS.FileManger.Services;
+using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Entities.CommonEntity;
 using OMS.Shared.Services.Contract;
 
@@ -85,7 +88,7 @@ namespace OMS.Application.Services.Customers
                                     rule
                                 );
                                 responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponseData);
-                                if(responceData.KeyValue >0)
+                                if (responceData.KeyValue > 0)
                                 {
                                     if (oldDataDict!.TryGetValue(fieldName, out var updatedValue) && valuesChanged)
                                     {
@@ -109,6 +112,13 @@ namespace OMS.Application.Services.Customers
             }
 
             CustomersDto customersDto = requestData.ToMapp<AddEditCustomersBasicInformationRequest, CustomersDto>();
+            if (requestData.Base64File != null)
+            {
+                customersDto.AttachmentName = FileManager.SaveFile(
+                                requestData.Base64File!,
+                                Path.Combine(commonSettingService.ApplicationSettings.SaveFilePath!, requestData.StoragePath!),
+                                requestData.AttachmentName!);
+            }
             customersDto.CreatedBy = CurrentUserId;
             AddEditResponse responseData = await repositoryManager.customers.AddEditCustomersBasicInformation(customersDto);
 
@@ -151,7 +161,20 @@ namespace OMS.Application.Services.Customers
 
         public async Task<GetCustomersBasicInformationByIdResponse> GetCustomersBasicInformationById(int customerId)
         {
-            return await repositoryManager.customers.GetCustomersBasicInformationById(customerId);
+            GetCustomersBasicInformationByIdResponse getCustomersBasicInformationByIdResponse = new();
+            getCustomersBasicInformationByIdResponse= await repositoryManager.customers.GetCustomersBasicInformationById(customerId);
+
+            if (getCustomersBasicInformationByIdResponse.AttachmentName != null)
+            {
+                var filePath = Path.Combine(commonSettingService.ApplicationSettings.SaveFilePath!, "CustomerProfilePic"!,getCustomersBasicInformationByIdResponse.AttachmentName);
+                if (File.Exists(filePath))
+                {
+                    byte[] imageArray = await File.ReadAllBytesAsync(filePath);
+                    string base64ImageRepresentation = Convert.ToBase64String(imageArray);
+                    getCustomersBasicInformationByIdResponse.Base64File = base64ImageRepresentation;
+                }
+            }
+            return getCustomersBasicInformationByIdResponse;
         }
         public async Task<EntityList<GetCustomersResponse>> GetCustomers(GetCustomersRequest queryRequest)
         {
@@ -228,6 +251,10 @@ namespace OMS.Application.Services.Customers
         public async Task<AddEntityDto<int>> AddEditResponsibleUserForCustomer(AddEditResponsibleUserForCustomerRequest requestData, short currentUserId)
         {
             return await repositoryManager.customers.AddEditResponsibleUserForCustomer(requestData, currentUserId); ;
+        }
+        public async Task<List<GetSearchCustomersDetailsByNameEmailWebsiteResponse>> GetSearchCustomersDetailsByNameEmailWebsite(GetSearchCustomersDetailsByNameEmailWebsiteRequest requestData)
+        {
+            return await repositoryManager.customers.GetSearchCustomersDetailsByNameEmailWebsite(requestData);
         }
         #endregion
     }

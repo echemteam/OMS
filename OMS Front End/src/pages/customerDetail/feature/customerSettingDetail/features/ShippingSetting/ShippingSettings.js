@@ -111,7 +111,7 @@ const ShippingSettings = ({ isEditablePage, customerStatusId }) => {
     if (dataField === 'deliveryAccountId') {
       confirm(
         "Shipping Methods?", "Are you sure you want to Add Default Shipping Method?",
-        "Yes", '', false
+        "Yes", 'Cancel', true
       ).then((confirmed) => {
         let request = {
           customerId: customerId,
@@ -124,15 +124,22 @@ const ShippingSettings = ({ isEditablePage, customerStatusId }) => {
           }
           addDefaultShippings(defaultRequest);
           setAccountTypeId(data.value);
-        } else if (!confirmed) {
-          let defaultRequest = {
-            ...request,
-            isByDefault: false
-          }
-          addDefaultShippings(defaultRequest);
-          setAccountTypeId(data.value);
         }
-      });
+        else if (!confirmed) {
+          let form = { ...shippingFormData };
+          form.initialState = {
+            deliveryAccountId: isGetDefaultValueData?.deliveryAccountId
+          }
+          setFormData(form);
+          // let defaultRequest = {
+          //   ...request,
+          //   isByDefault: false
+          // }
+          // addDefaultShippings(defaultRequest);
+          // setAccountTypeId(data.value);
+        }
+      }
+      );
     }
   }
   const formActionHandler = {

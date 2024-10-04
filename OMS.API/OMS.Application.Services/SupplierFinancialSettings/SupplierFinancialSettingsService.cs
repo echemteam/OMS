@@ -38,28 +38,20 @@ namespace OMS.Application.Services.SupplierFinancialSettings
             SuppierBankDetailsDto suppierBankDetailsDto = new();
             //var supplierId = Convert.ToInt32(requestData.SupplierId);
             //var supplierData = await repositoryManager.supplier.GetSupplierBasicInformationById(supplierId);
-            //GetSupplierFinancialSettingsWithACHWireBySupplierIdResponse existingSupplierFinancialSettingsData = new();
+            //var existingSupplierFinancialSettingsData = await repositoryManager.supplierFinancialSettings.GetSupplierFinancialSettingsBySupplierId(supplierId);
+            //var existingData = await repositoryManager.supplierPaymentSettings.GetACHWireBySupplierId(supplierId);
 
-            //existingSupplierFinancialSettingsData.SupplierFinancialSettings = await repositoryManager.supplierFinancialSettings.GetSupplierFinancialSettingsBySupplierId(supplierId);
-            //existingSupplierFinancialSettingsData.OtherDetails = await repositoryManager.supplierPaymentSettings.GetACHWireBySupplierId(supplierId);
-
-            //if (existingSupplierFinancialSettingsData != null && supplierId > 0 && existingSupplierFinancialSettingsData.OtherDetails.BankAddressId > 0 && existingSupplierFinancialSettingsData.OtherDetails.RecipientAddressId > 0)
+            //if (supplierData.StatusId == (short)Status.Approved && existingSupplierFinancialSettingsData != null && existingSupplierFinancialSettingsData.SupplierAccountingSettingId > 0 && existingData.SupplierBankDetailsId > 0)
             //{
-            //    existingSupplierFinancialSettingsData.OtherDetails = await repositoryManager.supplierPaymentSettings.GetACHWireBySupplierId(supplierId);
 
-            //    existingSupplierFinancialSettingsData.BeneficiaryDetails = await repositoryManager.suppierBankDetails.GetBeneficiaryDetailsAddressByAddressId(existingSupplierFinancialSettingsData.OtherDetails.BankAddressId);
-            //    existingSupplierFinancialSettingsData.BankDetails = await repositoryManager.suppierBankDetails.GetBankDetailsAddressByAddressId(existingSupplierFinancialSettingsData.OtherDetails.RecipientAddressId);
-            //}
-
-            //if (supplierData.StatusId == (short)Status.Approved && existingSupplierFinancialSettingsData != null && existingSupplierFinancialSettingsData.SupplierFinancialSettings.SupplierAccountingSettingId > 0 && existingSupplierFinancialSettingsData.OtherDetails.SupplierBankDetailsId > 0)
-            //{
-            //    //var newJsonData = JsonConvert.SerializeObject(requestData);
-            //    // Serialize combined data to JSON
-            //    var oldJsonData = JsonConvert.SerializeObject(existingSupplierFinancialSettingsData);
-
+            //    if (existingData != null && supplierId > 0 && existingData.BankAddressId > 0 && existingData.RecipientAddressId > 0)
+            //    {
+            //        existingData.BankAddress = await repositoryManager.supplierPaymentSettings.GetAddressByAddressId(existingData.BankAddressId);
+            //        existingData.RecipientAddress = await repositoryManager.supplierPaymentSettings.GetAddressByAddressId(existingData.RecipientAddressId);
+            //    }
             //    var approvalEventName = new[]
-            //        {
-            //       ApprovalEvent.UpdateAchWireFinancialSetting
+            //    {
+            //       ApprovalEvent.UpdateSupplierFinancialSetting
             //    };
 
             //    var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
@@ -67,31 +59,13 @@ namespace OMS.Application.Services.SupplierFinancialSettings
 
             //    if (matchingRule != null)
             //    {
-            //        ;
-
-            //        // Serialize the combined object to a JSON string
-            //        var modifiedData = await ModifyAllJsonData(requestData);
-
-            //        // Serialize the combined data to a JSON string
-            //        string combinedJsonString = JsonConvert.SerializeObject(modifiedData);
-
-
-            //        // Deserialize the updated JSON strings back into their respective object types
-
-
-            //        //var combinedNewJson = MergeJson(updatedNewlsJsonSupplierFinancialSettingsData, updatedNewJsonBeneficiaryDetailsData, updatedNewJsonBankDetailsData, updatedNewJsonOtherDetailsData);
-
-            //        // If you need a string, call ToString() on combinedNewJson
-            //        //var combinedJsonString = combinedNewJson.ToString(Formatting.None);
-
             //        var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
             //        ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
-            //            combinedJsonString,
-            //            oldJsonData,
+            //            null,
+            //            requestData,
             //            CurrentUserId,
             //            formatTemplate,
-            //            matchingRule,
-            //            true
+            //            matchingRule
             //        );
             //        responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponceData);
             //    }
@@ -140,9 +114,9 @@ namespace OMS.Application.Services.SupplierFinancialSettings
             //var supplierId = Convert.ToInt32(requestData.SupplierId);
             //var supplierData = await repositoryManager.supplier.GetSupplierBasicInformationById(supplierId);
             //var existingData = await repositoryManager.supplierPaymentSettings.GetPaymentSettingsBySupplierId(supplierId);
-            //var existingSupplierFinancialSettingsData = await repositoryManager.supplierFinancialSettings.GetSupplierFinancialSettingsBySupplierId(supplierId);
+            //var existingSupplierFinancialSettingsData = repositoryManager.supplierFinancialSettings.GetSupplierFinancialSettingsBySupplierId(supplierId);
 
-            //if (supplierData.StatusId == (short)Status.Approved && requestData.SupplierPaymentSettingId > 0)
+            //if (supplierData.StatusId == (short)Status.Approved && existingData.SupplierPaymentSettingId > 0)
             //{
             //    if (existingData != null && supplierId > 0 && existingData.CheckMailingAddressId > 0 && existingData.CheckMailingAddressId > 0)
             //    {
@@ -151,7 +125,7 @@ namespace OMS.Application.Services.SupplierFinancialSettings
 
             //    var approvalEventName = new[]
             //    {
-            //        ApprovalEvent.UpdateCreditCardFinancialSetting
+            //        ApprovalEvent.UpdateSupplierFinancialSetting
             //    };
 
             //    var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
@@ -159,10 +133,9 @@ namespace OMS.Application.Services.SupplierFinancialSettings
 
             //    if (matchingRule != null)
             //    {
-            //        var oldJsonData = JsonConvert.SerializeObject(existingData);
             //        var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
             //        ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
-            //            oldJsonData,
+            //            null,
             //            requestData,
             //            CurrentUserId,
             //            formatTemplate,
@@ -192,7 +165,7 @@ namespace OMS.Application.Services.SupplierFinancialSettings
             //var existingSupplierFinancialSettingsData = repositoryManager.supplierFinancialSettings.GetSupplierFinancialSettingsBySupplierId(supplierId);
             //var existingData = await repositoryManager.supplierPaymentSettings.GetPaymentSettingsBySupplierId(supplierId);
 
-            //if (supplierData.StatusId == (short)Status.Approved && existingData?.SupplierPaymentSettingId > 0 && existingData != null && existingSupplierFinancialSettingsData != null)
+            //if (supplierData.StatusId == (short)Status.Approved && existingData?.SupplierPaymentSettingId > 0 && existingData !=null && existingSupplierFinancialSettingsData !=null)
             //{
             //    if (existingData != null && supplierId > 0 && existingData.CheckMailingAddressId > 0 && existingData.CheckMailingAddressId > 0)
             //    {
@@ -201,26 +174,21 @@ namespace OMS.Application.Services.SupplierFinancialSettings
 
             //    var approvalEventName = new[]
             //    {
-            //        ApprovalEvent.UpdateCheckFinancialSetting
+            //        ApprovalEvent.UpdateSupplierFinancialSetting
             //    };
 
             //    var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
             //    var matchingRule = approvalRules?.FirstOrDefault(rule => approvalEventName.Contains(rule.EventName));
 
-            //    var modifiedData = await ModifyAllCheckJsonData(requestData);
-            //    string combinedJsonString = JsonConvert.SerializeObject(modifiedData);
-
             //    if (matchingRule != null)
             //    {
-            //        var oldJsonData = JsonConvert.SerializeObject(existingData);
             //        var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
             //        ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
-            //            oldJsonData,
-            //            combinedJsonString,
+            //            null,
+            //            requestData,
             //            CurrentUserId,
             //            formatTemplate,
-            //            matchingRule,
-            //            true
+            //            matchingRule
             //        );
             //        responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponceData);
             //    }
@@ -245,32 +213,26 @@ namespace OMS.Application.Services.SupplierFinancialSettings
             //var supplierId = Convert.ToInt32(requestData.SupplierId);
             //var supplierData = await repositoryManager.supplier.GetSupplierBasicInformationById(supplierId);
             //var existingData = await repositoryManager.supplierPaymentSettings.GetPaymentSettingsBySupplierId(supplierId);
-
             //if (supplierData.StatusId == (short)Status.Approved && existingData?.SupplierPaymentSettingId > 0 && existingData != null && existingData != null)
             //{
             //    if (existingData != null && supplierId > 0 && existingData.CheckMailingAddressId > 0 && existingData.CheckMailingAddressId > 0)
             //    {
             //        existingData.MailingAddress = await repositoryManager.supplierPaymentSettings.GetAddressByAddressId(existingData.CheckMailingAddressId);
             //    }
+
             //    var approvalEventName = new[]
             //    {
-            //        ApprovalEvent.UpdateOtherFinancialSetting,
+            //        ApprovalEvent.UpdateSupplierFinancialSetting
             //    };
 
             //    var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
             //    var matchingRule = approvalRules?.FirstOrDefault(rule => approvalEventName.Contains(rule.EventName));
 
-            //    //var modifiedData = await ModifyAllJsonData(requestData);
-
-            //    //// Serialize the combined data to a JSON string
-            //    //string combinedJsonString = JsonConvert.SerializeObject(modifiedData);
-
             //    if (matchingRule != null)
             //    {
-            //        var oldJsonData = JsonConvert.SerializeObject(existingData);
             //        var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
             //        ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
-            //            oldJsonData,
+            //            null,
             //            requestData,
             //            CurrentUserId,
             //            formatTemplate,

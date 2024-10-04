@@ -4,25 +4,20 @@ import PropTypes from "prop-types";
 import CardSection from "../../../components/ui/card/CardSection";
 import { useLazyGetAllModulesWithPendingRequestCountQuery } from "../../../app/services/commonAPI";
 
-const ModuleList = ({ moduleList, onModuleChange ,isPending,setModuleList}) => {
+const ModuleList = ({ moduleList, onModuleChange, isPending, setModuleList, onGetById }) => {
     const [activeModule, setActiveModule] = useState(null);
-    const [
-        getAllModulesWithPendingRequestCount,
-        { isSuccess: isGetAllModulesWithPendingRequestCountSucess, data: allGetAllModulesWithPendingRequestCountData },
-      ] = useLazyGetAllModulesWithPendingRequestCountQuery();
+    const [getAllModulesWithPendingRequestCount, { isSuccess: isGetAllModulesWithPendingRequestCountSucess, data: allGetAllModulesWithPendingRequestCountData },] = useLazyGetAllModulesWithPendingRequestCountQuery();
 
     // Set the first module as active by default when the component mounts
     useEffect(() => {
-
         getAllModulesWithPendingRequestCount(isPending);
-      
-    }, [getAllModulesWithPendingRequestCount]);
+    }, [getAllModulesWithPendingRequestCount, onGetById]);
 
     useEffect(() => {
         if (isGetAllModulesWithPendingRequestCountSucess && allGetAllModulesWithPendingRequestCountData) {
-          setModuleList(allGetAllModulesWithPendingRequestCountData);
+            setModuleList(allGetAllModulesWithPendingRequestCountData);
         }
-      }, [isGetAllModulesWithPendingRequestCountSucess, allGetAllModulesWithPendingRequestCountData]);
+    }, [isGetAllModulesWithPendingRequestCountSucess, allGetAllModulesWithPendingRequestCountData]);
 
     useEffect(() => {
         if (moduleList && moduleList.length > 0) {
@@ -44,9 +39,9 @@ const ModuleList = ({ moduleList, onModuleChange ,isPending,setModuleList}) => {
                     {moduleList && moduleList.map((data, index) => (
                         <li className={activeModule === data.moduleId ? "active" : ""}
                             onClick={() => handleModuleClick(data)} key={index}>
-                            <span>{data.moduleName} {data.requestCount > 0 ? <> <div className="module-count">{data.requestCount}</div></>: null}</span>
-                            
-                        </li> 
+                            <span>{data.moduleName} {data.requestCount > 0 ? <> <div className="module-count">{data.requestCount}</div></> : null}</span>
+
+                        </li>
                     ))}
                 </ul>
             </div>

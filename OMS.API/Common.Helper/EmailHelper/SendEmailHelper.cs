@@ -1,5 +1,7 @@
-﻿using System.Net;
+﻿using OMS.Domain.Entities.API.Request.Organization;
+using System.Net;
 using System.Net.Mail;
+using System.Runtime.Intrinsics.X86;
 
 namespace Common.Helper.EmailHelper
 {
@@ -17,6 +19,11 @@ namespace Common.Helper.EmailHelper
         public bool EnableSsl { get; set; } = true;
         public bool EnableSendMail { get; set; } = true;
         public int Port { get; set; } = 1;
+
+        public static string? EmailAddress { get; set; }
+        public static string? TypeOfExchange { get; set; }
+        public static bool? SSL { get; set; }
+
         public SmtpDeliveryMethod DeliveryMethod { get; set; } = SmtpDeliveryMethod.Network;
 
         public SendEmailHelper()

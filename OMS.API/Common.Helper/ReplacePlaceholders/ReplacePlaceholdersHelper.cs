@@ -49,10 +49,10 @@ namespace Common.Helper.ReplacePlaceholders
             switch (listName.ToLower())
             {
                 case "EmailAddressList":
-                    return template.Replace("#EmailAddressList#", listHtml);
+                    return template.Replace("#EmailList#", listHtml);
 
                 case "PhoneNumberList":
-                    return template.Replace("#PhoneNumberList#", listHtml);
+                    return template.Replace("#PhoneList#", listHtml);
 
                 // Add cases for future lists here
                 default:
