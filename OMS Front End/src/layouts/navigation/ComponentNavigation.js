@@ -19,7 +19,7 @@ const Dashboard = React.lazy(() => import('../../pages/dashboard/Dashboard'));
 //** Order */
 const Order = React.lazy(() => import('../../pages/order/addOrder/AddOrder'));
 const OrderList = React.lazy(() => import('../../pages/order/orderGrid/OrderList'));
-const OrderDetails = React.lazy(() => import('../../pages/order/orderGrid/feature/OrderDetails'));
+const OrderDetails = React.lazy(() => import('../../pages/order/orderDetail/OrderDetails'));
 
 
 
@@ -95,16 +95,16 @@ export const ComponentNavigation = [
   },
   {
     id: "orderDetails",
-    path: "/orderDetails",
+    path: "/orderDetails/:id",
     exact: true,
     title: '',
     component: OrderDetails,
-    hasParams: false,
+    hasParams: true,
     text: 'OrderDetails',
     securityKey: securityKey.ADDORDER
   },
 
-  
+
 
   {
     id: 'demoForm',

@@ -60,7 +60,8 @@ const SupplierBasicInfoCard = ({
   const [rUserValue, setRUserValue] = useState([]);
   const [addSupplierNotes] = useAddSupplierNotesMutation();
   const [responsibleUserOptions, setResponsibleUserOptions] = useState([]);
-  const [filteredStatusOptions,setFilteredStatusOptions]=useState(StatusValue);
+  const [filteredStatusOptions, setFilteredStatusOptions] = useState(StatusValue);
+  const [prevRUserValue, setPrevRUserValue] = useState("");
 
   const [
     getAllUser,
@@ -216,6 +217,7 @@ const SupplierBasicInfoCard = ({
       }));
       setResponsibleUserIds(responsibleUserIds);
       setRUserValue(responsibleUsers);
+      setPrevRUserValue(responsibleUsers);
       setSelectedStatus(GetSupplierBasicInformationByIdData.status);
       getAllUser();
       getSupplierCompletionCount(
@@ -259,8 +261,8 @@ const SupplierBasicInfoCard = ({
       );
       const filteredData = responsibleUserIds
         ? uniqueData.filter(
-            (item) => !responsibleUserIds.includes(item.userId.toString())
-          )
+          (item) => !responsibleUserIds.includes(item.userId.toString())
+        )
         : uniqueData;
       const modifyUserData = filteredData.map((item) => ({
         value: item.userId,
@@ -355,14 +357,14 @@ const SupplierBasicInfoCard = ({
 
   useEffect(() => {
     if (supplierData) {
-        let newStatusOptions = StatusValue;
-        if (supplierData.status === statusMapping.APPROVED) {
-            newStatusOptions = StatusValue.filter(option => option.value !== 2);
-        } 
-          else if (supplierData.status === statusMapping.PENDING) {
-            newStatusOptions = StatusValue.filter(option => option.value !== 3  )
-        }
-        setFilteredStatusOptions(newStatusOptions);
+      let newStatusOptions = StatusValue;
+      if (supplierData.status === statusMapping.APPROVED) {
+        newStatusOptions = StatusValue.filter(option => option.value !== 2);
+      }
+      else if (supplierData.status === statusMapping.PENDING) {
+        newStatusOptions = StatusValue.filter(option => option.value !== 3)
+      }
+      setFilteredStatusOptions(newStatusOptions);
     }
   }, [supplierData]);
   const removeFields = () => {
@@ -408,11 +410,24 @@ const SupplierBasicInfoCard = ({
     addEditResponsibleUserForSupplier(req);
   };
   const onHandleBlur = () => {
-    let req = {
-      supplierId: supplierId,
-      userId: rUserValue?.map((option) => option.value).join(","),
-    };
-    addEditResponsibleUserForSupplier(req);
+    // let req = {
+    //   supplierId: supplierId,
+    //   userId: rUserValue?.map((option) => option.value).join(","),
+    // };
+    // addEditResponsibleUserForSupplier(req);
+
+    const currentValues = rUserValue?.map((option) => option.value).join(",");
+
+    if (currentValues !== prevRUserValue) {
+      let req = {
+        customerId: supplierId,
+        userId: currentValues,
+      };
+
+      addEditResponsibleUserForSupplier(req);
+      setPrevRUserValue(currentValues);  // Store the current value for future comparison
+    }
+
   };
   const handleToggleModal = () => {
     setShowModal(false);
@@ -463,12 +478,8 @@ const SupplierBasicInfoCard = ({
               <div className="d-flex col-3 flex-column profile-icon-desc justify-content-center">
                 <div className="d-flex w-100">
                   <div className="profile-icon ">
-                    {/* {" "}
-                    {supplierData?.name
-                      ? supplierData?.name.charAt(0).toUpperCase()
-                      : ""} */}
                     <Image
-                      imagePath={AppIcons.DummyLogo}
+                      imagePath={supplierData?.base64File ? supplierData?.base64File : AppIcons.DummyLogo}
                       altText="button Icon"
                     />
                   </div>
@@ -528,15 +539,19 @@ const SupplierBasicInfoCard = ({
                 <div className="field-desc basic-info-select dis-dropdown">
                   <div className="inf-label">Status</div>
                   <b>&nbsp;:&nbsp;</b>
-                  <div className={`status-dropdown ${getStatusClass()}`}>
-                    <DropDown
-                      options={filteredStatusOptions}
-                      value={selectedStatus}
-                      onChange={handleStatusChange}
-                      placeholder="Select Status"
-                      isDisabled={isButtonDisable}
-                    />
-                  </div>
+                  {isButtonDisable ?
+                    <div className={`info-desc  ${getStatusClass()}`}>{selectedStatus}</div>
+                    :
+                    <div className={`status-dropdown ${getStatusClass()}`}>
+                      <DropDown
+                        options={filteredStatusOptions}
+                        value={selectedStatus}
+                        onChange={handleStatusChange}
+                        placeholder="Select Status"
+                        isDisabled={isButtonDisable}
+                      />
+                    </div>
+                  }
                 </div>
 
                 <div className="field-desc">

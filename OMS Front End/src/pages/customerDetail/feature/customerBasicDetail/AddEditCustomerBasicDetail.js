@@ -43,6 +43,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     const [isResponsibleUser, setIsResponsibleUser] = useState(false);
     const [validateCustomerSupplierInfoModal, setValidateCustomerSupplierInfoModal] = useState(false);
     const [validateCustomerSupplierData, setValidateCustomerSupplierData] = useState([]);
+    const [isRemoveFields, setIsRemoveFields] = useState(false);
     const { nextRef, customerId, setCustomerId, moveNextPage, setCustomerCountryId } = useContext(BasicDetailContext);
 
     //** API Call's */
@@ -56,7 +57,6 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         data: GetCustomersBasicInformationByIdData }] = useLazyGetCustomersBasicInformationByIdQuery();
     const [addEditCustomersBasicInformation, { isLoading: isAddEditCustomersBasicInformationLoading, isSuccess: isAddEditCustomersBasicInformationSuccess,
         data: isAddEditCustomersBasicInformationData }] = useAddEditCustomersBasicInformationMutation();
-    const [checkExistingInformation] = useLazyGetCustomersDetailsByCutomerNameQuery();
     const [validateCustomerNameEmailWebsite, { isSuccess: isValidateCustomerNameEmailWebsiteSucess, data: isValidateCustomerNameEmailWebsiteData, isLoading }] = useGetSearchCustomersDetailsByNameEmailWebsiteMutation();
 
     //** Security Key */
@@ -102,11 +102,13 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             if (!isOpen) {
                 const modifyFormFields = removeFormFields(formData, ['responsibleUserId']);
                 setFormData(modifyFormFields);
+                setIsRemoveFields(true);
                 setFieldSetting(customerbasicData, 'name', FieldSettingType.ISINFOBUTTONVISIBLE, true);
             }
         };
         fetchData();
     }, [keyId, isOpen]);
+
     useEffect(() => {
         if (isOpen) {
             if (customerId > 0) {
@@ -139,6 +141,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         }
     }, [isGetAllGroupTypesSucess, allGetAllGroupTypesData, isGetAllUserSucess, allGetAllUserData, isGetAllCountriesSucess, allGetAllCountriesData,
         isGetAllTerritoriesSucess, allGetAllTerritoriesData, isGetAllIncotermSucess, allGetAllIncotermData]);
+
     useEffect(() => {
         if (isAddEditCustomersBasicInformationSuccess && isAddEditCustomersBasicInformationData) {
             if (isAddEditCustomersBasicInformationData.errorMessage.includes('exists')) {
@@ -161,19 +164,21 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             }
         }
     }, [isAddEditCustomersBasicInformationSuccess, isAddEditCustomersBasicInformationData]);
+
     const onreset = () => {
         onSidebarClose()
         let restData = { ...customerbasicData };
         restData.initialState = { ...formData };
         setFormData(restData);
     }
+
     useEffect(() => {
         if (isGetCustomersBasicInformationById && GetCustomersBasicInformationByIdData && !isGetCustomersBasicInformationByIdFetching) {
             if (isCustomerOrSupplierApprovedStatus(GetCustomersBasicInformationByIdData.statusId)) {
-                setFieldSetting(customerbasicData, 'name', FieldSettingType.CKEDITORDISABLED, true);
+                setFieldSetting(customerbasicData, 'name', FieldSettingType.DISABLED, true);
                 setFieldSetting(formData, 'taxId', 'isDisabled', true);
             } else {
-                setFieldSetting(customerbasicData, 'name', FieldSettingType.CKEDITORDISABLED, false);
+                setFieldSetting(customerbasicData, 'name', FieldSettingType.DISABLED, false);
                 setFieldSetting(formData, 'taxId', 'isDisabled');
             }
             const newFrom = { ...customerbasicData };
@@ -192,6 +197,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             customerId && getCustomersBasicInformationById(customerId);
         }
     }, [isOpen]);
+
     useImperativeHandle(nextRef, () => ({
         handleAddBasicDetails,
     }));
@@ -239,8 +245,8 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             responsibleUserId: data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
             customerId: keyId ? keyId : customerId,
             customerNoteId: noteId ? noteId : 0,
-            attachmentName: null,
-            base64File: null,
+            attachmentName: data.attachment.fileName,
+            base64File: data.attachment.base64Data,
             storagePath: 'CustomerProfilePic'
         };
         if (data.taxId === "") {
@@ -255,8 +261,8 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                 if (data.taxId.length >= minLength || data.taxId.length <= maxLength) {
                     let value = {
                         ...req,
-                        attachmentName: null,
-                        base64File: null,
+                        attachmentName: data.attachment.fileName,
+                        base64File: data.attachment.base64Data,
                         storagePath: 'CustomerProfilePic',
                         responsibleUserId: data.responsibleUserId === "" ? 0 : data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
                     }
@@ -356,7 +362,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         <div className="basic-info-sec half-sec">
             <CardSection buttonClassName="theme-button">
                 <div className="row basic-info-step">
-                    {!isGetCustomersBasicInformationByIdFetching ?
+                    {!isGetCustomersBasicInformationByIdFetching && isRemoveFields ?
                         <FormCreator
                             config={formData}
                             ref={basicDetailRef}

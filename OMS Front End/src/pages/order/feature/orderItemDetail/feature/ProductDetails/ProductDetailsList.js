@@ -16,12 +16,12 @@ import FinalMolGrid from "../../../../../../components/FinalMolGrid/FinalMolGrid
 import AddOrderContext from "../../../../../../utils/Order/AddOrderContext";
 
 const ProductDetailsList = ({ onhandleProductDetailsListData, isDocumentData }) => {
-  const ref = useRef();
+  // const ref = useRef();
   const molGridRef = useRef();
   const [showModal, setShowModal] = useState(false);
   const [productSearch, setProductSearch] = useState("");
   const [productDetailList, setProductDetailList] = useState([]);
-  const { setProductId } = useContext(AddOrderContext);
+  const { setProductId, documentRef } = useContext(AddOrderContext);
 
   const [
     getThirdPartyApiResponse,
@@ -98,18 +98,28 @@ const ProductDetailsList = ({ onhandleProductDetailsListData, isDocumentData }) 
     INPUT_CHANGED: handleInputFields,
   };
 
-  useEffect(() => {
-    if (isDocumentData) {
-      const data = ref.current.getFormData();
-      if (data) {
-        let req = {
-          documentName: data.attachment.fileName,
-          base64File: data.attachment.base64Data,
-        }
-        onhandleProductDetailsListData(req)
-      }
-    }
-  }, [isDocumentData])
+  // useEffect(() => {
+  //   if (isDocumentData) {
+  //     const data = ref.current.getFormData();
+  //     if (data) {
+  //       let req = {
+  //         documentName: data.attachment.fileName,
+  //         base64File: data.attachment.base64Data,
+  //       }
+  //       onhandleProductDetailsListData(req)
+  //     }
+  //   }
+  // }, [isDocumentData])
+
+  // const onFormStateChange = (data) => {
+  //   if (data) {
+  //     let req = {
+  //       documentName: data.attachment.fileName,
+  //       base64File: data.attachment.base64Data,
+  //     }
+  //     onhandleProductDetailsListData(req)
+  //   }
+  // };
 
   return (
     <>
@@ -117,7 +127,7 @@ const ProductDetailsList = ({ onhandleProductDetailsListData, isDocumentData }) 
         <form onKeyPress={handleKeyPress}>
           <FormCreator
             config={productDetailsList}
-            ref={ref}
+            ref={documentRef}
             onInputChange={formInputHandler}
             handleInputGroupButton={handleInputGroupButton}
           />

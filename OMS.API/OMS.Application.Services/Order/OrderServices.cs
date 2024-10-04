@@ -1,15 +1,20 @@
-﻿using Common.Helper.Export;
+﻿using Common.Helper.Enum;
+using Common.Helper.Export;
 using Common.Helper.Extension;
 using OMS.Application.Services.Implementation;
+using OMS.Domain.Entities.API.Request.CustomerDocuments;
 using OMS.Domain.Entities.API.Request.Orders;
 using OMS.Domain.Entities.API.Response.Orders;
 using OMS.Domain.Entities.Entity.CommonEntity;
+using OMS.Domain.Entities.Entity.CustomerDocuments;
 using OMS.Domain.Entities.Entity.OrderAddress;
 using OMS.Domain.Entities.Entity.OrderDocument;
 using OMS.Domain.Entities.Entity.OrderItems;
 using OMS.Domain.Entities.Entity.Orders;
 using OMS.Domain.Repository;
 using OMS.FileManger.Services;
+using OMS.Prisitance.Entities.Entities;
+using OMS.Shared.Entities.CommonEntity;
 using OMS.Shared.Services.Contract;
 using System.Data;
 
@@ -106,6 +111,102 @@ namespace OMS.Application.Services.Order
             }
             return responseData;
         }
-        #endregion
+
+        public async Task<GetOrderResponse> GetOrders(GetOrderRequest request)
+        {
+            EntityList<OrderListResponse> Order = await repositoryManager.order.GetOrders(request);
+            List<GetOrderItemsByOrderIdResponse> OrderItems = await repositoryManager.order.GetOrderItemsByOrderId(0);
+            GetOrderResponse response = new()
+            {
+                OrderList = Order?.DataSource,
+                OrderItemList = OrderItems,
+                TotalRecord = Order?.TotalRecord ?? 0,
+            };
+            return response!;
+        }
+        public async Task<List<GetOrderItemsByOrderIdResponse>> GetOrderItemsByOrderId(int orderId)
+        {
+            return await repositoryManager.order.GetOrderItemsByOrderId(orderId);
+        }
+        public async Task<GetOrderDetailByOrderIdResponse> GetOrderDetailByOrderId(int orderId)
+        {
+            var orderDetails = await repositoryManager.order.GetOrderDetailByOrderId(orderId);
+            if (orderDetails == null)
+            {
+                return orderDetails!;
+            }
+
+            // Get Address Information
+            AddressResponse orderBillingAddresses = await repositoryManager.order.GetOrderAddressesByOrderId(orderDetails.BillingAddressId);
+            AddressResponse orderShippingAddresses = await repositoryManager.order.GetOrderAddressesByOrderId(orderDetails.ShippingAddressId);
+
+            orderDetails.OrderAddressInformation = new GetOrderAddressByOrderIdResponse
+            {
+                BillingAddress = orderBillingAddresses,
+                ShippingAddress = orderShippingAddresses
+            };
+
+            // Get Contact Information
+            orderDetails.OrderContactList = await repositoryManager.order.GetOrderContactByOrderId(orderId);
+            var ownerTypeId = (short)OwnerType.CustomerContact;
+            var tasks = orderDetails.OrderContactList.Select(async contact =>
+            {
+                var emailTask = repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId, ownerTypeId);
+                var phoneTask = repositoryManager.phoneNumber.GetPhoneByContactId(contact.ContactId);
+
+                var emailAddresses = await emailTask;
+                var phoneNumbers = await phoneTask;
+
+                contact.EmailAddressList = emailAddresses;
+                contact.PhoneNumberList = phoneNumbers;
+            });
+            await Task.WhenAll(tasks);
+
+            // Get Document Information
+            orderDetails.OrderDocumentList = await repositoryManager.order.GetOrderDocumentByOrderId(orderId);
+
+
+            return orderDetails!;
+        }
+        public async Task<AddEntityDto<int>> DeleteOrder(int orderId, int deletedBy)
+        {
+            return await repositoryManager.order.DeleteOrder(orderId, deletedBy);
+        }
+
+        public async Task<AddEntityDto<int>> AddOrderDocuments(AddOrderDocumentsRequest requestData, short CurrentUserId)
+        {
+            AddEntityDto<int> responseData = new();
+            if (requestData.DocumentOrderList != null)
+            {
+                foreach (var document in requestData.DocumentOrderList)
+                {
+                    if (!string.IsNullOrEmpty(document.Base64File) && !string.IsNullOrEmpty(requestData.StoragePath))
+                    {
+                        string AESKey = commonSettingService.EncryptionSettings.AESKey!;
+                        string AESIV = commonSettingService.EncryptionSettings.AESIV!;
+
+
+                        document.DocumentName = FileManager.SaveEncryptFile(
+                            document.Base64File!,
+                            Path.Combine(commonSettingService.ApplicationSettings.SaveFilePath!, requestData.StoragePath, requestData.OrderId.ToString()!),
+                            document.DocumentName,
+                            AESKey,
+                            AESIV);
+                    }
+
+
+                }
+            }
+
+            // Map the request to the DTO and add it to the repository
+            OrderDocumentDto orderDocumentsDto = requestData.ToMapp<AddOrderDocumentsRequest, OrderDocumentDto>();
+            orderDocumentsDto.CreatedBy = CurrentUserId;
+            var modifyData = requestData.DocumentOrderList.Select(data => new { data.DocumentName, data.DocumentType }).ToList();
+            DataTable documentDataTable = ExportHelper.ListToDataTable(modifyData);
+            responseData = await repositoryManager.order.AddOrderDocuments(orderDocumentsDto, documentDataTable);
+            return responseData;
+        }
     }
+    #endregion
 }
+

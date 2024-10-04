@@ -3,11 +3,57 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../data/gridColumnType";
 import { getLabelClass } from "../../../../../utils/StatusColors/StatusColors";
 
-export const excludingRoles = ['Admin', 'manager']
+export const excludingRoles = ["Admin", "manager"];
 
 export const customerbasicData = {
-  initialState: { name: "", groupTypeId: 1, countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", isSubCustomer: false, taxId: "", isBuyingForThirdParty: false, responsibleUserId: "", customerNoteId: "", incotermId: 11 },
+  initialState: {
+    name: "",
+    groupTypeId: 1,
+    countryId: 233,
+    territoryId: 2,
+    emailAddress: "",
+    website: "",
+    note: "",
+    isSubCustomer: false,
+    taxId: "",
+    isBuyingForThirdParty: false,
+    responsibleUserId: "",
+    customerNoteId: "",
+    incotermId: 11,
+    attachment: "",
+    base64File: "",
+    storagePath: "",
+  },
   formFields: [
+    {
+      id: "attachment",
+      lable: "Customer Logo ",
+      Field_Name: "Attachment",
+      fieldType: FormFieldTypes.IMAGE,
+      dataField: "attachment",
+      fieldSetting: {
+        placeholder: "Upload Attachment",
+        allowSpace: true,
+        isImageUpload: true,
+        isButtonVisible: true,
+        isCustomButtonVisible: false,
+        acceptedFiles: ".png , .jpg ",
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss:
+          "col-xxl-4 col-xl-4 col-md-4 col-4 col-4 mb-input mb-0 custom-file-upload-section validation-image-uploader",
+      },
+    },
+    {
+      id: "",
+      lable: "",
+      Field_Name: "",
+      dataField: "",
+      style: {
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-4 col-4 remove-line",
+      },
+    },
     {
       id: "name",
       lable: "Customer Name ",
@@ -18,7 +64,7 @@ export const customerbasicData = {
         placeholder: "Enter Customer Name",
         allowSpace: true,
         maxLength: 50,
-        exemptBoundarySpaces: true
+        exemptBoundarySpaces: true,
       },
       validation: [{ type: "require" }, { type: "uniqueName" }],
       style: {
@@ -30,9 +76,9 @@ export const customerbasicData = {
         infoButtonConfig: {
           isInfoButtonVisible: true,
           infoButtonIcon: "fa-search",
-          infoButtonTooltip: "Customer Information"
-        }
-      }
+          infoButtonTooltip: "Customer Information",
+        },
+      },
     },
     {
       id: "emailAddress",
@@ -44,7 +90,7 @@ export const customerbasicData = {
         placeholder: "Enter Email",
         allowSpace: false,
         maxLength: 65,
-        exemptBoundarySpaces: true
+        exemptBoundarySpaces: true,
       },
       validation: [{ type: "require" }, { type: "email" }],
       style: {
@@ -60,7 +106,7 @@ export const customerbasicData = {
       fieldSetting: {
         placeholder: "https://www.xyz.com",
         allowSpace: false,
-        maxLength: 250
+        maxLength: 250,
       },
       validation: [{ type: "require" }, { type: "website" }],
       style: {
@@ -76,14 +122,13 @@ export const customerbasicData = {
       dataField: "groupTypeId",
       fieldSetting: {
         placeholder: "Select Group Type",
-        isEnableOnChange: true
+        isEnableOnChange: true,
       },
       validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-3 col-xl-4 col-md-6 col-12 mb-input",
       },
     },
-
 
     {
       id: "countryId",
@@ -93,7 +138,7 @@ export const customerbasicData = {
       dataField: "countryId",
       fieldSetting: {
         placeholder: "Select Country",
-        isEnableOnChange: true
+        isEnableOnChange: true,
       },
       validation: [{ type: "require" }],
       style: {
@@ -108,7 +153,7 @@ export const customerbasicData = {
       dataField: "territoryId",
       fieldSetting: {
         placeholder: "Select Territory",
-        isEnableOnChange: true
+        isEnableOnChange: true,
       },
       validation: [{ type: "require" }],
       style: {
@@ -123,7 +168,7 @@ export const customerbasicData = {
       dataField: "incotermId",
       fieldSetting: {
         placeholder: "Select Incoterm",
-        isEnableOnChange: true
+        isEnableOnChange: true,
       },
       validation: [{ type: "require" }],
       style: {
@@ -141,12 +186,12 @@ export const customerbasicData = {
         allowSpace: false,
         minLength: 10,
         maxLength: 10,
-        exemptBoundarySpaces: true
+        exemptBoundarySpaces: true,
       },
       inputIcon: {
         isIconShow: true,
         faIcon: "fa-info-circle",
-        message: SuccessMessage.DefaultUSATaxId
+        message: SuccessMessage.DefaultUSATaxId,
       },
       style: {
         containerCss: "col-xxl-3 col-xl-3 col-md-4 col-12 mb-input",
@@ -174,7 +219,8 @@ export const customerbasicData = {
       fieldType: FormFieldTypes.CHECKBOX,
       dataField: "isBuyingForThirdParty",
       style: {
-        containerCss: "col-xxl-2 col-xl-2 col-md-3 col-12 pt-2 mb-input margin-top-checkbox mt-2",
+        containerCss:
+          "col-xxl-2 col-xl-2 col-md-3 col-12 pt-2 mb-input margin-top-checkbox mt-2",
       },
     },
     {
@@ -184,7 +230,8 @@ export const customerbasicData = {
       fieldType: FormFieldTypes.CHECKBOX,
       dataField: "isSubCustomer",
       style: {
-        containerCss: "col-xxl-2 col-xl-2 col-md-3 col-12 md-pt-0 pt-2 mb-input margin-top-checkbox margin-left0-checkbox mt-2",
+        containerCss:
+          "col-xxl-2 col-xl-2 col-md-3 col-12 md-pt-0 pt-2 mb-input margin-top-checkbox margin-left0-checkbox mt-2",
       },
     },
     {
@@ -202,11 +249,10 @@ export const customerbasicData = {
         containerCss: "col-xxl-5 col-xl-5 col-md-12 col-12 mb-input mb-0",
       },
     },
-
   ],
   formSetting: {
-    isViewOnly: false
-  }
+    isViewOnly: false,
+  },
 };
 
 export const basicInfoData = {
@@ -264,4 +310,3 @@ export const basicInfoData = {
     },
   ],
 };
-

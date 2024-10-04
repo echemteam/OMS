@@ -15,41 +15,32 @@ export const orderListMolGridConfig = {
       fieldName: "poNumber",
       allowShort: false,
       colStyle: {
-        width: "12%",
+        width: "15%",
       },
     },
     {
       name: "Entry Date",
-      fieldName: "entryDatePODate",
+      fieldName: "orderReceivedDate",
       colType: GridColumnType.DATE,
       colSettings: {
         format: "MM/DD/YYYY",
       },
       allowShort: false,
       colStyle: {
-        width: "8%",
+        width: "15%",
       },
     },
     {
       name: "Method/Terms",
-      fieldName: "paymentMethodTerms",
+      fieldName: "orderMethod",
       allowShort: false,
       colStyle: {
-        width: "25%",
+        width: "20%",
       },
     },
     {
       name: "Items ",
-      fieldName: "noItems",
-      allowShort: false,
-      colStyle: {
-        width: "5%",
-      },
-    },
-    
-    {
-      name: "Price",
-      fieldName: "totalPrice",
+      fieldName: "items",
       allowShort: false,
       colStyle: {
         width: "10%",
@@ -57,12 +48,8 @@ export const orderListMolGridConfig = {
     },
 
     {
-      name: "Status",
-      fieldName: "status",
-      colType: GridColumnType.CHECKBOX,
-      colSettings: {
-        allowEdit: false,
-      },
+      name: "Price",
+      fieldName: "itemsTotal",
       allowShort: false,
       colStyle: {
         width: "10%",
@@ -86,7 +73,7 @@ export const orderListMolGridConfig = {
   ChildTableColumn: [
     {
       name: "Catalog",
-      fieldName: "catalog",
+      fieldName: "catalogId",
       allowShort: false,
       colStyle: {
         width: "15%",
@@ -98,20 +85,24 @@ export const orderListMolGridConfig = {
       allowShort: false,
       colStyle: {
         width: "15%",
-        
+
       },
     },
     {
       name: "Unit/Size",
-      fieldName: "unitSize",
+      fieldName: "itemUnitPrice",
       allowShort: false,
+      colType: GridColumnType.CUSTOM,
       colStyle: {
         width: "10%",
       },
+      renderCustomCol: (rowData) => {
+        return `${rowData?.["packSize"]} ${rowData?.["unit"]}`;
+      }
     },
     {
       name: "Price",
-      fieldName: "price",
+      fieldName: "itemUnitPrice",
       allowShort: false,
       colStyle: {
         width: "10%",
@@ -126,8 +117,8 @@ export const orderListMolGridConfig = {
       },
     },
     {
-      name: "Delivery Meter",
-      fieldName: "deliveryMeter",
+      name: "Delivery Method",
+      fieldName: "deliveryMethod",
       allowShort: false,
       colStyle: {
         width: "25%",
@@ -136,6 +127,9 @@ export const orderListMolGridConfig = {
     {
       name: "Action",
       fieldName: "Action",
+      defaultAction: {
+        allowEdit: true,
+      },
       allowShort: false,
       colStyle: {
         width: "10%",
@@ -148,8 +142,8 @@ export const orderListMolGridConfig = {
   OnColumnChangeEdit: null,
   hasChildGridTable: true,
   childGridSetting: {
-    parentKeyDataField: "id",
-    childKeyDataField: "id",
+    parentKeyDataField: "orderId",
+    childKeyDataField: "orderId",
     hideChildHeader: false,
   },
 };

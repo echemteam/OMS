@@ -464,7 +464,7 @@ const TaskDetail = ({
                   </div>
                   <div className="d-flex">
                     {approvedData?.eventName !==
-                    FunctionalitiesName.UPLOADCUSTOMERDOCUMENT ? (
+                      FunctionalitiesName.UPLOADCUSTOMERDOCUMENT ? (
                       <>
                         &nbsp;{" "}
                         <span
@@ -488,7 +488,7 @@ const TaskDetail = ({
                           <div className="detail-card">
                             <div classname="detail-item">
                               {valueTypes === "old Value" &&
-                              approvedData.oldValue ? (
+                                approvedData.oldValue ? (
                                 <div
                                   className="html-render mb-0"
                                   dangerouslySetInnerHTML={{
@@ -595,12 +595,8 @@ const TaskDetail = ({
                         <span className="value-title">New Value</span>
 
                         {approvedData.newValueTemplate ? (
-                          <div
-                            className="html-render mb-0"
-                            dangerouslySetInnerHTML={{
-                              __html: approvedData.newValueTemplate,
-                            }}
-                          ></div>
+                          <div className="html-render mb-0"
+                            dangerouslySetInnerHTML={{ __html: approvedData.newValueTemplate }} ></div>
                         ) : (
                           <>
                             {Object.entries(

@@ -14,6 +14,8 @@ import { useSelector } from "react-redux";
 import { EmailProviders,FieldSettingType} from "../../../../utils/Enums/commonEnums";
 import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
 import { setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import TestEmails from "./TestEmails";
+import CenterModel from "../../../../components/ui/centerModel/CenterModel";
 const setInitialData = {
   label: "Gmail",
   value: "Gmail"
@@ -30,7 +32,8 @@ const SMTPSettings = (isEditablePage) => {
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const { formSetting } = SMTPSettingsFormData;
   const roles = useSelector((state) => state.auth.roles.roleName);
-
+  const [isTestEmailModelOpen, setIsTestEmailModelOpen] = useState(false);
+  
   useEffect(() => {
     if (isEditablePage) {
       if (roles?.includes("Admin")) {
@@ -189,6 +192,13 @@ const SMTPSettings = (isEditablePage) => {
     ); // Replace with a proper loading spinner or component
   }
 
+  const handleTestEmail=()=>{
+    setIsTestEmailModelOpen(true);
+  }
+	const onCloseModal = () => {
+		setIsTestEmailModelOpen(false);
+	}
+
   return (
     <div className="row mt-2 add-address-form">
       <h4 className="organization-tab-title">SMTP Settings</h4>
@@ -201,6 +211,12 @@ const SMTPSettings = (isEditablePage) => {
       {isEditablePage ? (
         <div className="col-md-12 mt-2">
           <div className="d-flex align-item-end justify-content-end">
+          <Buttons
+              buttonTypeClassName="theme-button mr-4"
+              buttonText="Test Outbound Email"
+              onClick={handleTestEmail}
+              isDisable={isButtonDisable}
+            />
             <Buttons
               buttonTypeClassName="theme-button"
               buttonText="Save"
@@ -211,6 +227,18 @@ const SMTPSettings = (isEditablePage) => {
           </div>
         </div>
       ) : null}
+      <CenterModel
+          showModal={isTestEmailModelOpen}
+          handleToggleModal={onCloseModal}
+          modalTitle={"Test Outbound Email"}
+          modelSizeClass="w-40"
+        >
+          <TestEmails 
+              onClose={onCloseModal}
+              smtpRef={smtpRef}
+              
+          />
+        </CenterModel>
     </div>
   );
 };

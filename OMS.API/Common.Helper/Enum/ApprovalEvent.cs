@@ -15,6 +15,22 @@
         public const string UpdateCustomerFinancialSetting = "Update Customer Financial Setting";
         public const string UpdateCustomerShippingSetting = "Update Customer Shipping Setting";
         public const string UploadCustomerDocument = "Upload Customer Document";
+        public const string UpdateCustomerShippingCarrierDetails = "Update Customer Shipping Carrier Details";
+        public const string UpdateCustomerShippingDeliveryMethodDetails= "Update Customer Shipping Delivery Method Details";
+
+        //Supplier 
+        public const string AddSupplierPhysicalAddress = "Add Supplier Physical Address";
+        public const string UpdateSupplierPhysicalAddress = "Update Supplier Physical Address";
+        public const string AddSupplierBankAddress = "Add Supplier Bank Address";
+        public const string UpdateSupplierBankAddress = "Update Supplier Bank Address";
+        public const string AddSupplierPrimaryContact = "Add Supplier Primary Contact";
+        public const string UpdateSupplierPrimaryContact = "Update Supplier Primary Contact";
+        public const string AddSupplierAccountsReceivableContact = "Add Supplier Accounts Receivable Contact";
+        public const string UpdateSupplierAccountsReceivableContact = "Update Supplier Accounts Receivable Contact";
+        public const string UpdateAchWireFinancialSetting = "Update Supplier ACH/WIRE Financial Setting";
+        public const string UpdateCreditCardFinancialSetting = "Update Supplier Credit Card Financial Setting";
+        public const string UpdateCheckFinancialSetting = "Update Supplier Check Financial Setting";
+        public const string UpdateOtherFinancialSetting = "Update Supplier Other Financial Setting";
 
     }
 }

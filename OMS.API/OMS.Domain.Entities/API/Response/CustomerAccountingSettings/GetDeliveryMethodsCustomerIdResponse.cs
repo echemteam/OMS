@@ -7,6 +7,7 @@
         public byte? DeliveryMethodId { get; set; }
         public bool? IsForInternational { get; set; }
         public string? Name { get; set; }
+        public string? DeliveryMethod { get; set; }
         public decimal? Charge { get; set; }
         public bool? IsPrimary { get; set; }
     }

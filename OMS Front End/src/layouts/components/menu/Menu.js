@@ -43,7 +43,7 @@ export const Menu = [
           },
           {
             id: "SecurityRoleManagement",
-            submenuName: "Security Roles Management",
+            submenuName: "Role Management",
             to: "/SecurityRoleManagement",
             securityKey: securityKey.SECURITYROLEMANAGEMENT,
           },

@@ -65,7 +65,9 @@ const CustomerBasicInfoCard = ({
   const [responsibleUserIds, setResponsibleUserIds] = useState([]);
   const [rUserValue, setRUserValue] = useState([]);
   const [responsibleUserOptions, setResponsibleUserOptions] = useState([]);
-  const [filteredStatusOptions,setFilteredStatusOptions]=useState(StatusValue);
+  const [filteredStatusOptions, setFilteredStatusOptions] = useState(StatusValue);
+  const [prevRUserValue, setPrevRUserValue] = useState("");
+
   const [
     updateCustomerSubCustomer,
     {
@@ -136,6 +138,7 @@ const CustomerBasicInfoCard = ({
       handleToggleModal();
     }
   }, [isSuccessUpdateCustomerInActiveStatus, updateCustomerInActiveStatusData]);
+
   useEffect(() => {
     if (isSuccessUpdateCustomerStatus && updateCustomerStatusData) {
       ToastService.success(updateCustomerStatusData.errorMessage);
@@ -143,7 +146,7 @@ const CustomerBasicInfoCard = ({
     }
   }, [isSuccessUpdateCustomerStatus, updateCustomerStatusData]);
   useEffect(() => {
-        if (
+    if (
       GetCustomersBasicInformationByIdData &&
       isGetCustomersBasicInformationById &&
       !isGetCustomersBasicInformationByIdFetching
@@ -162,6 +165,7 @@ const CustomerBasicInfoCard = ({
       }));
       setResponsibleUserIds(responsibleUserIds);
       setRUserValue(responsibleUsers);
+      setPrevRUserValue(responsibleUsers);
       setSelectedStatus(GetCustomersBasicInformationByIdData.status);
       getAllUser();
       getCustomerCompletionCount(
@@ -195,8 +199,8 @@ const CustomerBasicInfoCard = ({
       );
       const filteredData = responsibleUserIds
         ? uniqueData.filter(
-            (item) => !responsibleUserIds.includes(item.userId.toString())
-          )
+          (item) => !responsibleUserIds.includes(item.userId.toString())
+        )
         : uniqueData;
       const modifyUserData = filteredData.map((item) => ({
         value: item.userId,
@@ -289,35 +293,40 @@ const CustomerBasicInfoCard = ({
     }
   };
 
-
-useEffect(() => {
-  if (customerData) {
+  useEffect(() => {
+    if (customerData) {
       let newStatusOptions = StatusValue;
       if (customerData.status === statusMapping.APPROVED) {
-          newStatusOptions = StatusValue.filter(option => option.value !== 2);
-      } 
-        else if (customerData.status === statusMapping.PENDING) {
-          newStatusOptions = StatusValue.filter(option => option.value !== 3  )
+        newStatusOptions = StatusValue.filter(option => option.value !== 2);
+      }
+      else if (customerData.status === statusMapping.PENDING) {
+        newStatusOptions = StatusValue.filter(option => option.value !== 3)
       }
       setFilteredStatusOptions(newStatusOptions);
-  }
-}, [customerData]);
-  
- 
+    }
+  }, [customerData]);
+
+
   const removeFields = () => {
     const modifyFormFields = removeFormFields(formData, ["responsibleUserId"]);
     setFormData(modifyFormFields);
   };
 
   const onHandleBlur = () => {
-    let req = {
-      customerId: customerId,
-      // userId: String(rUserValue)
-      userId: rUserValue?.map((option) => option.value).join(","),
-    };
+    // Compare current rUserValue with previous value
+    const currentValues = rUserValue?.map((option) => option.value).join(",");
 
-    addEditResponsibleUserForCustomer(req);
+    if (currentValues !== prevRUserValue) {
+      let req = {
+        customerId: customerId,
+        userId: currentValues,
+      };
+
+      addEditResponsibleUserForCustomer(req);
+      setPrevRUserValue(currentValues);  // Store the current value for future comparison
+    }
   };
+
 
   const updateRUserData = (data) => {
     const responsibleUserId = data.map((option) => option.value.toString());
@@ -476,12 +485,9 @@ useEffect(() => {
         <div className="d-flex profile-info  justify-content-between col-12">
           <div className="col-3 flex-column profile-icon-desc justify-content-center">
             <div className="d-flex w-100">
+              {/* <FormCreator config={imagesData} /> */}
               <div className="profile-icon ">
-                {/* {" "}
-                {customerData?.name
-                  ? customerData?.name.charAt(0).toUpperCase()
-                  : ""} */}
-                <Image imagePath={AppIcons.DummyLogo} altText="button Icon" />
+                <Image imagePath={customerData?.base64File ? customerData?.base64File : AppIcons.DummyLogo} altText="button Icon" />
               </div>
               <div className="detail-sec">
                 <div className="customer-name">
@@ -543,15 +549,18 @@ useEffect(() => {
             <div className="field-desc basic-info-select dis-dropdown">
               <div className="inf-label">Status</div>
               <b>&nbsp;:&nbsp;</b>
-              <div className={`status-dropdown ${getStatusClass()}`}>
-                <DropDown
-                  options={filteredStatusOptions}
-                  value={selectedStatus}
-                  onChange={handleStatusChange}
-                  placeholder="Select Status"
-                  isDisabled={isButtonDisable}
-                />
-              </div>
+              {isButtonDisable ?
+                <div className={`info-desc  ${getStatusClass()}`}>{selectedStatus}</div>
+                :
+                <div className={`status-dropdown ${getStatusClass()}`}>
+                  <DropDown
+                    options={filteredStatusOptions}
+                    value={selectedStatus}
+                    onChange={handleStatusChange}
+                    placeholder="Select Status"
+                    isDisabled={isButtonDisable}
+                  />
+                </div>}
             </div>
 
             <div className="field-desc">

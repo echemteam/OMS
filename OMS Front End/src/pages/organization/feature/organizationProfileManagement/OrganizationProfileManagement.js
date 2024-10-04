@@ -6,12 +6,10 @@ import FormCreator from '../../../../components/Forms/FormCreator';
 import { useAddEditOrganizationProfileMutation, useLazyGetOrganizationProfileQuery } from '../../../../app/services/organizationAPI';
 import ToastService from '../../../../services/toastService/ToastService';
 import DataLoader from '../../../../components/ui/dataLoader/DataLoader';
-import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
-import { securityKey } from '../../../../data/SecurityKey';
 import { useSelector } from 'react-redux';
 
 
-const OrganizationProfileManagement = ({isEditablePage,setCompanyName}) => {
+const OrganizationProfileManagement = ({ isEditablePage, setCompanyName }) => {
     const organizationProfileRef = useRef();
     const [organizationProfileData, setOrganizationProfileData] = useState(OrganizationProfileManagementdata);
     const [addEditOrganization, { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData }] = useAddEditOrganizationProfileMutation();
@@ -19,21 +17,21 @@ const OrganizationProfileManagement = ({isEditablePage,setCompanyName}) => {
     const [profileId, setProfileId] = useState(0);
     const [isButtonDisable, setIsButtonDisable] = useState(false);
     const { formSetting } = OrganizationProfileManagementdata;
-    const roles = useSelector((state) => state.auth.roles.roleName );
+    const roles = useSelector((state) => state.auth.roles.roleName);
 
-   
-   useEffect(() => {
-    if (isEditablePage) {
-      if (roles?.includes("Admin")) {  
-        setIsButtonDisable(false);
-        formSetting.isViewOnly = false;
-      } else {
-        setIsButtonDisable(true);
-        formSetting.isViewOnly = true;
-      }
-    }
-  }, [isEditablePage, roles]);
-    
+
+    useEffect(() => {
+        if (isEditablePage) {
+            if (roles?.includes("Admin")) {
+                setIsButtonDisable(false);
+                formSetting.isViewOnly = false;
+            } else {
+                setIsButtonDisable(true);
+                formSetting.isViewOnly = true;
+            }
+        }
+    }, [isEditablePage, roles]);
+
     useEffect(() => {
         getOrganizationProfile()
 
@@ -54,13 +52,14 @@ const OrganizationProfileManagement = ({isEditablePage,setCompanyName}) => {
                 sOSFileNumber: isGetOrganizationProfileData.sosFileNumber,
                 webFileNumber: isGetOrganizationProfileData.webFileNumber,
                 tWCTaxAccountNumber: isGetOrganizationProfileData.twcTaxAccountNumber,
+                attachment: isGetOrganizationProfileData.base64Data
             };
             setOrganizationProfileData(formData);
             setProfileId(isGetOrganizationProfileData.organizationProfileId);
             setCompanyName(isGetOrganizationProfileData.registeredName);
 
         }
-    }, [isGetOrganizationProfileFetching, isGetOrganizationProfileSuccess, isGetOrganizationProfileData,]);
+    }, [isGetOrganizationProfileFetching, isGetOrganizationProfileSuccess, isGetOrganizationProfileData]);
 
     useEffect(() => {
         if (isAddSuccess && isAddData) {
@@ -84,6 +83,9 @@ const OrganizationProfileManagement = ({isEditablePage,setCompanyName}) => {
                 sOSFileNumber: profileFormData.sOSFileNumber,
                 webFileNumber: profileFormData.webFileNumber,
                 tWCTaxAccountNumber: profileFormData.tWCTaxAccountNumber,
+                base64Data: profileFormData.attachment.base64Data,
+                attachmentName: profileFormData.attachment.fileName,
+                storagePath: 'OrganizationProfilePic'
             }
             addEditOrganization(request)
         }
@@ -103,21 +105,21 @@ const OrganizationProfileManagement = ({isEditablePage,setCompanyName}) => {
                 ref={organizationProfileRef}
             />
 
-        {isEditablePage ?
-            <div className="col-md-12 mt-2">
-                <div className="d-flex align-item-end justify-content-end">
-                    <Buttons
-                        buttonTypeClassName="theme-button"
-                        buttonText="Save"
-                        onClick={handleAddEdit}
-                        isLoading={isAddLoading}
-                        isDisable={isButtonDisable}
-                    />
+            {isEditablePage ?
+                <div className="col-md-12 mt-2">
+                    <div className="d-flex align-item-end justify-content-end">
+                        <Buttons
+                            buttonTypeClassName="theme-button"
+                            buttonText="Save"
+                            onClick={handleAddEdit}
+                            isLoading={isAddLoading}
+                            isDisable={isButtonDisable}
+                        />
+                    </div>
                 </div>
-            </div>
-             : null}
+                : null}
         </div>
-        
+
     );
 };
 

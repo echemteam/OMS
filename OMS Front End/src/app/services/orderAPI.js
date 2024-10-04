@@ -37,10 +37,54 @@ const orderAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        getOrders: builder.mutation({
+            query: (userQuery) => ({
+                url: '/Order/GetOrders',
+                method: 'POST',
+                body: transformRequest(userQuery)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+
+        getOrderDetailByOrderId: builder.query({
+            query: (orderId) => ({
+                url: encryptQueryString(`Order/GetOrderDetailByOrderId?orderId=${orderId}`),
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse,
+        }),
+
+        getOrderItemsByOrderId: builder.query({
+            query: (orderId) => ({
+                url: encryptQueryString(`/Order/GetOrderItemsByOrderId/?orderId=${orderId}`),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        deleteOrder: builder.mutation({
+            query: (orderId) => ({
+                url: encryptQueryString(`/Order/DeleteOrder/?orderId=${orderId}`),
+                method: 'DELETE'
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+            downloadDocument: builder.query({
+            query: (requestData) => ({
+                url: encryptQueryString(`/Common/DownloadDocument/?folderName=${requestData.folderName}&fileName=${requestData.fileName}&keyId=${requestData.keyId}`),
+                Method: 'GET',
+                responseHandler: (response) => response.blob()
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
 export const { useCheckPoNumberExistOrNotMutation, useLazyGetPoNumberDetailsByPoNumberQuery,
-    useAddOrderMutation } = orderAPI;
+    useAddOrderMutation ,useGetOrdersMutation,  useLazyGetOrderDetailByOrderIdQuery,useLazyGetOrderItemsByOrderIdQuery ,useDeleteOrderMutation,useLazyDownloadDocumentQuery} = orderAPI;
 
 export default orderAPI;

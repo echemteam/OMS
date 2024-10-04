@@ -28,5 +28,6 @@ namespace OMS.Application.Services.Organization
         Task<AddEntityDto<int>> AddEditBusinessAddresses(AddEditOrganizationBusinessAddressesRequest requestData, short CurrentUserId);
         Task<GetOrganizationBusinessAddressesResponse> GetOrganizationBusinessAddresses();
         Task<EntityList<GetOrganizationHistorysResponse>> GetOrganizationHistorys(GetOrganizationHistoryRequest requestData);
+        Task<AddEntityDto<int>> SendTestOutboundEmails(SmtpCheckConnection requestData);
     }
 }

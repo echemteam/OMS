@@ -1,6 +1,8 @@
 ﻿using Common.Helper.Enum;
 using Common.Helper.Export;
 using Common.Helper.Extension;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.Contact;
 using OMS.Domain.Entities.API.Request.Customers;
@@ -29,15 +31,25 @@ namespace OMS.Application.Services.Contact
         #region  Contact Service
         public async Task<AddEntityDto<int>> AddEditContact(AddEditContactRequest requestData, short CurrentUserId)
         {
-            const string? OwnerTypeIdColumnName = "OwnerTypeId";
-            const string? CreatedByColumnName = "CreatedBy";
+            AddEntityDto<int> responseData = new();
+            var customerId = Convert.ToInt32(requestData.CustomerId);
+            var supplierId = Convert.ToInt32(requestData.SupplierId);
+            var contactTypeIds = requestData.ContactTypeId!.Split(',').Select(id => id.Trim()).Distinct().ToList(); // Handle multiple contact types
 
-            string[] contactTypeIds = requestData.ContactTypeId!.Split(',');
+            var approvedContactTypes = new HashSet<ContactType>();
 
-            AddEntityDto<int> responceData = new();
-            foreach (var singleContactTypeId in contactTypeIds)
+            if (customerId > 0)
             {
-                short contactTypeId = short.Parse(singleContactTypeId);
+                approvedContactTypes.Add(ContactType.InvoiceFollowUp);
+                approvedContactTypes.Add(ContactType.InvoiceSubmission);
+            }
+
+            // Add contact types based on supplierId
+            if (supplierId > 0)
+            {
+                approvedContactTypes.Add(ContactType.Primary);
+                approvedContactTypes.Add(ContactType.AccountsReceivable);
+            }
 
                 requestData.ContactTypeId = singleContactTypeId;
                 ContactDto contactDto = requestData.ToMapp<AddEditContactRequest, ContactDto>();
@@ -47,14 +59,74 @@ namespace OMS.Application.Services.Contact
 
                 if (responceData.KeyValue > 0)
                 {
-                    List<AddContactEmailRequest> emailDT = requestData.EmailList!;
-                    List<AddContactPhoneRequest> PhoneDT = requestData.PhoneList!;
-
-                    int contactId = responceData.KeyValue;
-                    OwnerType ownerTypeId = 0;
-                    if (requestData.CustomerId > 0 && responceData.KeyValue > 0)
+                    bool isApprovalRequired = (customerId > 0 && (await repositoryManager.customers.GetCustomersBasicInformationById(customerId))?.StatusId == (short)Status.Approved && approvedContactTypes.Contains(contactType)) ||
+                                               (supplierId > 0 && (await repositoryManager.supplier.GetSupplierBasicInformationById(supplierId))?.StatusId == (short)Status.Approved && approvedContactTypes.Contains(contactType));
+                    if (isApprovalRequired)
                     {
-                        ownerTypeId = OwnerType.CustomerContact;
+                        string approvalEventName = null!;
+
+                        if (customerId > 0 && requestData.ContactId == 0)
+                        {
+                            if (contactType == ContactType.InvoiceSubmission)
+                                approvalEventName = ApprovalEvent.AddCustomerInvoiceSubmissionContact;
+                            else if (contactType == ContactType.InvoiceFollowUp)
+                                approvalEventName = ApprovalEvent.AddCustomerInvoiceFollowUpContact;
+                        }
+                        if (customerId > 0 && requestData.ContactId > 0)
+                        {
+                            if (contactType == ContactType.InvoiceSubmission)
+                                approvalEventName = ApprovalEvent.UpdateCustomerInvoiceSubmissionContact;
+                            else if (contactType == ContactType.InvoiceFollowUp)
+                                approvalEventName = ApprovalEvent.UpdateCustomerInvoiceFollowUpContact;
+                        }
+                        if (supplierId > 0 && requestData.ContactId == 0)
+                        {
+                            if (contactType == ContactType.Primary)
+                                approvalEventName = ApprovalEvent.AddSupplierPrimaryContact;
+                            else if (contactType == ContactType.AccountsReceivable)
+                                approvalEventName = ApprovalEvent.AddSupplierAccountsReceivableContact;
+                        }
+                        if (supplierId > 0 && requestData.ContactId > 0)
+                        {
+                            if (contactType == ContactType.Primary)
+                                approvalEventName = ApprovalEvent.UpdateSupplierPrimaryContact;
+                            else if (contactType == ContactType.AccountsReceivable)
+                                approvalEventName = ApprovalEvent.UpdateSupplierAccountsReceivableContact;
+                        }
+                        if (approvalEventName != null && !approvalEventNames.Contains(approvalEventName))
+                        {
+                            approvalEventNames.Add(approvalEventName);
+
+                            var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
+                            var matchingRule = approvalRules?.FirstOrDefault(rule => rule.EventName == approvalEventName);
+
+                            var ownerType = customerId > 0 ? OwnerType.CustomerContact : OwnerType.SupplierContact;
+                            var existingContactData = requestData.ContactId > 0 ? await FetchContactDetails(Convert.ToInt32(requestData.ContactId), ownerType) : null;
+
+                            requestData.ContactTypeId = contactTypeId;
+                            var updatedJsonData = await UpdateContactData(requestData);
+
+                            var updatedExistingJsonData = "";
+                            if (existingContactData != null)
+                            {
+                                // Ensure existingContactData.ContactTypeId is not null before updating
+                                existingContactData.ContactTypeId ??= contactTypeId?.ToString(); // Assign if null
+                                updatedExistingJsonData = await UpdateContactData(existingContactData);
+                            }
+
+                            if (matchingRule != null)
+                            {
+                                var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
+                                var approvalRequest = await ApprovalRuleHelper.ProcessApprovalRequest(
+                                   updatedExistingJsonData,
+                                    updatedJsonData,
+                                    CurrentUserId,
+                                    formatTemplate,
+                                    matchingRule
+                                );
+                                approvalRequests.Add(approvalRequest);
+                            }
+                        }
                     }
                     else if (requestData.SupplierId > 0 && responceData.KeyValue > 0)
                     {
@@ -90,8 +162,10 @@ namespace OMS.Application.Services.Contact
                         _ = await repositoryManager.phoneNumber.AddEditContactPhone(phoneDataTable, contactId);
                     }
                 }
-
-                if (requestData.CustomerId > 0 && responceData.KeyValue > 0)
+            }
+            if (approvalRequests.Count > 0)
+            {
+                foreach (var approvalRequest in approvalRequests)
                 {
                     AddEditContactForCustomerRequest addEditContactForCustomerRequest = new()
                     {
@@ -117,9 +191,109 @@ namespace OMS.Application.Services.Contact
                     _ = await repositoryManager.supplier.AddEditContactForSupplier(addEditContactForSupplierRequest, CurrentUserId);
                 }
             }
-            return responceData;
+            return responseData;
         }
 
+        private async Task<dynamic> FetchContactDetails(int contactId, OwnerType ownerType)
+        {
+            dynamic contactDetail;
+
+            if (ownerType == OwnerType.CustomerContact)
+            {
+                contactDetail = await repositoryManager.contact.GetCustomerContactByContactId(contactId);
+            }
+            else
+            {
+                contactDetail = await repositoryManager.contact.GetSupllierContactByContactId(contactId);
+            }
+
+            var emailTask = repositoryManager.emailAddress.GetEmailByContactId(contactId, (short)ownerType);
+            var phoneTask = repositoryManager.phoneNumber.GetPhoneByContactId(contactId);
+
+            contactDetail.EmailAddressList = await emailTask;
+            contactDetail.PhoneNumberList = await phoneTask;
+
+            return contactDetail;
+        }
+
+        public async Task<string> UpdateContactData(object requestData)
+         {
+            var newJObject = JObject.FromObject(requestData);
+            string contactTypeIds = "";
+            // Check if ContactTypeId exists in the JObject and update it if needed
+            if (newJObject["ContactTypeId"] != null)
+            {
+                // Convert JToken to string
+                contactTypeIds = newJObject["ContactTypeId"].ToString();
+            }
+            var getAllContactTypesResponse = await repositoryManager.commonRepository.GetAllContactTypes();
+            var getAllPhoneTypesResponse = await repositoryManager.commonRepository.GetAllPhoneTypes();
+
+            var contactTypeIdList = contactTypeIds.Split(',').Select(id => id.Trim()).ToList();
+            var contactTypeDictionary = getAllContactTypesResponse.ToDictionary(
+                p => p.ContactTypeId.ToString(),
+                p => p.Type
+            );
+
+            if (contactTypeDictionary.Count > 0)
+            {
+                foreach (var contactTypeIdString in contactTypeIdList)
+                {
+                    if (int.TryParse(contactTypeIdString, out int contactTypeId))
+                    {
+                        if (contactTypeDictionary.TryGetValue(contactTypeId.ToString(), out var contactTypeName))
+                        {
+                            if (newJObject["ContactType"] == null)
+                            {
+                                newJObject["ContactType"] = contactTypeName;
+                            }
+                        }
+                    }
+                }
+            }
+
+            var phoneTypeDictionary = getAllPhoneTypesResponse.ToDictionary(
+                p => p.PhoneTypeId.ToString(),
+                p => p.Type
+            );
+
+            var phoneList = newJObject["PhoneList"] as JArray ?? new JArray();
+
+            foreach (var phoneItem in phoneList)
+            {
+                var phoneTypeId = phoneItem["PhoneTypeId"]?.ToString();
+
+                if (phoneTypeDictionary.TryGetValue(phoneTypeId, out var phoneTypeName))
+                {
+                    phoneItem["PhoneType"] = phoneTypeName;
+                }
+            }
+
+            return newJObject.ToString(Formatting.None);
+        }
+        public async Task<string> UpdateContactPhoneTypeNames(object requestData)
+        {
+            var newJObject = JObject.FromObject(requestData);
+            var getPhoneTypesResponse = await repositoryManager.commonRepository.GetAllPhoneTypes();
+
+            var phoneList = newJObject["PhoneList"] as JArray ?? new JArray();
+
+            var phoneTypeDictionary = getPhoneTypesResponse.ToDictionary(
+                p => p.PhoneTypeId.ToString(),
+                p => p.Type
+            );
+            foreach (var phoneItem in phoneList)
+            {
+                var phoneTypeId = phoneItem["PhoneTypeId"]?.ToString();
+
+                if (phoneTypeDictionary.TryGetValue(phoneTypeId, out var phoneTypeName))
+                {
+                    phoneItem["PhoneType"] = phoneTypeName;
+                }
+            }
+
+            return newJObject.ToString(Formatting.None);
+        }
         public async Task<GetCustomerContactByContactIdResponse> GetCustomerContactByContactId(int contactId)
         {
             var contactDetail = await repositoryManager.contact.GetCustomerContactByContactId(contactId);

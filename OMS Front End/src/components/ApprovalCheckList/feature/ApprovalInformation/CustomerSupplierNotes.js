@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLazyGetDetailsbyCustomerIDQuery } from "../../../../app/services/customerSettingsAPI";
 import Iconify from "../../../ui/iconify/Iconify";
+import NoRecordFound from "../../../ui/noRecordFound/NoRecordFound";
 
 const CustomerSupplierNotes = ({
   mainId,
@@ -41,7 +42,9 @@ const CustomerSupplierNotes = ({
       isGetDetailByCustomerIdSuccess &&
       isGetDetailByCustomerIdData
     ) {
-      setInvoiceNote(isGetDetailByCustomerIdData.invoiceSubmissionInstruction);
+      if (isGetDetailByCustomerIdData?.invoiceSubmissionInstruction) {
+        setInvoiceNote(isGetDetailByCustomerIdData.invoiceSubmissionInstruction);
+      }
     }
   }, [
     isGetDetailByCustomerIdFetching,
@@ -51,8 +54,10 @@ const CustomerSupplierNotes = ({
 
   useEffect(() => {
     if (!isGetNotesFetching && isGetNotesSuccess && isGetNotesData) {
-      const latestNote = isGetNotesData[0]; // get the latest note
-      setNotes(latestNote.note);
+      if (isGetNotesData?.length > 0) {
+        const latestNote = isGetNotesData[0]; // get the latest note
+        setNotes(latestNote.note);
+      }
     }
   }, [isGetNotesFetching, isGetNotesSuccess, isGetNotesData]);
 
@@ -84,10 +89,14 @@ const CustomerSupplierNotes = ({
           {openSections[0] && (
             <div className="card-info-checklist">
               <div className="pt-2">
-                <span
-                  className="validation-msg"
-                  dangerouslySetInnerHTML={{ __html: invoiceNote }}
-                />
+                {invoiceNote ?
+                  <span
+                    className="validation-msg"
+                    dangerouslySetInnerHTML={{ __html: invoiceNote }}
+                  />
+                  :
+                  <NoRecordFound />
+                }
               </div>
             </div>
           )}
@@ -106,10 +115,14 @@ const CustomerSupplierNotes = ({
         <>
           <div className="card-info-checklist">
             <div className="pt-2">
-              <span
-                className="validation-msg"
-                dangerouslySetInnerHTML={{ __html: notes }}
-              />
+              {notes ?
+                <span
+                  className="validation-msg"
+                  dangerouslySetInnerHTML={{ __html: notes }}
+                />
+                :
+                <NoRecordFound />
+              }
             </div>
           </div>
         </>

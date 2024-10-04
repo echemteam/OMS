@@ -18,7 +18,7 @@ import {
 import { setDropDownOptionField } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
 import { AppIcons } from "../../../../data/appIcons";
-import { addressFormData } from "../../../../../src/common/features/component/Address/config/AddressForm.data";
+import { addressFormData } from "../../../../common/features/component/Address/config/AddressForm.data";
 import { AddressType } from "../../../../utils/Enums/commonEnums";
 import NoRecordFound from "../../../../components/ui/noRecordFound/NoRecordFound";
 import AddEditAddress from "../../../../common/features/component/Address/feature/AddEditAddress";

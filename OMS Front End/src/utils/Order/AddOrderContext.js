@@ -13,6 +13,7 @@ export const AddOrderContextProvider = ({ children }) => {
     const [orderCustomerId, setOrderCustomerId] = useState(0);
     const [orderId, setOrderId] = useState(0);
     const [productId, setProductId] = useState(0);
+    const documentRef = useRef(null);
 
     const moveNextPage = () => {
         setActiveTab((prev) => prev + 1);
@@ -46,7 +47,7 @@ export const AddOrderContextProvider = ({ children }) => {
     return (
         <AddOrderContext.Provider value={{
             nextStepRef, orderCustomerId, setOrderCustomerId, moveNextPage, movePreviewPage, addOrder, activeTab, setActiveTab, orderId, setOrderId, conatctRef
-            , productId, setProductId, itemRef
+            , productId, setProductId, itemRef, documentRef
         }}>
             {children}
         </AddOrderContext.Provider>

@@ -129,7 +129,7 @@ const basicdetailAPI = createApi({
             }),
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
-        }),
+        })
     })
 })
 

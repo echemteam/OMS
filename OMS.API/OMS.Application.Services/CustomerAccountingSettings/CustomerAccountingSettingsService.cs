@@ -1,5 +1,7 @@
 ﻿using Common.Helper.Enum;
 using Common.Helper.Extension;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.CustomerAccountingNotes;
 using OMS.Domain.Entities.API.Response.CustomerAccountingSettings;
@@ -31,67 +33,89 @@ namespace OMS.Application.Services.CustomerAccountingSettings
         public async Task<AddEntityDto<int>> AddEditCustomerSettings(AddEditCustomerSettingRequest requestData, short CurrentUserId)
         {
             AddEntityDto<int> responceData = new();
-            //if (requestData.CustomerAccountingSettingId > 0)
-            //{
-                //var existingData = await repositoryManager.customerAccountingSettings.GetDetailsbyCustomerID(Convert.ToInt32(requestData.CustomerId)).ConfigureAwait(false);
-                //var oldJsonData = JsonConvert.SerializeObject(existingData);
-                //var newJsonData = JsonConvert.SerializeObject(requestData);
-                //var existingscustomerData = await repositoryManager.customers.GetCustomersBasicInformationById(Convert.ToInt16(requestData.CustomerId));
+            if (requestData.CustomerAccountingSettingId > 0)
+            {
+                var existingData = await repositoryManager.customerAccountingSettings.GetDetailsbyCustomerID(Convert.ToInt32(requestData.CustomerId)).ConfigureAwait(false);
+                var oldJsonData = JsonConvert.SerializeObject(existingData);
+                var newJsonData = JsonConvert.SerializeObject(requestData);
+                var existingscustomerData = await repositoryManager.customers.GetCustomersBasicInformationById(Convert.ToInt16(requestData.CustomerId));
 
-                //if (existingscustomerData.StatusId == (short)Status.Approved)
-                //{
-                //    var oldDataDict = JsonConvert.DeserializeObject<Dictionary<string, object>>(oldJsonData);
-                //    var newDataDict = JsonConvert.DeserializeObject<Dictionary<string, object>>(newJsonData);
+                if (existingscustomerData.StatusId == (short)Status.Approved)
+                {
+                    var oldDataDict = JsonConvert.DeserializeObject<Dictionary<string, object>>(oldJsonData);
+                    var newDataDict = JsonConvert.DeserializeObject<Dictionary<string, object>>(newJsonData);
 
-                //    var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
-                //    var requestProperties = typeof(AddEditCustomerSettingRequest).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+                    var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
+                    var requestProperties = typeof(AddEditCustomerSettingRequest).GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
-                //    foreach (var rule in approvalRules)
-                //    {
-                //        var fieldName = rule.FieldName;
-                //        if (string.IsNullOrEmpty(fieldName))
-                //        {
-                //            continue;
-                //        }
-                //        if (oldDataDict!.TryGetValue(fieldName, out var oldValue) &&
-                //            newDataDict!.TryGetValue(fieldName, out var newValue))
-                //        {
-                //            bool valuesChanged = (oldValue == null && newValue != null) ||
-                //                                 (oldValue != null && !oldValue.Equals(newValue));
+                    foreach (var rule in approvalRules)
+                    {
+                        var fieldName = rule.FieldName;
+                        if (string.IsNullOrEmpty(fieldName))
+                        {
+                            continue;
+                        }
+                        if (oldDataDict!.TryGetValue(fieldName, out var oldValue) &&
+                            newDataDict!.TryGetValue(fieldName, out var newValue))
+                        {
+                            bool valuesChanged = (oldValue == null && newValue != null) ||
+                                                 (oldValue != null && !oldValue.Equals(newValue));
 
-                //            if (valuesChanged)
-                //            {
-                //                var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(rule.FunctionalityEventId);
-                //                var approvalResponseData = await ApprovalRuleHelper.ProcessApprovalRequest(
-                //                    oldJsonData,
-                //                    newJsonData,
-                //                    CurrentUserId,
-                //                    formatTemplate,
-                //                    rule
-                //                );
-                //                responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponseData);
-                //                if (responceData.KeyValue > 0)
-                //                {
-                //                    if (oldDataDict!.TryGetValue(fieldName, out var updatedValue) && valuesChanged)
-                //                    {
-                //                        var propertyInfo = requestData.GetType().GetProperty(fieldName);
-                //                        if (propertyInfo != null && updatedValue != null)
-                //                        {
-                //                            Type targetType = propertyInfo.PropertyType;
-                //                            if (targetType.IsGenericType && targetType.GetGenericTypeDefinition() == typeof(Nullable<>))
-                //                            {
-                //                                targetType = Nullable.GetUnderlyingType(targetType);
-                //                            }
-                //                            var convertedValue = Convert.ChangeType(updatedValue, targetType);
-                //                            propertyInfo.SetValue(requestData, convertedValue);
-                //                        }
-                //                    }
-                //                }
-                //            }
-                //        }
-                //    }
-                //}
+                            if (valuesChanged)
+                            {
+                                var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(rule.FunctionalityEventId);
+                                var approvalResponseData = await ApprovalRuleHelper.ProcessApprovalRequest(
+                                    oldJsonData,
+                                    newJsonData,
+                                    CurrentUserId,
+                                    formatTemplate,
+                                    rule
+                                );
+                                responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponseData);
+                                if (responceData.KeyValue > 0)
+                                {
+                                    if (oldDataDict!.TryGetValue(fieldName, out var updatedValue) && valuesChanged)
+                                    {
+                                        var propertyInfo = requestData.GetType().GetProperty(fieldName);
+                                        if (propertyInfo != null && updatedValue != null)
+                                        {
+                                            Type targetType = propertyInfo.PropertyType;
+                                            if (targetType.IsGenericType && targetType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                                            {
+                                                targetType = Nullable.GetUnderlyingType(targetType);
+                                            }
+                                            var convertedValue = Convert.ChangeType(updatedValue, targetType);
+                                            propertyInfo.SetValue(requestData, convertedValue);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    CustomerAccountingSettingsDto customerAccountingSettingsDto = requestData.ToMapp<AddEditCustomerSettingRequest, CustomerAccountingSettingsDto>();
+                    customerAccountingSettingsDto.CreatedBy = CurrentUserId;
+                    responceData = await repositoryManager.customerAccountingSettings.AddEditCustomerSettings(customerAccountingSettingsDto);
 
+                    if (requestData.CustomerAccountingSettingId == null)
+                    {
+                        CustomerShppingDeliveryCarriersDto customerShppingDeliveryCarriersDto = new()
+                        {
+                            CustomerId = requestData.CustomerId,
+                            CreatedBy = CurrentUserId,
+                            DeliveryAccountId = (int)DeliveryAccount.OurAccount,
+                            IsByDefault = true
+                        };
+
+                        _ = await repositoryManager.customerAccountingSettings.AddCustomerShppingDeliveryCarriersAndDeliveryMethods(customerShppingDeliveryCarriersDto);
+                    }
+                }
+
+            }
+            else
+            {
                 CustomerAccountingSettingsDto customerAccountingSettingsDto = requestData.ToMapp<AddEditCustomerSettingRequest, CustomerAccountingSettingsDto>();
                 customerAccountingSettingsDto.CreatedBy = CurrentUserId;
                 responceData = await repositoryManager.customerAccountingSettings.AddEditCustomerSettings(customerAccountingSettingsDto);
@@ -108,8 +132,7 @@ namespace OMS.Application.Services.CustomerAccountingSettings
 
                     _ = await repositoryManager.customerAccountingSettings.AddCustomerShppingDeliveryCarriersAndDeliveryMethods(customerShppingDeliveryCarriersDto);
                 }
-
-            //}
+            }
             return responceData;
 
         }
@@ -130,9 +153,47 @@ namespace OMS.Application.Services.CustomerAccountingSettings
 
         public async Task<AddEntityDto<int>> UpdateShppingDeliveryCarriers(UpdateShppingDeliveryCarriersRequest requestData, short CurrentUserId)
         {
-            CustomerShppingDeliveryCarriersDto customerShppingDeliveryCarriersDto = requestData.ToMapp<UpdateShppingDeliveryCarriersRequest, CustomerShppingDeliveryCarriersDto>();
-            customerShppingDeliveryCarriersDto.UpdatedBy = CurrentUserId;
-            return await repositoryManager.customerAccountingSettings.UpdateShppingDeliveryCarriers(customerShppingDeliveryCarriersDto);
+            AddEntityDto<int> responceData = new();
+            var customerId = Convert.ToInt32(requestData.CustomerId);
+            var existingData = await repositoryManager.customers.GetCustomersBasicInformationById(customerId);
+
+            if (existingData.StatusId == (short)Status.Approved)
+            {
+                var exstingCarriersData = await repositoryManager.customerAccountingSettings.GetShppingDeliveryCarriersByCustomerId(customerId);
+
+                var carrierData = exstingCarriersData
+                    .FirstOrDefault(carrier => carrier.CustomerDeliveryCarrierId == requestData.CustomerDeliveryCarrierId);
+                var updatedJsonData = await ModifyDeliveryCarriersJson(requestData);
+
+                var approvalEventName = new[]
+                {
+                  ApprovalEvent.UpdateCustomerShippingCarrierDetails
+                };
+
+                var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
+                var matchingRule = approvalRules?.FirstOrDefault(rule => approvalEventName.Contains(rule.EventName));
+
+                if (matchingRule != null)
+                {
+                    var oldJsonData = JsonConvert.SerializeObject(carrierData);
+                    var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
+                    ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
+                        oldJsonData,
+                        updatedJsonData,
+                        CurrentUserId,
+                        formatTemplate,
+                        matchingRule
+                    );
+                    responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponceData);
+                }
+            }
+            else
+            {
+                CustomerShppingDeliveryCarriersDto customerShppingDeliveryCarriersDto = requestData.ToMapp<UpdateShppingDeliveryCarriersRequest, CustomerShppingDeliveryCarriersDto>();
+                customerShppingDeliveryCarriersDto.UpdatedBy = CurrentUserId;
+                responceData = await repositoryManager.customerAccountingSettings.UpdateShppingDeliveryCarriers(customerShppingDeliveryCarriersDto);
+            }
+            return responceData;
         }
 
         public async Task<GetShppingDeliveryCarrierAndDeliveryMethodsByIdResponse> GetShppingDeliveryCarrierAndDeliveryMethodsById(int customerId)
@@ -158,11 +219,94 @@ namespace OMS.Application.Services.CustomerAccountingSettings
 
         public async Task<AddEntityDto<int>> UpdateDeliveryMethods(UpdateDeliveryMethodsRequest requestData, short CurrentUserId)
         {
-            CustomerDeliveryMethodsDto customerDeliveryMethodsDto = requestData.ToMapp<UpdateDeliveryMethodsRequest, CustomerDeliveryMethodsDto>();
-            customerDeliveryMethodsDto.UpdatedBy = CurrentUserId;
-            return await repositoryManager.customerAccountingSettings.UpdateDeliveryMethods(customerDeliveryMethodsDto);
-        }
+            AddEntityDto<int> responceData = new();
+            var customerId = Convert.ToInt32(requestData.CustomerId);
+            var existingData = await repositoryManager.customers.GetCustomersBasicInformationById(customerId);
 
+            if (existingData.StatusId == (short)Status.Approved)
+            {
+                var exstingCarriersData = await repositoryManager.customerAccountingSettings.GetDeliveryMethodsCustomerId(customerId);
+
+                var deliveryMethodData = exstingCarriersData
+                    .FirstOrDefault(carrier => carrier.CustomerDeliveryMethodId == requestData.CustomerDeliveryMethodId);
+
+                if (deliveryMethodData != null)
+                {
+                    deliveryMethodData.DeliveryMethod = deliveryMethodData.Name;
+                }
+
+                var updatedJsonData = await ModifyDeliveryMethodsJson(requestData);
+                var approvalEventName = new[]
+                {
+                  ApprovalEvent.UpdateCustomerShippingDeliveryMethodDetails
+                };
+
+                var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
+                var matchingRule = approvalRules?.FirstOrDefault(rule => approvalEventName.Contains(rule.EventName));
+
+                if (matchingRule != null)
+                {
+                    var oldJsonData = JsonConvert.SerializeObject(deliveryMethodData);
+                    var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
+                    ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
+                        oldJsonData,
+                        updatedJsonData,
+                        CurrentUserId,
+                        formatTemplate,
+                        matchingRule
+                    );
+                    responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponceData);
+                }
+            }
+            else
+            {
+                CustomerDeliveryMethodsDto customerDeliveryMethodsDto = requestData.ToMapp<UpdateDeliveryMethodsRequest, CustomerDeliveryMethodsDto>();
+                customerDeliveryMethodsDto.UpdatedBy = CurrentUserId;
+                responceData = await repositoryManager.customerAccountingSettings.UpdateDeliveryMethods(customerDeliveryMethodsDto);
+            }
+            return responceData;
+        }
+        public async Task<string> ModifyDeliveryMethodsJson(UpdateDeliveryMethodsRequest requestData)
+        {
+            var newJsonData = JsonConvert.SerializeObject(requestData);
+            var jObject = JObject.Parse(newJsonData);
+            var getAllDeliveryMethodsResponse = await repositoryManager.commonRepository.GetAllDeliveryMethods();
+
+            var deliveryMethod = getAllDeliveryMethodsResponse
+                .FirstOrDefault(p => p.DeliveryMethodId == requestData.DeliveryMethodId);
+
+            if (deliveryMethod != null)
+            {
+                jObject["DeliveryMethod"] = deliveryMethod.Name;
+                jObject["IsForInternational"] = deliveryMethod.IsForInternational;
+            }
+            else
+            {
+                jObject["DeliveryMethod"] = "Unknown";
+                jObject["IsForInternational"] = false;
+            }
+            return jObject.ToString(Formatting.None);
+        }
+        public async Task<string> ModifyDeliveryCarriersJson(UpdateShppingDeliveryCarriersRequest requestData)
+        {
+            var newJsonData = JsonConvert.SerializeObject(requestData);
+            var jObject = JObject.Parse(newJsonData);
+            var getAllCarriersResponse = await repositoryManager.commonRepository.GetAllDeliveryCarriers();
+
+            var carrier = getAllCarriersResponse
+                .FirstOrDefault(p => p.CarrierId == requestData.CarrierId);
+
+            if (carrier != null)
+            {
+
+                jObject["Carrier"] = carrier.Carrier;
+            }
+            else
+            {
+                jObject["Carrier"] = "Unknown";
+            }
+            return jObject.ToString(Formatting.None);
+        }
         public async Task<AddEntityDto<int>> DeleteCustomerDeliveryCarriersById(int customerDeliveryCarrierId, int deletedBy)
         {
             return await repositoryManager.customerAccountingSettings.DeleteCustomerDeliveryCarriersById(customerDeliveryCarrierId, deletedBy);

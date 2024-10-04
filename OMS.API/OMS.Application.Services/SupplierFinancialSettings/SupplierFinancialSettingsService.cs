@@ -1,4 +1,6 @@
 ﻿using Common.Helper.Extension;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using OMS.Application.Services.Implementation;
 using OMS.Application.Services.SupplierAccoutingSetting;
 using OMS.Domain.Entities.API.Request.SupplierAccoutingSetting;
@@ -104,6 +106,7 @@ namespace OMS.Application.Services.SupplierFinancialSettings
                 }
             }
         }
+
         public async Task<AddEntityDto<int>> AddEditCreditCard(AddEditCreditCardRequest requestData, short CurrentUserId)
         {
             AddEntityDto<int> responceData = new();
@@ -298,6 +301,91 @@ namespace OMS.Application.Services.SupplierFinancialSettings
             }
             return responseData!;
         }
+
+        public async Task<AddEditACHWireResponse> ModifyAllJsonData(AddEditACHWireRequest requestData)
+        {
+            // Modify the JSON data using your existing ModifyJsonData method
+            var jsonData = await ModifyJsonData(requestData.SupplierFinancialSettings!);
+            var supplierFinancialSettingsResponse = JsonConvert.DeserializeObject<SupplierFinancialSettingsResponse>(jsonData);
+
+            var jsonBeneficiaryDetailsData = await ModifyJsonData(requestData.BeneficiaryDetails!);
+            var beneficiaryDetailsResponse = JsonConvert.DeserializeObject<BeneficiaryDetailsDataResponse>(jsonBeneficiaryDetailsData);
+
+            var bankDetailsJsonData = await ModifyJsonData(requestData.BankDetails!);
+            var bankDetailsResponse = JsonConvert.DeserializeObject<BankDetailsDataResponse>(bankDetailsJsonData);
+
+            var otherDetailsJsonData = await ModifyJsonData(requestData.OtherDetails!);
+            var otherDetailsResponse = JsonConvert.DeserializeObject<OtherDetailsResponce>(otherDetailsJsonData);
+
+
+            // Create a new response object
+            var response = new AddEditACHWireResponse
+            {
+                SupplierFinancialSettings = supplierFinancialSettingsResponse!,
+                BeneficiaryDetails = beneficiaryDetailsResponse!,
+                BankDetails = bankDetailsResponse!,
+                OtherDetails = otherDetailsResponse!,
+                SupplierId = requestData.SupplierId
+            };
+
+            return response;
+        }
+        public async Task<AddEditCheckRequestResponse> ModifyAllCheckJsonData(AddEditCheckRequest requestData)
+        {
+            var jsonData = await ModifyJsonData(requestData.MailingAddress!);
+            var mailingAddressResponse = JsonConvert.DeserializeObject<MailingAddressResponce>(jsonData);
+            var response = new AddEditCheckRequestResponse
+            {
+                MailingAddress = mailingAddressResponse
+            };
+            return response;
+        }
+        public async Task<string> ModifyJsonData(object requestData)
+        {
+            var newJsonData = JsonConvert.SerializeObject(requestData);
+            var jObject = JObject.Parse(newJsonData);
+
+            var getAllCountriesResponse = await repositoryManager.commonRepository.GetAllCountries();
+            var getAllCitiesResponse = await repositoryManager.commonRepository.GetAllCities(Convert.ToInt16((jObject["StateId"] ?? 0)));
+            var getAllStatesResponse = await repositoryManager.commonRepository.GetAllStates();
+            var getAllPODeliveryMethodResponse = await repositoryManager.commonRepository.GetAllPODeliveryMethod();
+            var getAllPaymentTermsResponse = await repositoryManager.commonRepository.GetAllPaymentTerms();
+            var getAllPaymentMethodResponse = await repositoryManager.commonRepository.GetAllPaymentMethod();
+
+            var countryData = getAllCountriesResponse.FirstOrDefault(p => p.CountryId == (int)(jObject["CountryId"] ?? 0));
+            var stateData = getAllStatesResponse.FirstOrDefault(p => p.StateId == (int)(jObject["StateId"] ?? 0));
+            var cityData = getAllCitiesResponse.FirstOrDefault(p => p.CityId == (int)(jObject["CityId"] ?? 0));
+            var poDeliveryMethod = getAllPODeliveryMethodResponse.FirstOrDefault(p => p.PODeliveryMethodId == (int)(jObject["PoDeliveryMethodId"] ?? 0));
+            var paymentTerm = getAllPaymentTermsResponse.FirstOrDefault(p => p.PaymentTermId == (int)(jObject["PaymentTermId"] ?? 0));
+            var paymentMethod = getAllPaymentMethodResponse.FirstOrDefault(p => p.PaymentMethodId == (int)(jObject["InvoiceSubmissionMethod"] ?? 0));
+
+            if (countryData != null)
+            {
+                jObject["CountryName"] = countryData.Name;
+            }
+            if (stateData != null)
+            {
+                jObject["StateName"] = stateData.Name;
+            }
+            if (cityData != null)
+            {
+                jObject["CityName"] = cityData.Name;
+            }
+            if (poDeliveryMethod != null)
+            {
+                jObject["PODeliveryMethod"] = poDeliveryMethod.PODeliveryMethod;
+            }
+            if (paymentTerm != null)
+            {
+                jObject["PaymentTerm"] = paymentTerm.PaymentTerm;
+            }
+            if (paymentMethod != null)
+            {
+                jObject["PaymentMethod"] = paymentMethod.Method;
+            }
+            return jObject.ToString(Formatting.None);
+        }
+
         #endregion
     }
 }
