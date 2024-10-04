@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Accordion } from "react-bootstrap";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
+import { useLazyGetOrderItemsByOrderIdQuery } from "../../../../../app/services/orderAPI";
+import { decryptUrlData } from "../../../../../services/CryptoService";
+import { useParams } from "react-router-dom";
+import formatDate from "../../../../../lib/formatDate";
 
 const OrderItemList = () => {
   const [activeKey, setActiveKey] = useState([]);
+  const [itemList,setItemList]=useState([]);
+
+  const { id } = useParams();
+  const orderId = id ? decryptUrlData(id) : 0;
 
   const handleToggle = (key) => {
     if (activeKey.includes(key)) {
@@ -13,6 +21,18 @@ const OrderItemList = () => {
       setActiveKey([...activeKey, key]);
     }
   };
+
+  const [getOrderItemsByOrderId, { isFetching: isGetOrderItemsByOrderIdFetching, isSuccess: isGetOrderItemsByOrderIdSuccess, data: isGetOrderItemsByOrderIdData }] = useLazyGetOrderItemsByOrderIdQuery();
+    
+  useEffect(()=>{
+        getOrderItemsByOrderId(orderId);
+ },[])
+
+  useEffect(()=>{
+    if(!isGetOrderItemsByOrderIdFetching && isGetOrderItemsByOrderIdSuccess && isGetOrderItemsByOrderIdData ){
+      setItemList(isGetOrderItemsByOrderIdData);
+    }
+  },[isGetOrderItemsByOrderIdFetching,isGetOrderItemsByOrderIdSuccess,isGetOrderItemsByOrderIdData])
   const data = [
     {
       eventKey: "0",
@@ -64,18 +84,19 @@ const OrderItemList = () => {
           </div>
           <div className="accordian-desc">
             <Accordion activeKey={activeKey}>
-              {data.map((item, index) => (
+              {itemList.map((item, index) => (
                 <Accordion.Item eventKey={item.eventKey} key={index}>
                   <Accordion.Header onClick={() => handleToggle(item.eventKey)}>
                     <div className="header-items">
-                      <span>{item.id}</span>
+                      <span>{item.catalogId}</span>
                       <span>{item.casNumber}</span>
-                      <span>{item.totalCost}</span>
-                      <span>{item.quantity}</span>
-                      <span>{item.price}</span>
+                      <span>{item.itemUnitPrice}</span>
+                      <span>{item.packSize}</span>
+                      <span>{item.subTotalPrice}</span>
+                  
                       <span>
                         <div className={`status-btn ${item.statusClass}`}>
-                          {item.status}
+                          {item.itemStatus}
                         </div>
                       </span>
                     </div>
@@ -86,7 +107,7 @@ const OrderItemList = () => {
                         <div className="key-value-se">
                           <span className="key-sec">Name</span>
                           <span className="value-sec">
-                            &nbsp;:&nbsp; {item.name}
+                            &nbsp;:&nbsp; {item.chemicalName}
                           </span>
                         </div>
                         <div className="key-value-se">
@@ -130,20 +151,20 @@ const OrderItemList = () => {
                               <span className="value-sec">
                                 &nbsp;:&nbsp;
                                 <span className="status-btn heigh-bg">
-                                  {item.priority}
+                                  {item.orderPriority}
                                 </span>
                               </span>
                             </div>
                             <div className="key-value-se">
                               <span className="key-sec">Req-Date</span>
                               <span className="value-sec">
-                                &nbsp;:&nbsp; {item.requestDate}
+                                &nbsp;:&nbsp; {formatDate(item.requestDate, "MM/DD/YYYY hh:mm A")}
                               </span>
                             </div>
                             <div className="key-value-se">
                               <span className="key-sec">Promise Date</span>
                               <span className="value-sec">
-                                &nbsp;:&nbsp; {item.promiseDate}
+                                &nbsp;:&nbsp;  {formatDate(item.promiseDate, "MM/DD/YYYY hh:mm A")}
                               </span>
                             </div>
                           </div>

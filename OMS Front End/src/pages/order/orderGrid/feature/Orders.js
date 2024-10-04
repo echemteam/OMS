@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 /** Common Components */
@@ -15,35 +15,75 @@ import { orderListMolGridConfig } from "../../feature/orderListDetail/config/Ord
 import { collapsibleChildGridData, orderListMolGridData, } from "../../feature/orderListDetail/config/OrderList.Data";
 
 /** RTK Query */
-import { useGetOrdersMutation } from "../../../../app/services/orderAPI";
+import { useDeleteOrderMutation, useGetOrdersMutation, useLazyGetOrderItemsByOrderIdQuery } from "../../../../app/services/orderAPI";
 
 /** CSS Files */
 import "../../Order.scss";
+import useDebounce from "../../../../app/customHooks/useDebouce";
+import ToastService from "../../../../services/toastService/ToastService";
+import { ErrorMessage } from "../../../../data/appMessages";
 
-const Orders = ({ orderStatusId, orderSubStatusId, orderItemStatusId }) => {
+const Orders = ({ orderStatusId,  orderItemStatusId ,orderSubStatusId}) => {
 
   const molGridRef = useRef();
   const navigate = useNavigate();
-
+  const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 300);
   const [dataSource, setDataSource] = useState([]);
+  const [orderId,setOrderId]=useState(0);
   const [totalRowCount, setTotalRowCount] = useState(0);
-  const [gridChildDataSource, setGridChildDataSource] = useState(collapsibleChildGridData);
-
-  // const { confirm } = SwalAlert();
-
+  const [itemListDataSource, setItemListDataSource] = useState([]);
   const [getOrders, { isLoading: isGetOrderListLoading, isSuccess: isGetOrderListSuccess, data: isGetOrderListData }] = useGetOrdersMutation();
-
+  //const [deleteOrder, {  isSuccess: isDeleteOrderSuccess, data: isDeleteOrderData }] = useDeleteOrderMutation();
   useEffect(() => {
-    onGetData()
-  }, [orderStatusId, orderSubStatusId, orderItemStatusId]);
+    onGetData();
+
+  }, [orderStatusId,orderSubStatusId, orderItemStatusId]);
+
+  const handleSearch = () => {
+    if (search.length >= 3 ) {
+      onGetData();
+    } else {
+      ToastService.warning(ErrorMessage.CommonErrorMessage)
+    }
+  };
+
+  // useEffect(() => {
+  //   if (isDeleteOrderSuccess && isDeleteOrderData) {
+  //     ToastService.success(isDeleteOrderData.errorMessage);
+  //     const currentPageObject = molGridRef.current.getCurrentPageObject();
+  //     handlePageChange(currentPageObject)
+  //   }
+  // }, [isDeleteOrderSuccess, isDeleteOrderData]);
+
+  const handleChange = (event) => {
+      setSearch(event.target.value.trim());   
+  };
+
+  const handleKeyPress=(event)=>{
+    if (event.code === "Enter") {
+      handleSearch();
+    }
+  }
+const handleClear = () => 
+{
+      setSearch(""); 
+};
+
+useEffect(() => {
+if (debouncedSearch === "" ) {
+  onGetData();
+}
+}, [debouncedSearch]);
+
 
   useEffect(() => {
     if (isGetOrderListSuccess && isGetOrderListData) {
-
+    
       if (isGetOrderListData) {
-        setDataSource(isGetOrderListData.dataSource);
-        // handleListData(isGetOrderListData.dataSource.length)
-
+        setDataSource(isGetOrderListData.orderList);
+        setItemListDataSource(isGetOrderListData.orderItemList);
+       
       }
       if (isGetOrderListData.totalRecord) {
         setTotalRowCount(isGetOrderListData.totalRecord);
@@ -57,7 +97,7 @@ const Orders = ({ orderStatusId, orderSubStatusId, orderItemStatusId }) => {
         pageNumber: pageObject.pageNumber,
         pageSize: pageObject.pageSize,
       },
-      filters: { searchText: "" },
+      filters: { searchText: debouncedSearch },
       sortString: sortingString,
       orderStatusId: orderStatusId,
       orderSubStatusId: orderSubStatusId ? orderSubStatusId : 0,
@@ -81,7 +121,6 @@ const Orders = ({ orderStatusId, orderSubStatusId, orderItemStatusId }) => {
     }
   }
 
-
   // useEffect(() => {
   //   if (orderListMolGridData) {
   //     setDataSource(orderListMolGridData);
@@ -104,6 +143,7 @@ const Orders = ({ orderStatusId, orderSubStatusId, orderItemStatusId }) => {
     EDIT: handleEditClick,
     DELETE: handleDeleteClick,
   };
+
   return (
     <>
       <div className="row">
@@ -112,30 +152,31 @@ const Orders = ({ orderStatusId, orderSubStatusId, orderItemStatusId }) => {
             <CardSection
               cardTitle="Orders"
               searchInput={true}
-              handleChange=""
-              searchInputName="Search By Customer Name, Tax Id , Email Address"
-              searchFilter=""
+              handleChange={handleChange}
+              searchInputName="Search By Order"
               isCardSection={true}
               searchButton={true}
               searchbuttonText="Search"
               buttonClassName="theme-button"
-              searchTitleButtonClick=""
+              searchTitleButtonClick={handleSearch}
               clearButton={true}
-              clearTitleButtonClick=""
+              clearTitleButtonClick={handleClear}
               clearButtonText="Clear"
               clearButtonClassName="dark-btn"
               searchIconImg={AppIcons.SearchIcone}
               searchTextWithIcon={true}
               clearTextWithIcon={true}
               clearIconImg={AppIcons.ClearIcone}
+              handleKeyPress={handleKeyPress}
             >
               <FinalMolGrid
                 ref={molGridRef}
                 configuration={orderListMolGridConfig}
-                childTableDataSource={gridChildDataSource}
+                childTableDataSource={itemListDataSource}
                 dataSource={dataSource}
                 // dataSource={collapsibleMolGridData}
                 onPageChange={handlePageChange}
+                isLoading={isGetOrderListLoading}
                 allowPagination={true}
                 onSorting={handleSorting}
                 pagination={{
