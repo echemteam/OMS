@@ -72,7 +72,8 @@ const orderAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
-            downloadDocument: builder.query({
+
+        downloadDocument: builder.query({
             query: (requestData) => ({
                 url: encryptQueryString(`/Common/DownloadDocument/?folderName=${requestData.folderName}&fileName=${requestData.fileName}&keyId=${requestData.keyId}`),
                 Method: 'GET',
@@ -81,10 +82,28 @@ const orderAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+
+        addOrderDocuments: builder.mutation({
+            query: (requestData) => ({
+                url: '/Order/AddOrderDocuments',
+                method: 'POST',
+                body: transformRequest(requestData)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
-export const { useCheckPoNumberExistOrNotMutation, useLazyGetPoNumberDetailsByPoNumberQuery,
-    useAddOrderMutation ,useGetOrdersMutation,  useLazyGetOrderDetailByOrderIdQuery,useLazyGetOrderItemsByOrderIdQuery ,useDeleteOrderMutation,useLazyDownloadDocumentQuery} = orderAPI;
+export const { useCheckPoNumberExistOrNotMutation,
+    useLazyGetPoNumberDetailsByPoNumberQuery,
+    useAddOrderMutation,
+    useGetOrdersMutation,
+    useLazyGetOrderDetailByOrderIdQuery,
+    useLazyGetOrderItemsByOrderIdQuery,
+    useDeleteOrderMutation,
+    useLazyDownloadDocumentQuery,
+    useAddOrderDocumentsMutation
+} = orderAPI;
 
 export default orderAPI;
