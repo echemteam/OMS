@@ -138,9 +138,7 @@ const OrderInformation = ({ orderDetails }) => {
         modalTitleIcon={AppIcons.AddIcon}
         isOpen={isModelOpenUsers}
       >
-        <UsercardModel
-          
-        />
+        <UsercardModel />
       </SidebarModel>
     </div>
   );

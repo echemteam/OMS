@@ -19,7 +19,7 @@ const UserCardDetail = ({ contact, handleToggleModalUsers }) => {
           </div>
           <div className="right-info">
             <div className="right-name-btn">
-              <div className="user-name">
+              <div className="user-name text-ellipsis">
                 {contact?.firstName} {contact?.lastName}
               </div>
               <div className="btn-sec">
