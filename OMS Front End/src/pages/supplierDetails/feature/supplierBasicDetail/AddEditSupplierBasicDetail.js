@@ -29,6 +29,7 @@ import { useSelector } from "react-redux";
 import SwalAlert from "../../../../services/swalService/SwalService";
 import { validateNameEmailWebsiteGrid } from "../../../../common/features/component/ExistingInfo/Config/Existing.data";
 import ValidateCustomerSupplierInfo from "../../../../common/features/component/ExistingInfo/ValidateCustomerSupplierInfo";
+import { isCustomerOrSupplierApprovedStatus } from "../../../../utils/CustomerSupplier/CustomerSupplierUtils";
 
 //** Compoent's */
 const ExistingCustomerSupplierInfo = React.lazy(() => import("../../../../common/features/component/ExistingInfo/ExistingCustomerSupplierInfo"));
@@ -102,10 +103,10 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
         }
         if (isOpen) {
             // setFieldSetting(supplierBasicData, 'name', FieldSettingType.INPUTBUTTON);
-            setFieldSetting(supplierBasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON);
+            setFieldSetting(supplierBasicData, 'name', FieldSettingType.ISINFOBUTTONVISIBLE);
         } else if (!isOpen) {
             // setFieldSetting(supplierBasicData, 'name', FieldSettingType.INPUTBUTTON, true);
-            setFieldSetting(supplierBasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON, true);
+            setFieldSetting(supplierBasicData, 'name', FieldSettingType.ISINFOBUTTONVISIBLE, true);
         }
 
     }, [isOpen, isEditablePage, hasEditPermission, formSetting, formData, isResponsibleUser])
@@ -182,6 +183,13 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
 
     useEffect(() => {
         if (isGetSupplierBasicInformationById && GetSupplierBasicInformationByIdData && !isGetSupplierBasicInformationByIdFetching) {
+            if (isCustomerOrSupplierApprovedStatus(GetSupplierBasicInformationByIdData.statusId)) {
+                setFieldSetting(supplierBasicData, 'name', FieldSettingType.DISABLED, true);
+                setFieldSetting(formData, 'taxId', 'isDisabled', true);
+            } else {
+                setFieldSetting(supplierBasicData, 'name', FieldSettingType.DISABLED, false);
+                setFieldSetting(formData, 'taxId', 'isDisabled');
+            }
             const newFrom = { ...supplierBasicData };
             const { formFields } = getTaxIdMinMaxLength(GetSupplierBasicInformationByIdData.countryId, supplierBasicData.formFields, 'taxId');
             newFrom.formFields = formFields;
