@@ -7,14 +7,17 @@ import OrderInfoAddressModel from "./feature/OrderInfoAddressModel";
 import UserDetailsModel from "./feature/UserDetailsModel";
 import UserCardDetail from "./feature/UserCardDetail";
 import UsercardModel from "./feature/UsercardModel";
+import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 
 const OrderInformation = ({ orderDetails }) => {
   const [orderInfo, setOrderInfo] = useState(null);
   const [orderAddressDetails, setOrderAddressDetails] = useState(null);
   const [orderContactDetails, setOrderContactDetails] = useState(null);
 
-  const [isModelOpenShippingAddress, setIsModelOpenShippingAddress] = useState(false);
-  const [isModelOpenUpdateAddress, setIsModelOpenUpdateAddress] = useState(false);
+  const [isModelOpenShippingAddress, setIsModelOpenShippingAddress] =
+    useState(false);
+  const [isModelOpenUpdateAddress, setIsModelOpenUpdateAddress] =
+    useState(false);
 
   const onSidebarCloseShippingAddress = () => {
     setIsModelOpenShippingAddress(false);
@@ -51,11 +54,14 @@ const OrderInformation = ({ orderDetails }) => {
   }, [orderDetails]);
 
   return (
+    
     <div>
       <CardSection cardTitle="Order Information">
+        {orderDetails ?(
         <div className="order-info-list">
           <div className="row">
             <div className="col-xxl-12 col-lg-12 col-md-12 col-12">
+              
               <div className="order-title">
                 <span>Order Method &nbsp;:&nbsp;</span>
                 <span className="desc">{orderInfo?.orderMethod}</span>
@@ -65,7 +71,10 @@ const OrderInformation = ({ orderDetails }) => {
           {/* Address Details */}
           <div className="row mt-2">
             {orderAddressDetails?.map((address) => (
-              <div className="col-xxl-6 col-lg-6 col-md-6 col-12" key={address.type}>
+              <div
+                className="col-xxl-6 col-lg-6 col-md-6 col-12"
+                key={address.type}
+              >
                 <div className="order-title">
                   <span>{address.type} Address &nbsp;:&nbsp;</span>
                 </div>
@@ -119,6 +128,7 @@ const OrderInformation = ({ orderDetails }) => {
             ))}
           </div>
         </div>
+        ):<DataLoader/>}
       </CardSection>
       <SidebarModel
         modalTitle="Change Shipping Address"

@@ -706,9 +706,100 @@
                     display: flex;
                     align-items: center;
 
+                    .hover-model {
+                      &:hover {
+                        .address-card {
+                          display: unset !important;
+                        }
+                        .note-card {
+                          display: unset !important;
+                        }
+                      }
+                      .address-card {
+                        position: absolute;
+                        top: 100%;
+                        display: none;
+                        z-index: 99;
+                        .shipping-address {
+                          color: var(--textColor);
+                          box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px,
+                            rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+                          background-color: var(--whiteColor);
+                          border-radius: 5px;
+                          font-size: var(--commonFont-medium);
+                          width: 280px;
+                          min-height: 136px;
+                          .addresscard-title {
+                            font-size: var(--commonFont);
+                            position: relative;
+                            padding: 5px 8px;
+                            color: var(--themeColor);
+                            font-weight: 600;
+                            &::before {
+                              content: "";
+                              width: 100%;
+                              height: 1px;
+                              position: absolute;
+                              bottom: 0;
+                              left: 0;
+                              background-color: var(--inputBorder);
+                            }
+                          }
+                          .addresscard-body {
+                            padding: 5px;
+                            border: 1px solid var(--themeColor);
+                            margin: 7px;
+                            border-radius: 5px;
+                            span {
+                              display: block;
+                            }
+                          }
+                        }
+                      }
+                      .note-card {
+                        position: absolute;
+                        top: 100%;
+                        display: none;
+                        z-index: 99;
+                        .order-notes {
+                          color: var(--textColor);
+                          box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px,
+                            rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+                          background-color: var(--whiteColor);
+                          border-radius: 5px;
+                          font-size: var(--commonFont-medium);
+                          width: 280px;
+                          padding-bottom: 1px;
+                          .ordercard-title {
+                            font-size: var(--commonFont);
+                            position: relative;
+                            padding: 5px 8px;
+                            color: var(--themeColor);
+                            font-weight: 600;
+                            &::before {
+                              content: "";
+                              width: 100%;
+                              height: 1px;
+                              position: absolute;
+                              bottom: 0;
+                              left: 0;
+                              background-color: var(--inputBorder);
+                            }
+                          }
+                          .ordercard-body {
+                            padding: 5px;
+                            border: 1px solid var(--themeColor);
+                            margin: 7px;
+                            border-radius: 5px;
+                          }
+                        }
+                      }
+                    }
+
                     .info-btn {
                       color: var(--themeColor);
                       margin-right: 3px;
+                      position: relative;
 
                       &:last-child {
                         margin-right: 0;
@@ -1040,6 +1131,7 @@
           display: flex;
           align-items: center;
           padding-left: 4px;
+          font-size: var(--commonFont-medium);
 
           .icon-part {
             display: flex;
@@ -1220,7 +1312,6 @@
   //Order-Information
 
   //UserCardDetail
-
   .contact-card {
     .profile-name-btn {
       .right-info {
@@ -1233,5 +1324,26 @@
         }
       }
     }
+  }
+
+  //Order list
+  .accordion-body {
+    .key-value-se {
+      display: flex;
+      align-items: center;
+      font-size: var(--commonFont-medium);
+      min-height: 23px;
+
+      .key-sec {
+        min-width: 95px;
+        font-weight: 600;
+        color: var(--textColor);
+      }
+    }
+  }
+
+  .custom-col-5 {
+    width: 41.66667%;
+    flex: 0 0 auto;
   }
 }

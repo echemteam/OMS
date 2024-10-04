@@ -65,7 +65,7 @@ const Orders = ({ orderStatusId,  orderItemStatusId ,orderSubStatusId}) => {
   }
 const handleClear = () => 
 {
-      setSearch(""); 
+     setSearch(""); 
 };
 
 useEffect(() => {
@@ -80,7 +80,16 @@ if (debouncedSearch === "" ) {
     
       if (isGetOrderListData) {
         setDataSource(isGetOrderListData.orderList);
-        setItemListDataSource(isGetOrderListData.orderItemList);
+
+        const modifyCustomerData = isGetOrderListData.orderItemList.map((data) => ({
+          ...data,
+          catalog: data.catalog === "" ? "-" : data.catalog,
+          casNumber: data.casNumber === "" ? "-" : data.casNumber,
+          itemUnitPrice:data.itemUnitPrice === "" ? "-" : data.itemUnitPrice,
+          status:data.status === "" ? "-" : data.status,
+          deliveryMethod:data.deliveryMethod === "" ? "-" : data.deliveryMethod,
+        }));
+        setItemListDataSource(modifyCustomerData);
        
       }
       if (isGetOrderListData.totalRecord) {
@@ -118,15 +127,6 @@ if (debouncedSearch === "" ) {
       getLists(defaultPageObject, molGridRef.current.generateSortingString());
     }
   }
-
-  // useEffect(() => {
-  //   if (orderListMolGridData) {
-  //     setDataSource(orderListMolGridData);
-  //   }
-  //   if (collapsibleChildGridData) {
-  //     setGridChildDataSource(collapsibleChildGridData);
-  //   }
-  // }, [orderListMolGridData, collapsibleChildGridData]);
 
   const handleEditClick = (data) => {
     const orderId = data.orderId;

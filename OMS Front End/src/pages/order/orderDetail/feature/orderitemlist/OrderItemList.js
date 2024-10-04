@@ -6,10 +6,12 @@ import { useLazyGetOrderItemsByOrderIdQuery } from "../../../../../app/services/
 import { decryptUrlData } from "../../../../../services/CryptoService";
 import { useParams } from "react-router-dom";
 import formatDate from "../../../../../lib/formatDate";
+import ShippingAddressDetailsModel from "./feature/ShippingAddressDetailsModel";
+import OrderNoteDetailsModel from "./feature/OrderNoteDetailsModel";
 
 const OrderItemList = () => {
   const [activeKey, setActiveKey] = useState([]);
-  const [itemList,setItemList]=useState([]);
+  const [itemList, setItemList] = useState([]);
 
   const { id } = useParams();
   const orderId = id ? decryptUrlData(id) : 0;
@@ -22,14 +24,25 @@ const OrderItemList = () => {
     }
   };
 
-  const [getOrderItemsByOrderId, { isFetching: isGetOrderItemsByOrderIdFetching, isSuccess: isGetOrderItemsByOrderIdSuccess, data: isGetOrderItemsByOrderIdData }] = useLazyGetOrderItemsByOrderIdQuery();
-    
-  useEffect(()=>{
-        getOrderItemsByOrderId(orderId);
- },[])
+  const [
+    getOrderItemsByOrderId,
+    {
+      isFetching: isGetOrderItemsByOrderIdFetching,
+      isSuccess: isGetOrderItemsByOrderIdSuccess,
+      data: isGetOrderItemsByOrderIdData,
+    },
+  ] = useLazyGetOrderItemsByOrderIdQuery();
 
-  useEffect(()=>{
-    if(!isGetOrderItemsByOrderIdFetching && isGetOrderItemsByOrderIdSuccess && isGetOrderItemsByOrderIdData ){
+  useEffect(() => {
+    getOrderItemsByOrderId(orderId);
+  }, []);
+
+  useEffect(() => {
+    if (
+      !isGetOrderItemsByOrderIdFetching &&
+      isGetOrderItemsByOrderIdSuccess &&
+      isGetOrderItemsByOrderIdData
+    ) {
       setItemList(isGetOrderItemsByOrderIdData);
     }
   },[isGetOrderItemsByOrderIdFetching,isGetOrderItemsByOrderIdSuccess,isGetOrderItemsByOrderIdData])
@@ -86,7 +99,9 @@ const OrderItemList = () => {
             <Accordion activeKey={activeKey}>
               {itemList.map((item, index) => (
                 <Accordion.Item eventKey={item.orderItemId} key={index}>
-                  <Accordion.Header onClick={() => handleToggle(item.orderItemId)}>
+                  <Accordion.Header
+                    onClick={() => handleToggle(item.orderItemId)}
+                  >
                     <div className="header-items">
                       <span>{item.catalogId? item.catalogId: "-"}</span>
                       <span>{item.casNumber ? item.casNumber :"-"}</span>
@@ -103,12 +118,10 @@ const OrderItemList = () => {
                   </Accordion.Header>
                   <Accordion.Body>
                     <div className="row">
-                      <div className="col-xxl-6 col-lg-6 col-md-6 col-12">
-                        <div className="key-value-se">
-                          <span className="key-sec">Name</span>
-                          <span className="value-sec">
-                            &nbsp;:&nbsp; {item.chemicalName ? item.chemicalName : "NA"}
-                          </span>
+                      <div className="col-xxl-6 col-lg-6 col-md-6 col-12 custom-col-5">
+                        <div className="key-value-se align-items-start">
+                          <span className="key-sec">Name</span>&nbsp;:&nbsp;
+                          <span className="value-sec">{item.chemicalName ? item.chemicalName : "NA"}</span>
                         </div>
                         <div className="key-value-se">
                           <span className="key-sec">MDL Number </span>
@@ -124,11 +137,14 @@ const OrderItemList = () => {
                             </span>
                             <span className="right-btn">
                               {item.shippingAddress ?(
-                              <span className="info-btn">
+                              <span className="info-btn hover-model">
                                 <Iconify
                                   icon="ep:info-filled"
                                   className="swap-icon"
                                 />
+                                <span className="address-card">
+                                  <ShippingAddressDetailsModel />
+                                </span>
                               </span>): null
                       }
                               <span className="info-btn tooltip-div">
@@ -140,6 +156,25 @@ const OrderItemList = () => {
                                   <p>Change Address</p>
                                 </div>
                                 <div className="tooltip-arrow-icon"></div>
+                              </span>
+                            </span>
+                          </div>
+                        </div>
+                        <div className="key-value-se">
+                          <span className="key-sec">Order Notes</span>
+                          <div className="value-right-btn">
+                            <span className="value-sec add-value">
+                              &nbsp;:&nbsp; {item.shippingAddress}
+                            </span>
+                            <span className="right-btn">
+                              <span className="info-btn hover-model">
+                                <Iconify
+                                  icon="ep:info-filled"
+                                  className="swap-icon"
+                                />
+                                <span className="note-card">
+                                  <OrderNoteDetailsModel />
+                                </span>
                               </span>
                             </span>
                           </div>
