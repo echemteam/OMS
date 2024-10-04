@@ -1,21 +1,21 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import CardSection from "../../../../components/ui/card/CardSection";
 import Orders from "./Orders";
 import { OrderSubStatusEnums } from "../../../../utils/Enums/StatusEnums";
 
 const PendingOrdersTab=({statusId})=>{
     const [activeTab, setActiveTab] = useState("0");
-    const handleTabClick = (tabIndex) => {
+       const handleTabClick = (tabIndex) => {
         setActiveTab(tabIndex.toString());
       };
-    
+     
     const tabs = [
         {
           sMenuItemCaption: "Customer Not valid",
           component: (
             <div className="mt-2">
               <Orders orderStatusId={statusId}
-              orderSubStatusId={OrderSubStatusEnums.CustomerNotValid}
+                          orderSubStatusId={OrderSubStatusEnums.CustomerNotValid}
               />
             </div>
           ),
@@ -24,7 +24,7 @@ const PendingOrdersTab=({statusId})=>{
           sMenuItemCaption: "Review pending",
           component: (
             <div className="mt-2">
-              <Orders   orderSubStatusId={OrderSubStatusEnums.ReviewPending}
+              <Orders  orderStatusId={statusId} orderSubStatusId={OrderSubStatusEnums.ReviewPending}
               />
             </div>
           ),
@@ -33,7 +33,7 @@ const PendingOrdersTab=({statusId})=>{
           sMenuItemCaption: "Billing Address Pending Approval",
           component: (
             <div className="mt-2">
-              <Orders  orderSubStatusId={OrderSubStatusEnums.BillingAddressPendingApproval}
+              <Orders orderStatusId={statusId}  orderSubStatusId={OrderSubStatusEnums.BillingAddressPendingApproval}
               />
             </div>
           ),

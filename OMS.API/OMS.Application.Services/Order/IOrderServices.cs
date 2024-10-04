@@ -13,5 +13,7 @@ namespace OMS.Application.Services.Order
         Task<GetOrderResponse> GetOrders(GetOrderRequest request);
         Task<List<GetOrderItemsByOrderIdResponse>> GetOrderItemsByOrderId(int orderId);
         Task<GetOrderDetailByOrderIdResponse> GetOrderDetailByOrderId(int orderId);
+        Task<AddEntityDto<int>> DeleteOrder(int orderId, int deletedBy);
+
     }
 }

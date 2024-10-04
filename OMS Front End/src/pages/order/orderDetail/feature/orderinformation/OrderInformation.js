@@ -6,6 +6,7 @@ import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel
 import OrderInfoAddressModel from "./feature/OrderInfoAddressModel";
 import UserDetailsModel from "./feature/UserDetailsModel";
 import UserCardDetail from "./feature/UserCardDetail";
+import UsercardModel from "./feature/UsercardModel";
 
 const OrderInformation = ({ orderDetails }) => {
   const [orderInfo, setOrderInfo] = useState(null);
@@ -114,7 +115,6 @@ const OrderInformation = ({ orderDetails }) => {
                   index={index}
                   // handleToggleModalUsers={handleToggleModalUsers}
                   handleToggleModalUsers={handleToggleModalUsers}
-
                 />
               </div>
             ))}
@@ -138,7 +138,9 @@ const OrderInformation = ({ orderDetails }) => {
         modalTitleIcon={AppIcons.AddIcon}
         isOpen={isModelOpenUsers}
       >
-        Contact card
+        <UsercardModel
+          
+        />
       </SidebarModel>
     </div>
   );
