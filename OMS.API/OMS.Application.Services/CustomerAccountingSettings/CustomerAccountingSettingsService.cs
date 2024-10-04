@@ -232,6 +232,11 @@ namespace OMS.Application.Services.CustomerAccountingSettings
                 var deliveryMethodData = exstingCarriersData
                     .FirstOrDefault(carrier => carrier.CustomerDeliveryMethodId == requestData.CustomerDeliveryMethodId);
 
+                if (deliveryMethodData != null)
+                {
+                    deliveryMethodData.DeliveryMethod = deliveryMethodData.Name;
+                }
+
                 var updatedJsonData = await ModifyDeliveryMethodsJson(requestData);
                 var approvalEventName = new[]
                 {

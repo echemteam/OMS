@@ -6,17 +6,17 @@ namespace Common.Helper.ReplacePlaceholders
 {
     public class ReplacePlaceholdersHelper
     {
-        public static string ProcessTemplate(string jsonValue, string template, bool isMultiple = false)
+        public static string ProcessTemplate(string jsonValue, string oldValueJson, string template, bool isOldTemplate, bool isFunctional, bool isMultiple = false)
         {
-
             try
             {
                 if (isMultiple)
                 {
-                    return ProcessMultipleTemplate(jsonValue, template); 
+                    return ProcessMultipleTemplate(jsonValue, template);
 
                 }
                 var data = JObject.Parse(jsonValue).ToObject<Dictionary<string, object>>();
+                var oldData = string.IsNullOrWhiteSpace(oldValueJson) ? null : JObject.Parse(oldValueJson).ToObject<Dictionary<string, object>>();
                 var dataList = new List<Dictionary<string, object>>();
 
                 foreach (var entry in data!)
@@ -31,7 +31,10 @@ namespace Common.Helper.ReplacePlaceholders
                         }
                     }
                 }
-                template = ReplacePlaceholders(template, data.ToDictionary(p => $"#{p.Key}#", p => p.Value?.ToString() ?? string.Empty));
+                //template = ReplacePlaceholders(template, data.ToDictionary(p => $"#{p.Key}#", p => p.Value?.ToString() ?? string.Empty));
+
+                // Replace placeholders with the comparison of old and new values
+                template = ReplacePlaceholdersWithComparison(template, data, oldData, isOldTemplate, isFunctional);
 
                 // Replace any unreplaced placeholders with "NA"
                 return ReplaceUnreplacedPlaceholdersWithNA(template);
@@ -48,15 +51,17 @@ namespace Common.Helper.ReplacePlaceholders
 
             switch (listName.ToLower())
             {
-                case "EmailAddressList":
+                case "emailaddresslist":
+                    listHtml = GenerateEmailTableHtml(dataList);
                     return template.Replace("#EmailList#", listHtml);
 
-                case "PhoneNumberList":
+                case "phonenumberlist":
+                    listHtml = GeneratePhoneTableHtml(dataList);
                     return template.Replace("#PhoneList#", listHtml);
 
                 // Add cases for future lists here
                 default:
-                    return ReplacePlaceholdersWithTable(template, dataList, new Dictionary<string, object>(), $"#{listName}#");
+                    return ReplacePlaceholdersWithTable(template, dataList, [], $"#{listName}#");
             }
         }
 
@@ -75,8 +80,6 @@ namespace Common.Helper.ReplacePlaceholders
                 throw new ApplicationException("Error generating HTML table and replacing placeholders", ex);
             }
         }
-
-
 
         private static string ReplaceUnreplacedPlaceholdersWithNA(string template)
         {
@@ -122,8 +125,6 @@ namespace Common.Helper.ReplacePlaceholders
             tableHtml.AppendLine("</table>");
             return tableHtml.ToString();
         }
-
-
         public static string ProcessMultipleTemplate(string jsonValue, string template)
         {
             try
@@ -145,7 +146,6 @@ namespace Common.Helper.ReplacePlaceholders
 
 
         }
-
         private static void FlattenJson(JToken token, Dictionary<string, string> placeholders, string parentKey)
         {
             foreach (var property in token.Children<JProperty>())
@@ -187,5 +187,114 @@ namespace Common.Helper.ReplacePlaceholders
                 throw new ApplicationException("Error replacing placeholders", ex);
             }
         }
+        private static string GenerateEmailTableHtml(List<Dictionary<string, object>> dataList)
+        {
+            var tableHtml = new StringBuilder();
+            tableHtml.AppendLine("<table class='email-table'>");
+            tableHtml.AppendLine("<thead><tr><th>Email Address</th><th>Is Primary</th></tr></thead>");
+            tableHtml.AppendLine("<tbody>");
+
+            foreach (var row in dataList)
+            {
+                tableHtml.AppendLine("<tr>");
+                tableHtml.AppendLine($"<td>{(row.ContainsKey("EmailAddress") ? row["EmailAddress"]?.ToString() : string.Empty)}</td>");
+                tableHtml.AppendLine($"<td>{(row.ContainsKey("IsPrimary") ? row["IsPrimary"]?.ToString() : string.Empty)}</td>");
+                tableHtml.AppendLine("</tr>");
+            }
+
+            if (dataList.Count == 0)
+            {
+                tableHtml.AppendLine("<tr><td colspan='2' style='text-align:center;'>No email addresses available</td></tr>");
+            }
+
+            tableHtml.AppendLine("</tbody></table>");
+            return tableHtml.ToString();
+        }
+        private static string GeneratePhoneTableHtml(List<Dictionary<string, object>> dataList)
+        {
+            var tableHtml = new StringBuilder();
+            tableHtml.AppendLine("<table class='phone-table'>");
+            tableHtml.AppendLine("<thead><tr><th>Phone Number</th><th>Extension</th><th>Is Primary</th></tr></thead>");
+            tableHtml.AppendLine("<tbody>");
+
+            foreach (var row in dataList)
+            {
+                tableHtml.AppendLine("<tr>");
+                string phoneCode = row.ContainsKey("PhoneCode") ? $"({row["PhoneCode"]})" : string.Empty;
+                string phoneNumber = row.ContainsKey("PhoneNumber") ? row["PhoneNumber"]?.ToString() : string.Empty;
+                tableHtml.AppendLine($"<td>{phoneCode} {phoneNumber}</td>");
+                tableHtml.AppendLine($"<td>{(row.ContainsKey("PhoneType") ? row["PhoneType"]?.ToString() : string.Empty)}</td>");
+                tableHtml.AppendLine($"<td>{(row.ContainsKey("Extension") ? row["Extension"]?.ToString() : string.Empty)}</td>");
+                tableHtml.AppendLine($"<td>{(row.ContainsKey("IsPrimary") ? row["IsPrimary"]?.ToString() : string.Empty)}</td>");
+                tableHtml.AppendLine("</tr>");
+            }
+
+            if (dataList.Count == 0)
+            {
+                tableHtml.AppendLine("<tr><td colspan='3' style='text-align:center;'>No phone numbers available</td></tr>");
+            }
+
+            tableHtml.AppendLine("</tbody></table>");
+            return tableHtml.ToString();
+        }
+
+        //** This Replace code with highlights for the changes 
+        public static string ReplacePlaceholdersWithComparison(string template, Dictionary<string, object> newData, Dictionary<string, object>? oldData, bool isOldTemplate, bool isFunctional)
+        {
+            foreach (var newItem in newData)
+            {
+                var placeholder = $"#{newItem.Key}#";
+                var newValue = newItem.Value?.ToString() ?? string.Empty;
+                if (isFunctional)
+                {
+                    string oldValue = oldData != null && oldData.ContainsKey(newItem.Key) ? oldData[newItem.Key]?.ToString() ?? string.Empty : string.Empty;
+                    if (isOldTemplate)
+                    {
+                        if (newValue != oldValue)
+                        {
+                            newValue = $"<span style='color: red;'>{newValue}</span>";
+                        }
+                    }
+                    else
+                    {
+                        if (newValue != oldValue)
+                        {
+                            newValue = $"<span style='color: green;'>{newValue}</span>";
+                        }
+                    }
+                }
+
+                template = template.Replace(placeholder, newValue);
+            }
+
+            return template;
+        }
+
+
+
+        //public static string ReplacePlaceholdersWithComparison(string template, Dictionary<string, object> newData, Dictionary<string, object>? oldData)
+        //{
+        //    foreach (var newItem in newData)
+        //    {
+        //        var placeholder = $"#{newItem.Key}#";
+        //        var newValue = newItem.Value?.ToString() ?? string.Empty;
+
+        //        string oldValue = oldData != null && oldData.ContainsKey(newItem.Key) ? oldData[newItem.Key]?.ToString() ?? string.Empty : string.Empty;
+
+        //        // If the new value is different from the old value, highlight it in green
+        //        if (oldValue != null && oldValue != "")
+        //        {
+        //            if (newValue != oldValue)
+        //            {
+        //                newValue = $"<span style='color: green;'>{newValue}</span>";
+        //            }
+        //        }
+        //        // Replace the placeholder with the value
+        //        template = template.Replace(placeholder, newValue);
+        //    }
+
+        //    return template;
+        //}
     }
+
 }

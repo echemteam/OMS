@@ -10,7 +10,7 @@ namespace Common.Helper.ApprovalRules
     {
         public static async Task<ApprovalRequestsDto> ProcessApprovalRequest<T>(string? existingRequestData, T newRequestData, short currentUserId, GetTemplateByFunctionalityEventIdResponse formatTemplate, GetApprovalConfigurationResponse matchingRule, bool isMultiple = false)
         {
-            var existingValueJson = existingRequestData is string ? existingRequestData.ToString() : JsonSerializer.Serialize(existingRequestData);
+            var existingValueJson = existingRequestData != null ? existingRequestData is string ? existingRequestData.ToString() : JsonSerializer.Serialize(existingRequestData) : null;
             var newValueJson = newRequestData is string ? newRequestData.ToString() : JsonSerializer.Serialize(newRequestData);
 
             ApprovalRequestsDto approvalRequest = new()
@@ -22,17 +22,18 @@ namespace Common.Helper.ApprovalRules
                 TableId = matchingRule.TableId,
                 FunctionalitiesFieldId = matchingRule.FunctionalitiesFieldId,
                 FunctionalityEventId = matchingRule.FunctionalityEventId,
-                RequestedByUserId = currentUserId
+                RequestedByUserId = currentUserId,
+                IsFunctional = matchingRule.IsFunctional
             };
             if (formatTemplate != null && !string.IsNullOrWhiteSpace(formatTemplate.Template))
             {
                 if (!string.IsNullOrWhiteSpace(existingValueJson) && existingValueJson != "{}" && existingValueJson != "null" && existingValueJson != null)
                 {
-                    approvalRequest.OldValueTemplate = ReplacePlaceholdersHelper.ProcessTemplate(existingValueJson, formatTemplate.Template, isMultiple);
+                    approvalRequest.OldValueTemplate = ReplacePlaceholdersHelper.ProcessTemplate(existingValueJson, newValueJson, formatTemplate.Template, true, approvalRequest.IsFunctional, isMultiple);
                 }
                 if (!string.IsNullOrWhiteSpace(newValueJson) && newValueJson != "{}" && newValueJson != "null" && newValueJson != null)
                 {
-                    approvalRequest.NewValueTemplate = ReplacePlaceholdersHelper.ProcessTemplate(newValueJson, formatTemplate.Template, isMultiple);
+                    approvalRequest.NewValueTemplate = ReplacePlaceholdersHelper.ProcessTemplate(newValueJson, existingValueJson, formatTemplate.Template, false, approvalRequest.IsFunctional, isMultiple);
                 }
             }
             return approvalRequest;

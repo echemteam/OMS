@@ -94,11 +94,11 @@ namespace OMS.Application.Services.Approval
             {
                 if (!string.IsNullOrEmpty(requestData.OldValue))
                 {
-                    approvalRequestsDto.OldValueTemplate = ReplacePlaceholdersHelper.ProcessTemplate(requestData.OldValue!, formatTemplate!.Template!);
+                    approvalRequestsDto.OldValueTemplate = ReplacePlaceholdersHelper.ProcessTemplate(requestData.OldValue!, requestData.NewValue!, formatTemplate!.Template!,true, approvalRequestsDto.IsFunctional);
                 }
                 if (!string.IsNullOrEmpty(requestData.NewValue))
                 {
-                    approvalRequestsDto.NewValueTemplate = ReplacePlaceholdersHelper.ProcessTemplate(requestData.NewValue!, formatTemplate!.Template!);
+                    approvalRequestsDto.NewValueTemplate = ReplacePlaceholdersHelper.ProcessTemplate(requestData.NewValue!, requestData.OldValue!, formatTemplate!.Template!, false, approvalRequestsDto.IsFunctional);
                 }
             }
             return await repositoryManager.approval.AddApprovalRequests(approvalRequestsDto);

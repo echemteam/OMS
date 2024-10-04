@@ -38,13 +38,20 @@ namespace OMS.Application.Services.Contact
             var supplierId = Convert.ToInt32(requestData.SupplierId);
             var contactTypeIds = requestData.ContactTypeId!.Split(',').Select(id => id.Trim()).Distinct().ToList(); // Handle multiple contact types
 
-            var approvedContactTypes = new HashSet<ContactType>
+            var approvedContactTypes = new HashSet<ContactType>();
+
+            if (customerId > 0)
             {
-                ContactType.Primary,
-                ContactType.AccountsReceivable,
-                ContactType.InvoiceFollowUp,
-                ContactType.InvoiceSubmission
-            };
+                approvedContactTypes.Add(ContactType.InvoiceFollowUp);
+                approvedContactTypes.Add(ContactType.InvoiceSubmission);
+            }
+
+            // Add contact types based on supplierId
+            if (supplierId > 0)
+            {
+                approvedContactTypes.Add(ContactType.Primary);
+                approvedContactTypes.Add(ContactType.AccountsReceivable);
+            }
 
             var approvalRequests = new List<ApprovalRequestsDto>();
             var approvalEventNames = new HashSet<string>();
@@ -95,15 +102,18 @@ namespace OMS.Application.Services.Contact
                             var matchingRule = approvalRules?.FirstOrDefault(rule => rule.EventName == approvalEventName);
 
                             var ownerType = customerId > 0 ? OwnerType.CustomerContact : OwnerType.SupplierContact;
-                            var existingContactData = requestData.ContactId > 0
-                                ? await FetchContactDetails(Convert.ToInt32(requestData.ContactId), ownerType)
-                                : null;
+                            var existingContactData = requestData.ContactId > 0 ? await FetchContactDetails(Convert.ToInt32(requestData.ContactId), ownerType) : null;
 
                             requestData.ContactTypeId = contactTypeId;
-                            var updatedJsonData = await UpdateContactData(requestData, contactTypeId);
-                            var updatedExistingJsonData = existingContactData != null
-                                ? await UpdateContactData(existingContactData, contactTypeId)
-                                : null;
+                            var updatedJsonData = await UpdateContactData(requestData);
+
+                            var updatedExistingJsonData = "";
+                            if (existingContactData != null)
+                            {
+                                // Ensure existingContactData.ContactTypeId is not null before updating
+                                existingContactData.ContactTypeId ??= contactTypeId?.ToString(); // Assign if null
+                                updatedExistingJsonData = await UpdateContactData(existingContactData);
+                            }
 
                             if (matchingRule != null)
                             {
@@ -224,9 +234,16 @@ namespace OMS.Application.Services.Contact
             return contactDetail;
         }
 
-        public async Task<string> UpdateContactData(object requestData, string contactTypeIds)
-        {
+        public async Task<string> UpdateContactData(object requestData)
+         {
             var newJObject = JObject.FromObject(requestData);
+            string contactTypeIds = "";
+            // Check if ContactTypeId exists in the JObject and update it if needed
+            if (newJObject["ContactTypeId"] != null)
+            {
+                // Convert JToken to string
+                contactTypeIds = newJObject["ContactTypeId"].ToString();
+            }
             var getAllContactTypesResponse = await repositoryManager.commonRepository.GetAllContactTypes();
             var getAllPhoneTypesResponse = await repositoryManager.commonRepository.GetAllPhoneTypes();
 
