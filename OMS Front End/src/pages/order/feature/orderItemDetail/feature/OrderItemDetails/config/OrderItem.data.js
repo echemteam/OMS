@@ -1,3 +1,5 @@
+import { GridColumnType } from "../../../../../../../data/gridColumnType";
+
 export const orderItemSelectList = {
   columns: [
     {
@@ -25,9 +27,13 @@ export const orderItemSelectList = {
     {
       name: "Size",
       fieldName: "Size",
+      colType: GridColumnType.CUSTOM,
       colStyle: {
         width: "15%",
       },
+      renderCustomCol: (rowData) => {
+        return `${rowData?.["Size"]} ${rowData?.["Unit"]}`;
+      }
     },
     {
       name: "Order Total",

@@ -14,7 +14,7 @@
         public short? OrderItemSubStatusId { get; set; }
         public decimal? Quantity { get; set; }
         public decimal? PackSize { get; set; }
-        public byte? Unitid { get; set; }
+        public string? Unit { get; set; }
         public decimal? ItemUnitPrice { get; set; }
         public decimal? PoItemUnitPrice { get; set; }
         public decimal? SubTotalPrice { get; set; }

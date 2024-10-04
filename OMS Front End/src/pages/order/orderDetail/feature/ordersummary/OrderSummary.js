@@ -7,6 +7,7 @@ import CustomerDetailsModel from "./feature/CustomerDetailsModel";
 import formatDate from "../../../../../components/FinalMolGrid/libs/formatDate";
 import { useLazyDownloadDocumentQuery } from "../../../../../app/services/orderAPI";
 import { FileViewer } from "react-file-viewer";
+import ToastService from "../../../../../services/toastService/ToastService";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 
 const OrderSummary = ({ orderDetails }) => {
@@ -15,24 +16,21 @@ const OrderSummary = ({ orderDetails }) => {
   const [getFileType, setGetFileType] = useState([]);
   const [selectedDocument, setSelectedDocument] = useState(null);
 
-  const [
-    Downalod,
-    {
-      isFetching: isDownalodFetching,
-      isSuccess: isDownalodSucess,
-      data: isDownalodData,
-    },
-  ] = useLazyDownloadDocumentQuery();
+  const [Downalod, { isFetching: isDownalodFetching, isSuccess: isDownalodSucess, data: isDownalodData }] = useLazyDownloadDocumentQuery();
 
   const handleToggleModalPDF = () => {
     if (orderDetails?.poNumber) {
-      const documentNames = orderDetails.orderDocumentList
-        ?.filter((doc) => doc.documentName)
-        .map((doc) => doc.documentName)[0];
-      handleDocumentAction(documentNames);
-    }else{
-    setIsModelOpenPDF(false);
-  }
+      // const documentNames = orderDetails.orderDocumentList?.filter(doc => doc.documentName).map(doc => doc.documentName)[0];
+      const details = orderDetails.orderDocumentList?.find(doc => doc.documentTypeId === 0 || doc.documentTypeId === "");
+      if (details) {
+        handleDocumentAction(details?.documentName);
+      }
+      else {
+        ToastService.error("File not found");
+      }
+    } else {
+      setIsModelOpenPDF(false);
+    }
   };
 
   const onSidebarClosePDF = () => {
@@ -50,17 +48,15 @@ const OrderSummary = ({ orderDetails }) => {
   useEffect(() => {
     if (!isDownalodFetching && isDownalodSucess && isDownalodData) {
       const fileData = isDownalodData.fileData;
-      console.log(fileData)
       const blob = new Blob([fileData], { type: fileData.type });
       const fileURL = URL.createObjectURL(blob);
-        setSelectedDocument(fileURL);
-        setIsModelOpenPDF(true);
-        setGetFileType(determineFileType(isDownalodData.fileName));
-        
+      setSelectedDocument(fileURL);
+      setIsModelOpenPDF(true);
+      setGetFileType(determineFileType(isDownalodData.fileName));
     }
   }, [isDownalodFetching, isDownalodSucess, isDownalodData]);
 
-  const handleDocumentAction = ( fileName) => {
+  const handleDocumentAction = (fileName) => {
     setSelectedDocument(null);
     let request = {
       folderName: "Order",
@@ -93,6 +89,7 @@ const OrderSummary = ({ orderDetails }) => {
         return null;
     }
   };
+  
   return (
     <div>
       <CardSection

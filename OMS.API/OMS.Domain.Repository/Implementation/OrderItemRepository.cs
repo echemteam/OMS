@@ -36,7 +36,7 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.OrderItemSubStatusId,
                 requestData.Quantity,
                 requestData.PackSize,
-                requestData.Unitid,
+                requestData.Unit,
                 requestData.ItemUnitPrice,
                 requestData.PoItemUnitPrice,
                 requestData.SubTotalPrice,
