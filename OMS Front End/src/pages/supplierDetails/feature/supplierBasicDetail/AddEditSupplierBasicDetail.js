@@ -265,8 +265,8 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             responsibleUserId: getIdValue(data.responsibleUserId) || 0,
             supplierId: keyId || supplierId,
             supplierNoteId: noteId || 0,
-            attachmentName: null,
-            base64File: null,
+            attachmentName: data.attachment.fileName,
+            base64File: data.attachment.base64Data,
             storagePath: 'SupplierProfilePic'
         };
         if (!data.taxId) {

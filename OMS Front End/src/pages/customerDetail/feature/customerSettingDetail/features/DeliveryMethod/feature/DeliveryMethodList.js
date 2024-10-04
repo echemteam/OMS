@@ -40,7 +40,6 @@ const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleT
 
     const handleGridCheckBoxChange = (fieldName, newRowData, rowIndex) => {
         if (fieldName === 'isPrimary') {
-            console.log(dataSource);
             const dataSourceCharge = Number(dataSource[rowIndex]?.charge);
             const newRowDataCharge = Number(newRowData.charge);
             if (dataSourceCharge === newRowDataCharge) {
