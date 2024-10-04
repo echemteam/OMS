@@ -21,7 +21,6 @@
 }
 
 .verify-product-group {
-
   // margin-top: 36px;
   .loader-section {
     padding: 0;
@@ -295,6 +294,10 @@
       display: flex;
       align-items: center;
       margin-bottom: 5px;
+      min-height: 24px;
+      span {
+        font-size: var(--commonFont-medium);
+      }
 
       &:last-child {
         margin-bottom: 0;
@@ -303,7 +306,7 @@
       .key-icon-part {
         display: flex;
         align-items: center;
-        min-width: 145px;
+        min-width: 90px;
 
         .component-iconify {
           color: var(--themeColor);
@@ -318,7 +321,14 @@
 
       .desc-detail {
         display: flex;
-        align-items: flex-start;
+        align-items: center;
+
+        .name-ellipsis {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 240px;
+        }
 
         span {
           color: var(--textColor2);
@@ -339,16 +349,12 @@
             width: 16px !important;
             height: 16px !important;
           }
-
-
         }
-
-
       }
 
       &.right-status-sec {
         .key-icon-part {
-          min-width: 122px;
+          min-width: 100px;
         }
 
         .desc-detail {
@@ -362,6 +368,7 @@
               border-radius: 5px;
               font-weight: 600;
               font-size: var(--commonFont-small);
+              white-space: nowrap;
 
               &.pending {
                 background-color: #ffe5cc;
@@ -401,14 +408,18 @@
       border: 1px solid #e2e2ec;
       border-radius: 5px;
       height: auto;
+      font-size: var(--commonFont-medium);
 
       .title-swap-btn {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        position: relative;
 
         .swap-btn {
           cursor: pointer;
+          position: absolute;
+          right: 0;
 
           .component-iconify {
             color: var(--themeColor);
@@ -635,7 +646,6 @@
                   border-top-right-radius: 7px;
                   border-top-left-radius: 7px;
                   background: transparent;
-
                 }
               }
             }
@@ -645,6 +655,7 @@
                 display: flex;
                 align-items: center;
                 font-size: var(--commonFont-medium);
+                min-height: 23px;
 
                 .key-sec {
                   min-width: 95px;
@@ -802,10 +813,18 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        font-size: var(--commonFont);
 
         .user-name {
           text-transform: capitalize;
           font-weight: 600;
+
+          &.text-ellipsis {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 190px;
+          }
         }
 
         .btn-sec {
@@ -838,13 +857,15 @@
       }
 
       .user-details {
+        font-size: var(--commonFont-medium);
         div {
           color: var(--textColor2);
           line-height: normal;
           display: flex;
           align-items: center;
 
-          &.email {}
+          &.email {
+          }
 
           &.number {
             margin-top: 3px;
@@ -874,11 +895,14 @@
   background: var(--whiteColor);
   box-shadow: 0 0 15px -6px rgb(106, 129, 180);
   border-radius: 5px;
+  font-size: var(--commonFont-medium);
+  white-space: nowrap;
 
   .add-desc {
     .add-line-part {
       span {
-        &.add-info {}
+        &.add-info {
+        }
       }
 
       &.first-add-sec {
@@ -912,14 +936,11 @@
           }
         }
       }
-
     }
   }
 }
 
 // Address card Style End
-
-
 
 // Common User popup Section Start
 .info-user {
@@ -976,7 +997,6 @@
           display: flex;
           align-items: center;
           justify-content: center;
-
         }
 
         .name-status {
@@ -985,6 +1005,7 @@
           justify-content: space-between;
           margin-left: 5px;
           color: var(--textColor);
+          width: 100%;
 
           .name-sec {
             font-weight: 700;
@@ -1017,9 +1038,8 @@
         .icon-detail {
           margin-top: 5px;
           display: flex;
-          align-items: flex-start;
+          align-items: center;
           padding-left: 4px;
-
 
           .icon-part {
             display: flex;
@@ -1083,10 +1103,8 @@
 
                 @media only screen and (max-width: 1750px) {
                   padding: 2px;
-
                 }
               }
-
             }
 
             &.email-list {
@@ -1123,7 +1141,6 @@
               }
             }
           }
-
         }
 
         &.user-desc {
@@ -1139,6 +1156,7 @@
         .key-value {
           display: flex;
           align-items: center;
+          font-size: var(--commonFont-medium);
 
           .key-part {
             font-weight: 700;
@@ -1149,7 +1167,6 @@
             color: var(--textColor2);
           }
         }
-
       }
     }
   }
@@ -1169,3 +1186,52 @@
 }
 
 // Common User popup Section End
+
+//Responsive Styling
+
+@media only screen and (max-width: 1560px) {
+  .custom-col-6 {
+    width: 50%;
+    flex: 0 0 auto;
+  }
+
+  //Order-Summary
+  .order-review-section {
+    .order-summery-list {
+      .desc-section {
+        min-height: 22px;
+        .key-icon-part {
+          min-width: 82px;
+        }
+        .desc-detail {
+          .name-ellipsis {
+            max-width: 130px;
+          }
+        }
+        &.right-status-sec {
+          .key-icon-part {
+            min-width: 90px;
+          }
+        }
+      }
+    }
+  }
+
+  //Order-Information
+
+  //UserCardDetail
+
+  .contact-card {
+    .profile-name-btn {
+      .right-info {
+        .right-name-btn {
+          .user-name {
+            &.text-ellipsis {
+              max-width: 120px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

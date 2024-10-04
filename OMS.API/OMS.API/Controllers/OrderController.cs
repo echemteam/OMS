@@ -51,10 +51,11 @@ namespace OMS.API.Controllers
 
         [HttpPost("GetOrders")]
         public async Task<IActionResult> GetOrders(GetOrderRequest request)
-        {
+        {   
             var list = await _serviceManager.orderServices.GetOrders(request);
             return APISucessResponce<object>(list);
         }
+
         [HttpGet("GetOrderItemsByOrderId")]
         public async Task<IActionResult> GetOrderItemsByOrderId(int orderId)
         {
@@ -70,6 +71,17 @@ namespace OMS.API.Controllers
         {
             GetOrderDetailByOrderIdResponse responseData = await _serviceManager.orderServices.GetOrderDetailByOrderId(orderId).ConfigureAwait(true);
             return APISucessResponce(responseData);
+        }
+        [HttpDelete("DeleteOrder")]
+        public async Task<IActionResult> DeleteOrder(int orderId)
+        {
+            if (orderId > 0)
+            {
+                int deletedBy = CurrentUserId;
+                var deleteItem = await _serviceManager.orderServices.DeleteOrder(orderId, deletedBy).ConfigureAwait(true);
+                return APISucessResponce<object>(deleteItem);
+            }
+            return APISucessResponce(orderId);
         }
         #endregion
     }

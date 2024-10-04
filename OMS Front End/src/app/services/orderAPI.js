@@ -55,10 +55,28 @@ const orderAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse,
         }),
+
+        getOrderItemsByOrderId: builder.query({
+            query: (orderId) => ({
+                url: encryptQueryString(`/Order/GetOrderItemsByOrderId/?orderId=${orderId}`),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        deleteOrder: builder.mutation({
+            query: (orderId) => ({
+                url: encryptQueryString(`/Order/DeleteOrder/?orderId=${orderId}`),
+                method: 'DELETE'
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+
     })
 })
 
 export const { useCheckPoNumberExistOrNotMutation, useLazyGetPoNumberDetailsByPoNumberQuery,
-    useAddOrderMutation ,useGetOrdersMutation,  useLazyGetOrderDetailByOrderIdQuery, } = orderAPI;
+    useAddOrderMutation ,useGetOrdersMutation,  useLazyGetOrderDetailByOrderIdQuery,useLazyGetOrderItemsByOrderIdQuery ,useDeleteOrderMutation} = orderAPI;
 
 export default orderAPI;

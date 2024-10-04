@@ -53,10 +53,9 @@ namespace OMS.Shared.DbContext
                 }
                 return objResult;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception($"An error occurred while executing the query: {ex.Message}", ex);
             }
             finally
             {

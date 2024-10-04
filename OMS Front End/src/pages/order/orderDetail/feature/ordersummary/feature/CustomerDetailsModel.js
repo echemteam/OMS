@@ -4,22 +4,26 @@ import Iconify from "../../../../../../components/ui/iconify/Iconify";
 import { useLazyGetCustomersInfoByIdQuery } from "../../../../../../app/services/ApprovalAPI";
 
 const CustomerDetailsModel = ({ customerId }) => {
-
   const [customerBasicDetails, setCustomerBasicDetails] = useState(null);
 
-  const [getCustomerDetailsByCustomerId, {
-    isFetching: isCustomerFetching,
-    isSuccess: isCustomerFetched,
-    data: customerByIdData
-  }] = useLazyGetCustomersInfoByIdQuery();
+  const [
+    getCustomerDetailsByCustomerId,
+    {
+      isFetching: isCustomerFetching,
+      isSuccess: isCustomerFetched,
+      data: customerByIdData,
+    },
+  ] = useLazyGetCustomersInfoByIdQuery();
 
   const getInitials = (firstName, lastName) => {
-    return (firstName?.[0] || '').toUpperCase() + (lastName?.[0] || '').toUpperCase();
-  }
+    return (
+      (firstName?.[0] || "").toUpperCase() + (lastName?.[0] || "").toUpperCase()
+    );
+  };
 
   useEffect(() => {
     if (customerId) {
-      getCustomerDetailsByCustomerId(customerId)
+      getCustomerDetailsByCustomerId(customerId);
     }
   }, [customerId]);
 
@@ -34,9 +38,18 @@ const CustomerDetailsModel = ({ customerId }) => {
       <div className="customer-popup-sec">
         <div className="popup-body-sec">
           <div className="name-icon-status">
-            <div className="icon-sec">{getInitials(customerBasicDetails?.name, customerBasicDetails?.name)}</div>
-            <div className="name-sec">{customerBasicDetails?.name}</div>
-            <div className="status-sec pending">{customerBasicDetails?.status}</div>
+            <div className="icon-sec">
+              {getInitials(
+                customerBasicDetails?.name,
+                customerBasicDetails?.name
+              )}
+            </div>
+            <div className="name-status">
+              <div className="name-sec">{customerBasicDetails?.name}</div>
+              <div className="status-sec pending">
+                {customerBasicDetails?.status}
+              </div>
+            </div>
           </div>
           <div className="desc-sec-bottom">
             {/* Email Start */}
@@ -75,19 +88,27 @@ const CustomerDetailsModel = ({ customerId }) => {
           <div className="customer-detail">
             <div className="key-value">
               <div className="key-part">R-User</div>
-              <div className="value-part">&nbsp;:&nbsp; {customerBasicDetails?.responsibleUserName}</div>
+              <div className="value-part">
+                &nbsp;:&nbsp; {customerBasicDetails?.responsibleUserName}
+              </div>
             </div>
             <div className="key-value">
               <div className="key-part">Country</div>
-              <div className="value-part">&nbsp;:&nbsp; {customerBasicDetails?.countryName}</div>
+              <div className="value-part">
+                &nbsp;:&nbsp; {customerBasicDetails?.countryName}
+              </div>
             </div>
             <div className="key-value">
               <div className="key-part">tax Id</div>
-              <div className="value-part">&nbsp;:&nbsp; {customerBasicDetails?.taxId}</div>
+              <div className="value-part">
+                &nbsp;:&nbsp; {customerBasicDetails?.taxId}
+              </div>
             </div>
             <div className="key-value">
               <div className="key-part">Group Type</div>
-              <div className="value-part">&nbsp;:&nbsp; {customerBasicDetails?.type}</div>
+              <div className="value-part">
+                &nbsp;:&nbsp; {customerBasicDetails?.type}
+              </div>
             </div>
           </div>
         </div>

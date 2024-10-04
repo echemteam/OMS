@@ -22,6 +22,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETORDERADDRESSESBYORDERID = "GetOrderAddressesByOrderId";
         const string GETORDERCONTACTBYORDERID = "GetOrderContactByOrderId";
         const string GETORDERDOCUMENTBYORDERID = "GetOrderDocumentByOrderId";
+        const string DELETEORDERDATA = "DeleteOrderData";
         #endregion
 
         public OrderRepository(DapperContext dapperContext) : base(dapperContext)
@@ -65,9 +66,9 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<EntityList<GetOrderResponse>> GetOrders(GetOrderRequest request)
+        public async Task<EntityList<OrderListResponse>> GetOrders(GetOrderRequest request)
         {
-            return await _context.GetListSP<GetOrderResponse>(GETORDERS, new
+            return await _context.GetListSP<OrderListResponse>(GETORDERS, new
             {
                 request.OrderStatusId,
                 request.OrderSubStatusId,
@@ -122,7 +123,14 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
             return contactDetails;
         }
-
+        public async Task<AddEntityDto<int>> DeleteOrder(int orderId, int deletedBy)
+        {
+            return await _context.GetSingleAsync<AddEntityDto<int>>(DELETEORDERDATA, new
+            {
+                orderId,
+                deletedBy
+            }, CommandType.StoredProcedure);
+        }
         #endregion
     }
 }

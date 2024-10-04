@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Checkbox from "../../../../../../components/ui/inputs/checkBox/CheckBox";
+import Buttons from "../../../../../../components/ui/button/Buttons";
 
-const OrderInfoAddressModel = () => {
+const OrderInfoAddressModel = ({ onUpdate }) => {
   const addresses = [
     {
       id: 1,
@@ -19,7 +20,6 @@ const OrderInfoAddressModel = () => {
       addressLine3: "United Kingdom, Cambridgeshire CB2 1TN",
       isChecked: false,
     },
-    // Add more address objects as needed
   ];
   const [selectedAddresses, setSelectedAddresses] = useState(
     addresses.map((addr) => ({ ...addr, isChecked: addr.isChecked }))
@@ -36,37 +36,45 @@ const OrderInfoAddressModel = () => {
   };
 
   return (
-    <>
-      <div className="add-list-section">
-        <div className="row">
-          {selectedAddresses.map((address) => (
-            <div
-              className="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-12"
-              key={address.id}
-            >
-              <div className="address-card-main">
-                <div className="add-desc">
-                  <div className="add-line-part first-add-sec">
-                    <span className="add-info">{address.name}</span>
-                    <span className="checkbox-part">
-                      <Checkbox
-                        name="addressId"
-                        checked={address.isChecked}
-                        onChange={() => handleCheckboxChange(address.id)}
-                      />
-                    </span>
-                  </div>
-                  <div className="add-line-part">{address.addressLine1}</div>
-                  <div className="add-line-part">{address.addressLine2}</div>
-                  <div className="add-line-part">{address.addressLine3}</div>
-                  <div className="add-line-part">{address.addressLine4}</div>
+    <div className="add-list-section">
+      <div className="row">
+        {selectedAddresses.map((address) => (
+          <div
+            className="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-12"
+            key={address.id}
+          >
+            <div className="address-card-main">
+              <div className="add-desc">
+                <div className="add-line-part first-add-sec">
+                  <span className="add-info">{address.name}</span>
+                  <span className="checkbox-part">
+                    <Checkbox
+                      name={`addressId_${address.id}`}
+                      checked={address.isChecked}
+                      onChange={() => handleCheckboxChange(address.id)}
+                    />
+                  </span>
                 </div>
+                <div className="add-line-part">{address.addressLine1}</div>
+                <div className="add-line-part">{address.addressLine2}</div>
+                <div className="add-line-part">{address.addressLine3}</div>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
-    </>
+      <div className="d-flex align-item-end justify-content-end mt-3">
+        <Buttons
+          buttonTypeClassName="theme-button"
+          buttonText="Save"
+        />
+        <Buttons
+          buttonTypeClassName="theme-button ml-3"
+          buttonText="Update"
+          onClick={onUpdate}
+        />
+      </div>
+    </div>
   );
 };
 

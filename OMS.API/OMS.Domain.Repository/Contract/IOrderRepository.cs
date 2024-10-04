@@ -11,11 +11,13 @@ namespace OMS.Domain.Repository.Contract
         Task<AddEntityDto<int>> CheckPoNumberExistOrNot(OrderDto requestData);
         Task<List<GetPoNumberDetailsByPoNumberResponse>> GetPoNumberDetailsByPoNumber(string poNumber);
         Task<AddEntityDto<int>> AddOrder(OrderDto requestData);
-        Task<EntityList<GetOrderResponse>> GetOrders(GetOrderRequest request);
+        Task<EntityList<OrderListResponse>> GetOrders(GetOrderRequest request);
         Task<List<GetOrderItemsByOrderIdResponse>> GetOrderItemsByOrderId(int orderId);
         Task<GetOrderDetailByOrderIdResponse> GetOrderDetailByOrderId(int orderId);
         Task<AddressResponse> GetOrderAddressesByOrderId(int addressId);
         Task<List<GetOrderContactByOrderIdResponse>> GetOrderContactByOrderId(int orderId);
         Task<List<GetOrderDocumentByOrderIdResponse>> GetOrderDocumentByOrderId(int orderId);
+        Task<AddEntityDto<int>> DeleteOrder(int orderId, int deletedBy);
+
     }
 }

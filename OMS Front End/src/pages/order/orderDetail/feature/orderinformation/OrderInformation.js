@@ -13,9 +13,8 @@ const OrderInformation = ({ orderDetails }) => {
   const [orderAddressDetails, setOrderAddressDetails] = useState(null);
   const [orderContactDetails, setOrderContactDetails] = useState(null);
 
-  const [isModelOpenShippingAddress, setIsModelOpenShippingAddress] =
-    useState(false);
-  const [isModelOpenUsers, setIsModelOpenUsers] = useState(false);
+  const [isModelOpenShippingAddress, setIsModelOpenShippingAddress] = useState(false);
+  const [isModelOpenUpdateAddress, setIsModelOpenUpdateAddress] = useState(false);
 
   const onSidebarCloseShippingAddress = () => {
     setIsModelOpenShippingAddress(false);
@@ -25,12 +24,14 @@ const OrderInformation = ({ orderDetails }) => {
     setIsModelOpenShippingAddress(true);
   };
 
-  const onSidebarCloseUsers = () => {
-    setIsModelOpenUsers(false);
+  const onSidebarCloseUpdateAddress = () => {
+    setIsModelOpenUpdateAddress(false);
+    setIsModelOpenShippingAddress(true);
   };
 
-  const handleToggleModalUsers = (contact, index) => {
-    setIsModelOpenUsers(true);
+  const handleUpdateAddress = () => {
+    setIsModelOpenShippingAddress(false);
+    setIsModelOpenUpdateAddress(true);
   };
 
   useEffect(() => {
@@ -57,7 +58,6 @@ const OrderInformation = ({ orderDetails }) => {
             <div className="col-xxl-12 col-lg-12 col-md-12 col-12">
               <div className="order-title">
                 <span>Order Method &nbsp;:&nbsp;</span>
-                {/* <span className="desc">Mail</span> */}
                 <span className="desc">{orderInfo?.orderMethod}</span>
               </div>
             </div>
@@ -65,7 +65,7 @@ const OrderInformation = ({ orderDetails }) => {
           {/* Address Details */}
           <div className="row mt-2">
             {orderAddressDetails?.map((address) => (
-              <div className="col-xxl-6 col-lg-6 col-md-6 col-12">
+              <div className="col-xxl-6 col-lg-6 col-md-6 col-12" key={address.type}>
                 <div className="order-title">
                   <span>{address.type} Address &nbsp;:&nbsp;</span>
                 </div>
@@ -105,7 +105,7 @@ const OrderInformation = ({ orderDetails }) => {
           {/* Contact Details */}
           <div className="row mt-2">
             {orderContactDetails?.map((contact, index) => (
-              <div className="col-xxl-6 col-lg-6 col-md-6 col-12">
+              <div className="col-xxl-6 col-lg-6 col-md-6 col-12" key={index}>
                 <div className="order-title">
                   <span>{contact?.contactType} &nbsp;:&nbsp;</span>
                 </div>
@@ -113,8 +113,7 @@ const OrderInformation = ({ orderDetails }) => {
                 <UserCardDetail
                   contact={contact}
                   index={index}
-                  // handleToggleModalUsers={handleToggleModalUsers}
-                  handleToggleModalUsers={handleToggleModalUsers}
+                  handleToggleModalUsers={handleToggleModalShippingAddress}
                 />
               </div>
             ))}
@@ -128,19 +127,17 @@ const OrderInformation = ({ orderDetails }) => {
         modalTitleIcon={AppIcons.AddIcon}
         isOpen={isModelOpenShippingAddress}
       >
-        <OrderInfoAddressModel />
+        <OrderInfoAddressModel onUpdate={handleUpdateAddress} />
       </SidebarModel>
 
       <SidebarModel
-        modalTitle="Change Users"
+        modalTitle="Update Shipping Address"
         contentClass="content-50"
-        onClose={onSidebarCloseUsers}
+        onClose={onSidebarCloseUpdateAddress}
         modalTitleIcon={AppIcons.AddIcon}
-        isOpen={isModelOpenUsers}
+        isOpen={isModelOpenUpdateAddress}
       >
-        <UsercardModel
-          
-        />
+        <div>Update Shipping Address</div>
       </SidebarModel>
     </div>
   );
