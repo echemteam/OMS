@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 /** Common Components */
@@ -12,29 +12,28 @@ import { encryptUrlData } from "../../../../services/CryptoService";
 
 /** Configuration files */
 import { orderListMolGridConfig } from "../../feature/orderListDetail/config/OrderListConfig";
-import { collapsibleChildGridData, orderListMolGridData, } from "../../feature/orderListDetail/config/OrderList.Data";
-
 /** RTK Query */
-import { useDeleteOrderMutation, useGetOrdersMutation, useLazyGetOrderItemsByOrderIdQuery } from "../../../../app/services/orderAPI";
+import { useDeleteOrderMutation, useGetOrdersMutation } from "../../../../app/services/orderAPI";
 
 /** CSS Files */
 import "../../Order.scss";
 import useDebounce from "../../../../app/customHooks/useDebouce";
 import ToastService from "../../../../services/toastService/ToastService";
 import { ErrorMessage } from "../../../../data/appMessages";
+import SwalAlert from "../../../../services/swalService/SwalService";
 
 const Orders = ({ orderStatusId,  orderItemStatusId ,orderSubStatusId}) => {
 
   const molGridRef = useRef();
   const navigate = useNavigate();
+  const { confirm } = SwalAlert();
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 300);
   const [dataSource, setDataSource] = useState([]);
-  const [orderId,setOrderId]=useState(0);
   const [totalRowCount, setTotalRowCount] = useState(0);
   const [itemListDataSource, setItemListDataSource] = useState([]);
   const [getOrders, { isLoading: isGetOrderListLoading, isSuccess: isGetOrderListSuccess, data: isGetOrderListData }] = useGetOrdersMutation();
-  //const [deleteOrder, {  isSuccess: isDeleteOrderSuccess, data: isDeleteOrderData }] = useDeleteOrderMutation();
+  const [deleteOrder, {  isSuccess: isDeleteOrderSuccess, data: isDeleteOrderData }] = useDeleteOrderMutation();
   useEffect(() => {
     onGetData();
 
@@ -48,13 +47,12 @@ const Orders = ({ orderStatusId,  orderItemStatusId ,orderSubStatusId}) => {
     }
   };
 
-  // useEffect(() => {
-  //   if (isDeleteOrderSuccess && isDeleteOrderData) {
-  //     ToastService.success(isDeleteOrderData.errorMessage);
-  //     const currentPageObject = molGridRef.current.getCurrentPageObject();
-  //     handlePageChange(currentPageObject)
-  //   }
-  // }, [isDeleteOrderSuccess, isDeleteOrderData]);
+  useEffect(() => {
+    if (isDeleteOrderSuccess && isDeleteOrderData) {
+      ToastService.success(isDeleteOrderData.errorMessage);
+      onGetData();
+    }
+  }, [isDeleteOrderSuccess, isDeleteOrderData]);
 
   const handleChange = (event) => {
       setSearch(event.target.value.trim());   
@@ -135,8 +133,15 @@ if (debouncedSearch === "" ) {
     navigate(`/OrderDetails/${encryptUrlData(orderId)}`)
   };
 
-  const handleDeleteClick = () => {
-    alert("DELETE");
+  const handleDeleteClick = (data) => {
+    confirm("Delete?",
+    "Are you sure you want to Delete?",
+    "Delete", "Cancel"
+    ).then((confirmed) => {
+    if (confirmed) {
+      deleteOrder(data.orderId);
+    }
+    });
   };
 
   const actionHandler = {

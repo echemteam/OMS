@@ -28,7 +28,9 @@ const OrderSummary = ({ orderDetails }) => {
     if (orderDetails?.poNumber) {
       const documentNames = orderDetails.orderDocumentList?.filter(doc => doc.documentName).map(doc => doc.documentName)[0];
       handleDocumentAction(documentNames);
-    }
+    }else{
+    setIsModelOpenPDF(false);
+  }
   };
 
   const onSidebarClosePDF = () => {
@@ -50,6 +52,7 @@ const OrderSummary = ({ orderDetails }) => {
       const blob = new Blob([fileData], { type: fileData.type });
       const fileURL = URL.createObjectURL(blob);
         setSelectedDocument(fileURL);
+        setIsModelOpenPDF(true);
         setGetFileType(determineFileType(isDownalodData.fileName));
         
     }
@@ -57,8 +60,6 @@ const OrderSummary = ({ orderDetails }) => {
 
   const handleDocumentAction = ( fileName) => {
     setSelectedDocument(null);
-    setIsModelOpenPDF(true);
-
     let request = {
       folderName: "Order",
       keyId: orderDetails?.orderId,

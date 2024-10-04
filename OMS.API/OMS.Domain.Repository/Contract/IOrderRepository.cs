@@ -1,8 +1,10 @@
 ﻿using OMS.Domain.Entities.API.Request.Orders;
 using OMS.Domain.Entities.API.Response.Orders;
 using OMS.Domain.Entities.Entity.CommonEntity;
+using OMS.Domain.Entities.Entity.OrderDocument;
 using OMS.Domain.Entities.Entity.Orders;
 using OMS.Shared.Entities.CommonEntity;
+using System.Data;
 
 namespace OMS.Domain.Repository.Contract
 {
@@ -18,6 +20,6 @@ namespace OMS.Domain.Repository.Contract
         Task<List<GetOrderContactByOrderIdResponse>> GetOrderContactByOrderId(int orderId);
         Task<List<GetOrderDocumentByOrderIdResponse>> GetOrderDocumentByOrderId(int orderId);
         Task<AddEntityDto<int>> DeleteOrder(int orderId, int deletedBy);
-
+        Task<AddEntityDto<int>> AddOrderDocuments(OrderDocumentDto orderDocumentsDto, DataTable documentDataTable);
     }
 }

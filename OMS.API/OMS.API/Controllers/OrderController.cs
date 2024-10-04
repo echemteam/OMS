@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
+using OMS.Domain.Entities.API.Request.CustomerDocuments;
 using OMS.Domain.Entities.API.Request.Orders;
 using OMS.Domain.Entities.API.Response.Orders;
 using OMS.Framework;
@@ -82,6 +83,13 @@ namespace OMS.API.Controllers
                 return APISucessResponce<object>(deleteItem);
             }
             return APISucessResponce(orderId);
+        }
+
+        [HttpPost("AddOrderDocuments")]
+        public async Task<IActionResult> AddOrderDocuments(AddOrderDocumentsRequest requestData)
+        {
+            var addItem = await _serviceManager.orderServices.AddOrderDocuments(requestData, CurrentUserId);
+            return APISucessResponce(addItem);
         }
         #endregion
     }
