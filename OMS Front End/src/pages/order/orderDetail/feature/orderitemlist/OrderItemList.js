@@ -85,8 +85,8 @@ const OrderItemList = () => {
           <div className="accordian-desc">
             <Accordion activeKey={activeKey}>
               {itemList.map((item, index) => (
-                <Accordion.Item eventKey={item.eventKey} key={index}>
-                  <Accordion.Header onClick={() => handleToggle(item.eventKey)}>
+                <Accordion.Item eventKey={item.orderItemId} key={index}>
+                  <Accordion.Header onClick={() => handleToggle(item.orderItemId)}>
                     <div className="header-items">
                       <span>{item.catalogId}</span>
                       <span>{item.casNumber}</span>
