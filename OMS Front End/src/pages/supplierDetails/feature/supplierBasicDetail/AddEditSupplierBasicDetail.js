@@ -123,6 +123,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             if (!isOpen) {
                 const modifyFormFields = removeFormFields(formData, ['responsibleUserId']);
                 setFormData(modifyFormFields);
+                setIsRemoveFields(true);
                 // setFieldSetting(formData, 'name', FieldSettingType.ISPRIMARYBUTTONVISIBLE, true);
             }
         };

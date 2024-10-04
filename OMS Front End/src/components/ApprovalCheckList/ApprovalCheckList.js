@@ -380,195 +380,196 @@ const ApprovalCheckList = ({
   };
   return (
     <div>
-      <SidebarModel
-        modalTitle="Approval Check List"
-        contentClass="content-95 basic-info-model"
-        onClose={onSidebarClose}
-        modalTitleIcon={AppIcons.AddIcon}
-        isOpen={isModelOpen}
-      >
-        <div className="checklist-left-section">
-          <div className="row mt-3">
-            <div className="col-6 info-scrollable">
-              <div className="row">
-                <div className="col-12 mb-3">
+      {isModelOpen &&
+        <>
+          <SidebarModel
+            modalTitle="Approval Check List"
+            contentClass="content-95 basic-info-model"
+            onClose={onSidebarClose}
+            modalTitleIcon={AppIcons.AddIcon}
+            isOpen={isModelOpen}>
+            <div className="checklist-left-section">
+              <div className="row mt-3">
+                <div className="col-6 info-scrollable">
                   <div className="row">
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-12">
-                      <div className="approval-list-part">
-                        <BasicInformation
-                          isModelOpen={isModelOpen}
-                          mainId={mainId}
-                          getBasicInformationById={getBasicInformationById}
-                          approvalChekedData={approvalChekedData.find(
-                            (item) => item.name === "basicInformation"
-                          )}
-                          handleCheckbox={handleCheckbox}
-                          isSupplierApproval={isSupplierApproval}
-                        />
-                      </div>
-                      {!isSubCustomer ? (
-                        <div className="col-12 mb-3">
+                    <div className="col-12 mb-3">
+                      <div className="row">
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-12">
                           <div className="approval-list-part">
-                            <ContactInformation
+                            <BasicInformation
+                              isModelOpen={isModelOpen}
+                              mainId={mainId}
+                              getBasicInformationById={getBasicInformationById}
+                              approvalChekedData={approvalChekedData.find(
+                                (item) => item.name === "basicInformation"
+                              )}
+                              handleCheckbox={handleCheckbox}
+                              isSupplierApproval={isSupplierApproval}
+                            />
+                          </div>
+                          {!isSubCustomer ? (
+                            <div className="col-12 mb-3">
+                              <div className="approval-list-part">
+                                <ContactInformation
+                                  isSupplierApproval={isSupplierApproval}
+                                  isModelOpen={isModelOpen}
+                                  mainId={mainId}
+                                  getContactById={getContactById}
+                                  approvalChekedData={approvalChekedData.find(
+                                    (item) => item.name === "contactInformation"
+                                  )}
+                                  handleCheckbox={handleCheckbox}
+                                />
+                              </div>
+                            </div>
+                          ) : null}
+                          <div className="col-12 mb-3">
+                            <div className="approval-list-part">
+                              <CustomerSupplierNotes
+                                mainId={mainId}
+                                isSupplierApproval={isSupplierApproval}
+                                onGetByIdNotes={!isSupplierApproval ? useLazyGetCustomerNoteByCustomerIdQuery : useLazyGetSupplierNotesBySupplierIdQuery}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-12">
+                          <div className="approval-list-part">
+                            <AddressInformation
                               isSupplierApproval={isSupplierApproval}
                               isModelOpen={isModelOpen}
                               mainId={mainId}
-                              getContactById={getContactById}
+                              getAddressById={getAddressById}
+                              isSubCustomer={isSubCustomer}
                               approvalChekedData={approvalChekedData.find(
-                                (item) => item.name === "contactInformation"
+                                (item) => item.name === "addressInformation"
                               )}
                               handleCheckbox={handleCheckbox}
                             />
                           </div>
+                          {!isSubCustomer && !isSupplierApproval ? (
+                            <div className="col-12 mb-3">
+                              <div className="approval-list-part">
+                                <SettingInformation
+                                  isSupplierApproval={isSupplierApproval}
+                                  isModelOpen={isModelOpen}
+                                  mainId={mainId}
+                                  getFinacialSettingById={getFinacialSettingById}
+                                  approvalChekedData={approvalChekedData.find(
+                                    (item) => item.name === "settingInformation"
+                                  )}
+                                  handleCheckbox={handleCheckbox}
+                                />
+                              </div>
+                            </div>
+                          ) : null}
+                          {!isSubCustomer && !isSupplierApproval ? (
+                            <div className="col-12 mb-3">
+                              <div className="approval-list-part">
+                                <ShippingSetting
+                                  isSupplierApproval={isSupplierApproval}
+                                  isModelOpen={isModelOpen}
+                                  mainId={mainId}
+                                  getFinacialSettingById={getFinacialSettingById}
+                                  approvalChekedData={approvalChekedData.find(
+                                    (item) =>
+                                      item.name === "shippingsettingInformation"
+                                  )}
+                                  handleCheckbox={handleCheckbox}
+                                />
+                              </div>
+                            </div>
+                          ) : null}
+                          {isSupplierApproval ? (
+                            <div className="col-12 mb-3">
+                              <div className="approval-list-part">
+                                <SupplierSettingInformation
+                                  isSupplierApproval={isSupplierApproval}
+                                  isModelOpen={isModelOpen}
+                                  mainId={mainId}
+                                  getFinacialSettingById={getFinacialSettingById}
+                                  approvalChekedData={approvalChekedData.find(
+                                    (item) => item.name === "settingInformation"
+                                  )}
+                                  handleCheckbox={handleCheckbox}
+                                />
+                              </div>
+                            </div>
+                          ) : null}
                         </div>
-                      ) : null}
-                      <div className="col-12 mb-3">
-                        <div className="approval-list-part">
-                          <CustomerSupplierNotes
-                            mainId={mainId}
-                            isSupplierApproval={isSupplierApproval}
-                            onGetByIdNotes={!isSupplierApproval ? useLazyGetCustomerNoteByCustomerIdQuery : useLazyGetSupplierNotesBySupplierIdQuery}
+                      </div>
+                    </div>
+                    <div className="col-12 mb-3"></div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12 my-3 mt-4">
+                      <div className="d-flex align-item-end justify-content-end">
+                        <div className="d-flex align-item-end">
+                          <Buttons
+                            buttonTypeClassName="theme-button"
+                            buttonText="Approve"
+                            // isLoading={isAddUserCheckResponseLoading}
+                            onClick={handleAddResponse}
+                          />
+
+                          <Buttons
+                            buttonTypeClassName="danger-btn ml-5"
+                            buttonText="Reject"
+                            // isLoading={isAddUserCheckResponseLoading}
+                            onClick={handleRejectResponse}
+                          />
+                          <Buttons
+                            buttonTypeClassName="dark-btn ml-5"
+                            buttonText="Cancel"
+                            onClick={onSidebarClose}
                           />
                         </div>
                       </div>
                     </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-12">
-                      <div className="approval-list-part">
-                        <AddressInformation
-                          isSupplierApproval={isSupplierApproval}
-                          isModelOpen={isModelOpen}
-                          mainId={mainId}
-                          getAddressById={getAddressById}
-                          isSubCustomer={isSubCustomer}
-                          approvalChekedData={approvalChekedData.find(
-                            (item) => item.name === "addressInformation"
-                          )}
-                          handleCheckbox={handleCheckbox}
-                        />
+                  </div>
+                </div>
+                <div className="col-6 right-document-view">
+                  <div className="checklist-info">
+                    <h5>Documents</h5>
+                  </div>
+                  <div className="row">
+                    <div className="col-8">
+                      <DropDown
+                        placeholder="Select Documents"
+                        options={documentListData}
+                        value={document}
+                        onChange={handleDocumentChange}
+                      />
+                    </div>
+                  </div>
+                  {/* File viewer modal */}
+
+                  <div className="row">
+                    <div className="col-12">
+                      <div className="document-view">
+                        {selectedDocument && getFileType ? (
+                          getFileType === "pdf" ? (
+                            <div className="pdf-iframe">
+                              <iframe
+                                src={selectedDocument}
+                                title="PDF Preview"
+                                style={{ width: "100%", height: "200%" }}
+                              />
+                            </div>
+                          ) : (
+                            <FileViewer
+                              fileType={getFileType}
+                              filePath={selectedDocument}
+                              onError={(error) => console.error("Error:", error)}
+                            />
+                          )
+                        ) : null}
                       </div>
-                      {!isSubCustomer && !isSupplierApproval ? (
-                        <div className="col-12 mb-3">
-                          <div className="approval-list-part">
-                            <SettingInformation
-                              isSupplierApproval={isSupplierApproval}
-                              isModelOpen={isModelOpen}
-                              mainId={mainId}
-                              getFinacialSettingById={getFinacialSettingById}
-                              approvalChekedData={approvalChekedData.find(
-                                (item) => item.name === "settingInformation"
-                              )}
-                              handleCheckbox={handleCheckbox}
-                            />
-                          </div>
-                        </div>
-                      ) : null}
-                      {!isSubCustomer && !isSupplierApproval ? (
-                        <div className="col-12 mb-3">
-                          <div className="approval-list-part">
-                            <ShippingSetting
-                              isSupplierApproval={isSupplierApproval}
-                              isModelOpen={isModelOpen}
-                              mainId={mainId}
-                              getFinacialSettingById={getFinacialSettingById}
-                              approvalChekedData={approvalChekedData.find(
-                                (item) =>
-                                  item.name === "shippingsettingInformation"
-                              )}
-                              handleCheckbox={handleCheckbox}
-                            />
-                          </div>
-                        </div>
-                      ) : null}
-                      {isSupplierApproval ? (
-                        <div className="col-12 mb-3">
-                          <div className="approval-list-part">
-                            <SupplierSettingInformation
-                              isSupplierApproval={isSupplierApproval}
-                              isModelOpen={isModelOpen}
-                              mainId={mainId}
-                              getFinacialSettingById={getFinacialSettingById}
-                              approvalChekedData={approvalChekedData.find(
-                                (item) => item.name === "settingInformation"
-                              )}
-                              handleCheckbox={handleCheckbox}
-                            />
-                          </div>
-                        </div>
-                      ) : null}
                     </div>
                   </div>
                 </div>
-                <div className="col-12 mb-3"></div>
-              </div>
-              <div className="row">
-                <div className="col-md-12 my-3 mt-4">
-                  <div className="d-flex align-item-end justify-content-end">
-                    <div className="d-flex align-item-end">
-                      <Buttons
-                        buttonTypeClassName="theme-button"
-                        buttonText="Approve"
-                        // isLoading={isAddUserCheckResponseLoading}
-                        onClick={handleAddResponse}
-                      />
 
-                      <Buttons
-                        buttonTypeClassName="danger-btn ml-5"
-                        buttonText="Reject"
-                        // isLoading={isAddUserCheckResponseLoading}
-                        onClick={handleRejectResponse}
-                      />
-                      <Buttons
-                        buttonTypeClassName="dark-btn ml-5"
-                        buttonText="Cancel"
-                        onClick={onSidebarClose}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-6 right-document-view">
-              <div className="checklist-info">
-                <h5>Documents</h5>
-              </div>
-              <div className="row">
-                <div className="col-8">
-                  <DropDown
-                    placeholder="Select Documents"
-                    options={documentListData}
-                    value={document}
-                    onChange={handleDocumentChange}
-                  />
-                </div>
-              </div>
-              {/* File viewer modal */}
-
-              <div className="row">
-                <div className="col-12">
-                  <div className="document-view">
-                    {selectedDocument && getFileType ? (
-                      getFileType === "pdf" ? (
-                        <div className="pdf-iframe">
-                          <iframe
-                            src={selectedDocument}
-                            title="PDF Preview"
-                            style={{ width: "100%", height: "200%" }}
-                          />
-                        </div>
-                      ) : (
-                        <FileViewer
-                          fileType={getFileType}
-                          filePath={selectedDocument}
-                          onError={(error) => console.error("Error:", error)}
-                        />
-                      )
-                    ) : null}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* <div className="col-md-4 d-flex flex-column justify-content-between approval-check-list">
+                {/* <div className="col-md-4 d-flex flex-column justify-content-between approval-check-list">
                 <div>
                   {checkListData.map((item) => (
                     <div className="checklist-section">
@@ -603,40 +604,42 @@ const ApprovalCheckList = ({
                 </div>
                 
               </div> */}
-          </div>
-        </div>
-      </SidebarModel>
-      <CenterModel
-        showModal={showModal}
-        handleToggleModal={handleToggleModal}
-        modalTitle={`Reject Reason`}
-        modelSizeClass="w-50s"
-      >
-        <div className="row">
-          <FormCreator config={formData} ref={reasonRef} {...formData} />
-          <div className="col-md-12 mt-2">
-            <div className="d-flex align-item-end justify-content-end">
-              <div className="d-flex align-item-end">
-                <Buttons
-                  buttonTypeClassName="theme-button"
-                  buttonText="Update"
-                  isLoading={
-                    isSupplierApproval
-                      ? updateSupplierInActiveStatusLoading
-                      : updateCustomerInActiveStatusCustomerLoading
-                  }
-                  onClick={handleRejectUpdate}
-                />
-                <Buttons
-                  buttonTypeClassName="dark-btn ml-5"
-                  buttonText="Cancel"
-                  onClick={handleToggleModal}
-                />
               </div>
             </div>
-          </div>
-        </div>
-      </CenterModel>
+          </SidebarModel>
+          <CenterModel
+            showModal={showModal}
+            handleToggleModal={handleToggleModal}
+            modalTitle={`Reject Reason`}
+            modelSizeClass="w-50s"
+          >
+            <div className="row">
+              <FormCreator config={formData} ref={reasonRef} {...formData} />
+              <div className="col-md-12 mt-2">
+                <div className="d-flex align-item-end justify-content-end">
+                  <div className="d-flex align-item-end">
+                    <Buttons
+                      buttonTypeClassName="theme-button"
+                      buttonText="Update"
+                      isLoading={
+                        isSupplierApproval
+                          ? updateSupplierInActiveStatusLoading
+                          : updateCustomerInActiveStatusCustomerLoading
+                      }
+                      onClick={handleRejectUpdate}
+                    />
+                    <Buttons
+                      buttonTypeClassName="dark-btn ml-5"
+                      buttonText="Cancel"
+                      onClick={handleToggleModal}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CenterModel>
+        </>
+      }
     </div>
   );
 };
