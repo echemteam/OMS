@@ -1,6 +1,9 @@
-﻿using OMS.Domain.Entities.API.Request.Orders;
+﻿using Dapper;
+using OMS.Domain.Entities.API.Request.Orders;
 using OMS.Domain.Entities.API.Response.Orders;
 using OMS.Domain.Entities.Entity.CommonEntity;
+using OMS.Domain.Entities.Entity.CustomerDocuments;
+using OMS.Domain.Entities.Entity.OrderDocument;
 using OMS.Domain.Entities.Entity.Orders;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
@@ -23,6 +26,8 @@ namespace OMS.Domain.Repository.Implementation
         const string GETORDERCONTACTBYORDERID = "GetOrderContactByOrderId";
         const string GETORDERDOCUMENTBYORDERID = "GetOrderDocumentByOrderId";
         const string DELETEORDERDATA = "DeleteOrderData";
+
+        const string ADDORDERDOCUMENTS = "AddOrderDocuments";
         #endregion
 
         public OrderRepository(DapperContext dapperContext) : base(dapperContext)
@@ -129,6 +134,16 @@ namespace OMS.Domain.Repository.Implementation
             {
                 orderId,
                 deletedBy
+            }, CommandType.StoredProcedure);
+        }
+
+        public async Task<AddEntityDto<int>> AddOrderDocuments(OrderDocumentDto orderDocumentsDto, DataTable documentDataTable)
+        {
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDORDERDOCUMENTS, new
+            {
+                orderDocumentsDto.OrderId,
+                OrderList = documentDataTable.AsTableValuedParameter("[dbo].[OrderTypeTable]"),
+                orderDocumentsDto.CreatedBy
             }, CommandType.StoredProcedure);
         }
         #endregion

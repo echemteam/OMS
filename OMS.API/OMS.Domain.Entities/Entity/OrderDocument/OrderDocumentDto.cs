@@ -1,4 +1,6 @@
-﻿namespace OMS.Domain.Entities.Entity.OrderDocument
+﻿using OMS.Domain.Entities.API.Request.Common;
+
+namespace OMS.Domain.Entities.Entity.OrderDocument
 {
     public class OrderDocumentDto : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
@@ -13,5 +15,8 @@
         public short? CreatedBy { get; set; }
         public short? UpdatedBy { get; set; }
         public short? DeletedBy { get; set; }
+
+        public List<OrderDocumentList>? DocumentOrderList { get; set; }
+
     }
 }

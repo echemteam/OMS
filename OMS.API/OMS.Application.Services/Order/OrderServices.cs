@@ -2,9 +2,11 @@
 using Common.Helper.Export;
 using Common.Helper.Extension;
 using OMS.Application.Services.Implementation;
+using OMS.Domain.Entities.API.Request.CustomerDocuments;
 using OMS.Domain.Entities.API.Request.Orders;
 using OMS.Domain.Entities.API.Response.Orders;
 using OMS.Domain.Entities.Entity.CommonEntity;
+using OMS.Domain.Entities.Entity.CustomerDocuments;
 using OMS.Domain.Entities.Entity.OrderAddress;
 using OMS.Domain.Entities.Entity.OrderDocument;
 using OMS.Domain.Entities.Entity.OrderItems;
@@ -170,6 +172,41 @@ namespace OMS.Application.Services.Order
         {
             return await repositoryManager.order.DeleteOrder(orderId, deletedBy);
         }
-        #endregion
+
+        public async Task<AddEntityDto<int>> AddOrderDocuments(AddOrderDocumentsRequest requestData, short CurrentUserId)
+        {
+            AddEntityDto<int> responseData = new();
+            if (requestData.DocumentOrderList != null)
+            {
+                foreach (var document in requestData.DocumentOrderList)
+                {
+                    if (!string.IsNullOrEmpty(document.Base64File) && !string.IsNullOrEmpty(requestData.StoragePath))
+                    {
+                        string AESKey = commonSettingService.EncryptionSettings.AESKey!;
+                        string AESIV = commonSettingService.EncryptionSettings.AESIV!;
+
+
+                        document.DocumentName = FileManager.SaveEncryptFile(
+                            document.Base64File!,
+                            Path.Combine(commonSettingService.ApplicationSettings.SaveFilePath!, requestData.StoragePath, requestData.OrderId.ToString()!),
+                            document.DocumentName,
+                            AESKey,
+                            AESIV);
+                    }
+
+
+                }
+            }
+
+            // Map the request to the DTO and add it to the repository
+            OrderDocumentDto orderDocumentsDto = requestData.ToMapp<AddOrderDocumentsRequest, OrderDocumentDto>();
+            orderDocumentsDto.CreatedBy = CurrentUserId;
+            var modifyData = requestData.DocumentOrderList.Select(data => new { data.DocumentName, data.DocumentType }).ToList();
+            DataTable documentDataTable = ExportHelper.ListToDataTable(modifyData);
+            responseData = await repositoryManager.order.AddOrderDocuments(orderDocumentsDto, documentDataTable);
+            return responseData;
+        }
     }
+    #endregion
 }
+
