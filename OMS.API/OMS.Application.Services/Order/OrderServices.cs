@@ -11,6 +11,7 @@ using OMS.Domain.Entities.Entity.OrderItems;
 using OMS.Domain.Entities.Entity.Orders;
 using OMS.Domain.Repository;
 using OMS.FileManger.Services;
+using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Entities.CommonEntity;
 using OMS.Shared.Services.Contract;
 using System.Data;
@@ -113,7 +114,7 @@ namespace OMS.Application.Services.Order
         {
             var customersDetails = await repositoryManager.order.GetOrders(request);
             return customersDetails!;
-        }
+                    }
         public async Task<List<GetOrderItemsByOrderIdResponse>> GetOrderItemsByOrderId(int orderId)
         {
             return await repositoryManager.order.GetOrderItemsByOrderId(orderId);
@@ -157,6 +158,10 @@ namespace OMS.Application.Services.Order
 
 
             return orderDetails!;
+        }
+        public async Task<AddEntityDto<int>> DeleteOrder(int orderId, int deletedBy)
+        {
+            return await repositoryManager.order.DeleteOrder(orderId, deletedBy);
         }
         #endregion
     }

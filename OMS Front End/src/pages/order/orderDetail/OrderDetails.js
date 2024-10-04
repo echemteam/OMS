@@ -14,22 +14,30 @@ import "../Order.scss";
 /** Lazily Loaded Components */
 const OrderAction = lazy(() => import("./feature/orderaction/OrderAction"));
 const OrderSummary = lazy(() => import("./feature/ordersummary/OrderSummary"));
-const OrderItemList = lazy(() => import("./feature/orderitemlist/OrderItemList"));
-const OrderDocument = lazy(() => import("./feature/orderdocument/OrderDocument"));
-const OrderInformation = lazy(() => import("./feature/orderinformation/OrderInformation"));
+const OrderItemList = lazy(() =>
+  import("./feature/orderitemlist/OrderItemList")
+);
+const OrderDocument = lazy(() =>
+  import("./feature/orderdocument/OrderDocument")
+);
+const OrderInformation = lazy(() =>
+  import("./feature/orderinformation/OrderInformation")
+);
 
 const OrderDetails = () => {
-
   const { id } = useParams();
   const orderId = id ? decryptUrlData(id) : 0;
 
   const [orderDetails, setOrderDetails] = useState();
 
-  const [getOrderDetailByOrderId, {
-    isFetching: isOrderDetailsFetching,
-    isSuccess: isOrderDetailsFetched,
-    data: orderByOrderIdDetails
-  }] = useLazyGetOrderDetailByOrderIdQuery();
+  const [
+    getOrderDetailByOrderId,
+    {
+      isFetching: isOrderDetailsFetching,
+      isSuccess: isOrderDetailsFetched,
+      data: orderByOrderIdDetails,
+    },
+  ] = useLazyGetOrderDetailByOrderIdQuery();
 
   useEffect(() => {
     if (orderId) {
@@ -38,8 +46,12 @@ const OrderDetails = () => {
   }, [orderId]);
 
   useEffect(() => {
-    if (!isOrderDetailsFetching && isOrderDetailsFetched && orderByOrderIdDetails) {
-      setOrderDetails(orderByOrderIdDetails)
+    if (
+      !isOrderDetailsFetching &&
+      isOrderDetailsFetched &&
+      orderByOrderIdDetails
+    ) {
+      setOrderDetails(orderByOrderIdDetails);
     }
   }, [isOrderDetailsFetching, isOrderDetailsFetched, orderByOrderIdDetails]);
 

@@ -17,7 +17,7 @@ const VerifyProductDetail = React.lazy(() =>
 );
 
 const OrderItemDetail = ({ onhandleAddOrderData }) => {
-  const { productId, itemRef } = useContext(AddOrderContext);
+  const { productId, itemRef, documentRef } = useContext(AddOrderContext);
 
   const [priceList, setPriceList] = useState([]);
   const [isDocumentData, setIsDocumentData] = useState(false);
@@ -78,15 +78,16 @@ const OrderItemDetail = ({ onhandleAddOrderData }) => {
       note: item.orderNote || "",
       entityId: item.entityId || 0,
     }));
+    const documentData = documentRef.current.getFormData();
     const requestBody = {
       orderItemsList, // the array of items
       orderChargeId: 0,
       chargeType: "",
       name: "",
       orderItemId: 0,
-      documentName: productDetailsListData.documentName ? productDetailsListData.documentName : "",
+      documentName: documentData?.attachment?.fileName ? documentData?.attachment?.fileName : "",
       documentType: 0,
-      base64File: productDetailsListData.base64File ? productDetailsListData.base64File : "",
+      base64File: documentData?.attachment?.base64Data ? documentData?.attachment?.base64Data : "",
       storagePath: "",
     };
     onhandleAddOrderData(requestBody)
