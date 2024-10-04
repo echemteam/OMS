@@ -176,10 +176,10 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     useEffect(() => {
         if (isGetCustomersBasicInformationById && GetCustomersBasicInformationByIdData && !isGetCustomersBasicInformationByIdFetching) {
             if (isCustomerOrSupplierApprovedStatus(GetCustomersBasicInformationByIdData.statusId)) {
-                setFieldSetting(customerbasicData, 'name', FieldSettingType.CKEDITORDISABLED, true);
+                setFieldSetting(customerbasicData, 'name', FieldSettingType.DISABLED, true);
                 setFieldSetting(formData, 'taxId', 'isDisabled', true);
             } else {
-                setFieldSetting(customerbasicData, 'name', FieldSettingType.CKEDITORDISABLED, false);
+                setFieldSetting(customerbasicData, 'name', FieldSettingType.DISABLED, false);
                 setFieldSetting(formData, 'taxId', 'isDisabled');
             }
             const newFrom = { ...customerbasicData };

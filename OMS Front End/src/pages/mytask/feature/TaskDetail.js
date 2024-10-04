@@ -347,8 +347,8 @@ const TaskDetail = ({
   return (
     <React.Fragment>
       {(!isEventByIdLoading && !isUpdateLoading) ||
-      isGetSupplierFetching ||
-      isGetCustomerFetching ? (
+        isGetSupplierFetching ||
+        isGetCustomerFetching ? (
         <div className="task-detail">
           {approvedData ? (
             <>
@@ -364,9 +364,9 @@ const TaskDetail = ({
                       <b className="date ml-1">
                         {approvedData.requestedDate
                           ? formatDate(
-                              approvedData.requestedDate,
-                              "MM/DD/YYYY hh:mm A"
-                            )
+                            approvedData.requestedDate,
+                            "MM/DD/YYYY hh:mm A"
+                          )
                           : "No Date"}
                       </b>
                       {/* <b>Requested By:</b>  */}
@@ -464,7 +464,7 @@ const TaskDetail = ({
                   </div>
                   <div className="d-flex">
                     {approvedData?.eventName !==
-                    FunctionalitiesName.UPLOADCUSTOMERDOCUMENT ? (
+                      FunctionalitiesName.UPLOADCUSTOMERDOCUMENT ? (
                       <>
                         &nbsp;{" "}
                         <span
@@ -488,7 +488,7 @@ const TaskDetail = ({
                           <div className="detail-card">
                             <div classname="detail-item">
                               {valueTypes === "old Value" &&
-                              approvedData.oldValue ? (
+                                approvedData.oldValue ? (
                                 <div
                                   className="html-render mb-0"
                                   dangerouslySetInnerHTML={{
@@ -538,7 +538,7 @@ const TaskDetail = ({
               {approvedData.isFunctional ? (
                 <div className="value-comparison">
                   {approvedData?.eventName ===
-                  FunctionalitiesName.UPLOADCUSTOMERDOCUMENT ? (
+                    FunctionalitiesName.UPLOADCUSTOMERDOCUMENT ? (
                     <Base64FileViewer
                       documentData={approvedData.newValue}
                       isLoading={isEventByIdLoading}
@@ -548,59 +548,55 @@ const TaskDetail = ({
                       {approvedData?.eventName
                         .toLowerCase()
                         .includes("update") && (
-                        <div className="value-block w-100">
-                          <span className="value-title">Old Value</span>
+                          <div className="value-block w-100">
+                            <span className="value-title">Old Value</span>
 
-                          {approvedData.oldValueTemplate ? (
-                            <div
-                              className="html-render mb-0"
-                              dangerouslySetInnerHTML={{
-                                __html: approvedData.oldValueTemplate,
-                              }}
-                            ></div>
-                          ) : (
-                            <>
-                              {approvedData.oldValue &&
-                              Object.entries(
-                                filterKeysWithId(
-                                  parseJson(approvedData.oldValue)
-                                )
-                              ).length > 0 ? (
-                                <ul className="value-content pl-0">
-                                  {Object.entries(
+                            {approvedData.oldValueTemplate ? (
+                              <div
+                                className="html-render mb-0"
+                                dangerouslySetInnerHTML={{
+                                  __html: approvedData.oldValueTemplate,
+                                }}
+                              ></div>
+                            ) : (
+                              <>
+                                {approvedData.oldValue &&
+                                  Object.entries(
                                     filterKeysWithId(
                                       parseJson(approvedData.oldValue)
                                     )
-                                  ).map(([key, value]) => (
-                                    <li key={key}>
-                                      <span className="value-label">
-                                        {key}:
-                                      </span>
-                                      <span className="value-data ml-2">
-                                        {renderValue(value)}
-                                      </span>
-                                    </li>
-                                  ))}
-                                </ul>
-                              ) : (
-                                <div className="no-value">
-                                  No old value available
-                                </div>
-                              )}
-                            </>
-                          )}
-                        </div>
-                      )}
+                                  ).length > 0 ? (
+                                  <ul className="value-content pl-0">
+                                    {Object.entries(
+                                      filterKeysWithId(
+                                        parseJson(approvedData.oldValue)
+                                      )
+                                    ).map(([key, value]) => (
+                                      <li key={key}>
+                                        <span className="value-label">
+                                          {key}:
+                                        </span>
+                                        <span className="value-data ml-2">
+                                          {renderValue(value)}
+                                        </span>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                ) : (
+                                  <div className="no-value">
+                                    No old value available
+                                  </div>
+                                )}
+                              </>
+                            )}
+                          </div>
+                        )}
                       <div className="value-block w-100">
                         <span className="value-title">New Value</span>
 
                         {approvedData.newValueTemplate ? (
-                          <div
-                            className="html-render mb-0"
-                            dangerouslySetInnerHTML={{
-                              __html: approvedData.newValueTemplate,
-                            }}
-                          ></div>
+                          <div className="html-render mb-0"
+                            dangerouslySetInnerHTML={{ __html: approvedData.newValueTemplate }} ></div>
                         ) : (
                           <>
                             {Object.entries(

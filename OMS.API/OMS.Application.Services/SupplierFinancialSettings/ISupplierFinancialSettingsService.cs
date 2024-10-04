@@ -16,5 +16,6 @@ namespace OMS.Application.Services.SupplierAccoutingSetting
         Task<GetSupplierFinancialSettingsBySupplierIdResponse> GetSupplierFinancialSettingsBySupplierId(int supplierId);
         Task<GetACHWireBySupplierIdResponse> GetACHWireBySupplierId(int supplierId);
         Task<GetPaymentSettingsBySupplierIdResponse> GetPaymentSettingsBySupplierId(int supplierId);
+        //Task<GetSupplierFinancialSettingsWithACHWireBySupplierIdResponse> GetSupplierFinancialSettingsWithACHWireBySupplierId(int supplierId);
     }
 }
