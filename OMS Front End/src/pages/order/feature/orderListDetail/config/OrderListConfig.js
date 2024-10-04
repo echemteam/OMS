@@ -15,7 +15,7 @@ export const orderListMolGridConfig = {
       fieldName: "poNumber",
       allowShort: false,
       colStyle: {
-        width: "12%",
+        width: "15%",
       },
     },
     {
@@ -27,7 +27,7 @@ export const orderListMolGridConfig = {
       },
       allowShort: false,
       colStyle: {
-        width: "8%",
+        width: "15%",
       },
     },
     {
@@ -35,7 +35,7 @@ export const orderListMolGridConfig = {
       fieldName: "orderMethod",
       allowShort: false,
       colStyle: {
-        width: "25%",
+        width: "20%",
       },
     },
     {
@@ -43,26 +43,13 @@ export const orderListMolGridConfig = {
       fieldName: "items",
       allowShort: false,
       colStyle: {
-        width: "5%",
+        width: "10%",
       },
     },
     
     {
       name: "Price",
       fieldName: "itemsTotal",
-      allowShort: false,
-      colStyle: {
-        width: "10%",
-      },
-    },
-
-    {
-      name: "Status",
-      fieldName: "status",
-      colType: GridColumnType.CHECKBOX,
-      colSettings: {
-        allowEdit: false,
-      },
       allowShort: false,
       colStyle: {
         width: "10%",
@@ -86,7 +73,7 @@ export const orderListMolGridConfig = {
   ChildTableColumn: [
     {
       name: "Catalog",
-      fieldName: "catalog",
+      fieldName: "catalogId",
       allowShort: false,
       colStyle: {
         width: "15%",
@@ -111,7 +98,7 @@ export const orderListMolGridConfig = {
     },
     {
       name: "Price",
-      fieldName: "price",
+      fieldName: "itemUnitPrice",
       allowShort: false,
       colStyle: {
         width: "10%",
@@ -126,7 +113,7 @@ export const orderListMolGridConfig = {
       },
     },
     {
-      name: "Delivery Meter",
+      name: "Delivery Method",
       fieldName: "deliveryMeter",
       allowShort: false,
       colStyle: {
