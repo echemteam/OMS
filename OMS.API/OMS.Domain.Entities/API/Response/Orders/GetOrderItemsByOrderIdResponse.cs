@@ -22,6 +22,8 @@ namespace OMS.Domain.Entities.API.Response.Orders
         public DateTime? RequestDate { get; set; }
         public DateTime? PromiseDate { get; set; }
         public string? OrderPriority { get; set; }
-         public decimal Quantity {  get; set; }
+        public decimal Quantity {  get; set; }
+        public string? Unit { get; set; }
+        public byte? Unitid { get; set; }
     }
 }

@@ -46,7 +46,7 @@ export const orderListMolGridConfig = {
         width: "10%",
       },
     },
-    
+
     {
       name: "Price",
       fieldName: "itemsTotal",
@@ -85,16 +85,20 @@ export const orderListMolGridConfig = {
       allowShort: false,
       colStyle: {
         width: "15%",
-        
+
       },
     },
     {
       name: "Unit/Size",
-      fieldName: "unitSize",
+      fieldName: "itemUnitPrice",
       allowShort: false,
+      colType: GridColumnType.CUSTOM,
       colStyle: {
         width: "10%",
       },
+      renderCustomCol: (rowData) => {
+        return `${rowData?.["packSize"]} ${rowData?.["unit"]}`;
+      }
     },
     {
       name: "Price",
@@ -114,7 +118,7 @@ export const orderListMolGridConfig = {
     },
     {
       name: "Delivery Method",
-      fieldName: "deliveryMeter",
+      fieldName: "deliveryMethod",
       allowShort: false,
       colStyle: {
         width: "25%",
@@ -123,6 +127,9 @@ export const orderListMolGridConfig = {
     {
       name: "Action",
       fieldName: "Action",
+      defaultAction: {
+        allowEdit: true,
+      },
       allowShort: false,
       colStyle: {
         width: "10%",

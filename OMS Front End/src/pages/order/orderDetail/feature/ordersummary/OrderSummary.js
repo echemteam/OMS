@@ -6,8 +6,9 @@ import { AppIcons } from "../../../../../data/appIcons";
 import CustomerDetailsModel from "./feature/CustomerDetailsModel";
 import formatDate from "../../../../../components/FinalMolGrid/libs/formatDate";
 import { useLazyDownloadDocumentQuery } from "../../../../../app/services/orderAPI";
-import { FileViewer } from "react-file-viewer";
-
+import ToastService from "../../../../../services/toastService/ToastService";
+import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
+import FileViewer from "react-file-viewer";
 
 const OrderSummary = ({ orderDetails }) => {
   const [isModelOpenPDF, setIsModelOpenPDF] = useState(false);
@@ -15,19 +16,20 @@ const OrderSummary = ({ orderDetails }) => {
   const [getFileType, setGetFileType] = useState([]);
   const [selectedDocument, setSelectedDocument] = useState(null);
 
-  const [
-    Downalod,
-    {
-      isFetching: isDownalodFetching,
-      isSuccess: isDownalodSucess,
-      data: isDownalodData,
-    },
-  ] = useLazyDownloadDocumentQuery();
+  const [Downalod, { isFetching: isDownalodFetching, isSuccess: isDownalodSucess, data: isDownalodData }] = useLazyDownloadDocumentQuery();
 
   const handleToggleModalPDF = () => {
     if (orderDetails?.poNumber) {
-      const documentNames = orderDetails.orderDocumentList?.filter(doc => doc.documentName).map(doc => doc.documentName)[0];
-      handleDocumentAction(documentNames);
+      // const documentNames = orderDetails.orderDocumentList?.filter(doc => doc.documentName).map(doc => doc.documentName)[0];
+      const details = orderDetails.orderDocumentList?.find(doc => doc.documentTypeId === 0 || doc.documentTypeId === "");
+      if (details) {
+        handleDocumentAction(details?.documentName);
+      }
+      else {
+        ToastService.error("File not found");
+      }
+    } else {
+      setIsModelOpenPDF(false);
     }
   };
 
@@ -46,19 +48,16 @@ const OrderSummary = ({ orderDetails }) => {
   useEffect(() => {
     if (!isDownalodFetching && isDownalodSucess && isDownalodData) {
       const fileData = isDownalodData.fileData;
-      console.log(fileData)
       const blob = new Blob([fileData], { type: fileData.type });
       const fileURL = URL.createObjectURL(blob);
       setSelectedDocument(fileURL);
+      setIsModelOpenPDF(true);
       setGetFileType(determineFileType(isDownalodData.fileName));
-
     }
   }, [isDownalodFetching, isDownalodSucess, isDownalodData]);
 
   const handleDocumentAction = (fileName) => {
     setSelectedDocument(null);
-    setIsModelOpenPDF(true);
-
     let request = {
       folderName: "Order",
       keyId: orderDetails?.orderId,
@@ -90,6 +89,7 @@ const OrderSummary = ({ orderDetails }) => {
         return null;
     }
   };
+  
   return (
     <div>
       <CardSection
@@ -105,27 +105,62 @@ const OrderSummary = ({ orderDetails }) => {
         centerBtnTitle="Purchase Order Details"
         centerBtnOnClick={handleToggleModalPDF}
       >
-        <div className="order-summery-list">
-          <div className="row">
-            <div className="col-xxl-7 col-xl-6 col-lg-6 col-md-6 col-12 custom-col-6">
-              <div className="desc-section">
-                <div className="key-icon-part">
-                  <Iconify icon="ph:user" className="open-bar" />
-                  <span>Cust.</span>
+        {ordersummaryDetails ? (
+          <div className="order-summery-list">
+            <div className="row">
+              <div className="col-xxl-7 col-xl-6 col-lg-6 col-md-6 col-12 custom-col-6">
+                <div className="desc-section">
+                  <div className="key-icon-part">
+                    <Iconify icon="ph:user" className="open-bar" />
+                    <span>Cust.</span>
+                  </div>
+                  <div className="desc-detail">
+                    {/* &nbsp;:&nbsp;<span>Arcus Bioscience Inc.</span> */}
+                    &nbsp;:&nbsp;
+                    <span className="name-ellipsis">
+                      {ordersummaryDetails?.customerName || "---"}
+                    </span>
+                    <div className="info-icon info-user">
+                      <Iconify icon="ep:info-filled" className="info" />
+                      {/* Customer Detail Model Start */}
+                      <CustomerDetailsModel
+                        customerId={orderDetails?.customerId}
+                      />
+                      {/* Customer Detail Model End */}
+                    </div>
+                  </div>
                 </div>
-                <div className="desc-detail">
-                  {/* &nbsp;:&nbsp;<span>Arcus Bioscience Inc.</span> */}
-                  &nbsp;:&nbsp;
-                  <span className="name-ellipsis">
-                    {ordersummaryDetails?.customerName || "---"}
-                  </span>
-                  <div className="info-icon info-user">
-                    <Iconify icon="ep:info-filled" className="info" />
-                    {/* Customer Detail Model Start */}
-                    <CustomerDetailsModel
-                      customerId={orderDetails?.customerId}
+                <div className="desc-section">
+                  <div className="key-icon-part">
+                    <Iconify icon="ph:users" className="open-bar" />
+                    <span>Sub-Cust.</span>
+                  </div>
+                  <div className="desc-detail">
+                    {/* &nbsp;:&nbsp;<span>Exelixis Inc.</span> */}
+                    &nbsp;:&nbsp;
+                    <span className="name-ellipsis">
+                      {ordersummaryDetails?.subCustomerName || "-"}
+                    </span>
+                    <div className="info-icon info-user">
+                      <Iconify icon="ep:info-filled" className="info" />
+                      {/* Customer Detail Model Start */}
+                      <CustomerDetailsModel />
+                      {/* Customer Detail Model End */}
+                    </div>
+                  </div>
+                </div>
+                <div className="desc-section">
+                  <div className="key-icon-part">
+                    <Iconify
+                      icon="material-symbols:quick-reference-outline-rounded"
+                      className="open-bar"
                     />
-                    {/* Customer Detail Model End */}
+                    <span>Ref. No</span>
+                  </div>
+                  <div className="desc-detail">
+                    {/* &nbsp;:&nbsp;<span>123-654</span> */}
+                    &nbsp;:&nbsp;
+                    <span>{ordersummaryDetails?.referenceNumber || "N/A"}</span>
                   </div>
                 </div>
               </div>
@@ -147,68 +182,41 @@ const OrderSummary = ({ orderDetails }) => {
                     </div>)
                     : null}
                 </div>
-              </div>
-              <div className="desc-section">
-                <div className="key-icon-part">
-                  <Iconify
-                    icon="material-symbols:quick-reference-outline-rounded"
-                    className="open-bar"
-                  />
-                  <span>Ref. No</span>
+                <div className="desc-section right-status-sec">
+                  <div className="key-icon-part">
+                    <Iconify icon="f7:status" className="open-bar" />
+                    <span>Sub-Status</span>
+                  </div>
+                  <div className="desc-detail">
+                    &nbsp;:&nbsp;
+                    {/* <span className="status in-transit">In Transit</span> */}
+                    <span className="status in-transit">
+                      {ordersummaryDetails?.subStatus}
+                    </span>
+                  </div>
                 </div>
-                <div className="desc-detail">
-                  {/* &nbsp;:&nbsp;<span>123-654</span> */}
-                  &nbsp;:&nbsp;
-                  <span>{ordersummaryDetails?.referenceNumber || "N/A"}</span>
-                </div>
-              </div>
-            </div>
-            <div className="col-xxl-5 col-xl-6 col-lg-6 col-md-6 col-12 custom-col-6">
-              <div className="desc-section right-status-sec">
-                <div className="key-icon-part">
-                  <Iconify icon="f7:status" className="open-bar" />
-                  <span>Status</span>
-                </div>
-                <div className="desc-detail">
-                  &nbsp;:&nbsp;
-                  {/* <span className="status pending">Pending</span> */}
-                  <span className="status pending">
-                    {ordersummaryDetails?.status}
-                  </span>
-                </div>
-              </div>
-              <div className="desc-section right-status-sec">
-                <div className="key-icon-part">
-                  <Iconify icon="f7:status" className="open-bar" />
-                  <span>Sub-Status</span>
-                </div>
-                <div className="desc-detail">
-                  &nbsp;:&nbsp;
-                  {/* <span className="status in-transit">In Transit</span> */}
-                  <span className="status in-transit">
-                    {ordersummaryDetails?.subStatus}
-                  </span>
-                </div>
-              </div>
-              <div className="desc-section right-status-sec">
-                <div className="key-icon-part">
-                  <Iconify icon="uil:calender" className="open-bar" />
-                  <span>Recv. Date</span>
-                </div>
-                <div className="desc-detail">
-                  {/* &nbsp;:&nbsp;<span>26 Oct 2024</span> */}
-                  &nbsp;:&nbsp;
-                  <span>
-                    {formatDate(
-                      ordersummaryDetails?.orderReceivedDate,
-                      "MM/DD/YYYY"
-                    )}
-                  </span>
+                <div className="desc-section right-status-sec">
+                  <div className="key-icon-part">
+                    <Iconify icon="uil:calender" className="open-bar" />
+                    <span>Recv. Date</span>
+                  </div>
+                  <div className="desc-detail">
+                    {/* &nbsp;:&nbsp;<span>26 Oct 2024</span> */}
+                    &nbsp;:&nbsp;
+                    <span>
+                      {formatDate(
+                        ordersummaryDetails?.orderReceivedDate,
+                        "MM/DD/YYYY"
+                      )}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <DataLoader />
+        )}
       </CardSection>
       <SidebarModel
         modalTitle="PO PDF"

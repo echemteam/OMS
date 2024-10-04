@@ -55,6 +55,7 @@ export const userFormData = {
         placeholder: "Enter User Name",
         allowSpace: true,
         maxLength : 65,
+        isDisable:true
       },
       validation: [{ type: "require" }],
       style: {
@@ -99,6 +100,23 @@ export const userFormData = {
 
 export const UserGridConfig = {
   columns: [
+   
+    {
+      name: "First Name",
+      fieldName: "firstName",
+      colStyle: {
+        width: "25%",
+      },
+      allowShort: true,
+    },
+    {
+      name: "Last Name",
+      fieldName: "lastName",
+      colStyle: {
+        width: "25%",
+      },
+      allowShort: true,
+    },
     {
       name: "User Name",
       fieldName: "userName",
@@ -108,23 +126,7 @@ export const UserGridConfig = {
       allowShort: true,
     },
     {
-      name: "First Name",
-      fieldName: "firstName",
-      colStyle: {
-        width: "20%",
-      },
-      allowShort: true,
-    },
-    {
-      name: "Last Name",
-      fieldName: "lastName",
-      colStyle: {
-        width: "20%",
-      },
-      allowShort: true,
-    },
-    {
-      name: "IsActive",
+      name: "Is Active",
       fieldName: "isActive",
       colStyle: {
         width: "20%",
@@ -138,7 +140,7 @@ export const UserGridConfig = {
     {
       name: "Action",
       colStyle: {
-        width: "20%",
+        width: "10%",
       },
       colType: GridColumnType.ACTION,
       defaultAction: {
@@ -149,7 +151,7 @@ export const UserGridConfig = {
         {
           name: "HISTORY",
           iconName: "iconamoon:history-bold",
-          title: "History",
+          title: "Login History",
           className: ".history-btn "
         },
       ],
