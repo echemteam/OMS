@@ -135,8 +135,8 @@ export const orderListMolGridConfig = {
   OnColumnChangeEdit: null,
   hasChildGridTable: true,
   childGridSetting: {
-    parentKeyDataField: "id",
-    childKeyDataField: "id",
+    parentKeyDataField: "orderId",
+    childKeyDataField: "orderId",
     hideChildHeader: false,
   },
 };
