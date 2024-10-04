@@ -57,7 +57,6 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         data: GetCustomersBasicInformationByIdData }] = useLazyGetCustomersBasicInformationByIdQuery();
     const [addEditCustomersBasicInformation, { isLoading: isAddEditCustomersBasicInformationLoading, isSuccess: isAddEditCustomersBasicInformationSuccess,
         data: isAddEditCustomersBasicInformationData }] = useAddEditCustomersBasicInformationMutation();
-    const [checkExistingInformation] = useLazyGetCustomersDetailsByCutomerNameQuery();
     const [validateCustomerNameEmailWebsite, { isSuccess: isValidateCustomerNameEmailWebsiteSucess, data: isValidateCustomerNameEmailWebsiteData, isLoading }] = useGetSearchCustomersDetailsByNameEmailWebsiteMutation();
 
     //** Security Key */
@@ -176,10 +175,10 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     useEffect(() => {
         if (isGetCustomersBasicInformationById && GetCustomersBasicInformationByIdData && !isGetCustomersBasicInformationByIdFetching) {
             if (isCustomerOrSupplierApprovedStatus(GetCustomersBasicInformationByIdData.statusId)) {
-                setFieldSetting(customerbasicData, 'name', FieldSettingType.CKEDITORDISABLED, true);
+                setFieldSetting(customerbasicData, 'name', FieldSettingType.DISABLED, true);
                 setFieldSetting(formData, 'taxId', 'isDisabled', true);
             } else {
-                setFieldSetting(customerbasicData, 'name', FieldSettingType.CKEDITORDISABLED, false);
+                setFieldSetting(customerbasicData, 'name', FieldSettingType.DISABLED, false);
                 setFieldSetting(formData, 'taxId', 'isDisabled');
             }
             const newFrom = { ...customerbasicData };
@@ -246,8 +245,8 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             responsibleUserId: data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
             customerId: keyId ? keyId : customerId,
             customerNoteId: noteId ? noteId : 0,
-            attachmentName: null,
-            base64File: null,
+            attachmentName: data.attachment.fileName,
+            base64File: data.attachment.base64Data,
             storagePath: 'CustomerProfilePic'
         };
         if (data.taxId === "") {
@@ -262,8 +261,8 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                 if (data.taxId.length >= minLength || data.taxId.length <= maxLength) {
                     let value = {
                         ...req,
-                        attachmentName: null,
-                        base64File: null,
+                        attachmentName: data.attachment.fileName,
+                        base64File: data.attachment.base64Data,
                         storagePath: 'CustomerProfilePic',
                         responsibleUserId: data.responsibleUserId === "" ? 0 : data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
                     }

@@ -18,5 +18,6 @@
         public string? RejectReason { get; set; }
         public string? OldValueTemplate { get; set; }
         public string? NewValueTemplate { get; set; }
+        public bool IsFunctional  { get; set; }
     }                  
 }

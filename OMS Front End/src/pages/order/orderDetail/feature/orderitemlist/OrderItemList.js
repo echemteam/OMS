@@ -33,41 +33,41 @@ const OrderItemList = () => {
       setItemList(isGetOrderItemsByOrderIdData);
     }
   },[isGetOrderItemsByOrderIdFetching,isGetOrderItemsByOrderIdSuccess,isGetOrderItemsByOrderIdData])
-  const data = [
-    {
-      eventKey: "0",
-      id: "Y-2520",
-      casNumber: "19679-75-5",
-      price: "$51.75",
-      quantity: "2 x 50MG",
-      totalCost: "1X$20",
-      status: "Complete",
-      statusClass: "complete-bg",
-      name: "2-amino-3 5-dibromobenzaldehyde",
-      mdlNumber: "12002452003584",
-      shippingAddress: "2-amino-3 5-dibromobenzaldehyde",
-      priority: "High",
-      requestDate: "10/28/2024",
-      promiseDate: "11/15/2024",
-    },
-    {
-      eventKey: "1",
-      id: "Y-2520",
-      casNumber: "19679-75-5",
-      price: "$51.75",
-      quantity: "2 x 50MG",
-      totalCost: "1X$20",
-      status: "Pending",
-      statusClass: "pending-bg",
-      name: "2-amino-3 5-dibromobenzaldehyde",
-      mdlNumber: "12002452003584",
-      shippingAddress: "2-amino-3 5-dibromobenzaldehyde",
-      priority: "High",
-      requestDate: "10/28/2024",
-      promiseDate: "11/15/2024",
-    },
-    // Add more data as needed
-  ];
+  // const data = [
+  //   {
+  //     eventKey: "0",
+  //     id: "Y-2520",
+  //     casNumber: "19679-75-5",
+  //     price: "$51.75",
+  //     quantity: "2 x 50MG",
+  //     totalCost: "1X$20",
+  //     status: "Complete",
+  //     statusClass: "complete-bg",
+  //     name: "2-amino-3 5-dibromobenzaldehyde",
+  //     mdlNumber: "12002452003584",
+  //     shippingAddress: "2-amino-3 5-dibromobenzaldehyde",
+  //     priority: "High",
+  //     requestDate: "10/28/2024",
+  //     promiseDate: "11/15/2024",
+  //   },
+  //   {
+  //     eventKey: "1",
+  //     id: "Y-2520",
+  //     casNumber: "19679-75-5",
+  //     price: "$51.75",
+  //     quantity: "2 x 50MG",
+  //     totalCost: "1X$20",
+  //     status: "Pending",
+  //     statusClass: "pending-bg",
+  //     name: "2-amino-3 5-dibromobenzaldehyde",
+  //     mdlNumber: "12002452003584",
+  //     shippingAddress: "2-amino-3 5-dibromobenzaldehyde",
+  //     priority: "High",
+  //     requestDate: "10/28/2024",
+  //     promiseDate: "11/15/2024",
+  //   },
+  //   // Add more data as needed
+  // ];
   return (
     <div>
       <div className="order-item-list">
@@ -88,11 +88,11 @@ const OrderItemList = () => {
                 <Accordion.Item eventKey={item.orderItemId} key={index}>
                   <Accordion.Header onClick={() => handleToggle(item.orderItemId)}>
                     <div className="header-items">
-                      <span>{item.catalogId}</span>
-                      <span>{item.casNumber}</span>
-                      <span>{item.itemUnitPrice}</span>
-                      <span>{item.packSize}</span>
-                      <span>{item.subTotalPrice}</span>
+                      <span>{item.catalogId? item.catalogId: "-"}</span>
+                      <span>{item.casNumber ? item.casNumber :"-"}</span>
+                      <span>{item.quantity}{item.itemUnitPrice}</span>
+                      <span>{item.packSize ? item.packSize: "-"}</span>
+                      <span>{item.subTotalPrice ?item.subTotalPrice :"-"}</span>
                   
                       <span>
                         <div className={`status-btn ${item.statusClass}`}>
@@ -107,13 +107,13 @@ const OrderItemList = () => {
                         <div className="key-value-se">
                           <span className="key-sec">Name</span>
                           <span className="value-sec">
-                            &nbsp;:&nbsp; {item.chemicalName}
+                            &nbsp;:&nbsp; {item.chemicalName ? item.chemicalName : "NA"}
                           </span>
                         </div>
                         <div className="key-value-se">
                           <span className="key-sec">MDL Number </span>
                           <span className="value-sec">
-                            &nbsp;:&nbsp; {item.mdlNumber}
+                            &nbsp;:&nbsp; {item.mdlNumber ? item.mdlNumber : "NA"}
                           </span>
                         </div>
                         <div className="key-value-se">
@@ -123,12 +123,14 @@ const OrderItemList = () => {
                               &nbsp;:&nbsp; {item.shippingAddress}
                             </span>
                             <span className="right-btn">
+                              {item.shippingAddress ?(
                               <span className="info-btn">
                                 <Iconify
                                   icon="ep:info-filled"
                                   className="swap-icon"
                                 />
-                              </span>
+                              </span>): null
+                      }
                               <span className="info-btn tooltip-div">
                                 <Iconify
                                   icon="icon-park-outline:change"
@@ -149,22 +151,23 @@ const OrderItemList = () => {
                             <div className="key-value-se">
                               <span className="key-sec">Priority</span>
                               <span className="value-sec">
-                                &nbsp;:&nbsp;
+                                &nbsp;:&nbsp;{item.orderPriority ? 
                                 <span className="status-btn heigh-bg">
                                   {item.orderPriority}
                                 </span>
+                                : "NA"}
                               </span>
                             </div>
                             <div className="key-value-se">
                               <span className="key-sec">Req-Date</span>
                               <span className="value-sec">
-                                &nbsp;:&nbsp; {formatDate(item.requestDate, "MM/DD/YYYY hh:mm A")}
+                                &nbsp;:&nbsp; {item.requestDate ? formatDate(item.requestDate, "MM/DD/YYYY hh:mm A"): "NA"}
                               </span>
                             </div>
                             <div className="key-value-se">
                               <span className="key-sec">Promise Date</span>
                               <span className="value-sec">
-                                &nbsp;:&nbsp;  {formatDate(item.promiseDate, "MM/DD/YYYY hh:mm A")}
+                                &nbsp;:&nbsp;  {item.promiseDate ? formatDate(item.promiseDate, "MM/DD/YYYY hh:mm A"):"NA"}
                               </span>
                             </div>
                           </div>

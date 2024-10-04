@@ -5,17 +5,35 @@ import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel
 import { AppIcons } from "../../../../../data/appIcons";
 import CustomerDetailsModel from "./feature/CustomerDetailsModel";
 import formatDate from "../../../../../components/FinalMolGrid/libs/formatDate";
+import {  useLazyDownloadDocumentQuery } from "../../../../../app/services/orderAPI";
+import { FileViewer } from "react-file-viewer";
+ 
 
 const OrderSummary = ({ orderDetails }) => {
   const [isModelOpenPDF, setIsModelOpenPDF] = useState(false);
   const [ordersummaryDetails, setOrderSummaryDetails] = useState(null);
+  const [getFileType, setGetFileType] = useState([]);
+  const [selectedDocument, setSelectedDocument] = useState(null);
+
+  const [
+    Downalod,
+    {
+      isFetching: isDownalodFetching,
+      isSuccess: isDownalodSucess,
+      data: isDownalodData,
+    },
+  ] = useLazyDownloadDocumentQuery();
 
   const handleToggleModalPDF = () => {
-    setIsModelOpenPDF(true);
+    if (orderDetails?.poNumber) {
+      const documentNames = orderDetails.orderDocumentList?.filter(doc => doc.documentName).map(doc => doc.documentName)[0];
+      handleDocumentAction(documentNames);
+    }
   };
 
   const onSidebarClosePDF = () => {
     setIsModelOpenPDF(false);
+    setSelectedDocument(null);
   };
 
   useEffect(() => {
@@ -23,7 +41,55 @@ const OrderSummary = ({ orderDetails }) => {
       setOrderSummaryDetails(orderDetails);
     }
   }, [orderDetails]);
+  
 
+  useEffect(() => {
+    if (!isDownalodFetching && isDownalodSucess && isDownalodData) {
+      const fileData = isDownalodData.fileData;
+      console.log(fileData)
+      const blob = new Blob([fileData], { type: fileData.type });
+      const fileURL = URL.createObjectURL(blob);
+        setSelectedDocument(fileURL);
+        setGetFileType(determineFileType(isDownalodData.fileName));
+        
+    }
+  }, [isDownalodFetching, isDownalodSucess, isDownalodData]);
+
+  const handleDocumentAction = ( fileName) => {
+    setSelectedDocument(null);
+    setIsModelOpenPDF(true);
+
+    let request = {
+      folderName: "Order",
+      keyId: orderDetails?.orderId,
+      fileName: fileName,
+    };
+
+    Downalod(request);
+  };
+
+  const determineFileType = (fileName) => {
+    const extension = fileName.split(".").pop().toLowerCase();
+    switch (extension) {
+      case "pdf":
+        return "pdf";
+      case "docx":
+        return "docx";
+      case "ppt":
+      case "pptx":
+        return "pptx";
+      case "xlsx":
+        return "xlsx";
+      case "csv":
+        return "csv";
+      case "xls":
+        return "xls";
+      case "doc":
+        return "doc";
+      default:
+        return null;
+    }
+  };
   return (
     <div>
       <CardSection
@@ -150,7 +216,25 @@ const OrderSummary = ({ orderDetails }) => {
         isOpen={isModelOpenPDF}
         showToggle={true}
       >
-        Purchase Order PDF
+        <div className="model-height-fix doc-view">
+            {selectedDocument && getFileType ? (
+              getFileType === "pdf" ? (
+                <div className="pdf-iframe">
+                  <iframe
+                    src={selectedDocument}
+                    title="PDF Preview"
+                    style={{ width: "100%", height: "200%" }}
+                  />
+                </div>
+              ) : (
+                <FileViewer
+                  fileType={getFileType}
+                  filePath={selectedDocument}
+                  onError={(error) => console.error("Error:", error)}
+                />
+              )
+            ) : null}
+          </div>
       </SidebarModel>
     </div>
   );

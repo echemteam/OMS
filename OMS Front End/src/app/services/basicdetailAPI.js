@@ -129,16 +129,7 @@ const basicdetailAPI = createApi({
             }),
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
-        }),
-        download: builder.query({
-            query: (requestData) => ({
-                url: encryptQueryString(`/Common/Download/?folderName=${requestData.folderName}&fileName=${requestData.fileName}`),
-                Method: 'GET',
-                responseHandler: (response) => response.blob()
-            }),
-            transformResponse: transformSucessResponse,
-            transformErrorResponse: transformErrorResponse
-        }),
+        })
     })
 })
 
@@ -156,8 +147,7 @@ export const {
     useLazyGetCustomersDetailsByCutomerNameQuery,
     useUpdateCustomerSubCustomerMutation,
     useAddEditResponsibleUserForCustomerMutation,
-    useGetSearchCustomersDetailsByNameEmailWebsiteMutation,
-    useLazyDownloadQuery
+    useGetSearchCustomersDetailsByNameEmailWebsiteMutation
 } = basicdetailAPI
 
 export default basicdetailAPI;

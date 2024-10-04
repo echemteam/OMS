@@ -84,6 +84,17 @@ namespace OMS.API.Controllers
             }
             return APISucessResponce(supplierId);
         }
+
+        //[HttpGet("GetSupplierFinancialSettingsWithACHWireBySupplierId")]
+        //public async Task<IActionResult> GetSupplierFinancialSettingsWithACHWireBySupplierId(int supplierId)
+        //{
+        //    if (supplierId > 0)
+        //    {
+        //        GetSupplierFinancialSettingsWithACHWireBySupplierIdResponse responseData = await _serviceManager.supplierFinancialSettingsService.GetSupplierFinancialSettingsWithACHWireBySupplierId(supplierId).ConfigureAwait(true);
+        //        return APISucessResponce(responseData);
+        //    }
+        //    return APISucessResponce(supplierId);
+        //}
         #endregion
 
     }

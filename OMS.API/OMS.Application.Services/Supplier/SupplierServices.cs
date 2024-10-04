@@ -1,4 +1,5 @@
 ﻿using Common.Helper.Extension;
+using Common.Helper.Utility;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Domain.Entities.API.Request.Supplier;
@@ -81,7 +82,8 @@ namespace OMS.Application.Services.Supplier
                 {
                     byte[] imageArray = await File.ReadAllBytesAsync(filePath);
                     string base64ImageRepresentation = Convert.ToBase64String(imageArray);
-                    getSupplierBasicInformationByIdResponse.Base64File = base64ImageRepresentation;
+                    var extension = Path.GetExtension(getSupplierBasicInformationByIdResponse.AttachmentName).ToLowerInvariant();
+                    getSupplierBasicInformationByIdResponse.Base64File = CommonUtils.GenerateBase64ImageData(base64ImageRepresentation, extension);
                 }
             }
             return getSupplierBasicInformationByIdResponse;

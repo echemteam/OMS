@@ -162,7 +162,6 @@ const VerifyProductDetail = ({ productId, onVerifyProductList, setIsVerifyProduc
                                             dataField="isChemicalChecked"
                                             isStaticCheckBox={true}
                                         />
-                                        {console.log('tempProductDetail', tempProductDetail)}
                                         <div className="right-edit-pencil">
                                             {shouldShowPencilIcon("ProductName") && (
                                                 <button className="edit-button" onClick={() => handleEditClick("ProductName")}>
