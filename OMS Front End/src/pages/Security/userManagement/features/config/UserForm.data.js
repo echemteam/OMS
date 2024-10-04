@@ -105,7 +105,7 @@ export const UserGridConfig = {
       name: "First Name",
       fieldName: "firstName",
       colStyle: {
-        width: "20%",
+        width: "25%",
       },
       allowShort: true,
     },
@@ -113,7 +113,7 @@ export const UserGridConfig = {
       name: "Last Name",
       fieldName: "lastName",
       colStyle: {
-        width: "20%",
+        width: "25%",
       },
       allowShort: true,
     },
@@ -140,7 +140,7 @@ export const UserGridConfig = {
     {
       name: "Action",
       colStyle: {
-        width: "20%",
+        width: "10%",
       },
       colType: GridColumnType.ACTION,
       defaultAction: {
