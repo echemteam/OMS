@@ -89,7 +89,7 @@ const OrderItemList = () => {
             <div className="accordian-title">
               <span>Catalog ID</span>
               <span>Cas Number</span>
-              <span>Unit Price</span>
+              <span>Unit</span>
               <span>Pack Size</span>
               <span>Total Price</span>
               <span>Status</span>
@@ -105,7 +105,7 @@ const OrderItemList = () => {
                     <div className="header-items">
                       <span>{item.catalogId? item.catalogId: "-"}</span>
                       <span>{item.casNumber ? item.casNumber :"-"}</span>
-                      <span>{item.quantity}{item.itemUnitPrice}</span>
+                      <span>{item.unit ? item.unit : "-"}</span>
                       <span>{item.packSize ? item.packSize: "-"}</span>
                       <span>{item.subTotalPrice ?item.subTotalPrice :"-"}</span>
                   
