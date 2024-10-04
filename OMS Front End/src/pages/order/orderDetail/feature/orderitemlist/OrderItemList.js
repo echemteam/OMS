@@ -88,11 +88,11 @@ const OrderItemList = () => {
                 <Accordion.Item eventKey={item.orderItemId} key={index}>
                   <Accordion.Header onClick={() => handleToggle(item.orderItemId)}>
                     <div className="header-items">
-                      <span>{item.catalogId}</span>
-                      <span>{item.casNumber}</span>
-                      <span>{item.itemUnitPrice}</span>
-                      <span>{item.packSize}</span>
-                      <span>{item.subTotalPrice}</span>
+                      <span>{item.catalogId? item.catalogId: "-"}</span>
+                      <span>{item.casNumber ? item.casNumber :"-"}</span>
+                      <span>{item.quantity}{item.itemUnitPrice}</span>
+                      <span>{item.packSize ? item.packSize: "-"}</span>
+                      <span>{item.subTotalPrice ?item.subTotalPrice :"-"}</span>
                   
                       <span>
                         <div className={`status-btn ${item.statusClass}`}>
@@ -107,13 +107,13 @@ const OrderItemList = () => {
                         <div className="key-value-se">
                           <span className="key-sec">Name</span>
                           <span className="value-sec">
-                            &nbsp;:&nbsp; {item.chemicalName}
+                            &nbsp;:&nbsp; {item.chemicalName ? item.chemicalName : "NA"}
                           </span>
                         </div>
                         <div className="key-value-se">
                           <span className="key-sec">MDL Number </span>
                           <span className="value-sec">
-                            &nbsp;:&nbsp; {item.mdlNumber}
+                            &nbsp;:&nbsp; {item.mdlNumber ? item.mdlNumber : "NA"}
                           </span>
                         </div>
                         <div className="key-value-se">
@@ -123,12 +123,14 @@ const OrderItemList = () => {
                               &nbsp;:&nbsp; {item.shippingAddress}
                             </span>
                             <span className="right-btn">
+                              {item.shippingAddress ?(
                               <span className="info-btn">
                                 <Iconify
                                   icon="ep:info-filled"
                                   className="swap-icon"
                                 />
-                              </span>
+                              </span>): null
+                      }
                               <span className="info-btn tooltip-div">
                                 <Iconify
                                   icon="icon-park-outline:change"
@@ -149,22 +151,23 @@ const OrderItemList = () => {
                             <div className="key-value-se">
                               <span className="key-sec">Priority</span>
                               <span className="value-sec">
-                                &nbsp;:&nbsp;
+                                &nbsp;:&nbsp;{item.orderPriority ? 
                                 <span className="status-btn heigh-bg">
                                   {item.orderPriority}
                                 </span>
+                                : "NA"}
                               </span>
                             </div>
                             <div className="key-value-se">
                               <span className="key-sec">Req-Date</span>
                               <span className="value-sec">
-                                &nbsp;:&nbsp; {formatDate(item.requestDate, "MM/DD/YYYY hh:mm A")}
+                                &nbsp;:&nbsp; {item.requestDate ? formatDate(item.requestDate, "MM/DD/YYYY hh:mm A"): "NA"}
                               </span>
                             </div>
                             <div className="key-value-se">
                               <span className="key-sec">Promise Date</span>
                               <span className="value-sec">
-                                &nbsp;:&nbsp;  {formatDate(item.promiseDate, "MM/DD/YYYY hh:mm A")}
+                                &nbsp;:&nbsp;  {item.promiseDate ? formatDate(item.promiseDate, "MM/DD/YYYY hh:mm A"):"NA"}
                               </span>
                             </div>
                           </div>
