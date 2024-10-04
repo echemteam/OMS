@@ -5,9 +5,9 @@ import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel
 import { AppIcons } from "../../../../../data/appIcons";
 import CustomerDetailsModel from "./feature/CustomerDetailsModel";
 import formatDate from "../../../../../components/FinalMolGrid/libs/formatDate";
-import {  useLazyDownloadDocumentQuery } from "../../../../../app/services/orderAPI";
+import { useLazyDownloadDocumentQuery } from "../../../../../app/services/orderAPI";
 import { FileViewer } from "react-file-viewer";
- 
+import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 
 const OrderSummary = ({ orderDetails }) => {
   const [isModelOpenPDF, setIsModelOpenPDF] = useState(false);
@@ -26,7 +26,9 @@ const OrderSummary = ({ orderDetails }) => {
 
   const handleToggleModalPDF = () => {
     if (orderDetails?.poNumber) {
-      const documentNames = orderDetails.orderDocumentList?.filter(doc => doc.documentName).map(doc => doc.documentName)[0];
+      const documentNames = orderDetails.orderDocumentList
+        ?.filter((doc) => doc.documentName)
+        .map((doc) => doc.documentName)[0];
       handleDocumentAction(documentNames);
     }else{
     setIsModelOpenPDF(false);
@@ -43,7 +45,7 @@ const OrderSummary = ({ orderDetails }) => {
       setOrderSummaryDetails(orderDetails);
     }
   }, [orderDetails]);
-  
+
 
   useEffect(() => {
     if (!isDownalodFetching && isDownalodSucess && isDownalodData) {
@@ -106,108 +108,114 @@ const OrderSummary = ({ orderDetails }) => {
         centerBtnTitle="Purchase Order Details"
         centerBtnOnClick={handleToggleModalPDF}
       >
-        <div className="order-summery-list">
-          <div className="row">
-            <div className="col-xxl-7 col-xl-6 col-lg-6 col-md-6 col-12 custom-col-6">
-              <div className="desc-section">
-                <div className="key-icon-part">
-                  <Iconify icon="ph:user" className="open-bar" />
-                  <span>Cust.</span>
+        {ordersummaryDetails ? (
+          <div className="order-summery-list">
+            <div className="row">
+              <div className="col-xxl-7 col-xl-6 col-lg-6 col-md-6 col-12 custom-col-6">
+                <div className="desc-section">
+                  <div className="key-icon-part">
+                    <Iconify icon="ph:user" className="open-bar" />
+                    <span>Cust.</span>
+                  </div>
+                  <div className="desc-detail">
+                    {/* &nbsp;:&nbsp;<span>Arcus Bioscience Inc.</span> */}
+                    &nbsp;:&nbsp;
+                    <span className="name-ellipsis">
+                      {ordersummaryDetails?.customerName || "---"}
+                    </span>
+                    <div className="info-icon info-user">
+                      <Iconify icon="ep:info-filled" className="info" />
+                      {/* Customer Detail Model Start */}
+                      <CustomerDetailsModel
+                        customerId={orderDetails?.customerId}
+                      />
+                      {/* Customer Detail Model End */}
+                    </div>
+                  </div>
                 </div>
-                <div className="desc-detail">
-                  {/* &nbsp;:&nbsp;<span>Arcus Bioscience Inc.</span> */}
-                  &nbsp;:&nbsp;
-                  <span className="name-ellipsis">
-                    {ordersummaryDetails?.customerName || "---"}
-                  </span>
-                  <div className="info-icon info-user">
-                    <Iconify icon="ep:info-filled" className="info" />
-                    {/* Customer Detail Model Start */}
-                    <CustomerDetailsModel
-                      customerId={orderDetails?.customerId}
+                <div className="desc-section">
+                  <div className="key-icon-part">
+                    <Iconify icon="ph:users" className="open-bar" />
+                    <span>Sub-Cust.</span>
+                  </div>
+                  <div className="desc-detail">
+                    {/* &nbsp;:&nbsp;<span>Exelixis Inc.</span> */}
+                    &nbsp;:&nbsp;
+                    <span className="name-ellipsis">
+                      {ordersummaryDetails?.subCustomerName || "-"}
+                    </span>
+                    <div className="info-icon info-user">
+                      <Iconify icon="ep:info-filled" className="info" />
+                      {/* Customer Detail Model Start */}
+                      <CustomerDetailsModel />
+                      {/* Customer Detail Model End */}
+                    </div>
+                  </div>
+                </div>
+                <div className="desc-section">
+                  <div className="key-icon-part">
+                    <Iconify
+                      icon="material-symbols:quick-reference-outline-rounded"
+                      className="open-bar"
                     />
-                    {/* Customer Detail Model End */}
+                    <span>Ref. No</span>
+                  </div>
+                  <div className="desc-detail">
+                    {/* &nbsp;:&nbsp;<span>123-654</span> */}
+                    &nbsp;:&nbsp;
+                    <span>{ordersummaryDetails?.referenceNumber || "N/A"}</span>
                   </div>
                 </div>
               </div>
-              <div className="desc-section">
-                <div className="key-icon-part">
-                  <Iconify icon="ph:users" className="open-bar" />
-                  <span>Sub-Cust.</span>
-                </div>
-                <div className="desc-detail">
-                  {/* &nbsp;:&nbsp;<span>Exelixis Inc.</span> */}
-                  &nbsp;:&nbsp;
-                  <span className="name-ellipsis">{ordersummaryDetails?.subCustomerName || "-"}</span>
-                  <div className="info-icon info-user">
-                    <Iconify icon="ep:info-filled" className="info" />
-                    {/* Customer Detail Model Start */}
-                    <CustomerDetailsModel />
-                    {/* Customer Detail Model End */}
+              <div className="col-xxl-5 col-xl-6 col-lg-6 col-md-6 col-12 custom-col-6">
+                <div className="desc-section right-status-sec">
+                  <div className="key-icon-part">
+                    <Iconify icon="f7:status" className="open-bar" />
+                    <span>Status</span>
+                  </div>
+                  <div className="desc-detail">
+                    &nbsp;:&nbsp;
+                    {/* <span className="status pending">Pending</span> */}
+                    <span className="status pending">
+                      {ordersummaryDetails?.status}
+                    </span>
                   </div>
                 </div>
-              </div>
-              <div className="desc-section">
-                <div className="key-icon-part">
-                  <Iconify
-                    icon="material-symbols:quick-reference-outline-rounded"
-                    className="open-bar"
-                  />
-                  <span>Ref. No</span>
+                <div className="desc-section right-status-sec">
+                  <div className="key-icon-part">
+                    <Iconify icon="f7:status" className="open-bar" />
+                    <span>Sub-Status</span>
+                  </div>
+                  <div className="desc-detail">
+                    &nbsp;:&nbsp;
+                    {/* <span className="status in-transit">In Transit</span> */}
+                    <span className="status in-transit">
+                      {ordersummaryDetails?.subStatus}
+                    </span>
+                  </div>
                 </div>
-                <div className="desc-detail">
-                  {/* &nbsp;:&nbsp;<span>123-654</span> */}
-                  &nbsp;:&nbsp;
-                  <span>{ordersummaryDetails?.referenceNumber || "N/A"}</span>
-                </div>
-              </div>
-            </div>
-            <div className="col-xxl-5 col-xl-6 col-lg-6 col-md-6 col-12 custom-col-6">
-              <div className="desc-section right-status-sec">
-                <div className="key-icon-part">
-                  <Iconify icon="f7:status" className="open-bar" />
-                  <span>Status</span>
-                </div>
-                <div className="desc-detail">
-                  &nbsp;:&nbsp;
-                  {/* <span className="status pending">Pending</span> */}
-                  <span className="status pending">
-                    {ordersummaryDetails?.status}
-                  </span>
-                </div>
-              </div>
-              <div className="desc-section right-status-sec">
-                <div className="key-icon-part">
-                  <Iconify icon="f7:status" className="open-bar" />
-                  <span>Sub-Status</span>
-                </div>
-                <div className="desc-detail">
-                  &nbsp;:&nbsp;
-                  {/* <span className="status in-transit">In Transit</span> */}
-                  <span className="status in-transit">
-                    {ordersummaryDetails?.subStatus}
-                  </span>
-                </div>
-              </div>
-              <div className="desc-section right-status-sec">
-                <div className="key-icon-part">
-                  <Iconify icon="uil:calender" className="open-bar" />
-                  <span>Recv. Date</span>
-                </div>
-                <div className="desc-detail">
-                  {/* &nbsp;:&nbsp;<span>26 Oct 2024</span> */}
-                  &nbsp;:&nbsp;
-                  <span>
-                    {formatDate(
-                      ordersummaryDetails?.orderReceivedDate,
-                      "MM/DD/YYYY"
-                    )}
-                  </span>
+                <div className="desc-section right-status-sec">
+                  <div className="key-icon-part">
+                    <Iconify icon="uil:calender" className="open-bar" />
+                    <span>Recv. Date</span>
+                  </div>
+                  <div className="desc-detail">
+                    {/* &nbsp;:&nbsp;<span>26 Oct 2024</span> */}
+                    &nbsp;:&nbsp;
+                    <span>
+                      {formatDate(
+                        ordersummaryDetails?.orderReceivedDate,
+                        "MM/DD/YYYY"
+                      )}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <DataLoader />
+        )}
       </CardSection>
       <SidebarModel
         modalTitle="PO PDF"
@@ -218,24 +226,24 @@ const OrderSummary = ({ orderDetails }) => {
         showToggle={true}
       >
         <div className="model-height-fix doc-view">
-            {selectedDocument && getFileType ? (
-              getFileType === "pdf" ? (
-                <div className="pdf-iframe">
-                  <iframe
-                    src={selectedDocument}
-                    title="PDF Preview"
-                    style={{ width: "100%", height: "200%" }}
-                  />
-                </div>
-              ) : (
-                <FileViewer
-                  fileType={getFileType}
-                  filePath={selectedDocument}
-                  onError={(error) => console.error("Error:", error)}
+          {selectedDocument && getFileType ? (
+            getFileType === "pdf" ? (
+              <div className="pdf-iframe">
+                <iframe
+                  src={selectedDocument}
+                  title="PDF Preview"
+                  style={{ width: "100%", height: "200%" }}
                 />
-              )
-            ) : null}
-          </div>
+              </div>
+            ) : (
+              <FileViewer
+                fileType={getFileType}
+                filePath={selectedDocument}
+                onError={(error) => console.error("Error:", error)}
+              />
+            )
+          ) : null}
+        </div>
       </SidebarModel>
     </div>
   );

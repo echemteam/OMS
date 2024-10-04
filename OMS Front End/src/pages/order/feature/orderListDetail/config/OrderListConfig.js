@@ -90,7 +90,7 @@ export const orderListMolGridConfig = {
     },
     {
       name: "Unit/Size",
-      fieldName: "unitSize",
+      fieldName: "itemUnitPrice",
       allowShort: false,
       colStyle: {
         width: "10%",
@@ -114,7 +114,7 @@ export const orderListMolGridConfig = {
     },
     {
       name: "Delivery Method",
-      fieldName: "deliveryMeter",
+      fieldName: "deliveryMethod",
       allowShort: false,
       colStyle: {
         width: "25%",
@@ -123,6 +123,9 @@ export const orderListMolGridConfig = {
     {
       name: "Action",
       fieldName: "Action",
+      defaultAction: {
+        allowEdit: true,
+      },
       allowShort: false,
       colStyle: {
         width: "10%",
