@@ -67,9 +67,7 @@ export const updatePhoneNumberData = (data, listData, setListData, successMessag
         const normalizedPhoneCode = `+${phoneCode}`;
 
         // Remove phoneCode from phoneNumber if it starts with the normalized phoneCode
-        const phoneNumberWithoutCode = fullPhoneNumber.startsWith(normalizedPhoneCode)
-            ? fullPhoneNumber.slice(normalizedPhoneCode.length)
-            : fullPhoneNumber;
+        const phoneNumberWithoutCode = fullPhoneNumber.startsWith(normalizedPhoneCode) ? fullPhoneNumber.slice(normalizedPhoneCode.length) : fullPhoneNumber;
         const phoneTypeId = data.phoneTypeId && typeof data.phoneTypeId === "object" ? data.phoneTypeId.value : data.phoneTypeId
         const phoneType = data.phoneTypeId.label ? data.phoneTypeId.label : data.phoneType
         const isPrimary = data.isPrimaryPhoneNumber
@@ -89,6 +87,9 @@ export const updatePhoneNumberData = (data, listData, setListData, successMessag
                         isPrimary: isPrimary
                     };
                 } else if (isPrimary) {
+                    const phoneCode = item.phoneNumber.phoneCode && typeof item.phoneNumber === "object" ? item.phoneNumber.phoneCode : item.phoneCode;
+                    const fullPhoneNumber = item.phoneNumber.PhoneNumber && typeof item.phoneNumber === "object" ? item.phoneNumber.PhoneNumber : item.phoneNumber;
+                    const phoneNumberWithoutCode = fullPhoneNumber.startsWith(normalizedPhoneCode) ? fullPhoneNumber.slice(normalizedPhoneCode.length) : fullPhoneNumber;
                     return {
                         ...item,
                         phoneCode: phoneCode,
@@ -96,6 +97,9 @@ export const updatePhoneNumberData = (data, listData, setListData, successMessag
                         isPrimary: false
                     };
                 } else {
+                    const phoneCode = item.phoneNumber.phoneCode && typeof item.phoneNumber === "object" ? item.phoneNumber.phoneCode : item.phoneCode;
+                    const fullPhoneNumber = item.phoneNumber.PhoneNumber && typeof item.phoneNumber === "object" ? item.phoneNumber.PhoneNumber : item.phoneNumber;
+                    const phoneNumberWithoutCode = fullPhoneNumber.startsWith(normalizedPhoneCode) ? fullPhoneNumber.slice(normalizedPhoneCode.length) : fullPhoneNumber;
                     return {
                         ...item,
                         phoneCode: phoneCode,
