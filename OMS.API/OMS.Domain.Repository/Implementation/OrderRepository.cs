@@ -65,9 +65,9 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<EntityList<GetOrderResponse>> GetOrders(GetOrderRequest request)
+        public async Task<EntityList<OrderListResponse>> GetOrders(GetOrderRequest request)
         {
-            return await _context.GetListSP<GetOrderResponse>(GETORDERS, new
+            return await _context.GetListSP<OrderListResponse>(GETORDERS, new
             {
                 request.OrderStatusId,
                 request.OrderSubStatusId,
