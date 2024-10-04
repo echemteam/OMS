@@ -20,7 +20,7 @@ namespace ThirdPartyAPILibrary.Helper
             }
             catch (Exception ex)
             {
-                throw (Exception)ex;
+                throw ex;
             }
         }
 
@@ -34,7 +34,7 @@ namespace ThirdPartyAPILibrary.Helper
             }
             catch (Exception ex)
             {
-                throw (Exception)ex;
+                throw ex;
             }
         }
 
@@ -49,8 +49,31 @@ namespace ThirdPartyAPILibrary.Helper
             }
             catch (Exception ex)
             {
-                throw (Exception)ex;
+                throw ex;
             }
+        }
+        public async Task AddApiEventLog(int eventId, string requestData, int? statusCode, string? errorMessage, string logType, string requestUrl)
+        {
+            try
+            {
+                string procedure = "AddApiEventLog";
+                var parameters = new
+                {
+                    EventId = eventId,
+                    RequestData = requestData,
+                    StatusCode = statusCode,
+                    ErrorMessage = errorMessage,
+                    LogType = logType,
+                    RequestUrl = requestUrl
+                };
+
+                await _context.Execute(procedure, parameters, CommandType.StoredProcedure);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
     }
 }

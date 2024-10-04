@@ -51,18 +51,23 @@ namespace ThirdPartyAPILibrary
 
             APIResponse results = new();
             TokenDetails accessTokenObj = new();
+            string requestUrl = string.Empty;
+            int apiEventId = 0;
             try
             {
                 // Get the list of API providers based on apiEventId
                 APIEventResponse getApiEvent = await helper.GetAPIEndPointByApiEventId(requestData.EventName);
                 string url = getApiEvent.BaseURL;
+                requestUrl = url!;
+                apiEventId = getApiEvent.ApiEventId;
+                await helper.AddApiEventLog(eventId: getApiEvent?.ApiEventId ?? 0, requestData: JsonConvert.SerializeObject(requestData), statusCode: 200, errorMessage: "Successfully retrieved API endpoint information.", logType: "Request", requestUrl);
 
                 if (getApiEvent == null)
                 {
-
                     results.Message = "No API Event provider found.";
                     results.Data = "";
                     results.IsSuccess = false;
+                    await helper.AddApiEventLog(eventId: getApiEvent?.ApiEventId ?? 0, requestData: JsonConvert.SerializeObject(requestData), statusCode: 404, errorMessage: "API Event provider not found.", logType: "Request", requestUrl);
                     return results;
                 }
                 if (string.IsNullOrEmpty(getApiEvent.BaseURL))
@@ -70,6 +75,7 @@ namespace ThirdPartyAPILibrary
                     results.Message = $"Invalid API Event BaseURL {getApiEvent.BaseURL}.";
                     results.Data = "";
                     results.IsSuccess = false;
+                    await helper.AddApiEventLog(eventId: getApiEvent?.ApiEventId ?? 0, requestData: JsonConvert.SerializeObject(requestData), statusCode: 400, errorMessage: $"API Event BaseURL is missing or invalid: {getApiEvent.BaseURL}.", logType: "Request", requestUrl);
                     return results;
                 }
                 if (getApiEvent.Parameters == null && !requestData.IsDynamicParameter)
@@ -77,6 +83,7 @@ namespace ThirdPartyAPILibrary
                     results.Message = $"Invalid API Event Parameter {getApiEvent.Parameters}.";
                     results.Data = "";
                     results.IsSuccess = false;
+                    await helper.AddApiEventLog(eventId: getApiEvent?.ApiEventId ?? 0, requestData: JsonConvert.SerializeObject(requestData), statusCode: 400, errorMessage: "API Event parameters are missing or invalid.", logType: "Request", requestUrl);
                     return results;
                 }
                 if (getApiEvent.AuthenticationType == AuthenticationType.APIKEY)
@@ -86,6 +93,7 @@ namespace ThirdPartyAPILibrary
                         accessTokenObj.IsSuccess = true;
                         accessTokenObj.Token = getApiEvent.AuthKey;
                         accessTokenObj.Message = "Authentication Key successfully provide.";
+                        await helper.AddApiEventLog(eventId: getApiEvent?.ApiEventId ?? 0, requestData: JsonConvert.SerializeObject(requestData), statusCode: 200, errorMessage: "API Key authentication successful.", logType: "Request", requestUrl);
                     }
                     else
                     {
@@ -93,6 +101,7 @@ namespace ThirdPartyAPILibrary
                         results.Message = "Invalid Authentication Key";
                         results.Data = "";
                         results.IsSuccess = false;
+                        await helper.AddApiEventLog(eventId: getApiEvent?.ApiEventId ?? 0, requestData: JsonConvert.SerializeObject(requestData), statusCode: 401, errorMessage: "Invalid API Key authentication key.", logType: "Request", requestUrl);
                         return results;
                     }
 
@@ -107,6 +116,11 @@ namespace ThirdPartyAPILibrary
                     if (accessTokenObj.IsSuccess == true && accessTokenObj.Token != null && accessTokenObj.Token != "")
                     {
                         await helper.UpdateAPIAuthticationToken(accessTokenObj.Token, accessTokenObj.ExpiryTime, getApiEvent.AuthId);
+                        await helper.AddApiEventLog(eventId: getApiEvent?.ApiEventId ?? 0, requestData: JsonConvert.SerializeObject(requestData), statusCode: 200, errorMessage: "OAuth authentication successful.", logType: "Request", requestUrl);
+                    }
+                    else
+                    {
+                        await helper.AddApiEventLog(eventId: getApiEvent?.ApiEventId ?? 0, requestData: JsonConvert.SerializeObject(requestData), statusCode: 200, errorMessage: "Invalid OAuth authentication.", logType: "Request", requestUrl);
                     }
                 }
                 else
@@ -114,6 +128,7 @@ namespace ThirdPartyAPILibrary
                     results.Message = "Invalid Authentication Type";
                     results.Data = "";
                     results.IsSuccess = false;
+                    await helper.AddApiEventLog(eventId: getApiEvent?.ApiEventId ?? 0, requestData: JsonConvert.SerializeObject(requestData), statusCode: 400, errorMessage: $"Unsupported authentication type: {getApiEvent.AuthenticationType}.", logType: "Request", requestUrl);
                     return results;
                 }
                 if (accessTokenObj.IsSuccess == true && accessTokenObj.Token != null && accessTokenObj.Token != "")
@@ -125,6 +140,7 @@ namespace ThirdPartyAPILibrary
                         results.Message = "Required fields Or mapping are missing. Please ensure all necessary fields are provided before proceeding.";
                         results.Data = "";
                         results.IsSuccess = false;
+                        await helper.AddApiEventLog(eventId: getApiEvent?.ApiEventId ?? 0, requestData: JsonConvert.SerializeObject(requestData), statusCode: 400, errorMessage: "Missing required fields or mappings.", logType: "Request", requestUrl);
                         return results;
                     }
                     else
@@ -143,17 +159,22 @@ namespace ThirdPartyAPILibrary
 
                             url = uriBuilder.ToString();
                             results = await APIResponseProvider.GetMethod(url, accessTokenObj.Token, getRequiredField);
+                            await helper.AddApiEventLog(eventId: getApiEvent?.ApiEventId ?? 0, requestData: JsonConvert.SerializeObject(requestData), statusCode: results.IsSuccess ? 200 : 400, errorMessage: results.IsSuccess ? "API return response successful." : $"GET request failed: {results.Message}", logType: "Response", requestUrl);
+
                         }
                         else if (getApiEvent.Method == "POST")
                         {
                             string parameters = requestData.IsDynamicParameter ? requestData.Parameters : getApiEvent.Parameters;
                             results = await APIResponseProvider.PostMethod(url, accessTokenObj.Token, parameters, getRequiredField);
+                            await helper.AddApiEventLog(eventId: getApiEvent?.ApiEventId ?? 0, requestData: JsonConvert.SerializeObject(requestData), statusCode: results.IsSuccess ? 200 : 400, errorMessage: results.IsSuccess ? "API return response successful." : $"POST request failed: {results.Message}", logType: "Response", requestUrl);
+
                         }
                         else
                         {
                             results.Message = $"Unsupported HTTP method: {getApiEvent.Method} for apiEventId {getApiEvent.ApiEventId}.";
                             results.Data = "";
                             results.IsSuccess = false;
+                            await helper.AddApiEventLog(eventId: getApiEvent?.ApiEventId ?? 0, requestData: JsonConvert.SerializeObject(requestData), statusCode: 400, errorMessage: $"Unsupported HTTP method: {getApiEvent.Method}.", logType: "Request", requestUrl);
                             return results;
                         }
                     }
@@ -163,6 +184,7 @@ namespace ThirdPartyAPILibrary
                     results.Message = accessTokenObj.Message;
                     results.Data = "";
                     results.IsSuccess = false;
+                    await helper.AddApiEventLog(eventId: apiEventId, requestData: JsonConvert.SerializeObject(requestData), statusCode: 401, errorMessage: $"Access token error: {accessTokenObj.Message}.", logType: "Request", requestUrl);
                     return results;
                 }
             }
@@ -171,6 +193,7 @@ namespace ThirdPartyAPILibrary
                 results.Message = $"An error occurred: {ex.Message}";
                 results.Data = "";
                 results.IsSuccess = false;
+                await helper.AddApiEventLog(eventId: apiEventId, requestData: JsonConvert.SerializeObject(requestData), statusCode: 500, errorMessage: $"Exception: {ex.Message}.", logType: "Error", requestUrl);
             }
 
             return results;

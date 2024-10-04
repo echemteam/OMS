@@ -14,6 +14,6 @@
         public string? FieldName { get; set; }
         public int FunctionalityEventId { get; set; }
         public string? EventName { get; set; }
-        public bool? IsFunctional { get; set; }
+        public bool IsFunctional { get; set; }
     }
 }

@@ -7,7 +7,6 @@ import Image from "../../../image/Image";
 import Buttons from "../../button/Buttons";
 import { AppIcons } from "../../../../data/appIcons";
 import { TextInputType } from "../../../../data/formControlTypes";
-import Iconify from "../../iconify/Iconify";
 
 const ImageUpload = ({
     type = TextInputType.FILE,

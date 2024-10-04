@@ -1,4 +1,6 @@
-﻿using OMS.Domain.Entities.Entity.CommonEntity;
+﻿using OMS.Domain.Entities.API.Request.SupplierFinancialSettings;
+using OMS.Domain.Entities.API.Response.SuppierBankDetails;
+using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.SuppierBankDetails;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
@@ -11,6 +13,8 @@ namespace OMS.Domain.Repository.Implementation
     {
         #region SP Name
         const string ADDEDITACHWIRE = "AddEditACHWire";
+        const string GETBENEFICIARYDETAILSADDRESSBYADDRESSID = "GetAddressByAddressId";
+        const string GETBANKDETAILSADDRESSBYADDRESSID = "GetAddressByAddressId";
         #endregion
 
         public SuppierBankDetailsRepository(DapperContext dapperContext) : base(dapperContext)
@@ -43,6 +47,23 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.IsActive,
                 requestData.CreatedBy
             }, CommandType.StoredProcedure);
+        }
+
+        public async Task<BeneficiaryDetailsResponse> GetBeneficiaryDetailsAddressByAddressId(int? addressId)
+        {
+            BeneficiaryDetailsResponse getAddressResponse = await _context.GetFrist<BeneficiaryDetailsResponse>(GETBENEFICIARYDETAILSADDRESSBYADDRESSID, new
+            {
+                addressId
+            }, commandType: CommandType.StoredProcedure);
+            return getAddressResponse;
+        }
+        public async Task<BankDetailsResponse> GetBankDetailsAddressByAddressId(int? addressId)
+        {
+            BankDetailsResponse getAddressResponse = await _context.GetFrist<BankDetailsResponse>(GETBANKDETAILSADDRESSBYADDRESSID, new
+            {
+                addressId
+            }, commandType: CommandType.StoredProcedure);
+            return getAddressResponse;
         }
         #endregion
     }

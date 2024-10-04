@@ -9,7 +9,6 @@ import SwalAlert from "../../../../../services/swalService/SwalService";
 import { useLazyGetAllUserQuery } from "../../../../../app/services/commonAPI";
 import {
   useAddEditResponsibleUserForCustomerMutation,
-  useLazyDownloadQuery,
   useUpdateCustomerInActiveStatusMutation,
   useUpdateCustomerStatusMutation,
   useUpdateCustomerSubCustomerMutation,
@@ -78,14 +77,6 @@ const CustomerBasicInfoCard = ({
   ] = useUpdateCustomerSubCustomerMutation();
 
   const [
-    downalodImage,
-    {
-      isSuccess: isSuccessDownalod,
-      data: isDownalodData,
-    },
-  ] = useLazyDownloadQuery();
-
-  const [
     addEditResponsibleUserForCustomer,
     {
       isSuccess: isSuccessAddEditResponsibleUserForCustomer,
@@ -147,15 +138,6 @@ const CustomerBasicInfoCard = ({
       handleToggleModal();
     }
   }, [isSuccessUpdateCustomerInActiveStatus, updateCustomerInActiveStatusData]);
-
-  useEffect(() => {
-    if (isSuccessDownalod && isDownalodData) {
-      const fileData = isDownalodData.fileData;
-      const blob = new Blob([fileData], { type: fileData.type });
-      const fileURL = URL.createObjectURL(blob);
-      console.log(fileURL);
-    }
-  }, [isSuccessDownalod, isDownalodData]);
 
   useEffect(() => {
     if (isSuccessUpdateCustomerStatus && updateCustomerStatusData) {
@@ -303,7 +285,6 @@ const CustomerBasicInfoCard = ({
       }
     }
   };
-
 
   useEffect(() => {
     if (customerData) {
@@ -497,12 +478,9 @@ const CustomerBasicInfoCard = ({
         <div className="d-flex profile-info  justify-content-between col-12">
           <div className="col-3 flex-column profile-icon-desc justify-content-center">
             <div className="d-flex w-100">
+              {/* <FormCreator config={imagesData} /> */}
               <div className="profile-icon ">
-                {/* {" "}
-                {customerData?.name
-                  ? customerData?.name.charAt(0).toUpperCase()
-                  : ""} */}
-                <Image imagePath={AppIcons.DummyLogo} altText="button Icon" />
+                <Image imagePath={customerData?.base64File ? customerData?.base64File : AppIcons.DummyLogo} altText="button Icon" />
               </div>
               <div className="detail-sec">
                 <div className="customer-name">
