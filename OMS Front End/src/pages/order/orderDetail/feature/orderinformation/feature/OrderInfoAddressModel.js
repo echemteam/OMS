@@ -66,12 +66,16 @@ const OrderInfoAddressModel = ({ onUpdate }) => {
       <div className="d-flex align-item-end justify-content-end mt-3">
         <Buttons
           buttonTypeClassName="theme-button"
-          buttonText="Save"
+          buttonText="Change Address"
         />
         <Buttons
           buttonTypeClassName="theme-button ml-3"
-          buttonText="Update"
+          buttonText="Edit Address"
           onClick={onUpdate}
+        />
+        <Buttons
+          buttonTypeClassName="theme-button ml-3"
+          buttonText="Add Address"
         />
       </div>
     </div>
