@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 namespace OMS.Domain.Entities.API.Response.Orders
 {
     public class GetOrderItemsByOrderIdResponse
-    {
+    {   
+        public long? OrderItemId { get; set; }
+        public int? OrderId { get; set; }   
         public string? CatalogId {  get; set; }
         public string? CasNumber { get; set; }
         public decimal? ItemUnitPrice {  get; set; }
@@ -15,5 +17,10 @@ namespace OMS.Domain.Entities.API.Response.Orders
         public string? ItemStatus { get; set; }
         public decimal? PackSize {  get; set; }
         public decimal? SubTotalPrice {  get; set; }
+        public string? MdlNumber { get; set; }
+        public string? ChemicalName { get; set; }
+        public DateTime? RequestDate { get; set; }
+        public DateTime? PromiseDate { get; set; }
+        public string? OrderPriority { get; set; }
     }
 }
