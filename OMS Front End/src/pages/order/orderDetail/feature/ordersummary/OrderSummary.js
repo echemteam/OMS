@@ -164,19 +164,23 @@ const OrderSummary = ({ orderDetails }) => {
                   </div>
                 </div>
               </div>
-              <div className="col-xxl-5 col-xl-6 col-lg-6 col-md-6 col-12 custom-col-6">
-                <div className="desc-section right-status-sec">
-                  <div className="key-icon-part">
-                    <Iconify icon="f7:status" className="open-bar" />
-                    <span>Status</span>
-                  </div>
-                  <div className="desc-detail">
-                    &nbsp;:&nbsp;
-                    {/* <span className="status pending">Pending</span> */}
-                    <span className="status pending">
-                      {ordersummaryDetails?.status}
-                    </span>
-                  </div>
+              <div className="desc-section">
+                <div className="key-icon-part">
+                  <Iconify icon="ph:users" className="open-bar" />
+                  <span>Sub-Cust.</span>
+                </div>
+                <div className="desc-detail">
+                  {/* &nbsp;:&nbsp;<span>Exelixis Inc.</span> */}
+                  &nbsp;:&nbsp;
+                  <span className="name-ellipsis">{ordersummaryDetails?.subCustomerName || "N/A"}</span>
+                  {ordersummaryDetails?.subCustomerId ? (
+                    <div className="info-icon info-user">
+                      <Iconify icon="ep:info-filled" className="info" />
+                      {/* Customer Detail Model Start */}
+                      <CustomerDetailsModel />
+                      {/* Customer Detail Model End */}
+                    </div>)
+                    : null}
                 </div>
                 <div className="desc-section right-status-sec">
                   <div className="key-icon-part">

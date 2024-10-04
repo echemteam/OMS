@@ -25,19 +25,23 @@ const OrderInformation = lazy(() =>
 );
 
 const OrderDetails = () => {
+
   const { id } = useParams();
   const orderId = id ? decryptUrlData(id) : 0;
 
   const [orderDetails, setOrderDetails] = useState();
 
-  const [
-    getOrderDetailByOrderId,
-    {
-      isFetching: isOrderDetailsFetching,
-      isSuccess: isOrderDetailsFetched,
-      data: orderByOrderIdDetails,
-    },
-  ] = useLazyGetOrderDetailByOrderIdQuery();
+  const [getOrderDetailByOrderId, {
+    isFetching: isOrderDetailsFetching,
+    isSuccess: isOrderDetailsFetched,
+    data: orderByOrderIdDetails,
+  },] = useLazyGetOrderDetailByOrderIdQuery();
+
+  const handleRefreshOrderDetails = () => {
+    if (orderId) {
+      getOrderDetailByOrderId(orderId);
+    }
+  }
 
   useEffect(() => {
     if (orderId) {
@@ -69,7 +73,10 @@ const OrderDetails = () => {
           {/* Order Information End */}
 
           {/* Order Document Start */}
-          <OrderDocument orderDetails={orderDetails} />
+          <OrderDocument
+            orderDetails={orderDetails}
+            onRefreshOrderDetails={handleRefreshOrderDetails}
+          />
           {/* Order Document End */}
         </div>
         {/* Left Side Section End */}
