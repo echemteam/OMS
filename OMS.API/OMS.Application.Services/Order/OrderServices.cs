@@ -233,6 +233,10 @@ namespace OMS.Application.Services.Order
             order.UpdatedBy = CurrentUserId;
             return await repositoryManager.orderAddress.UpdateOrderAddress(order);
         }
+        public async Task<AddEntityDto<int>> DeleteOrderDocuementById(int OrderDocumentId, int deletedBy)
+        {
+            return await repositoryManager.order.DeleteOrderDocuementById(OrderDocumentId, deletedBy);
+        }
         #endregion
     }
 }

@@ -125,6 +125,18 @@ namespace OMS.API.Controllers
             }
             return APISucessResponce(responseData);
         }
+
+        [HttpDelete("DeleteOrderDocuementById")]
+        public async Task<IActionResult> DeleteOrderDocuementById(int OrderDocumentId)
+        {
+            if (OrderDocumentId > 0)
+            {
+                int deletedBy = CurrentUserId;
+                var deleteItem = await _serviceManager.orderServices.DeleteOrderDocuementById(OrderDocumentId, deletedBy).ConfigureAwait(true);
+                return APISucessResponce<object>(deleteItem);
+            }
+            return APISucessResponce(OrderDocumentId);
+        }
         #endregion
     }
 }
