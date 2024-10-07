@@ -184,8 +184,9 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             const newFrom = { ...customerbasicData };
             const { formFields } = getTaxIdMinMaxLength(GetCustomersBasicInformationByIdData.countryId, customerbasicData.formFields, 'taxId');
             newFrom.formFields = formFields;
-            newFrom.initialState = { ...GetCustomersBasicInformationByIdData };
+            newFrom.initialState = { ...GetCustomersBasicInformationByIdData, attachmentName: GetCustomersBasicInformationByIdData?.base64File };
             newFrom.formFields = customerbasicData.formFields.filter(field => field.dataField !== "note" && field.dataField !== "isSubCustomer" && field.dataField !== "responsibleUserId");
+            newFrom.formFields = newFrom.formFields.filter((field) => field.dataField !== 'attachment' && field.dataField !== '');
             setFormData(newFrom);
             setCustomerCountryId(GetCustomersBasicInformationByIdData.countryId);
             setIsResponsibleUser(validateResponsibleUserId(GetCustomersBasicInformationByIdData.responsibleUserId, authState?.user?.userID));
@@ -245,8 +246,8 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             responsibleUserId: data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
             customerId: keyId ? keyId : customerId,
             customerNoteId: noteId ? noteId : 0,
-            attachmentName: data.attachment.fileName,
-            base64File: data.attachment.base64Data,
+            attachmentName: data.attachment ? data.attachment?.fileName : null,
+            base64File: data.attachment ? data.attachment?.base64Data : null,
             storagePath: 'CustomerProfilePic'
         };
         if (data.taxId === "") {
@@ -261,8 +262,8 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                 if (data.taxId.length >= minLength || data.taxId.length <= maxLength) {
                     let value = {
                         ...req,
-                        attachmentName: data.attachment.fileName,
-                        base64File: data.attachment.base64Data,
+                        attachmentName: data.attachment ? data.attachment?.fileName : null,
+                        base64File: data.attachment ? data.attachment?.base64Data : null,
                         storagePath: 'CustomerProfilePic',
                         responsibleUserId: data.responsibleUserId === "" ? 0 : data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
                     }

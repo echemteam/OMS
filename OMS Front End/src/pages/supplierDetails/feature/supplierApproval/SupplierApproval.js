@@ -38,7 +38,7 @@ const SupplierApproval = forwardRef(({ childRef, getListApi, updateApproval, isD
     };
 
     //** Validate check list Modal */
-    const handleShowValidateModal = (supplierId, isShowApprovalCheckList = true, isShowBothButton = true) => {
+    const handleShowValidateModal = (supplierId, isShowApprovalCheckList, isShowBothButton = true) => {
         setIsShowValidateModal(!isShowValidateModal);
         let request = {
             customerId: 0,
@@ -46,7 +46,7 @@ const SupplierApproval = forwardRef(({ childRef, getListApi, updateApproval, isD
         }
         getValidateCheckList(request);
         setSupplierId(supplierId);
-        setShowApprovalCheckList(isShowApprovalCheckList);
+        setShowApprovalCheckList(isShowApprovalCheckList ? isShowApprovalCheckList : false);
         setIsShowBothButton(isShowBothButton);
     };
 
@@ -67,8 +67,8 @@ const SupplierApproval = forwardRef(({ childRef, getListApi, updateApproval, isD
     }
 
     const handleValidateSuccess = () => {
-        handleShowApprovalList();
         handleModalClose();
+        showApprovalCheckList && handleShowApprovalList();
         !showApprovalCheckList && updateApproval();
     }
 
@@ -88,7 +88,7 @@ const SupplierApproval = forwardRef(({ childRef, getListApi, updateApproval, isD
             <ApprovalValidateData parentRef={parentRef} handleValidateSuccess={handleValidateSuccess} showModal={isShowValidateModal} isSupplierApproval={true}
                 isGetCheckListLoading={isGetCheckListLoading} mainId={supplierId} isDetailPage={isDetailPage} handleShowValidateModal={handleShowValidateModal}
                 handleValidateModalClose={handleValidateModalClose} handleDone={handleDone} validateCheckList={validateCheckList} isShowBothButton={isShowBothButton} />
-            {showApprovalCheckList &&
+            {(isShowApproval) &&
                 <ApprovalCheckList onSidebarClose={onSidebarApprovalClose} isModelOpen={isShowApproval} mainId={supplierId} isSupplierApproval={true}
                     ApprovalData={ApprovalEnum.APPROVESUPPLIER} onSuccessApprovalClose={onSuccessApprovalClose}
                     getBasicInformationById={useLazyGetSupplierBasicInfoByIdQuery} getAddressById={useLazyGetSupplierAddressInfoByIdQuery}
