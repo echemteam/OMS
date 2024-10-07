@@ -4,6 +4,7 @@ using OMS.Application.Services;
  
 using OMS.Domain.Entities.API.Request.Orders;
 using OMS.Domain.Entities.API.Response.Orders;
+using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
 
@@ -11,7 +12,7 @@ namespace OMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+   [Authorize]
     //[CheckClientIpActionFilter]
     public class OrderController : BaseController
     {
@@ -91,11 +92,24 @@ namespace OMS.API.Controllers
             var addItem = await _serviceManager.orderServices.AddOrderDocuments(requestData, CurrentUserId);
             return APISucessResponce(addItem);
         }
+
         [HttpGet("GetOrderItemByOrderItemId")]
-        public async Task<IActionResult> GetOrderItemByOrderItemId(int orderItemId)
+        public async Task<IActionResult> GetOrderItemByOrderItemId(long orderItemId)
         {
             GetOrderItemByOrderItemIdResponse responseData = await _serviceManager.orderServices.GetOrderItemByOrderItemId(orderItemId).ConfigureAwait(true);
             return APISucessResponce(responseData);
+        }
+
+        [HttpPost("UpdateOrderItemByOrderItemId")]
+        public async Task<IActionResult> UpdateOrderItemByOrderItemId(UpdateOrderItemByOrderItemIdRequest requestData)
+        {
+            AddEntityDto<long> responseData = new();
+            if (requestData != null)
+            {
+                responseData = await _serviceManager.orderServices.UpdateOrderItemByOrderItemId(requestData, CurrentUserId);
+                return APISucessResponce(responseData);
+            }
+            return APISucessResponce<object>(responseData);
         }
         #endregion
     }

@@ -206,7 +206,7 @@ namespace OMS.Application.Services.Order
             responseData = await repositoryManager.order.AddOrderDocuments(orderDocumentsDto, documentDataTable);
             return responseData;
         }
-        public async Task<GetOrderItemByOrderItemIdResponse> GetOrderItemByOrderItemId(int orderItemId)
+        public async Task<GetOrderItemByOrderItemIdResponse> GetOrderItemByOrderItemId(long orderItemId)
         {
             var orderItemDetails = await repositoryManager.order.GetOrderItemByOrderItemId(orderItemId);
             if (orderItemDetails == null)
@@ -222,6 +222,12 @@ namespace OMS.Application.Services.Order
                 ShippingAddress = orderShippingAddresses
             };
             return orderItemDetails!;
+        }
+        public async Task<AddEntityDto<long>> UpdateOrderItemByOrderItemId(UpdateOrderItemByOrderItemIdRequest updateOrderItemRequest, short CurrentUserId)
+        {
+            OrderItemsDto orderItemsDto = updateOrderItemRequest.ToMapp<UpdateOrderItemByOrderItemIdRequest, OrderItemsDto>();
+            orderItemsDto.UpdatedBy = CurrentUserId;
+            return await repositoryManager.order.UpdateOrderItemByOrderItemId(orderItemsDto);
         }
         #endregion
     }

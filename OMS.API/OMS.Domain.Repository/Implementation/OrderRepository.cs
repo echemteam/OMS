@@ -4,6 +4,7 @@ using OMS.Domain.Entities.API.Response.Orders;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.CustomerDocuments;
 using OMS.Domain.Entities.Entity.OrderDocument;
+using OMS.Domain.Entities.Entity.OrderItems;
 using OMS.Domain.Entities.Entity.Orders;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
@@ -26,9 +27,10 @@ namespace OMS.Domain.Repository.Implementation
         const string GETORDERCONTACTBYORDERID = "GetOrderContactByOrderId";
         const string GETORDERDOCUMENTBYORDERID = "GetOrderDocumentByOrderId";
         const string DELETEORDERDATA = "DeleteOrderData";
-
         const string ADDORDERDOCUMENTS = "AddOrderDocuments";
         const string GETORDERDETAILBYORDERITEMID = "GetOrderItemByOrderItemId";
+        const string UPDATEORDERITEMSBYORDERITEMID = "UpdateOrderItemByOrderItemId";
+
         #endregion
 
         public OrderRepository(DapperContext dapperContext) : base(dapperContext)
@@ -147,13 +149,27 @@ namespace OMS.Domain.Repository.Implementation
                 orderDocumentsDto.CreatedBy
             }, CommandType.StoredProcedure);
         }
-        public async Task<GetOrderItemByOrderItemIdResponse> GetOrderItemByOrderItemId(int orderItemId)
+        public async Task<GetOrderItemByOrderItemIdResponse> GetOrderItemByOrderItemId(long orderItemId)
         {
             GetOrderItemByOrderItemIdResponse orderItemDetails = await _context.GetFrist<GetOrderItemByOrderItemIdResponse>(GETORDERDETAILBYORDERITEMID, new
             {
                 orderItemId
             }, commandType: CommandType.StoredProcedure);
             return orderItemDetails;
+        }
+        public async Task<AddEntityDto<long>> UpdateOrderItemByOrderItemId(OrderItemsDto orderItemsDto)
+        {
+            return await _context.GetSingleAsync<AddEntityDto<long>>(UPDATEORDERITEMSBYORDERITEMID, new
+            {
+                orderItemsDto.OrderItemId,
+                orderItemsDto.ChemicalName,
+                orderItemsDto.MdlNumber,
+                orderItemsDto.Note,
+                orderItemsDto.OrderPriority,
+                orderItemsDto.RequestDate,
+                orderItemsDto.PromiseDate,
+                orderItemsDto.UpdatedBy
+            }, CommandType.StoredProcedure);
         }
         #endregion
     }
