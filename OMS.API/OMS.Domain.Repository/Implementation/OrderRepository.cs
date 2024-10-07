@@ -2,7 +2,6 @@
 using OMS.Domain.Entities.API.Request.Orders;
 using OMS.Domain.Entities.API.Response.Orders;
 using OMS.Domain.Entities.Entity.CommonEntity;
-using OMS.Domain.Entities.Entity.CustomerDocuments;
 using OMS.Domain.Entities.Entity.OrderDocument;
 using OMS.Domain.Entities.Entity.OrderItems;
 using OMS.Domain.Entities.Entity.Orders;
@@ -21,7 +20,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETPONUMBERDETAILSBYPONUMBER = "GetPoNumberDetailsByPoNumber";
         const string ADDORDER = "AddOrder";
         const string GETORDERS = "GetOrders";
-        const string GETORDERITEMSBYORDERID="GetOrderItemsByOrderId";
+        const string GETORDERITEMSBYORDERID = "GetOrderItemsByOrderId";
         const string GETORDERDETAILBYORDERID = "GetOrderDetailByOrderId";
         const string GETORDERADDRESSESBYORDERID = "GetOrderAddressesByOrderId";
         const string GETORDERCONTACTBYORDERID = "GetOrderContactByOrderId";
@@ -116,7 +115,7 @@ namespace OMS.Domain.Repository.Implementation
 
         public async Task<List<GetOrderContactByOrderIdResponse>> GetOrderContactByOrderId(int orderId)
         {
-            List<GetOrderContactByOrderIdResponse> contactDetails = await _context.GetList<GetOrderContactByOrderIdResponse> (GETORDERCONTACTBYORDERID, new
+            List<GetOrderContactByOrderIdResponse> contactDetails = await _context.GetList<GetOrderContactByOrderIdResponse>(GETORDERCONTACTBYORDERID, new
             {
                 orderId
             }, CommandType.StoredProcedure);

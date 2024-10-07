@@ -2,18 +2,16 @@
 using Common.Helper.Export;
 using Common.Helper.Extension;
 using OMS.Application.Services.Implementation;
-using OMS.Domain.Entities.API.Request.CustomerDocuments;
+using OMS.Domain.Entities.API.Request.OrderAddress;
 using OMS.Domain.Entities.API.Request.Orders;
 using OMS.Domain.Entities.API.Response.Orders;
 using OMS.Domain.Entities.Entity.CommonEntity;
-using OMS.Domain.Entities.Entity.CustomerDocuments;
 using OMS.Domain.Entities.Entity.OrderAddress;
 using OMS.Domain.Entities.Entity.OrderDocument;
 using OMS.Domain.Entities.Entity.OrderItems;
 using OMS.Domain.Entities.Entity.Orders;
 using OMS.Domain.Repository;
 using OMS.FileManger.Services;
-using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Entities.CommonEntity;
 using OMS.Shared.Services.Contract;
 using System.Data;
@@ -228,6 +226,12 @@ namespace OMS.Application.Services.Order
             OrderItemsDto orderItemsDto = updateOrderItemRequest.ToMapp<UpdateOrderItemByOrderItemIdRequest, OrderItemsDto>();
             orderItemsDto.UpdatedBy = CurrentUserId;
             return await repositoryManager.order.UpdateOrderItemByOrderItemId(orderItemsDto);
+        }
+        public async Task<AddEntityDto<int>> UpdateOrderAddress(UpdateOrderAddressRequest requestData, short CurrentUserId)
+        {
+            OrderAddressDto order = requestData.ToMapp<UpdateOrderAddressRequest, OrderAddressDto>();
+            order.UpdatedBy = CurrentUserId;
+            return await repositoryManager.orderAddress.UpdateOrderAddress(order);
         }
         #endregion
     }
