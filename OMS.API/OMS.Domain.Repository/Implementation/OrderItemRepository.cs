@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using OMS.Domain.Entities.Entity.CommonEntity;
+using OMS.Domain.Entities.Entity.OrderAddress;
 using OMS.Domain.Entities.Entity.OrderItems;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
@@ -13,6 +14,7 @@ namespace OMS.Domain.Repository.Implementation
         #region SP Name
         const string ADDORDERITEMINFORMATION = "AddOrderItemInformation";
         const string ADDORDERITEM = "AddOrderItem";
+        const string UPDATEORDERITEMDETAIL = "UpdateOrderItemDetail";
         #endregion
 
         public OrderItemRepository(DapperContext dapperContext) : base(dapperContext)
@@ -47,6 +49,24 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.Note,
                 requestData.EntityId,
                 requestData.CreatedBy,
+            }, CommandType.StoredProcedure);
+        }
+        public async Task<AddEntityDto<int>> UpdateOrderItemDetail(OrderItemsDto requestData)
+        {
+            return await _context.GetSingleAsync<AddEntityDto<int>>(UPDATEORDERITEMDETAIL, new
+            {
+                requestData.OrderItemId,
+                requestData.OrderId,
+                requestData.ChemicalName,
+                requestData.CatalogId,
+                requestData.MdlNumber,
+                requestData.CasNumber,
+                requestData.RequestDate,
+                requestData.PromiseDate,
+                requestData.OrderPriority,
+                requestData.Note,
+                requestData.EntityType,
+                requestData.UpdatedBy,
             }, CommandType.StoredProcedure);
         }
     }

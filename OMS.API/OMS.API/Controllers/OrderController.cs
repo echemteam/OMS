@@ -4,7 +4,8 @@ using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Address;
 using OMS.Domain.Entities.API.Request.CustomerDocuments;
 using OMS.Domain.Entities.API.Request.OrderAddress;
- 
+using OMS.Domain.Entities.API.Request.OrderContact;
+using OMS.Domain.Entities.API.Request.OrderItem;
 using OMS.Domain.Entities.API.Request.Orders;
 using OMS.Domain.Entities.API.Response.Orders;
 using OMS.Domain.Entities.Entity.CommonEntity;
@@ -15,7 +16,7 @@ namespace OMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-   [Authorize]
+    [Authorize]
     //[CheckClientIpActionFilter]
     public class OrderController : BaseController
     {
@@ -136,6 +137,28 @@ namespace OMS.API.Controllers
                 return APISucessResponce<object>(deleteItem);
             }
             return APISucessResponce(OrderDocumentId);
+        }
+        [HttpPost("UpdateOrderContact")]
+        public async Task<IActionResult> UpdateOrderContact(UpdateOrderContactRequest requestData)
+        {
+            AddEntityDto<int> responseData = new();
+            if (requestData != null)
+            {
+                responseData = await _serviceManager.orderServices.UpdateOrderContact(requestData);
+                return APISucessResponce(responseData);
+            }
+            return APISucessResponce(responseData);
+        }
+        [HttpPost("UpdateOrderItemDetail")]
+        public async Task<IActionResult> UpdateOrderItemDetail(UpdateOrderItemDetailRequest requestData)
+        {
+            AddEntityDto<int> responseData = new();
+            if (requestData != null)
+            {
+                responseData = await _serviceManager.orderServices.UpdateOrderItemDetail(requestData, CurrentUserId);
+                return APISucessResponce(responseData);
+            }
+            return APISucessResponce(responseData);
         }
         #endregion
     }

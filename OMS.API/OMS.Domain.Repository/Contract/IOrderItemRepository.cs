@@ -6,5 +6,6 @@ namespace OMS.Domain.Repository.Contract
     public interface IOrderItemRepository
     {
         Task<AddEntityDto<int>> AddOrderItem(OrderItemsDto requestData);
+        Task<AddEntityDto<int>> UpdateOrderItemDetail(OrderItemsDto requestData);
     }
 }
