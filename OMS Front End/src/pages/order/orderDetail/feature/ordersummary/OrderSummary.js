@@ -16,16 +16,24 @@ const OrderSummary = ({ orderDetails }) => {
   const [getFileType, setGetFileType] = useState([]);
   const [selectedDocument, setSelectedDocument] = useState(null);
 
-  const [Downalod, { isFetching: isDownalodFetching, isSuccess: isDownalodSucess, data: isDownalodData }] = useLazyDownloadDocumentQuery();
+  const [
+    Downalod,
+    {
+      isFetching: isDownalodFetching,
+      isSuccess: isDownalodSucess,
+      data: isDownalodData,
+    },
+  ] = useLazyDownloadDocumentQuery();
 
   const handleToggleModalPDF = () => {
     if (orderDetails?.poNumber) {
       // const documentNames = orderDetails.orderDocumentList?.filter(doc => doc.documentName).map(doc => doc.documentName)[0];
-      const details = orderDetails.orderDocumentList?.find(doc => doc.documentTypeId === 0 || doc.documentTypeId === "");
+      const details = orderDetails.orderDocumentList?.find(
+        (doc) => doc.documentTypeId === 0 || doc.documentTypeId === ""
+      );
       if (details) {
         handleDocumentAction(details?.documentName);
-      }
-      else {
+      } else {
         ToastService.error("File not found");
       }
     } else {
@@ -43,7 +51,6 @@ const OrderSummary = ({ orderDetails }) => {
       setOrderSummaryDetails(orderDetails);
     }
   }, [orderDetails]);
-
 
   useEffect(() => {
     if (!isDownalodFetching && isDownalodSucess && isDownalodData) {
@@ -138,15 +145,17 @@ const OrderSummary = ({ orderDetails }) => {
                   <div className="desc-detail">
                     {/* &nbsp;:&nbsp;<span>Exelixis Inc.</span> */}
                     &nbsp;:&nbsp;
-                    <span className="name-ellipsis">{ordersummaryDetails?.subCustomerName || "N/A"}</span>
+                    <span className="name-ellipsis">
+                      {ordersummaryDetails?.subCustomerName || "N/A"}
+                    </span>
                     {ordersummaryDetails?.subCustomerId ? (
                       <div className="info-icon info-user">
                         <Iconify icon="ep:info-filled" className="info" />
                         {/* Customer Detail Model Start */}
                         <CustomerDetailsModel />
                         {/* Customer Detail Model End */}
-                      </div>)
-                      : null}
+                      </div>
+                    ) : null}
                   </div>
                 </div>
                 <div className="desc-section">
@@ -164,7 +173,7 @@ const OrderSummary = ({ orderDetails }) => {
                   </div>
                 </div>
               </div>
-              <div className="desc-section">
+              <div className="col-xxl-5 col-xl-6 col-lg-6 col-md-6 col-12 custom-col-6">
                 <div className="desc-section right-status-sec">
                   <div className="key-icon-part">
                     <Iconify icon="f7:status" className="open-bar" />
@@ -235,8 +244,9 @@ const OrderSummary = ({ orderDetails }) => {
 
 export default OrderSummary;
 
-
-{/* <span className="name-ellipsis">{ordersummaryDetails?.subCustomerName || "N/A"}</span> */ }
+{
+  /* <span className="name-ellipsis">{ordersummaryDetails?.subCustomerName || "N/A"}</span> */
+}
 // {
 //   ordersummaryDetails?.subCustomerId ? (
 //     <div className="info-icon info-user">
