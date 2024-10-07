@@ -206,7 +206,24 @@ namespace OMS.Application.Services.Order
             responseData = await repositoryManager.order.AddOrderDocuments(orderDocumentsDto, documentDataTable);
             return responseData;
         }
+        public async Task<GetOrderItemByOrderItemIdResponse> GetOrderItemByOrderItemId(int orderItemId)
+        {
+            var orderItemDetails = await repositoryManager.order.GetOrderItemByOrderItemId(orderItemId);
+            if (orderItemDetails == null)
+            {
+                return orderItemDetails!;
+            }
+
+            // Get Address Information
+            AddressResponse orderShippingAddresses = await repositoryManager.order.GetOrderAddressesByOrderId(orderItemDetails.ShippingAddressId);
+
+            orderItemDetails.OrderAddressInformation = new GetOrderAddressByOrderIdResponse
+            {
+                ShippingAddress = orderShippingAddresses
+            };
+            return orderItemDetails!;
+        }
+        #endregion
     }
-    #endregion
 }
 
