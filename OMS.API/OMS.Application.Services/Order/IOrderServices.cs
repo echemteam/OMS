@@ -24,6 +24,6 @@ namespace OMS.Application.Services.Order
         Task<AddEntityDto<int>> DeleteOrderDocuementById(int OrderDocumentId, int deletedBy);
         Task<AddEntityDto<int>> UpdateOrderContact(UpdateOrderContactRequest requestData);
 
-        Task<AddEntityDto<int>> UpdateOrderItemDetail(UpdateOrderItemDetailRequest requestData, short CurrentUserId);
+        Task<AddEntityDto<int>> UpdateOrderDetail(UpdateOrderDetailRequest requestData, short CurrentUserId);
     }
 }
