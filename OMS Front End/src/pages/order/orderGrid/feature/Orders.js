@@ -85,7 +85,7 @@ if (debouncedSearch === "" ) {
           ...data,
           catalog: data.catalog === "" ? "-" : data.catalog,
           casNumber: data.casNumber === "" ? "-" : data.casNumber,
-          itemUnitPrice:data.itemUnitPrice === "" ? "-" : data.itemUnitPrice,
+          itemUnitPrice:data.itemUnitPrice === "" ? "-" :`$${data.itemUnitPrice}`,
           status:data.status === "" ? "-" : data.status,
           deliveryMethod:data.deliveryMethod === "" ? "-" : data.deliveryMethod,
         }));

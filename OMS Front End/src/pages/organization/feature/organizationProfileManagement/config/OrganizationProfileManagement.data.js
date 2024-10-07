@@ -10,7 +10,7 @@ export const OrganizationProfileManagementdata = {
     formFields: [
         {
             id: "attachment",
-            lable: "attachment ",
+            lable: "Organization Logo",
             Field_Name: "attachment",
             fieldType: FormFieldTypes.IMAGE,
             dataField: "attachment",

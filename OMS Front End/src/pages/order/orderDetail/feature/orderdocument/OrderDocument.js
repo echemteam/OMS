@@ -6,8 +6,35 @@ import { AppIcons } from "../../../../../data/appIcons";
 import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
 import AddMultipleOrderDocument from "./features/AddMultipleOrderDocument";
 
-const OrderDocument = ({ orderDetails, onRefreshOrderDetails }) => {
+const getFileExtension = (filename) => {
+  const parts = filename.split(".");
+  return parts.length > 1 ? parts.pop().toLowerCase() : "";
+};
 
+const getFileIcon = (extension) => {
+  switch (extension) {
+    case "pdf":
+      return AppIcons.PdfIcon;
+    case "doc":
+    case "docx":
+      return AppIcons.DocIcon;
+    case "xls":
+    case "xlsx":
+      return AppIcons.XlsIcon;
+    case "ppt":
+    case "pptx":
+      return AppIcons.PptIcon;
+    case "csv":
+      return AppIcons.CsvIcon;
+    case "zip":
+    case "rar":
+      return AppIcons.ZipIcon;
+    default:
+      return AppIcons.defaultFileIcon;
+  }
+};
+
+const OrderDocument = ({ orderDetails, onRefreshOrderDetails }) => {
   const [documentDetails, setDocumentDetails] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -18,21 +45,23 @@ const OrderDocument = ({ orderDetails, onRefreshOrderDetails }) => {
   }, [orderDetails]);
 
   const handleSuccess = () => {
-    handleCloseDocumentModel()
+    handleCloseDocumentModel();
     if (onRefreshOrderDetails) {
-      onRefreshOrderDetails()
+      onRefreshOrderDetails();
     }
-  }
+  };
 
   const handleCloseDocumentModel = () => {
-    setIsModalOpen(false)
-  }
+    setIsModalOpen(false);
+  };
 
   const handleAddDocumentClick = () => {
     setIsModalOpen(true);
-  }
+  };
 
-  const handleDeleteDocumentClick = () => { }
+  const handleViewClick = () => {};
+
+  const handleDeleteDocumentClick = () => {};
 
   return (
     <>
@@ -47,31 +76,41 @@ const OrderDocument = ({ orderDetails, onRefreshOrderDetails }) => {
         >
           <div className="document-list">
             <div className="row">
-              {documentDetails?.map((doc) => (
-                <div className="col-12">
-                  <div className="document-view-sec">
-                    <div class="file-item">
-                      <div className="left-sec">
-                        <Image imagePath={AppIcons.PdfIcon} alt="Document Icon" />
-                        <div class="file-name">
-                          {doc.documentName}
+              {documentDetails?.map((doc) => {
+                const extension = getFileExtension(doc.documentName);
+                const fileIcon = getFileIcon(extension);
+
+                return (
+                  <div className="col-12" key={doc.documentName}>
+                    <div className="document-view-sec">
+                      <div className="file-item">
+                        <div className="left-sec">
+                          <Image imagePath={fileIcon} alt="Document Icon" />{" "}
+                          {/* Dynamic icon */}
+                          <div className="file-name">{doc.documentName}</div>
                         </div>
-                      </div>
-                      <div class="file-actions">
-                        <div className="btn-part pdf-view">
-                          <Iconify
-                            icon="icomoon-free:file-pdf"
-                            className="swap-icon"
-                          />
-                        </div>
-                        <div onClick={handleDeleteDocumentClick} className="btn-part delete-icon">
-                          <Iconify icon="mi:delete" className="swap-icon" />
+                        <div className="file-actions">
+                          <div
+                            onClick={handleViewClick}
+                            className="btn-part pdf-view"
+                          >
+                            <Iconify
+                              icon="icomoon-free:file-pdf"
+                              className="swap-icon"
+                            />
+                          </div>
+                          <div
+                            onClick={handleDeleteDocumentClick}
+                            className="btn-part delete-icon"
+                          >
+                            <Iconify icon="mi:delete" className="swap-icon" />
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </CardSection>
@@ -89,7 +128,6 @@ const OrderDocument = ({ orderDetails, onRefreshOrderDetails }) => {
           onSuccess={handleSuccess}
         />
       </CenterModel>
-
     </>
   );
 };

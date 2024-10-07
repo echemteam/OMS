@@ -11,6 +11,7 @@ namespace OMS.Domain.Repository.Implementation
     {
         #region SP Name
         const string ADDORDERADDRESS = "AddOrderAddress";
+        const string UPDATEORDERADDRESS = "UpdateOrderAddress";
         #endregion
 
         public OrderAddressRepository(DapperContext dapperContext) : base(dapperContext)
@@ -24,6 +25,17 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.BillingAddressId,
                 requestData.ShippingAddressId,
                 requestData.CreatedBy,
+            }, CommandType.StoredProcedure);
+        }
+        public async Task<AddEntityDto<int>> UpdateOrderAddress(OrderAddressDto requestData)
+        {
+            return await _context.GetSingleAsync<AddEntityDto<int>>(UPDATEORDERADDRESS, new
+            {
+                requestData.OrderAddressId,
+                requestData.OrderId,
+                requestData.BillingAddressId,
+                requestData.ShippingAddressId,
+                requestData.UpdatedBy,
             }, CommandType.StoredProcedure);
         }
 

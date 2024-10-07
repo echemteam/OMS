@@ -42,24 +42,24 @@ export const supplierBasicData = {
         }
       }
     },
-    // {
-    //   id: "attachment",
-    //   lable: "Attachment ",
-    //   Field_Name: "Attachment",
-    //   fieldType: FormFieldTypes.IMAGE,
-    //   dataField: "attachment",
-    //   fieldSetting: {
-    //     placeholder: "Upload Attachment",
-    //     allowSpace: true,
-    //     isImageUpload: true,
-    //     isButtonVisible: true,
-    //     isCustomButtonVisible: false,
-    //     acceptedFiles: '.png , .jpg ',
-    //   },
-    //   style: {
-    //     containerCss: "col-xxl-4 col-xl-4 col-md-4 col-4 col-4 mb-input mb-0 custom-file-upload-section",
-    //   },
-    // },
+    {
+      id: "attachment",
+      lable: "Supplier Logo",
+      Field_Name: "Attachment",
+      fieldType: FormFieldTypes.IMAGE,
+      dataField: "attachment",
+      fieldSetting: {
+        placeholder: "Upload Attachment",
+        allowSpace: true,
+        isImageUpload: true,
+        isButtonVisible: true,
+        isCustomButtonVisible: false,
+        acceptedFiles: '.png , .jpg ',
+      },
+      style: {
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-4 col-4 mb-input mb-0 custom-file-upload-section",
+      },
+    },
     {
       id: "dbaName",
       lable: "Doing Business As Name ",
