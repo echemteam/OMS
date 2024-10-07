@@ -4,7 +4,7 @@ import { ContactType } from "../../../../../utils/Enums/commonEnums";
 
 export const contactInformationData = {
   initialState: {
-    endUserId:null,
+    endUserId: null,
     isEndUser: true,
     isPurchasingGiven: true,
     refNumber: "",
@@ -38,7 +38,7 @@ export const contactInformationData = {
         isEnableOnChange: true
       },
       style: {
-        containerCss:"col-xxl-4 col-xl-4 col-md-4 col-12 col-12",
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 col-12",
       },
     },
     {
@@ -58,7 +58,7 @@ export const contactInformationData = {
     {
       id: "endUserId",
       lable: "End User ",
-      Field_Name: "End Name",
+      Field_Name: "End User",
       fieldType: FormFieldTypes.SELECT,
       dataField: "endUserId",
       fieldSetting: {
@@ -69,6 +69,7 @@ export const contactInformationData = {
         validation: [{ type: "require" }],
         isEnableOnChange: true,
       },
+      validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 col-6 mb-input",
       },
@@ -76,10 +77,10 @@ export const contactInformationData = {
         isInputButton: true,
         buttonText: 'Add',
         icon: AppIcons.PlusIcon,
-        GetByID : ContactType.ENDUSER
+        GetByID: ContactType.ENDUSER
       }
     },
-  
+
     {
       id: "invoiceSubmissionId",
       lable: "Invoice Submission ",
@@ -94,6 +95,7 @@ export const contactInformationData = {
         validation: [{ type: "require" }],
         isEnableOnChange: true,
       },
+      validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 col-6 mb-input",
       },
@@ -101,7 +103,7 @@ export const contactInformationData = {
         isInputButton: true,
         buttonText: 'Add',
         icon: AppIcons.PlusIcon,
-        GetByID : ContactType.INVOICESUBMISSION
+        GetByID: ContactType.INVOICESUBMISSION
 
       }
     },
@@ -119,6 +121,7 @@ export const contactInformationData = {
         validation: [{ type: "require" }],
         isEnableOnChange: true,
       },
+      validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 col-6 mb-input",
       },
@@ -126,7 +129,7 @@ export const contactInformationData = {
         isInputButton: true,
         buttonText: 'Add',
         icon: AppIcons.PlusIcon,
-        GetByID : ContactType.PURCHASING
+        GetByID: ContactType.PURCHASING
       }
     },
     {
@@ -147,6 +150,6 @@ export const contactInformationData = {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 col-6 mb-input",
       },
     },
-    
+
   ],
 };
