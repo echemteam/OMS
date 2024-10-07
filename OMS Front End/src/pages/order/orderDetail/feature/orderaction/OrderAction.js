@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import CardSection from "../../../../../components/ui/card/CardSection";
+import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
+import OrderHistory from "./feature/OrderHistory";
 
 const OrderAction = () => {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleToggleHistoryModal = () => {
+    setShowModal(!showModal);
+  };
+
   return (
-    <div>
+    <>
       <div className="order-action-sec">
         <CardSection
           cardTitle="Order Items"
@@ -14,6 +22,7 @@ const OrderAction = () => {
           multipleButton={true}
           isTooltip={true}
           tootipText="History"
+          titleButtonClick={handleToggleHistoryModal}
           rightButtonArray={[
             {
               isIcon: true,
@@ -39,7 +48,15 @@ const OrderAction = () => {
           ]}
         ></CardSection>
       </div>
-    </div>
+      <CenterModel
+        showModal={showModal}
+        handleToggleModal={handleToggleHistoryModal}
+        modalTitle="History"
+        modelSizeClass="w-45"
+      >
+        <OrderHistory />
+      </CenterModel>
+    </>
   );
 };
 
