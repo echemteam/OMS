@@ -3,7 +3,9 @@ using Common.Helper.Export;
 using Common.Helper.Extension;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.CustomerDocuments;
+using OMS.Domain.Entities.API.Request.OrderAddress;
 using OMS.Domain.Entities.API.Request.Orders;
+using OMS.Domain.Entities.API.Request.User;
 using OMS.Domain.Entities.API.Response.Orders;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.CustomerDocuments;
@@ -11,6 +13,7 @@ using OMS.Domain.Entities.Entity.OrderAddress;
 using OMS.Domain.Entities.Entity.OrderDocument;
 using OMS.Domain.Entities.Entity.OrderItems;
 using OMS.Domain.Entities.Entity.Orders;
+using OMS.Domain.Entities.Entity.User;
 using OMS.Domain.Repository;
 using OMS.FileManger.Services;
 using OMS.Prisitance.Entities.Entities;
@@ -206,7 +209,14 @@ namespace OMS.Application.Services.Order
             responseData = await repositoryManager.order.AddOrderDocuments(orderDocumentsDto, documentDataTable);
             return responseData;
         }
+
+        public async Task<AddEntityDto<int>> UpdateOrderAddress(UpdateOrderAddressRequest requestData, short CurrentUserId)
+        {
+            OrderAddressDto order  = requestData.ToMapp<UpdateOrderAddressRequest, OrderAddressDto>();
+            order.UpdatedBy = CurrentUserId;
+            return await repositoryManager.orderAddress.UpdateOrderAddress(order);
+        }
     }
     #endregion
-}
+} 
 
