@@ -953,6 +953,7 @@
           .info-display {
             margin-left: 0px;
             cursor: pointer;
+
             .component-iconify {
               color: var(--themeColor);
               width: 16px !important;
@@ -1031,10 +1032,11 @@
         }
       }
     }
+
     .profile-name-btn {
       .right-info {
         .right-name-btn {
-          .btn-sec{
+          .btn-sec {
             width: 25px;
           }
         }
@@ -1287,6 +1289,8 @@
             &.contact-info {
               flex-direction: column;
               align-items: flex-start;
+
+              font-size: var(--commonFont-small);
 
               .primary-email {
                 display: inline-block;
