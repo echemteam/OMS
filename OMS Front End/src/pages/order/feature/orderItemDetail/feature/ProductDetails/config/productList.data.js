@@ -42,7 +42,7 @@ export const productDetailsList = {
         allowSpace: true,
         isButtonVisible: false,
         isCustomButtonVisible: true,
-        acceptedFiles: ".pdf , .doc , .docx ,.csv , .xlsx , .xls ",
+        acceptedFiles: ".pdf , .doc , .docx ",
       },
       // validation: [{ type: "require" }],
       style: {
