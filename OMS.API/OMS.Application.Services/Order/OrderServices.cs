@@ -3,6 +3,7 @@ using Common.Helper.Export;
 using Common.Helper.Extension;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.OrderAddress;
+using OMS.Domain.Entities.API.Request.OrderItem;
 using OMS.Domain.Entities.API.Request.Orders;
 using OMS.Domain.Entities.API.Response.Orders;
 using OMS.Domain.Entities.Entity.CommonEntity;
@@ -227,6 +228,13 @@ namespace OMS.Application.Services.Order
             OrderAddressDto order = requestData.ToMapp<UpdateOrderAddressRequest, OrderAddressDto>();
             order.UpdatedBy = CurrentUserId;
             return await repositoryManager.orderAddress.UpdateOrderAddress(order);
+        }
+        public async Task<AddEntityDto<int>> UpdateOrderItemDetail(UpdateOrderItemDetailRequest requestData, short CurrentUserId)
+        {
+            OrderItemsDto order = requestData.ToMapp<UpdateOrderItemDetailRequest, OrderItemsDto>();
+            order.UpdatedBy = CurrentUserId;
+            order.EntityType = "OrderItem";
+            return await repositoryManager.orderItem.UpdateOrderItemDetail(order);
         }
         #endregion
     }
