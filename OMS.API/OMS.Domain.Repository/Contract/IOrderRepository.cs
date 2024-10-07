@@ -21,5 +21,7 @@ namespace OMS.Domain.Repository.Contract
         Task<List<GetOrderDocumentByOrderIdResponse>> GetOrderDocumentByOrderId(int orderId);
         Task<AddEntityDto<int>> DeleteOrder(int orderId, int deletedBy);
         Task<AddEntityDto<int>> AddOrderDocuments(OrderDocumentDto orderDocumentsDto, DataTable documentDataTable);
+        Task<GetOrderItemByOrderItemIdResponse> GetOrderItemByOrderItemId(int orderItemId);
+
     }
 }

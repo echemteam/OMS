@@ -76,8 +76,8 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
     }
 
     const handleValidateSuccess = () => {
-        handleShowApprovalList();
         handleModalClose();
+        showApprovalCheckList && handleShowApprovalList();
         !showApprovalCheckList && updateCustomerApproval();
     }
 

@@ -27,6 +27,7 @@ namespace OMS.Domain.Repository.Implementation
         const string DELETEORDERDATA = "DeleteOrderData";
 
         const string ADDORDERDOCUMENTS = "AddOrderDocuments";
+        const string GETORDERDETAILBYORDERITEMID = "GetOrderItemByOrderItemId";
         #endregion
 
         public OrderRepository(DapperContext dapperContext) : base(dapperContext)
@@ -144,6 +145,14 @@ namespace OMS.Domain.Repository.Implementation
                 OrderList = documentDataTable.AsTableValuedParameter("[dbo].[OrderTypeTable]"),
                 orderDocumentsDto.CreatedBy
             }, CommandType.StoredProcedure);
+        }
+        public async Task<GetOrderItemByOrderItemIdResponse> GetOrderItemByOrderItemId(int orderItemId)
+        {
+            GetOrderItemByOrderItemIdResponse orderItemDetails = await _context.GetFrist<GetOrderItemByOrderItemIdResponse>(GETORDERDETAILBYORDERITEMID, new
+            {
+                orderItemId
+            }, commandType: CommandType.StoredProcedure);
+            return orderItemDetails;
         }
         #endregion
     }
