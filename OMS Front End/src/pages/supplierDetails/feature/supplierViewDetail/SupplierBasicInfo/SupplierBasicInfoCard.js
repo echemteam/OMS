@@ -331,18 +331,16 @@ const SupplierBasicInfoCard = ({
         removeFields();
         setShowModal(true);
         setSelectedStatus(selectedOption.value);
-      } else if (
-        selectedOption.value === CustomerSupplierStatus.APPROVED ||
-        selectedOption.value === CustomerSupplierStatus.SUBMITTED
-      ) {
+      } else if (selectedOption.value === CustomerSupplierStatus.SUBMITTED) {
         removeFields();
         if (childRef.current) {
-          childRef.current.callChildFunction(
-            supplierId,
-            selectedOption.value === CustomerSupplierStatus.SUBMITTED
-              ? false
-              : true
-          );
+          childRef.current.callChildFunction(supplierId, false);
+        }
+        setStatusId(selectedOption.value);
+      } else if (selectedOption.value === CustomerSupplierStatus.APPROVED) {
+        removeFields();
+        if (childRef.current) {
+          childRef.current.callChildFunction(supplierId, true);
         }
         setStatusId(selectedOption.value);
       } else if (selectedOption.value === CustomerSupplierStatus.REJECT) {

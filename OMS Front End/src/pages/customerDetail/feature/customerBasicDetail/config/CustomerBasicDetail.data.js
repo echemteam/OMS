@@ -39,7 +39,6 @@ export const customerbasicData = {
         isCustomButtonVisible: false,
         acceptedFiles: ".png , .jpg ",
       },
-      validation: [{ type: "require" }],
       style: {
         containerCss:
           "col-xxl-4 col-xl-4 col-md-4 col-4 col-4 mb-input mb-0 custom-file-upload-section validation-image-uploader",

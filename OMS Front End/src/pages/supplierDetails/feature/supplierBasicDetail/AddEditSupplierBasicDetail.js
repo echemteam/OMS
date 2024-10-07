@@ -125,6 +125,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
                 setFormData(modifyFormFields);
                 setIsRemoveFields(true);
                 // setFieldSetting(formData, 'name', FieldSettingType.INPUTBUTTON, true);
+                // setFieldSetting(formData, 'name', FieldSettingType.ISPRIMARYBUTTONVISIBLE, true);
             }
         };
 
