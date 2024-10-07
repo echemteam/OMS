@@ -774,12 +774,11 @@
 
                         .order-notes {
                           color: var(--textColor);
-                          box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px,
-                            rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+                          box-shadow: 0px 3px 21px 0px rgba(0, 0, 0, 0.2);
                           background-color: var(--whiteColor);
                           border-radius: 5px;
                           font-size: var(--commonFont-medium);
-                          width: 280px;
+                          width: 450px;
                           padding-bottom: 1px;
 
                           .ordercard-title {
@@ -802,7 +801,7 @@
 
                           .ordercard-body {
                             padding: 5px;
-                            border: 1px solid var(--themeColor);
+                            border: 1px solid var(--linkMenu);
                             margin: 7px;
                             border-radius: 5px;
                           }
