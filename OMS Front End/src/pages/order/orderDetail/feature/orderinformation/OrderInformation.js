@@ -18,7 +18,7 @@ const OrderInformation = ({ orderDetails }) => {
     useState(false);
   const [isModelOpenUpdateAddress, setIsModelOpenUpdateAddress] =
     useState(false);
-
+  const [isModelOpenModelUserModel, setIsModelOpenUserModel] = useState(false);
   const onSidebarCloseShippingAddress = () => {
     setIsModelOpenShippingAddress(false);
   };
@@ -37,6 +37,12 @@ const OrderInformation = ({ orderDetails }) => {
     setIsModelOpenUpdateAddress(true);
   };
 
+  const onSidebarCloseUserModel = () => {
+    setIsModelOpenUserModel(false);
+  };
+  const handleToggleModalUserModel = () => {
+    setIsModelOpenUserModel(true);
+  };
   useEffect(() => {
     if (orderDetails) {
       setOrderInfo(orderDetails);
@@ -54,81 +60,86 @@ const OrderInformation = ({ orderDetails }) => {
   }, [orderDetails]);
 
   return (
-    
     <div>
       <CardSection cardTitle="Order Information">
-        {orderDetails ?(
-        <div className="order-info-list">
-          <div className="row">
-            <div className="col-xxl-12 col-lg-12 col-md-12 col-12">
-              
-              <div className="order-title">
-                <span>Order Method &nbsp;:&nbsp;</span>
-                <span className="desc">{orderInfo?.orderMethod}</span>
+        {orderDetails ? (
+          <div className="order-info-list">
+            <div className="row">
+              <div className="col-xxl-12 col-lg-12 col-md-12 col-12">
+                <div className="order-title">
+                  <span>Order Method &nbsp;:&nbsp;</span>
+                  <span className="desc">{orderInfo?.orderMethod}</span>
+                </div>
               </div>
             </div>
-          </div>
-          {/* Address Details */}
-          <div className="row mt-2">
-            {orderAddressDetails?.map((address) => (
-              <div
-                className="col-xxl-6 col-lg-6 col-md-6 col-12"
-                key={address.type}
-              >
-                <div className="order-title">
-                  <span>{address.type} Address &nbsp;:&nbsp;</span>
-                </div>
-                <div className="address-card">
-                  <div className="title-swap-btn">
-                    <span>{address.addressLine1}</span>
-                    <span
-                      className="swap-btn tooltip-div"
-                      onClick={handleToggleModalShippingAddress}
-                    >
-                      <Iconify
-                        icon="icon-park-outline:change"
-                        className="swap-icon"
-                      />
-                      <div className="tooltip-show">
-                        <p>Change Address</p>
-                      </div>
-                      <div className="tooltip-arrow-icon"></div>
-                    </span>
+            {/* Address Details */}
+            <div className="row mt-2">
+              {orderAddressDetails?.map((address) => (
+                <div
+                  className="col-xxl-6 col-lg-6 col-md-6 col-12"
+                  key={address.type}
+                >
+                  <div className="order-title">
+                    <span>{address.type} Address &nbsp;:&nbsp;</span>
                   </div>
-                  <div className="desc-add-sec">
-                    <span>{address?.addressLine2}</span>
-                    <span>
-                      {address?.cityName},{" "}
-                      {address.stateCode
-                        ? address.stateCode
-                        : address.stateName}{" "}
-                      {address?.zipCode}
-                    </span>
-                    <span>{address?.countryName}</span>
+                  <div className="address-card">
+                    <div className="title-swap-btn">
+                      <span>{address.addressLine1}</span>
+                      <span
+                        className="swap-btn tooltip-div"
+                        onClick={handleToggleModalShippingAddress}
+                      >
+                        <Iconify
+                          icon="icon-park-outline:change"
+                          className="swap-icon"
+                        />
+                        <div className="tooltip-show">
+                          <p>Change Address</p>
+                        </div>
+                        <div className="tooltip-arrow-icon"></div>
+                      </span>
+                    </div>
+                    <div className="desc-add-sec">
+                      <span>{address?.addressLine2}</span>
+                      <span>
+                        {address?.cityName},{" "}
+                        {address.stateCode
+                          ? address.stateCode
+                          : address.stateName}{" "}
+                        {address?.zipCode}
+                      </span>
+                      <span>{address?.countryName}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
 
-          {/* Contact Details */}
-          <div className="row mt-2">
-            {orderContactDetails?.map((contact, index) => (
-              <div className="col-xxl-6 col-lg-6 col-md-6 col-12" key={index}>
-                <div className="order-title">
-                  <span>{contact?.contactType} &nbsp;:&nbsp;</span>
-                </div>
-
+            {/* Contact Details */}
+            <div className="row mt-2">
+              {orderContactDetails?.map((contact, index) => (
+                <div className="col-xxl-6 col-lg-6 col-md-6 col-12" key={index}>
+                  <div className="order-title">
+                    <span>{contact?.contactType} &nbsp;:&nbsp;</span>
+                  </div>
+                  {/* 
                 <UserCardDetail
                   contact={contact}
                   index={index}
                   handleToggleModalUsers={handleToggleModalShippingAddress}
-                />
-              </div>
-            ))}
+                /> */}
+                  <UserCardDetail
+                    contact={contact}
+                    index={index}
+                    handleToggleModalUsers={handleToggleModalUserModel}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-        ):<DataLoader/>}
+        ) : (
+          <DataLoader />
+        )}
       </CardSection>
       <SidebarModel
         modalTitle="Change Shipping Address"
@@ -148,6 +159,15 @@ const OrderInformation = ({ orderDetails }) => {
         isOpen={isModelOpenUpdateAddress}
       >
         <div>Update Shipping Address</div>
+      </SidebarModel>
+      <SidebarModel
+        modalTitle="Update Shipping Address"
+        contentClass="content-50"
+        onClose={onSidebarCloseUserModel}
+        modalTitleIcon={AppIcons.AddIcon}
+        isOpen={isModelOpenModelUserModel}
+      >
+        <UsercardModel />
       </SidebarModel>
     </div>
   );

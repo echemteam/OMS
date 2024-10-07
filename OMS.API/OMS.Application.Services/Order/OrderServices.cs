@@ -3,11 +3,13 @@ using Common.Helper.Export;
 using Common.Helper.Extension;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.OrderAddress;
+using OMS.Domain.Entities.API.Request.OrderContact;
 using OMS.Domain.Entities.API.Request.OrderItem;
 using OMS.Domain.Entities.API.Request.Orders;
 using OMS.Domain.Entities.API.Response.Orders;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.OrderAddress;
+using OMS.Domain.Entities.Entity.OrderContacts;
 using OMS.Domain.Entities.Entity.OrderDocument;
 using OMS.Domain.Entities.Entity.OrderItems;
 using OMS.Domain.Entities.Entity.Orders;
@@ -205,7 +207,7 @@ namespace OMS.Application.Services.Order
             responseData = await repositoryManager.order.AddOrderDocuments(orderDocumentsDto, documentDataTable);
             return responseData;
         }
-        public async Task<GetOrderItemByOrderItemIdResponse> GetOrderItemByOrderItemId(int orderItemId)
+        public async Task<GetOrderItemByOrderItemIdResponse> GetOrderItemByOrderItemId(long orderItemId)
         {
             var orderItemDetails = await repositoryManager.order.GetOrderItemByOrderItemId(orderItemId);
             if (orderItemDetails == null)
@@ -222,12 +224,27 @@ namespace OMS.Application.Services.Order
             };
             return orderItemDetails!;
         }
-
+        public async Task<AddEntityDto<long>> UpdateOrderItemByOrderItemId(UpdateOrderItemByOrderItemIdRequest updateOrderItemRequest, short CurrentUserId)
+        {
+            OrderItemsDto orderItemsDto = updateOrderItemRequest.ToMapp<UpdateOrderItemByOrderItemIdRequest, OrderItemsDto>();
+            orderItemsDto.UpdatedBy = CurrentUserId;
+            return await repositoryManager.order.UpdateOrderItemByOrderItemId(orderItemsDto);
+        }
         public async Task<AddEntityDto<int>> UpdateOrderAddress(UpdateOrderAddressRequest requestData, short CurrentUserId)
         {
             OrderAddressDto order = requestData.ToMapp<UpdateOrderAddressRequest, OrderAddressDto>();
             order.UpdatedBy = CurrentUserId;
             return await repositoryManager.orderAddress.UpdateOrderAddress(order);
+        }
+        public async Task<AddEntityDto<int>> DeleteOrderDocuementById(int OrderDocumentId, int deletedBy)
+        {
+            return await repositoryManager.order.DeleteOrderDocuementById(OrderDocumentId, deletedBy);
+        }
+        public async Task<AddEntityDto<int>> UpdateOrderContact(UpdateOrderContactRequest requestData)
+        {
+            OrderContactsDto order = requestData.ToMapp<UpdateOrderContactRequest, OrderContactsDto>();
+             
+            return await repositoryManager.orderContact.UpdateOrderContact(order);
         }
         public async Task<AddEntityDto<int>> UpdateOrderItemDetail(UpdateOrderItemDetailRequest requestData, short CurrentUserId)
         {

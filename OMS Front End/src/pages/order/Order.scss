@@ -21,6 +21,7 @@
 }
 
 .verify-product-group {
+
   // margin-top: 36px;
   .loader-section {
     padding: 0;
@@ -292,9 +293,10 @@
   .order-summery-list {
     .desc-section {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       margin-bottom: 5px;
       min-height: 24px;
+
       span {
         font-size: var(--commonFont-medium);
       }
@@ -321,7 +323,7 @@
 
       .desc-detail {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
 
         .name-ellipsis {
           white-space: nowrap;
@@ -333,6 +335,7 @@
         span {
           color: var(--textColor2);
           line-height: normal;
+          margin-top: 4px;
         }
 
         .info-icon {
@@ -368,7 +371,6 @@
               border-radius: 5px;
               font-weight: 600;
               font-size: var(--commonFont-small);
-              white-space: nowrap;
 
               &.pending {
                 background-color: #ffe5cc;
@@ -711,15 +713,18 @@
                         .address-card {
                           display: unset !important;
                         }
+
                         .note-card {
                           display: unset !important;
                         }
                       }
+
                       .address-card {
                         position: absolute;
                         top: 100%;
                         display: none;
                         z-index: 99;
+
                         .shipping-address {
                           color: var(--textColor);
                           box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px,
@@ -729,12 +734,14 @@
                           font-size: var(--commonFont-medium);
                           width: 280px;
                           min-height: 136px;
+
                           .addresscard-title {
                             font-size: var(--commonFont);
                             position: relative;
                             padding: 5px 8px;
                             color: var(--themeColor);
                             font-weight: 600;
+
                             &::before {
                               content: "";
                               width: 100%;
@@ -745,22 +752,26 @@
                               background-color: var(--inputBorder);
                             }
                           }
+
                           .addresscard-body {
                             padding: 5px;
                             border: 1px solid var(--themeColor);
                             margin: 7px;
                             border-radius: 5px;
+
                             span {
                               display: block;
                             }
                           }
                         }
                       }
+
                       .note-card {
                         position: absolute;
                         top: 100%;
                         display: none;
                         z-index: 99;
+
                         .order-notes {
                           color: var(--textColor);
                           box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px,
@@ -770,12 +781,14 @@
                           font-size: var(--commonFont-medium);
                           width: 280px;
                           padding-bottom: 1px;
+
                           .ordercard-title {
                             font-size: var(--commonFont);
                             position: relative;
                             padding: 5px 8px;
                             color: var(--themeColor);
                             font-weight: 600;
+
                             &::before {
                               content: "";
                               width: 100%;
@@ -786,6 +799,7 @@
                               background-color: var(--inputBorder);
                             }
                           }
+
                           .ordercard-body {
                             padding: 5px;
                             border: 1px solid var(--themeColor);
@@ -873,10 +887,10 @@
 
 .contact-card {
   background: var(--whiteColor);
-  // box-shadow: 0px 5px 22px -5px #8fa5bf;
   border: 1px solid var(--themeColorLight);
   padding: 10px;
   border-radius: 7px;
+  margin-bottom: 15px;
 
   .profile-name-btn {
     display: flex;
@@ -899,6 +913,7 @@
 
     .right-info {
       width: calc(100% - 38px);
+      position: relative;
 
       .right-name-btn {
         display: flex;
@@ -937,6 +952,7 @@
 
           .info-display {
             margin-left: 0px;
+            cursor: pointer;
 
             .component-iconify {
               color: var(--themeColor);
@@ -949,24 +965,79 @@
 
       .user-details {
         font-size: var(--commonFont-medium);
+
         div {
           color: var(--textColor2);
           line-height: normal;
           display: flex;
           align-items: center;
 
-          &.email {
-          }
+          &.email {}
 
           &.number {
             margin-top: 3px;
             font-size: var(--commonFont-medium);
+
+            span {
+              font-size: var(--commonFont-small);
+            }
           }
 
           .component-iconify {
             width: 15px !important;
             height: 15px !important;
             margin-right: 5px;
+          }
+        }
+      }
+
+      .checkbox-sec {
+        position: absolute;
+        right: -15px;
+        top: -15px;
+
+        .checkbox {
+          margin-right: 0;
+
+          .checkbox-label {
+            min-width: 25px;
+            min-height: 25px;
+            max-width: 25px;
+            max-height: 25px;
+            border-radius: 100%;
+
+            &::before {
+              min-width: 25px;
+              min-height: 25px;
+              max-width: 25px;
+              max-height: 25px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.card-list-popup {
+    .info-user {
+      .customer-popup-sec {
+        right: -10px;
+        left: unset;
+
+        .popup-body-sec {
+          &::before {
+            left: unset;
+            right: -8px;
+          }
+        }
+      }
+    }
+
+    .profile-name-btn {
+      .right-info {
+        .right-name-btn {
+          .btn-sec {
+            width: 25px;
           }
         }
       }
@@ -992,8 +1063,7 @@
   .add-desc {
     .add-line-part {
       span {
-        &.add-info {
-        }
+        &.add-info {}
       }
 
       &.first-add-sec {
@@ -1220,6 +1290,8 @@
               flex-direction: column;
               align-items: flex-start;
 
+              font-size: var(--commonFont-small);
+
               .primary-email {
                 display: inline-block;
                 position: relative;
@@ -1292,14 +1364,17 @@
     .order-summery-list {
       .desc-section {
         min-height: 22px;
+
         .key-icon-part {
           min-width: 82px;
         }
+
         .desc-detail {
           .name-ellipsis {
             max-width: 130px;
           }
         }
+
         &.right-status-sec {
           .key-icon-part {
             min-width: 90px;
@@ -1345,5 +1420,35 @@
   .custom-col-5 {
     width: 41.66667%;
     flex: 0 0 auto;
+  }
+}
+
+.timeline-section {
+  &.order-timeline {
+    .timeline-ui {
+      height: calc(100vh - 200px);
+
+      .msg-desc {
+        ul {
+          li {
+            background: var(--bg-main-content);
+
+            .notes-desc {
+              &::before {
+                border-left-color: var(--bg-main-content) !important;
+              }
+            }
+
+            &:nth-child(even) {
+              .notes-desc {
+                &::before {
+                  border-right-color: var(--bg-main-content) !important;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

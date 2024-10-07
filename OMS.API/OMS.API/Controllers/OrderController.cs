@@ -4,6 +4,7 @@ using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Address;
 using OMS.Domain.Entities.API.Request.CustomerDocuments;
 using OMS.Domain.Entities.API.Request.OrderAddress;
+using OMS.Domain.Entities.API.Request.OrderContact;
 using OMS.Domain.Entities.API.Request.OrderItem;
 using OMS.Domain.Entities.API.Request.Orders;
 using OMS.Domain.Entities.API.Response.Orders;
@@ -15,7 +16,7 @@ namespace OMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+   [Authorize]
     //[CheckClientIpActionFilter]
     public class OrderController : BaseController
     {
@@ -95,11 +96,24 @@ namespace OMS.API.Controllers
             var addItem = await _serviceManager.orderServices.AddOrderDocuments(requestData, CurrentUserId);
             return APISucessResponce(addItem);
         }
+
         [HttpGet("GetOrderItemByOrderItemId")]
-        public async Task<IActionResult> GetOrderItemByOrderItemId(int orderItemId)
+        public async Task<IActionResult> GetOrderItemByOrderItemId(long orderItemId)
         {
             GetOrderItemByOrderItemIdResponse responseData = await _serviceManager.orderServices.GetOrderItemByOrderItemId(orderItemId).ConfigureAwait(true);
             return APISucessResponce(responseData);
+        }
+
+        [HttpPost("UpdateOrderItemByOrderItemId")]
+        public async Task<IActionResult> UpdateOrderItemByOrderItemId(UpdateOrderItemByOrderItemIdRequest requestData)
+        {
+            AddEntityDto<long> responseData = new();
+            if (requestData != null)
+            {
+                responseData = await _serviceManager.orderServices.UpdateOrderItemByOrderItemId(requestData, CurrentUserId);
+                return APISucessResponce(responseData);
+            }
+            return APISucessResponce<object>(responseData);
         }
         [HttpPost("UpdateOrderAddress")]
         public async Task<IActionResult> UpdateOrderAddress(UpdateOrderAddressRequest requestData)
@@ -108,6 +122,29 @@ namespace OMS.API.Controllers
             if (requestData != null)
             {
                 responseData = await _serviceManager.orderServices.UpdateOrderAddress(requestData, CurrentUserId);
+                return APISucessResponce(responseData);
+            }
+            return APISucessResponce(responseData);
+        }
+
+        [HttpDelete("DeleteOrderDocuementById")]
+        public async Task<IActionResult> DeleteOrderDocuementById(int OrderDocumentId)
+        {
+            if (OrderDocumentId > 0)
+            {
+                int deletedBy = CurrentUserId;
+                var deleteItem = await _serviceManager.orderServices.DeleteOrderDocuementById(OrderDocumentId, deletedBy).ConfigureAwait(true);
+                return APISucessResponce<object>(deleteItem);
+            }
+            return APISucessResponce(OrderDocumentId);
+        }
+        [HttpPost("UpdateOrderContact")]
+        public async Task<IActionResult> UpdateOrderContact(UpdateOrderContactRequest requestData)
+        {
+            AddEntityDto<int> responseData = new();
+            if (requestData != null)
+            {
+                responseData = await _serviceManager.orderServices.UpdateOrderContact(requestData);
                 return APISucessResponce(responseData);
             }
             return APISucessResponce(responseData);

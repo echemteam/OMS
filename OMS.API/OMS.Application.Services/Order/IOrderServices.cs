@@ -1,4 +1,5 @@
 ﻿using OMS.Domain.Entities.API.Request.OrderAddress;
+using OMS.Domain.Entities.API.Request.OrderContact;
 using OMS.Domain.Entities.API.Request.OrderItem;
 using OMS.Domain.Entities.API.Request.Orders;
 using OMS.Domain.Entities.API.Response.Orders;
@@ -17,8 +18,12 @@ namespace OMS.Application.Services.Order
         Task<GetOrderDetailByOrderIdResponse> GetOrderDetailByOrderId(int orderId);
         Task<AddEntityDto<int>> DeleteOrder(int orderId, int deletedBy);
         Task<AddEntityDto<int>> AddOrderDocuments(AddOrderDocumentsRequest requestData, short CurrentUserId);
-        Task<GetOrderItemByOrderItemIdResponse> GetOrderItemByOrderItemId(int orderItemId);
+        Task<GetOrderItemByOrderItemIdResponse> GetOrderItemByOrderItemId(long orderItemId);
+        Task<AddEntityDto<long>> UpdateOrderItemByOrderItemId(UpdateOrderItemByOrderItemIdRequest updateOrderItemRequest, short CurrentUserId);
         Task<AddEntityDto<int>> UpdateOrderAddress(UpdateOrderAddressRequest requestData, short CurrentUserId);
+        Task<AddEntityDto<int>> DeleteOrderDocuementById(int OrderDocumentId, int deletedBy);
+        Task<AddEntityDto<int>> UpdateOrderContact(UpdateOrderContactRequest requestData);
+
         Task<AddEntityDto<int>> UpdateOrderItemDetail(UpdateOrderItemDetailRequest requestData, short CurrentUserId);
     }
 }
