@@ -197,11 +197,11 @@ const ContactDetails = (props) => {
     switch (dataField) {
       case "isEndUser":
         if (data) {
-          updatedFormData.formFields = manageRequiredFields(updatedFormData.formFields, 'endUserId', false);
+          updatedFormData.formFields = manageRequiredFieldsValidation(updatedFormData.formFields, 'endUserId', false);
           setFieldSetting(updatedFormData, 'endUserId', FieldSettingType.DISABLED, false);
           setEndUserEnableDisableButton(true);
         } else {
-          updatedFormData.formFields = manageRequiredFields(updatedFormData.formFields, 'endUserId', true);
+          updatedFormData.formFields = manageRequiredFieldsValidation(updatedFormData.formFields, 'endUserId', true);
           setFieldSetting(updatedFormData, 'endUserId', FieldSettingType.DISABLED, true);
           basicInformation.current.updateFormFieldValue({
             endUserId: null,
@@ -212,11 +212,11 @@ const ContactDetails = (props) => {
         break;
       case "isInvoiceSubmission":
         if (data) {
-          updatedFormData.formFields = manageRequiredFields(updatedFormData.formFields, 'invoiceSubmissionId', false);
+          updatedFormData.formFields = manageRequiredFieldsValidation(updatedFormData.formFields, 'invoiceSubmissionId', false);
           setFieldSetting(updatedFormData, 'invoiceSubmissionId', FieldSettingType.DISABLED, false);
           setInvoiceEnableDisableButton(true);
         } else {
-          updatedFormData.formFields = manageRequiredFields(updatedFormData.formFields, 'invoiceSubmissionId', true);
+          updatedFormData.formFields = manageRequiredFieldsValidation(updatedFormData.formFields, 'invoiceSubmissionId', true);
           updatedFormData.formFields = updatedFormData.formFields.map((field) => {
             if (field.id === 'invoiceSubmissionId') {
               const { validation, ...rest } = field;
@@ -234,11 +234,11 @@ const ContactDetails = (props) => {
         break;
       case "isPurchasingGiven":
         if (data) {
-          updatedFormData.formFields = manageRequiredFields(updatedFormData.formFields, 'purchasingId', false);
+          updatedFormData.formFields = manageRequiredFieldsValidation(updatedFormData.formFields, 'purchasingId', false);
           setFieldSetting(updatedFormData, 'purchasingId', FieldSettingType.DISABLED, false);
           setPurchasingEnableDisableButton(true);
         } else {
-          updatedFormData.formFields = manageRequiredFields(updatedFormData.formFields, 'purchasingId', true);
+          updatedFormData.formFields = manageRequiredFieldsValidation(updatedFormData.formFields, 'purchasingId', true);
           setFieldSetting(updatedFormData, 'purchasingId', FieldSettingType.DISABLED, true);
           basicInformation.current.updateFormFieldValue({
             purchasingId: null,
@@ -253,7 +253,7 @@ const ContactDetails = (props) => {
     setFormData(updatedFormData);
   };
 
-  const manageRequiredFields = (formFields, fieldsId, isRemove) => {
+  const manageRequiredFieldsValidation = (formFields, fieldsId, isRemove) => {
     return formFields.map((field) => {
       if (field.id === fieldsId) {
         if (isRemove) {
