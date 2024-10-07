@@ -50,6 +50,7 @@ export const orderListMolGridConfig = {
     {
       name: "Price",
       fieldName: "itemsTotal",
+      colType: GridColumnType.MONEY,
       allowShort: false,
       colStyle: {
         width: "10%",

@@ -91,7 +91,7 @@ const OrderItemList = () => {
               <span>Cas Number</span>
               <span>Unit</span>
               <span>Pack Size</span>
-              <span>Total Price</span>
+              <span>Price</span>
               <span>Status</span>
             </div>
           </div>
@@ -107,7 +107,7 @@ const OrderItemList = () => {
                       <span>{item.casNumber ? item.casNumber :"-"}</span>
                       <span>{item.unit ? item.unit : "-"}</span>
                       <span>{item.packSize ? item.packSize: "-"}</span>
-                      <span>{item.subTotalPrice ?item.subTotalPrice :"-"}</span>
+                      <span>{item.itemUnitPrice ?`$${item.itemUnitPrice}` :"-"}</span>
                   
                       <span>
                         <div className={`status-btn ${item.statusClass}`}>
