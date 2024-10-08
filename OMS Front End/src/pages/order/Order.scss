@@ -293,7 +293,7 @@
   .order-summery-list {
     .desc-section {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       margin-bottom: 5px;
       min-height: 24px;
 
@@ -323,7 +323,7 @@
 
       .desc-detail {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
 
         .name-ellipsis {
           white-space: nowrap;
@@ -335,6 +335,7 @@
         span {
           color: var(--textColor2);
           line-height: normal;
+          margin-top: 4px;
         }
 
         .info-icon {
@@ -370,7 +371,6 @@
               border-radius: 5px;
               font-weight: 600;
               font-size: var(--commonFont-small);
-              white-space: nowrap;
 
               &.pending {
                 background-color: #ffe5cc;
@@ -446,40 +446,50 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin: 7px 0 0 0;
+      margin: 7px 0 4px 0;
+      border: 1px solid var(--linkMenu);
+      border-radius: 5px;
+      box-shadow: 0 0 13px -6px rgb(155 155 178);
+      padding: 4px 0px 4px 6px;
 
       .left-sec {
         display: flex;
         align-items: center;
         width: calc(100% - 90px);
         margin-right: 10px;
-        border: 1px solid var(--inputBorder);
-        padding: 4px;
-        border-radius: 5px;
 
         img {
-          width: 24px;
+          width: 20px;
           margin-right: 10px;
         }
 
         .file-name {
           flex-grow: 1;
+          font-size: var(--commonFont-medium);
         }
       }
 
       .file-actions {
         display: flex;
+        justify-content: center;
         gap: 10px;
         width: 80px;
 
         .btn-part {
-          width: 35px;
-          height: 35px;
+          width: 30px;
+          height: 30px;
           border-radius: 100%;
           padding: 3px;
           display: flex;
           align-items: center;
           justify-content: center;
+
+          .component-iconify {
+            width: 16px !important;
+            height: 16px !important;
+            align-items: center;
+            justify-content: center;
+          }
 
           &.pdf-view {
             background: #f0effc;
@@ -774,12 +784,11 @@
 
                         .order-notes {
                           color: var(--textColor);
-                          box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px,
-                            rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+                          box-shadow: 0px 3px 21px 0px rgba(0, 0, 0, 0.2);
                           background-color: var(--whiteColor);
                           border-radius: 5px;
                           font-size: var(--commonFont-medium);
-                          width: 280px;
+                          width: 450px;
                           padding-bottom: 1px;
 
                           .ordercard-title {
@@ -802,7 +811,7 @@
 
                           .ordercard-body {
                             padding: 5px;
-                            border: 1px solid var(--themeColor);
+                            border: 1px solid var(--linkMenu);
                             margin: 7px;
                             border-radius: 5px;
                           }
@@ -970,16 +979,17 @@
           color: var(--textColor2);
           line-height: normal;
           display: flex;
-          align-items: center;
-
+          align-items: flex-start;
+          word-break: break-all;
           &.email {}
 
           &.number {
-            margin-top: 3px;
+            margin-top: 2px;
             font-size: var(--commonFont-medium);
 
             span {
               font-size: var(--commonFont-small);
+              padding-top: 4px;
             }
           }
 
@@ -1019,6 +1029,8 @@
   }
 
   &.card-list-popup {
+    height: 100%;
+    margin-bottom: 0;
     .info-user {
       .customer-popup-sec {
         right: -10px;
@@ -1034,8 +1046,19 @@
     }
 
     .profile-name-btn {
+      .profile-icon-sec {
+        min-width: 33px;
+        min-height: 33px;
+        max-width: 33px;
+        max-height: 33px;
+        font-size: var(--commonFont-small);
+      }
+
       .right-info {
         .right-name-btn {
+          .user-name {
+            margin-bottom: 2px;
+          }
           .btn-sec {
             width: 25px;
           }
@@ -1055,10 +1078,14 @@
 .address-card-main {
   padding: 10px;
   background: var(--whiteColor);
-  box-shadow: 0 0 15px -6px rgb(106, 129, 180);
+  // box-shadow: 0 0 15px -6px rgb(106, 129, 180);
+  border: 1px solid var(--linkMenu);
   border-radius: 5px;
   font-size: var(--commonFont-medium);
   white-space: nowrap;
+  height: 100%;
+  width: 100%;
+  transition: 0.5s all;
 
   .add-desc {
     .add-line-part {
@@ -1071,6 +1098,7 @@
         align-items: flex-start;
         justify-content: space-between;
         position: relative;
+        font-weight: 700;
 
         .checkbox-part {
           position: absolute;
@@ -1098,6 +1126,11 @@
         }
       }
     }
+  }
+
+  &.active-card {
+    border-color: var(--themeColor);
+    box-shadow: 0 0 15px -6px rgb(106, 129, 180);
   }
 }
 
@@ -1371,7 +1404,7 @@
 
         .desc-detail {
           .name-ellipsis {
-            max-width: 130px;
+            max-width: 110px;
           }
         }
 
@@ -1420,5 +1453,35 @@
   .custom-col-5 {
     width: 41.66667%;
     flex: 0 0 auto;
+  }
+}
+
+.timeline-section {
+  &.order-timeline {
+    .timeline-ui {
+      height: calc(100vh - 200px);
+
+      .msg-desc {
+        ul {
+          li {
+            background: var(--bg-main-content);
+
+            .notes-desc {
+              &::before {
+                border-left-color: var(--bg-main-content) !important;
+              }
+            }
+
+            &:nth-child(even) {
+              .notes-desc {
+                &::before {
+                  border-right-color: var(--bg-main-content) !important;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
