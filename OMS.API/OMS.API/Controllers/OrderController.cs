@@ -161,7 +161,7 @@ namespace OMS.API.Controllers
             return APISucessResponce(responseData);
         }
         [HttpDelete("DeleteOrderItems")]
-        public async Task<IActionResult> DeleteOrderItems(int orderItemId)
+        public async Task<IActionResult> DeleteOrderItems(long orderItemId)
         {
             if (orderItemId > 0)
             {
