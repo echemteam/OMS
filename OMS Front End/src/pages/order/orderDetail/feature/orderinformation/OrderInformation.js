@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useImperativeHandle, useState } from "react";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
 import { AppIcons } from "../../../../../data/appIcons";
@@ -14,7 +14,7 @@ import {
 } from "../../../../../app/services/addressAPI";
 import AddEditAddress from "../../../../../common/features/component/Address/feature/AddEditAddress";
 
-const OrderInformation = ({ orderDetails }) => {
+const OrderInformation = ({ orderDetails, orderItemShippingAddRef }) => {
   const [orderInfo, setOrderInfo] = useState(null);
   const [orderAddressDetails, setOrderAddressDetails] = useState(null);
   const [orderContactDetails, setOrderContactDetails] = useState(null);
@@ -37,6 +37,10 @@ const OrderInformation = ({ orderDetails }) => {
     setIsModelOpenShippingAddress(true);
     setAddressContactType(type);
   };
+
+  useImperativeHandle(orderItemShippingAddRef, () => ({
+    handleToggleModalShippingAddress
+  }))
 
   const onSidebarCloseUpdateAddress = () => {
     setIsModelOpenUpdateAddress(false);

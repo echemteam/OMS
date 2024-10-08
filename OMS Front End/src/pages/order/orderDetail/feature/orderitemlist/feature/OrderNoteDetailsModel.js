@@ -1,12 +1,16 @@
 import React from 'react'
+import NoRecordFound from '../../../../../../components/FinalMolGrid/ui/noRecordFound/NoRecordFound'
 
-const OrderNoteDetailsModel = () => {
+const OrderNoteDetailsModel = ({ orderNote }) => {
   return (
     <div className='order-notes'>
       <div className='ordercard-title'>Order Notes</div>
-      <div className='ordercard-body'>
-        <span>Order Notes Description</span>
-      </div>
+      {orderNote ?
+        <div className='ordercard-body'>
+          <span>{orderNote}</span>
+        </div>
+        : <NoRecordFound />
+      }
     </div>
   )
 }
