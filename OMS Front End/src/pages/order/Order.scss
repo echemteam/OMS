@@ -1054,11 +1054,14 @@
 .address-card-main {
   padding: 10px;
   background: var(--whiteColor);
-  box-shadow: 0 0 15px -6px rgb(106, 129, 180);
+  // box-shadow: 0 0 15px -6px rgb(106, 129, 180);
+  border: 1px solid var(--linkMenu);
   border-radius: 5px;
   font-size: var(--commonFont-medium);
   white-space: nowrap;
-
+  height: 100%;
+  width: 100%;
+  transition: 0.5s all;
   .add-desc {
     .add-line-part {
       span {
@@ -1070,6 +1073,7 @@
         align-items: flex-start;
         justify-content: space-between;
         position: relative;
+        font-weight: 700;
 
         .checkbox-part {
           position: absolute;
@@ -1097,6 +1101,10 @@
         }
       }
     }
+  }
+  &.active-card{
+    border-color: var(--themeColor);
+  box-shadow: 0 0 15px -6px rgb(106, 129, 180);
   }
 }
 

@@ -31,6 +31,7 @@ namespace OMS.Domain.Repository.Implementation
         const string UPDATEORDERITEMSBYORDERITEMID = "UpdateOrderItemByOrderItemId";
         const string DELETEORDERDOCUMENTSBYID = "DeleteOrderDocuementById";
         const string UPDATEORDERDETAIL = "UpdateOrderDetail";
+        const string DELETEORDERITEM = "DeleteOrderItem";
         #endregion
 
         public OrderRepository(DapperContext dapperContext) : base(dapperContext)
@@ -162,9 +163,13 @@ namespace OMS.Domain.Repository.Implementation
             return await _context.GetSingleAsync<AddEntityDto<long>>(UPDATEORDERITEMSBYORDERITEMID, new
             {
                 orderItemsDto.OrderItemId,
+                orderItemsDto.OrderId,
                 orderItemsDto.ChemicalName,
+                orderItemsDto.CatalogId,
+                orderItemsDto.CasNumber,
                 orderItemsDto.MdlNumber,
                 orderItemsDto.Note,
+                orderItemsDto.EntityType,
                 orderItemsDto.OrderPriority,
                 orderItemsDto.RequestDate,
                 orderItemsDto.PromiseDate,
@@ -188,6 +193,14 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.OrderReceivedDate,
                 requestData.ReferenceNumber,
                 requestData.UpdatedBy,
+            }, CommandType.StoredProcedure);
+        }
+        public async Task<AddEntityDto<long>> DeleteOrderItems(long orderItemId, int deletedBy)
+        {
+            return await _context.GetSingleAsync<AddEntityDto<long>>(DELETEORDERITEM, new
+            {
+                orderItemId,
+                deletedBy
             }, CommandType.StoredProcedure);
         }
         #endregion

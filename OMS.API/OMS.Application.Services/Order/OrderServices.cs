@@ -228,6 +228,7 @@ namespace OMS.Application.Services.Order
         {
             OrderItemsDto orderItemsDto = updateOrderItemRequest.ToMapp<UpdateOrderItemByOrderItemIdRequest, OrderItemsDto>();
             orderItemsDto.UpdatedBy = CurrentUserId;
+            orderItemsDto.EntityType = "OrderItem";
             return await repositoryManager.order.UpdateOrderItemByOrderItemId(orderItemsDto);
         }
         public async Task<AddEntityDto<int>> UpdateOrderAddress(UpdateOrderAddressRequest requestData, short CurrentUserId)
@@ -251,6 +252,10 @@ namespace OMS.Application.Services.Order
             OrderDto order = requestData.ToMapp<UpdateOrderDetailRequest, OrderDto>();
             order.UpdatedBy = CurrentUserId;
             return await repositoryManager.order.UpdateOrderDetail(order);
+        }
+        public async Task<AddEntityDto<long>> DeleteOrderItems(long orderItemId, int deletedBy)
+        {
+            return await repositoryManager.order.DeleteOrderItems(orderItemId, deletedBy);
         }
         #endregion
     }

@@ -2,17 +2,20 @@ import React, { useEffect, useState } from "react";
 import { Accordion } from "react-bootstrap";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
-import { useLazyGetOrderItemsByOrderIdQuery } from "../../../../../app/services/orderAPI";
+import { useDeleteOrderItemMutation, useLazyGetOrderItemsByOrderIdQuery } from "../../../../../app/services/orderAPI";
 import { decryptUrlData } from "../../../../../services/CryptoService";
 import { useParams } from "react-router-dom";
 import formatDate from "../../../../../lib/formatDate";
 import ShippingAddressDetailsModel from "./feature/ShippingAddressDetailsModel";
 import OrderNoteDetailsModel from "./feature/OrderNoteDetailsModel";
+import ToastService from "../../../../../services/toastService/ToastService";
+import SwalAlert from "../../../../../services/swalService/SwalService";
+import NoRecordFound from "../../../../../components/FinalMolGrid/ui/noRecordFound/NoRecordFound";
 
 const OrderItemList = () => {
   const [activeKey, setActiveKey] = useState([]);
   const [itemList, setItemList] = useState([]);
-
+  const { confirm } = SwalAlert();
   const { id } = useParams();
   const orderId = id ? decryptUrlData(id) : 0;
 
@@ -33,6 +36,8 @@ const OrderItemList = () => {
     },
   ] = useLazyGetOrderItemsByOrderIdQuery();
 
+  const [deleteOrderItem, {  isSuccess: isDeleteOrderItemSuccess, data: isDeleteOrderItemData }] = useDeleteOrderItemMutation();
+
   useEffect(() => {
     getOrderItemsByOrderId(orderId);
   }, []);
@@ -46,6 +51,29 @@ const OrderItemList = () => {
       setItemList(isGetOrderItemsByOrderIdData);
     }
   },[isGetOrderItemsByOrderIdFetching,isGetOrderItemsByOrderIdSuccess,isGetOrderItemsByOrderIdData])
+
+  useEffect(() => {
+    if (isDeleteOrderItemSuccess && isDeleteOrderItemData) {
+      ToastService.success(isDeleteOrderItemData.errorMessage);
+      onGetData();
+    }
+  }, [isDeleteOrderItemSuccess, isDeleteOrderItemData]);
+
+  const handleDeleteClick = (orderItemId) => {
+    confirm("Delete?",
+    "Are you sure you want to Delete?",
+    "Delete", "Cancel"
+    ).then((confirmed) => {
+    if (confirmed) {
+      
+      deleteOrderItem(orderItemId);
+    }
+    });
+  };
+
+  const onGetData = () => {
+    getOrderItemsByOrderId(orderId);
+  };  
   // const data = [
   //   {
   //     eventKey: "0",
@@ -81,7 +109,7 @@ const OrderItemList = () => {
   //   },
   //   // Add more data as needed
   // ];
-  return (
+    return (
     <div>
       <div className="order-item-list">
         <CardSection>
@@ -96,6 +124,9 @@ const OrderItemList = () => {
             </div>
           </div>
           <div className="accordian-desc">
+          {itemList?.length === 0 ? (
+              <NoRecordFound />  
+            ) : (
             <Accordion activeKey={activeKey}>
               {itemList.map((item, index) => (
                 <Accordion.Item eventKey={item.orderItemId} key={index}>
@@ -220,7 +251,7 @@ const OrderItemList = () => {
                                   className="swap-icon"
                                 />
                               </div>
-                              <div className="btn-part delete-icon">
+                              <div className="btn-part delete-icon" onClick={() => handleDeleteClick(item.orderItemId)}>
                                 <Iconify
                                   icon="mi:delete"
                                   className="swap-icon"
@@ -235,6 +266,7 @@ const OrderItemList = () => {
                 </Accordion.Item>
               ))}
             </Accordion>
+           )}
           </div>
         </CardSection>
       </div>

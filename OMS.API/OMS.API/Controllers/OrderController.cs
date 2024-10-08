@@ -16,7 +16,7 @@ namespace OMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     //[CheckClientIpActionFilter]
     public class OrderController : BaseController
     {
@@ -159,6 +159,17 @@ namespace OMS.API.Controllers
                 return APISucessResponce(responseData);
             }
             return APISucessResponce(responseData);
+        }
+        [HttpDelete("DeleteOrderItems")]
+        public async Task<IActionResult> DeleteOrderItems(long orderItemId)
+        {
+            if (orderItemId > 0)
+            {
+                int deletedBy = CurrentUserId;
+                var deleteItem = await _serviceManager.orderServices.DeleteOrderItems(orderItemId, deletedBy).ConfigureAwait(true);
+                return APISucessResponce<object>(deleteItem);
+            }
+            return APISucessResponce(orderItemId);
         }
         #endregion
     }

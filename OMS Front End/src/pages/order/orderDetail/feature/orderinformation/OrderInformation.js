@@ -161,7 +161,7 @@ const OrderInformation = ({ orderDetails }) => {
         <div>Update Shipping Address</div>
       </SidebarModel>
       <SidebarModel
-        modalTitle="Update Shipping Address"
+        modalTitle="Update Users"
         contentClass="content-50"
         onClose={onSidebarCloseUserModel}
         modalTitleIcon={AppIcons.AddIcon}
