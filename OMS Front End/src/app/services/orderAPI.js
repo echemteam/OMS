@@ -109,7 +109,7 @@ const orderAPI = createApi({
         //     transformResponse: transformSucessResponse,
         //     transformErrorResponse: transformErrorResponse
         // }),
-        
+
         updateOrderAddress: builder.mutation({
             query: (requestData) => ({
                 url: '/Order/UpdateOrderAddress',
@@ -123,6 +123,23 @@ const orderAPI = createApi({
             query: (orderItemId) => ({
                 url: encryptQueryString(`/Order/DeleteOrderItems/?orderItemId=${orderItemId}`),
                 method: 'DELETE'
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getOrderItemByOrderItemId: builder.query({
+            query: (id) => ({
+                url: encryptQueryString(`/Order/GetOrderItemByOrderItemId/?orderItemId=${id}`),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        updateOrderItemByOrderItemId: builder.mutation({
+            query: (requestData) => ({
+                url: '/Order/UpdateOrderItemByOrderItemId',
+                method: 'POST',
+                body: transformRequest(requestData)
             }),
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
@@ -143,6 +160,8 @@ export const { useCheckPoNumberExistOrNotMutation,
     useLazyGetContactByCustomerIdQuery,
     useUpdateOrderAddressMutation,
     useDeleteOrderItemMutation,
+    useLazyGetOrderItemByOrderItemIdQuery,
+    useUpdateOrderItemByOrderItemIdMutation,
 } = orderAPI;
 
 export default orderAPI;

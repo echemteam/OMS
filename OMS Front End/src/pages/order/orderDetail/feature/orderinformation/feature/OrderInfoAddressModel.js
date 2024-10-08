@@ -1,30 +1,57 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Checkbox from "../../../../../../components/ui/inputs/checkBox/CheckBox";
 import Buttons from "../../../../../../components/ui/button/Buttons";
 import { useLazyGetAddresssByCustomerIdQuery } from "../../../../../../app/services/addressAPI";
-import {  useUpdateOrderAddressMutation } from "../../../../../../app/services/orderAPI";
+import { useUpdateOrderAddressMutation } from "../../../../../../app/services/orderAPI";
 import SwalAlert from "../../../../../../services/swalService/SwalService";
 import { toast } from "react-toastify";
 
-const OrderInfoAddressModel =({handleAddClick, onUpdate ,onSidebarCloseUpdateAddress,addressContactType,customerId,orderDetails,onGetData}) => {
-
-const [dataList,setDataList]=useState([]);
-const { confirm } = SwalAlert();
-const [selectedAddressId, setSelectedAddressId] = useState(null);
-const [getAddresssByCustomerId,{  isFetching: isGetAddresssByCustomerIdFetching,  isSuccess: isGetAddresssByCustomerId,  data: GetAddresssByCustomerIdData},] = useLazyGetAddresssByCustomerIdQuery();
-const [ updateOrderAddress,{  isLoading: isUpdateOrderAddressLoading,  isSuccess: isUpdateOrderAddressSuccess,  data: isUpdateOrderAddressData},] = useUpdateOrderAddressMutation();
-
-  useEffect(()=>{
-    if(customerId){
-    getAddresssByCustomerId(customerId);
-    }
-  },[customerId,addressContactType,onSidebarCloseUpdateAddress])
+const OrderInfoAddressModel = ({
+  handleAddClick,
+  onUpdate,
+  onSidebarCloseUpdateAddress,
+  addressContactType,
+  customerId,
+  orderDetails,
+  onGetData,
+}) => {
+  const [dataList, setDataList] = useState([]);
+  const { confirm } = SwalAlert();
+  const [selectedAddressId, setSelectedAddressId] = useState(null);
+  const [
+    getAddresssByCustomerId,
+    {
+      isFetching: isGetAddresssByCustomerIdFetching,
+      isSuccess: isGetAddresssByCustomerId,
+      data: GetAddresssByCustomerIdData,
+    },
+  ] = useLazyGetAddresssByCustomerIdQuery();
+  const [
+    updateOrderAddress,
+    {
+      isLoading: isUpdateOrderAddressLoading,
+      isSuccess: isUpdateOrderAddressSuccess,
+      data: isUpdateOrderAddressData,
+    },
+  ] = useUpdateOrderAddressMutation();
 
   useEffect(() => {
-    if (!isGetAddresssByCustomerIdFetching && isGetAddresssByCustomerId && GetAddresssByCustomerIdData) {
-      
-      if (addressContactType === "Shipping" || addressContactType === "Billing") {
+    if (customerId) {
+      getAddresssByCustomerId(customerId);
+    }
+  }, [customerId, addressContactType, onSidebarCloseUpdateAddress]);
+
+  useEffect(() => {
+    if (
+      !isGetAddresssByCustomerIdFetching &&
+      isGetAddresssByCustomerId &&
+      GetAddresssByCustomerIdData
+    ) {
+      if (
+        addressContactType === "Shipping" ||
+        addressContactType === "Billing"
+      ) {
         const filteredData = addressContactType
           ? GetAddresssByCustomerIdData.filter(
               (address) => address.type === addressContactType
@@ -33,13 +60,17 @@ const [ updateOrderAddress,{  isLoading: isUpdateOrderAddressLoading,  isSuccess
         setDataList(filteredData);
       }
     }
-  }, [isGetAddresssByCustomerIdFetching,isGetAddresssByCustomerId,GetAddresssByCustomerIdData]);
+  }, [
+    isGetAddresssByCustomerIdFetching,
+    isGetAddresssByCustomerId,
+    GetAddresssByCustomerIdData,
+  ]);
 
   const handleCheckboxChange = (id) => {
     if (selectedAddressId === id) {
       setSelectedAddressId(null);
       if (onGetData) {
-        onGetData(null); 
+        onGetData(null);
       }
     } else {
       setSelectedAddressId(id);
@@ -48,46 +79,42 @@ const [ updateOrderAddress,{  isLoading: isUpdateOrderAddressLoading,  isSuccess
       }
     }
   };
-  const handlevalidate=()=>{
+  const handlevalidate = () => {
     if (!selectedAddressId) {
-      toast.error("Please select an Address ."); 
+      toast.error("Please select an Address .");
       return;
     }
-  }
-  const handleEditAddress=()=>{
-   
-    if(selectedAddressId){
-    onUpdate();
-    }else{
+  };
+  const handleEditAddress = () => {
+    if (selectedAddressId) {
+      onUpdate();
+    } else {
       handlevalidate();
     }
-  }
+  };
 
-const handleChangeAddress=()=>{ 
- 
-
-if(selectedAddressId){
-  const req={
-      //orderAddressId: ,
-      orderId:orderDetails.orderId,
-      billingAddressId:dataList.addressId,
-      shippingAddressId:dataList.addressId,
+  const handleChangeAddress = () => {
+    if (selectedAddressId) {
+      const req = {
+        //orderAddressId: ,
+        orderId: orderDetails.orderId,
+        billingAddressId: dataList.addressId,
+        shippingAddressId: dataList.addressId,
+      };
+      confirm(
+        "Change?",
+        "Are you sure you want to Change Address?",
+        "Change",
+        "Cancel"
+      ).then((confirmed) => {
+        if (confirmed) {
+          updateOrderAddress(req);
+        }
+      });
+    } else {
+      handlevalidate();
     }
-  confirm(
-    "Change?",
-    "Are you sure you want to Change Address?",
-    "Change",
-    "Cancel"
-  ).then((confirmed) => {
-    if (confirmed) {
-      updateOrderAddress(req);
-    }
-  });
-}
-else{
-  handlevalidate();
-}
-};
+  };
 
   return (
     <div className="add-list-section">
@@ -99,7 +126,7 @@ else{
           >
             <div
               className={`address-card-main ${
-                address.isChecked ? "active-card" : ""
+                selectedAddressId === address.addressId ? "active-card" : ""
               }`}
             >
               <div className="add-desc">

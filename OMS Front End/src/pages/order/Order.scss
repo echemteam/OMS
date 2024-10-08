@@ -446,40 +446,50 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin: 7px 0 0 0;
+      margin: 7px 0 4px 0;
+      border: 1px solid var(--linkMenu);
+      border-radius: 5px;
+      box-shadow: 0 0 13px -6px rgb(155 155 178);
+      padding: 4px 0px 4px 6px;
 
       .left-sec {
         display: flex;
         align-items: center;
         width: calc(100% - 90px);
         margin-right: 10px;
-        border: 1px solid var(--inputBorder);
-        padding: 4px;
-        border-radius: 5px;
 
         img {
-          width: 24px;
+          width: 20px;
           margin-right: 10px;
         }
 
         .file-name {
           flex-grow: 1;
+          font-size: var(--commonFont-medium);
         }
       }
 
       .file-actions {
         display: flex;
+        justify-content: center;
         gap: 10px;
         width: 80px;
 
         .btn-part {
-          width: 35px;
-          height: 35px;
+          width: 30px;
+          height: 30px;
           border-radius: 100%;
           padding: 3px;
           display: flex;
           align-items: center;
           justify-content: center;
+
+          .component-iconify {
+            width: 16px !important;
+            height: 16px !important;
+            align-items: center;
+            justify-content: center;
+          }
 
           &.pdf-view {
             background: #f0effc;
@@ -1033,8 +1043,19 @@
     }
 
     .profile-name-btn {
+      .profile-icon-sec {
+        min-width: 33px;
+        min-height: 33px;
+        max-width: 33px;
+        max-height: 33px;
+        font-size: var(--commonFont-small);
+      }
+
       .right-info {
         .right-name-btn {
+          .user-name {
+            margin-bottom: 2px;
+          }
           .btn-sec {
             width: 25px;
           }
@@ -1062,6 +1083,7 @@
   height: 100%;
   width: 100%;
   transition: 0.5s all;
+
   .add-desc {
     .add-line-part {
       span {
@@ -1102,9 +1124,10 @@
       }
     }
   }
-  &.active-card{
+
+  &.active-card {
     border-color: var(--themeColor);
-  box-shadow: 0 0 15px -6px rgb(106, 129, 180);
+    box-shadow: 0 0 15px -6px rgb(106, 129, 180);
   }
 }
 

@@ -7,33 +7,35 @@ import OrderInfoAddressModel from "./feature/OrderInfoAddressModel";
 import UserCardDetail from "./feature/UserCardDetail";
 import UsercardModel from "./feature/UsercardModel";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
-import { useAddAddressMutation, useLazyGetCustomerAddresssByAddressIdQuery, useUpdateAddAddressMutation } from "../../../../../app/services/addressAPI";
+import {
+  useAddAddressMutation,
+  useLazyGetCustomerAddresssByAddressIdQuery,
+  useUpdateAddAddressMutation,
+} from "../../../../../app/services/addressAPI";
 import AddEditAddress from "../../../../../common/features/component/Address/feature/AddEditAddress";
 
 const OrderInformation = ({ orderDetails }) => {
   const [orderInfo, setOrderInfo] = useState(null);
   const [orderAddressDetails, setOrderAddressDetails] = useState(null);
   const [orderContactDetails, setOrderContactDetails] = useState(null);
-  const [selectedAddressId,setSelectedAddressId]=useState(null);
-  const [editMode,setEditMode]=useState(false);
-  const [customerId,setCustomerId]=useState(null);
-  const [addressContactType,setAddressContactType]=useState("");
+  const [selectedAddressId, setSelectedAddressId] = useState(null);
+  const [editMode, setEditMode] = useState(false);
+  const [customerId, setCustomerId] = useState(null);
+  const [addressContactType, setAddressContactType] = useState("");
   const [isModelOpenShippingAddress, setIsModelOpenShippingAddress] =
     useState(false);
   const [isModelOpenUpdateAddress, setIsModelOpenUpdateAddress] =
     useState(false);
   const [isModelOpenModelUserModel, setIsModelOpenUserModel] = useState(false);
-  
+
   const onSidebarCloseShippingAddress = () => {
     setIsModelOpenShippingAddress(false);
     setAddressContactType("");
   };
 
   const handleToggleModalShippingAddress = (type) => {
-   
     setIsModelOpenShippingAddress(true);
     setAddressContactType(type);
-    
   };
 
   const onSidebarCloseUpdateAddress = () => {
@@ -43,17 +45,15 @@ const OrderInformation = ({ orderDetails }) => {
   };
 
   const handleUpdateAddress = () => {
-
     setIsModelOpenShippingAddress(false);
     setEditMode(true);
     setIsModelOpenUpdateAddress(true);
   };
-const handleAddClick=()=>{
-  setIsModelOpenShippingAddress(false);
-  setEditMode(false);
+  const handleAddClick = () => {
+    setIsModelOpenShippingAddress(false);
+    setEditMode(false);
     setIsModelOpenUpdateAddress(true);
-   
-}
+  };
   const onSidebarCloseUserModel = () => {
     setIsModelOpenUserModel(false);
   };
@@ -63,7 +63,7 @@ const handleAddClick=()=>{
   useEffect(() => {
     if (orderDetails) {
       setOrderInfo(orderDetails);
-      setCustomerId(orderDetails.customerId)
+      setCustomerId(orderDetails.customerId);
 
       if (orderDetails.orderAddressInformation) {
         const { billingAddress, shippingAddress } =
@@ -79,7 +79,6 @@ const handleAddClick=()=>{
 
   const onGetData = (id) => {
     setSelectedAddressId(id);
- 
   };
 
   return (
@@ -111,7 +110,8 @@ const handleAddClick=()=>{
                       <span
                         className="swap-btn tooltip-div"
                         onClick={() =>
-                          handleToggleModalShippingAddress(address.type)}
+                          handleToggleModalShippingAddress(address.type)
+                        }
                       >
                         <Iconify
                           icon="icon-park-outline:change"
@@ -172,29 +172,36 @@ const handleAddClick=()=>{
         modalTitleIcon={AppIcons.AddIcon}
         isOpen={isModelOpenShippingAddress}
       >
-        <OrderInfoAddressModel onSidebarCloseUpdateAddress={onSidebarCloseUpdateAddress} onUpdate={handleUpdateAddress} handleAddClick={handleAddClick} onGetData={onGetData}orderDetails={orderDetails}  addressContactType={addressContactType} customerId={customerId}/>
-      </SidebarModel>
-    {isModelOpenUpdateAddress ?(
-      <SidebarModel
-        modalTitle={`${editMode ? "Update" : "Add"} Address`}
-        contentClass="content-50"
-        onClose={onSidebarCloseUpdateAddress}
-        modalTitleIcon={AppIcons.AddIcon}
-        isOpen={isModelOpenUpdateAddress}
-      >
-          <AddEditAddress
-          editMode={editMode}
-          selectedAddressId={selectedAddressId}
-          isModelOpenUpdateAddress={isModelOpenUpdateAddress}
-          keyId={customerId}
-          updateAddress={useUpdateAddAddressMutation}
-          addAddress={useAddAddressMutation}
-          getAddresssById={useLazyGetCustomerAddresssByAddressIdQuery}
-          onSidebarClose={onSidebarCloseUpdateAddress}
+        <OrderInfoAddressModel
+          onSidebarCloseUpdateAddress={onSidebarCloseUpdateAddress}
+          onUpdate={handleUpdateAddress}
+          handleAddClick={handleAddClick}
+          onGetData={onGetData}
+          orderDetails={orderDetails}
+          addressContactType={addressContactType}
+          customerId={customerId}
         />
-      </SidebarModel>)
-      :null
-}
+      </SidebarModel>
+      {isModelOpenUpdateAddress ? (
+        <SidebarModel
+          modalTitle={`${editMode ? "Update" : "Add"} Address`}
+          contentClass="content-50"
+          onClose={onSidebarCloseUpdateAddress}
+          modalTitleIcon={AppIcons.AddIcon}
+          isOpen={isModelOpenUpdateAddress}
+        >
+          <AddEditAddress
+            editMode={editMode}
+            selectedAddressId={selectedAddressId}
+            isModelOpenUpdateAddress={isModelOpenUpdateAddress}
+            keyId={customerId}
+            updateAddress={useUpdateAddAddressMutation}
+            addAddress={useAddAddressMutation}
+            getAddresssById={useLazyGetCustomerAddresssByAddressIdQuery}
+            onSidebarClose={onSidebarCloseUpdateAddress}
+          />
+        </SidebarModel>
+      ) : null}
       <SidebarModel
         modalTitle="Update Users"
         contentClass="content-50"
