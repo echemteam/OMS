@@ -228,6 +228,7 @@ namespace OMS.Application.Services.Order
         {
             OrderItemsDto orderItemsDto = updateOrderItemRequest.ToMapp<UpdateOrderItemByOrderItemIdRequest, OrderItemsDto>();
             orderItemsDto.UpdatedBy = CurrentUserId;
+            orderItemsDto.EntityType = "OrderItem";
             return await repositoryManager.order.UpdateOrderItemByOrderItemId(orderItemsDto);
         }
         public async Task<AddEntityDto<int>> UpdateOrderAddress(UpdateOrderAddressRequest requestData, short CurrentUserId)

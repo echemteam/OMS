@@ -161,9 +161,13 @@ namespace OMS.Domain.Repository.Implementation
             return await _context.GetSingleAsync<AddEntityDto<long>>(UPDATEORDERITEMSBYORDERITEMID, new
             {
                 orderItemsDto.OrderItemId,
+                orderItemsDto.OrderId,
                 orderItemsDto.ChemicalName,
+                orderItemsDto.CatalogId,
+                orderItemsDto.CasNumber,
                 orderItemsDto.MdlNumber,
                 orderItemsDto.Note,
+                orderItemsDto.EntityType,
                 orderItemsDto.OrderPriority,
                 orderItemsDto.RequestDate,
                 orderItemsDto.PromiseDate,
