@@ -171,6 +171,7 @@ if (debouncedSearch === "" ) {
               searchIconImg={AppIcons.SearchIcone}
               searchTextWithIcon={true}
               clearTextWithIcon={true}
+              searchValue={search}
               clearIconImg={AppIcons.ClearIcone}
               handleKeyPress={handleKeyPress}
             >
