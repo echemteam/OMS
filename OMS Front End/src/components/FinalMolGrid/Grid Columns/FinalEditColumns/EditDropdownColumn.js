@@ -44,7 +44,7 @@ const EditDropdownColumn = ({
       const newRowData = updatedData
         ? { ...updatedData, [col.fieldName]: selectedValue }
         : { ...rowData, [col.fieldName]: selectedValue };
-      onChange(rowIndex, newRowData);
+      onChange(rowIndex, newRowData, col?.fieldName);
     }
   };
 
