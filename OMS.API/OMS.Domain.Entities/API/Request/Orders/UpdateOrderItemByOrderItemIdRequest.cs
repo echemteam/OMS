@@ -14,7 +14,6 @@ namespace OMS.Domain.Entities.API.Request.Orders
         public string? CatalogId { get; set; }
         public string? CasNumber { get; set; }
         public string? ChemicalName { get; set; }
-        public string? EntityType { get; set; }
         public string? MdlNumber { get; set; }
         public string? Note { get; set; }
         public string? OrderPriority { get; set; }

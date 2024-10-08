@@ -9,6 +9,8 @@ namespace OMS.Domain.Entities.API.Response.Orders
     public  class GetOrderItemByOrderItemIdResponse
     {
         public long? OrderItemId { get; set; }
+        public string? CatalogId { get; set; }
+        public string? CasNumber { get; set; }
         public string? ChemicalName {  get; set; }
         public string? MdlNumber {  get; set; }
         public int ShippingAddressId { get; set; }
