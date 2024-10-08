@@ -31,7 +31,9 @@
   }
 
   span {
-    margin-left: 8px;
+    &.label-l-space{
+      margin-left: 8px;
+    }
   }
 
   &.theme-button {
@@ -190,11 +192,15 @@
   }
 
   .tooltip-arrow-icon {
-    top: 30px;
+    top: 29px;
     right: 10px;
     left: unset;
     transform: translateX(-50%);
     rotate: 360deg;
     opacity: 0;
+    
+    @media only screen and (max-width: 1750px) {
+      top: 22px;
+    }
   }
 }

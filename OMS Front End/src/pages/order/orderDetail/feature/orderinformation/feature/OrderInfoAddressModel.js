@@ -94,10 +94,14 @@ else{
       <div className="row">
         {dataList.map((address) => (
           <div
-            className="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-12"
-            key={address.addressId}
+            className="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-12 mb-3"
+            key={address.id}
           >
-            <div className="address-card-main">
+            <div
+              className={`address-card-main ${
+                address.isChecked ? "active-card" : ""
+              }`}
+            >
               <div className="add-desc">
                 <div className="add-line-part first-add-sec">
                   <span className="add-info">{address.name}</span>

@@ -196,8 +196,8 @@ const handleAddClick=()=>{
       :null
 }
       <SidebarModel
-        modalTitle="Update Shipping Address"
-        contentClass="content-40"
+        modalTitle="Update Users"
+        contentClass="content-50"
         onClose={onSidebarCloseUserModel}
         modalTitleIcon={AppIcons.AddIcon}
         isOpen={isModelOpenModelUserModel}
