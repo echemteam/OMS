@@ -15,8 +15,6 @@ const OrderInfoAddressModel = ({ onUpdate }) => {
     {
       id: 2,
       name: "Physics Research Center",
-      addressLine1: "University Avenue",
-      addressLine2: "Cambridge",
       addressLine3: "United Kingdom, Cambridgeshire CB2 1TN",
       isChecked: false,
     },
@@ -40,10 +38,14 @@ const OrderInfoAddressModel = ({ onUpdate }) => {
       <div className="row">
         {selectedAddresses.map((address) => (
           <div
-            className="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-12"
+            className="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-12 mb-3"
             key={address.id}
           >
-            <div className="address-card-main">
+            <div
+              className={`address-card-main ${
+                address.isChecked ? "active-card" : ""
+              }`}
+            >
               <div className="add-desc">
                 <div className="add-line-part first-add-sec">
                   <span className="add-info">{address.name}</span>
