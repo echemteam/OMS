@@ -16,6 +16,7 @@
         public string? SubStatus { get; set; }
         public byte? OrderMethodId { get; set; }
         public string? OrderMethod { get; set; }
+        public int? OrderAddressId { get; set; }
         public int BillingAddressId { get; set; }
         public int ShippingAddressId { get; set; }
         public GetOrderAddressByOrderIdResponse OrderAddressInformation { get; set; }
