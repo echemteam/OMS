@@ -247,12 +247,11 @@ namespace OMS.Application.Services.Order
              
             return await repositoryManager.orderContact.UpdateOrderContact(order);
         }
-        public async Task<AddEntityDto<int>> UpdateOrderItemDetail(UpdateOrderItemDetailRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> UpdateOrderDetail(UpdateOrderDetailRequest requestData, short CurrentUserId)
         {
-            OrderItemsDto order = requestData.ToMapp<UpdateOrderItemDetailRequest, OrderItemsDto>();
+            OrderDto order = requestData.ToMapp<UpdateOrderDetailRequest, OrderDto>();
             order.UpdatedBy = CurrentUserId;
-            order.EntityType = "OrderItem";
-            return await repositoryManager.orderItem.UpdateOrderItemDetail(order);
+            return await repositoryManager.order.UpdateOrderDetail(order);
         }
         #endregion
     }

@@ -149,13 +149,13 @@ namespace OMS.API.Controllers
             }
             return APISucessResponce(responseData);
         }
-        [HttpPost("UpdateOrderItemDetail")]
-        public async Task<IActionResult> UpdateOrderItemDetail(UpdateOrderItemDetailRequest requestData)
+        [HttpPost("UpdateOrderDetail")]
+        public async Task<IActionResult> UpdateOrderDetail(UpdateOrderDetailRequest requestData)
         {
             AddEntityDto<int> responseData = new();
             if (requestData != null)
             {
-                responseData = await _serviceManager.orderServices.UpdateOrderItemDetail(requestData, CurrentUserId);
+                responseData = await _serviceManager.orderServices.UpdateOrderDetail(requestData, CurrentUserId);
                 return APISucessResponce(responseData);
             }
             return APISucessResponce(responseData);
