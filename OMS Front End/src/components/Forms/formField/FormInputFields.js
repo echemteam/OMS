@@ -40,7 +40,7 @@ const FormInputFields = ({
         }
         onChange(dataField, newValue);
         if (inputField) {
-          inputField('INPUT_CHANGED', dataField, newValue);
+          inputField('IP_CHANGED', dataField, newValue);
         }
       } else if (e.target.files[0]) {
         const fileObj = e.target.files[0];

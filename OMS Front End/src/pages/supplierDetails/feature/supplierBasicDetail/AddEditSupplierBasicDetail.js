@@ -329,7 +329,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
 
     //** Form Handler */
     const formInputHandler = {
-        INPUT_CHANGED: handleInputFields
+        IP_CHANGED: handleInputFields
     }
     const formActionHandler = {
         DDL_CHANGED: handleValidateTextId

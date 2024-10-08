@@ -1,0 +1,96 @@
+.date-picker-label-part {
+  width: 100%;
+
+  .input-date-sec {
+    position: relative;
+    margin-bottom: 10px;
+
+    .validation-text {
+      position: absolute;
+      margin-top: 0 !important;
+    }
+  }
+
+}
+
+.date-picker {
+  width: 100%;
+
+  .MuiInputBase-root {
+    font-size: 0.875rem;
+    height: 40px;
+  }
+
+  .MuiFormLabel-root {
+    font-size: 0.875rem;
+    top: -10%;
+  }
+
+  .MuiFormHelperText-root {
+    font-size: var(--commonFont-small);
+    position: absolute;
+    bottom: -20px;
+    margin-left: 5px;
+  }
+}
+
+
+
+// Indian Calander CSS
+.indian-stripes {
+  .react-datepicker__week:nth-child(3n + 1) {
+    background-color: #FF671F;
+  }
+
+  .react-datepicker__week:nth-child(3n + 2) {
+    background-color: #FFFFFF;
+  }
+
+  .react-datepicker__week:nth-child(3n + 3) {
+    background-color: #046A38, ;
+  }
+}
+
+.orange-week-days {
+  .react-datepicker__week:nth-child(2n+1) {
+    background-color: #FFA500;
+  }
+}
+
+// Russian Calander CSS
+.russian-strips {
+  .react-datepicker__week:nth-child(3n + 1) {
+    background-color: #FFFFFF;
+  }
+
+  .react-datepicker__week:nth-child(3n + 2) {
+    background-color: #1C3578;
+  }
+
+  .react-datepicker__week:nth-child(3n + 3) {
+    background-color: #E4181C, ;
+  }
+}
+
+// input custom css
+.orange-input {
+  background-color: #FFA500;
+}
+
+.light-orange-input {
+  background-color: #FFD580;
+}
+
+.dark-orange-input {
+  background-color: #FF8C00;
+}
+
+// css for days
+.normal-date-text {
+  color: #000;
+}
+
+.random-date-text {
+  background-color: #FFA500;
+  // color: #FF671F;
+}

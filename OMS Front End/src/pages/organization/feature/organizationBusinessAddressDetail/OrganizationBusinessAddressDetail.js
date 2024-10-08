@@ -33,7 +33,7 @@ const OrganizationBusinessAddressDetail = (isEditablePage) => {
   const [warehouseAddressData] = useState(WarehouseAddressForm);
   const [remitToAddressData] = useState(RemitToAddressForm);
   const [registeredAddressData] = useState(RegisteredAddressForm);
-  const roles = useSelector((state) => state.auth.roles.roleName );
+  const roles = useSelector((state) => state.auth.roles.roleName);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
 
   useEffect(() => {
@@ -45,14 +45,14 @@ const OrganizationBusinessAddressDetail = (isEditablePage) => {
       RemitToAddressForm.formSetting.isViewOnly = isViewOnly;
       RegisteredAddressForm.formSetting.isViewOnly = isViewOnly;
     };
-  
+
     if (isEditablePage) {
       if (roles?.includes("Admin")) {
         setIsButtonDisable(false);
-        setFormSettingsForAll(false);  
+        setFormSettingsForAll(false);
       } else {
         setIsButtonDisable(true);
-        setFormSettingsForAll(true);  
+        setFormSettingsForAll(true);
       }
     }
   }, [isEditablePage, roles]);
@@ -275,19 +275,20 @@ const OrganizationBusinessAddressDetail = (isEditablePage) => {
         remitToAddressRef={remitToAddressRef}
         RemitToAddressForm={RemitToAddressForm}
       />
+
       {isEditablePage ?
-      <div className="col-md-12">
-        <div className="d-flex align-item-end justify-content-end">
-          <Buttons
-            buttonTypeClassName="theme-button mr-2"
-            buttonText="Save"
-            isLoading={isAddEditBusinessAddressLoading}
-            onClick={handleAddEditBusinessAddress}
-            isDisable={isButtonDisable}
-          />
+        <div className="col-md-12">
+          <div className="d-flex align-item-end justify-content-end">
+            <Buttons
+              buttonTypeClassName="theme-button mr-2"
+              buttonText="Save"
+              isLoading={isAddEditBusinessAddressLoading}
+              onClick={handleAddEditBusinessAddress}
+              isDisable={isButtonDisable}
+            />
+          </div>
         </div>
-      </div>
-       : null}
+        : null}
     </div>
   );
 };

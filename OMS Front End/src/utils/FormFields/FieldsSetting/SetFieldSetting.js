@@ -7,7 +7,18 @@ import PropTypes from 'prop-types';
  * @returns {Object|null} - The field data object if found, otherwise null.
  */
 export const getFieldData = (formFieldsData, fieldId) => {
-    return formFieldsData.formFields?.find((item) => item.dataField === fieldId) || null;
+    if (formFieldsData?.section) {
+        for (const section of formFieldsData?.section) {
+            const field = section.fields.find((item) => item.dataField === fieldId);
+            if (field) {
+                return field;
+            }
+        }
+        return null;
+    } else {
+        return formFieldsData.formFields?.find((item) => item.dataField === fieldId) || null;
+    }
+
 };
 // Define propTypes for the function parameters
 getFieldData.propTypes = {
@@ -81,8 +92,8 @@ export const setFieldSetting = (formFieldsData, fieldId, fieldSettingType, value
             case 'isMultiSelect':
                 selectField.fieldSetting.isMultiSelect = value;
                 break;
-            case 'isDisabled':
-                selectField.fieldSetting.isDisabled = value;
+            case 'isDisable':
+                selectField.fieldSetting.isDisable = value;
                 break;
             case 'isPrimaryButtonVisible':
                 selectField.inputButtonGroupConfig.isPrimaryButtonVisible = value;
@@ -95,8 +106,8 @@ export const setFieldSetting = (formFieldsData, fieldId, fieldSettingType, value
                 selectField.fieldSetting.isText = value;
                 break;
             case 'CKEditorDisabled':
-                    selectField.fieldSetting.isDisable = value;
-                    break;
+                selectField.fieldSetting.isDisable = value;
+                break;
             default:
                 break;
         }
@@ -109,3 +120,6 @@ setFieldSetting.propTypes = {
     fieldSettingType: PropTypes.array.isRequired,
     value: PropTypes.bool
 };
+
+
+/********************************  New Form Creator Fields Settings   ********************************/

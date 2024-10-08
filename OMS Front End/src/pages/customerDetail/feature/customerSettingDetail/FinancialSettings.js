@@ -437,7 +437,7 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
   //** Action Handler */
   const formActionHandler = {
     DDL_CHANGED: handleDropdownChanges,
-    CHECK_CHANGE: handleCheckboxChanges
+    CB_CHANGE: handleCheckboxChanges
   };
 
   return (

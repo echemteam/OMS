@@ -1,0 +1,37 @@
+
+.validation-text {
+  color: var(--helperTextColor);
+  font-size: var(--commonFont-small);
+  font-weight: 500;
+  margin-left: 5px;
+  margin-top: -15px !important;
+}
+
+@media only screen and (max-width: 1560px) {
+  .validation-text {
+    margin-top: -25px !important;
+  }
+}
+
+// .validation-star {
+//   color: var(--helperTextColor);
+//   margin-left: 3px;
+// }
+
+.checkbox-label-part {
+  .validation-star {
+    display: none;
+  }
+}
+
+form {
+  width: 100%;
+  font-size: var(--commonFont);
+}
+
+@media only screen and (max-width: 1560px) {
+  .input-field{
+    height: 30px;
+    padding: 0 5px;
+  }
+}

@@ -449,7 +449,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier,isModelOpenUpdateAddress,
     //** Action Handler */
     const formActionHandler = {
         DDL_CHANGED: handleChangeDropdownList,
-        CHECK_CHANGE: handleCheckboxChanges,
+        CB_CHANGE: handleCheckboxChanges,
         DA_CHANGED: handleDropdownAction
     };
 

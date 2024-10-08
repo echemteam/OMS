@@ -417,7 +417,7 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
   };
 
   const formInputHandler = {
-    INPUT_CHANGED: handleInputFields,
+    IP_CHANGED: handleInputFields,
   };
 
   useImperativeHandle(nextStepRef, () => ({

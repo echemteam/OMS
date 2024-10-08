@@ -246,7 +246,7 @@ const ContactDetails = (props) => {
   };
 
   const formActionHandler = {
-    CHECK_CHANGE: handleCheckboxChanges
+    CB_CHANGE: handleCheckboxChanges
   };
 
   useImperativeHandle(conatctRef, () => ({

@@ -310,7 +310,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     }
     const formActionHandler = {
         DDL_CHANGED: handleValidateTextId,
-        CHECK_CHANGE: handleCheckboxchange
+        CB_CHANGE: handleCheckboxchange
     };
     const handleInputFields = (data, dataField) => {
         if (dataField === 'name') {
@@ -330,7 +330,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         }
     }
     const formInputHandler = {
-        INPUT_CHANGED: handleInputFields,
+        IP_CHANGED: handleInputFields,
     }
     const handleInputGroupButton = () => {
         if (customerName !== '') {

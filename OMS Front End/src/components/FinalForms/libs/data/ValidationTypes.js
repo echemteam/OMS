@@ -1,0 +1,19 @@
+ export const validationTypes={
+    REQUIRE:"require",
+    EMAIL:"email",
+    PASSWORD:"password",
+    PHONENUMBER:"phoneNumber",
+    COMPARE:"compare",
+    DISTINICT:"distinct",
+    NUMBER:"number",
+    UNIQUEIDENTIFIER:"uniqueIdentifier",
+    MAXLENGTH:"maxLength",
+    MINLENGTH:"minLength",
+    MAXPROSPECTS:"maxProspects",
+    MINENDDATE:"minEndDate",
+    MAXSUM:"maxSum",
+    VALIDEIN:"validEIN",
+    VALIDPHONE:"validPhone",
+    VALIDFAX:"validFax",
+    VALIDZIPCODE:"validZipCode"
+}

@@ -3,8 +3,8 @@ import { Validate, ValidateAll } from './Validation';
 
 export const isValidForm = (formDetails, validationRule, validState) => {
     const validation = ValidateAll(formDetails, validationRule);
-    validState = validation;
-    return validState;
+    const newValidState  = validation;
+    return newValidState;
 }
  
 // Validation functions 

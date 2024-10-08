@@ -95,7 +95,7 @@ const ProductDetailsList = ({ onhandleProductDetailsListData, isDocumentData }) 
 
   //** Form Handler */
   const formInputHandler = {
-    INPUT_CHANGED: handleInputFields,
+    IP_CHANGED: handleInputFields,
   };
 
   // useEffect(() => {

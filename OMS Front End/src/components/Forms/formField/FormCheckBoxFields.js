@@ -22,7 +22,7 @@ const FormCheckboxField = ({
       onChange(dataField, value);
     }
     if (fieldActions) {
-      fieldActions('CHECK_CHANGE', dataField, value);
+      fieldActions('CB_CHANGE', dataField, value);
     }
   };
 

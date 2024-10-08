@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { OrganizationProfileManagementdata } from './config/OrganizationProfileManagement.data';
 import Buttons from '../../../../components/ui/button/Buttons';
-import FormCreator from '../../../../components/Forms/FormCreator';
+import FormCreator from '../../../../components/FinalForms/FormCreator';
 import { useAddEditOrganizationProfileMutation, useLazyGetOrganizationProfileQuery } from '../../../../app/services/organizationAPI';
 import ToastService from '../../../../services/toastService/ToastService';
 import DataLoader from '../../../../components/ui/dataLoader/DataLoader';
@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 
 
 const OrganizationProfileManagement = ({ isEditablePage, setCompanyName }) => {
+
     const organizationProfileRef = useRef();
     const [organizationProfileData, setOrganizationProfileData] = useState(OrganizationProfileManagementdata);
     const [addEditOrganization, { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData }] = useAddEditOrganizationProfileMutation();
@@ -52,7 +53,7 @@ const OrganizationProfileManagement = ({ isEditablePage, setCompanyName }) => {
                 sOSFileNumber: isGetOrganizationProfileData.sosFileNumber,
                 webFileNumber: isGetOrganizationProfileData.webFileNumber,
                 tWCTaxAccountNumber: isGetOrganizationProfileData.twcTaxAccountNumber,
-                attachment: isGetOrganizationProfileData.base64Data
+                profilePic: isGetOrganizationProfileData.base64Data
             };
             setOrganizationProfileData(formData);
             setProfileId(isGetOrganizationProfileData.organizationProfileId);
@@ -83,8 +84,8 @@ const OrganizationProfileManagement = ({ isEditablePage, setCompanyName }) => {
                 sOSFileNumber: profileFormData.sOSFileNumber,
                 webFileNumber: profileFormData.webFileNumber,
                 tWCTaxAccountNumber: profileFormData.tWCTaxAccountNumber,
-                base64Data: profileFormData.attachment.base64Data,
-                attachmentName: profileFormData.attachment.fileName,
+                base64Data: profileFormData.profilePic ? profileFormData.profilePic?.base64Data : null,
+                attachmentName: profileFormData.profilePic ? profileFormData.profilePic?.fileName : null,
                 storagePath: 'OrganizationProfilePic'
             }
             addEditOrganization(request)
@@ -103,6 +104,7 @@ const OrganizationProfileManagement = ({ isEditablePage, setCompanyName }) => {
             <FormCreator
                 config={organizationProfileData}
                 ref={organizationProfileRef}
+                key={false}
             />
 
             {isEditablePage ?
