@@ -168,9 +168,9 @@ const OrderItemList = ({ orderDetails, handleOrderItemShippingAddress }) => {
                             <div className="key-value-se">
                               <span className="key-sec">Shipping Add.</span>
                               <div className="value-right-btn">
-                                <span className="value-sec add-value">
+                                {/* <span className="value-sec add-value">
                                   &nbsp;:&nbsp; {item.orderShippingAddress}
-                                </span>
+                                </span> */}
                                 <span className="right-btn">
                                   <span className="info-btn hover-model">
                                     <Iconify icon="ep:info-filled" className="swap-icon" />
