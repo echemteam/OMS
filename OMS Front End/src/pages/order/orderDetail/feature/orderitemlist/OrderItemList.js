@@ -165,7 +165,7 @@ const OrderItemList = ({ orderDetails, handleOrderItemShippingAddress }) => {
                               </span>
                             </div>
                             <div className="key-value-se">
-                              <span className="key-sec">Shipping Add.</span>
+                              <span className="key-sec">Shipping Add.</span>&nbsp;:&nbsp;
                               <div className="value-right-btn">
                                 {/* <span className="value-sec add-value">
                                   &nbsp;:&nbsp; {item.orderShippingAddress}
