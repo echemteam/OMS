@@ -212,7 +212,7 @@ const OrderItemList = ({ orderDetails, handleOrderItemShippingAddress }) => {
                               </div>
                             </div>
                           </div>
-                          <div className="col-xxl-6 col-lg-6 col-md-6 col-12">
+                          <div className="col-xxl-6 col-lg-6 col-md-6 col-12 custom-col-7">
                             <div className="accordian-right-full-sec">
                               <div className="left-section">
                                 <div className="key-value-se">
