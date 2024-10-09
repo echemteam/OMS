@@ -26,7 +26,7 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef }) => {
   const [isModelOpenShippingAddress, setIsModelOpenShippingAddress] =useState(false);
   const [isModelOpenUpdateAddress, setIsModelOpenUpdateAddress] =useState(false);
   const [isModelOpenModelUserModel, setIsModelOpenUserModel] = useState(false);
-  const [isUpdateContact,setIsUpdateContact]=useState(false);
+  const [isUpdateContactModel,setIsUpdateContactModel]=useState(false);
   const [selectedContactId,setSelectedContactId]=useState(null)
   const [defaultId,setDefaultId]=useState(null);
   const [isEdit, setIsEdit] = useState(false);
@@ -77,7 +77,7 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef }) => {
   const handleAddContact=()=>{
     setIsModelOpenUserModel(false);
     setEditMode(false);
-    setIsUpdateContact(true);
+    setIsUpdateContactModel(true);
   }
   const onSidebarCloseUserModel = () => {
     setIsModelOpenUserModel(false);
@@ -95,7 +95,7 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef }) => {
   const handleUpdateContact=()=>{
    
     setIsModelOpenUserModel(false);
-    setIsUpdateContact(true);
+    setIsUpdateContactModel(true);
     setIsEdit(true);
     // if (editRef.current) {
     //   editRef.current.callEditFunction(selectedContactId);
@@ -103,7 +103,7 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef }) => {
   }
 
   const onSidebarCloseUpdateContact = () => {
-    setIsUpdateContact(false);
+    setIsUpdateContactModel(false);
     setIsEdit(false);
     setIsModelOpenUserModel(true);
   };
@@ -285,20 +285,20 @@ const onGetContactId=(id)=>{
       </SidebarModel>
       : null
 }
-{isUpdateContact ?
+{isUpdateContactModel ?
           <SidebarModel
           modalTitle="Add/Edit Contact"
           contentClass="content-40"
           onClose={onSidebarCloseUpdateContact}
           modalTitleIcon={AppIcons.AddIcon}
-          isOpen={isUpdateContact}
+          isOpen={isUpdateContactModel}
         >
           <AddEditContact
           editRef={editRef}
             addEditContactMutation={useAddEditContactMutation}
             customerId={customerId} 
             getContactById={useLazyGetCustomerContactByContactIdQuery}
-            isUpdateContact={isUpdateContact}
+            isUpdateContactModel={isUpdateContactModel}
             selectedContactId={selectedContactId}
             isEdit={isEdit}
             onSidebarClose={onSidebarCloseUpdateContact}
