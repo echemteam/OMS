@@ -161,7 +161,7 @@ const OrderInfoAddressModel = ({
                 <div className="add-line-part">{address.addressLine2}</div>
                 <div className="add-line-part">{address.addressLine3}</div>
 
-                <span> {address?.cityName},{" "}
+                <span className="add-line-part"> {address?.cityName},{" "}
                   {address.stateCode
                     ? address.stateCode
                     : address.stateName}{" "}

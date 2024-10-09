@@ -1109,6 +1109,9 @@
           &::before {
             left: unset;
             right: -8px;
+            @media only screen and (max-width: 1400px) {
+              right: 12px;
+            }
           }
         }
       }
@@ -1159,6 +1162,7 @@
 
   .add-desc {
     .add-line-part {
+      white-space: normal;
       span {
         &.add-info {}
       }
@@ -1237,7 +1241,7 @@
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         border-bottom: 8px solid var(--whiteColor);
-        top: -15px;
+        top: -13px;
         left: 8px;
         transform: translateX(-50%);
       }
@@ -1448,6 +1452,13 @@
   &.user-card {
     .customer-popup-sec {
       width: 250px;
+      @media only screen and (max-width: 1560px) {
+        width: 225px;
+      }  
+      @media only screen and (max-width: 1400px) {
+        width: 205px;
+        right: -30px !important;
+      }      
     }
   }
 }
@@ -1475,6 +1486,9 @@
         .desc-detail {
           .name-ellipsis {
             max-width: 110px;
+            @media only screen and (max-width: 1400px) {
+              max-width: 95px;
+            }
           }
         }
 
