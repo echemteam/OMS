@@ -77,7 +77,7 @@ export const orderListMolGridConfig = {
       fieldName: "catalogId",
       allowShort: false,
       colStyle: {
-        width: "15%",
+        width: "10%",
       },
     },
     {
@@ -90,7 +90,19 @@ export const orderListMolGridConfig = {
       },
     },
     {
-      name: "Unit/Size",
+      name: "Pack Size",
+      fieldName: "Pack Size",
+      allowShort: false,
+      colType: GridColumnType.CUSTOM,
+      colStyle: {
+        width: "15%",
+      },
+      renderCustomCol: (rowData) => {
+        return `${rowData?.["quantity"]} X ${rowData?.["packSize"]} ${rowData?.["unit"]}`;
+      }
+    },
+    {
+      name: "Unit Price",
       fieldName: "itemUnitPrice",
       allowShort: false,
       colType: GridColumnType.CUSTOM,
@@ -98,16 +110,24 @@ export const orderListMolGridConfig = {
         width: "10%",
       },
       renderCustomCol: (rowData) => {
-        return `${rowData?.["packSize"]} ${rowData?.["unit"]}`;
+        const priceValue = parseFloat(rowData?.["itemUnitPrice"].replace(/[$,]/g, '')) || 0;
+        return `$ ${priceValue?.toFixed(2)}`;
       }
     },
     {
-      name: "Price",
+      name: "Total Price",
       fieldName: "itemUnitPrice",
       allowShort: false,
+      colType: GridColumnType.CUSTOM,
       colStyle: {
         width: "10%",
       },
+      renderCustomCol: (rowData) => {
+        const packageValue = parseFloat(rowData?.["quantity"]) || 0;
+        const priceValue = parseFloat(rowData?.["itemUnitPrice"].replace(/[$,]/g, '')) || 0; // Remove '$' and ','
+        const result = packageValue * priceValue;
+        return `$ ${result?.toFixed(2)}`;
+      }
     },
     {
       name: "Approval Status",

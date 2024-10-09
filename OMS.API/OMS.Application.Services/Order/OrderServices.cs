@@ -86,6 +86,7 @@ namespace OMS.Application.Services.Order
                         orderItemsDto.OrderId = responseData.KeyValue;
                         orderItemsDto.CreatedBy = CurrentUserId;
                         orderItemsDto.EntityType = "OrderItem";
+                        orderItemsDto.SubTotalPrice = (orderItemsDto.ItemUnitPrice * orderItemsDto.Quantity);
                         await repositoryManager.orderItem.AddOrderItem(orderItemsDto);
                     }
                 }
