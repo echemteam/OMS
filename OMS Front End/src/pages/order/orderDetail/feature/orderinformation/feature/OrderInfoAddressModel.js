@@ -43,7 +43,7 @@ const OrderInfoAddressModel = ({
 
   useEffect(() => {
     if (isUpdateOrderAddressSuccess && isUpdateOrderAddressData) {
-      ToastService.success(isUpdateOrderAddressData.errorMessage);   
+      ToastService.success(isUpdateOrderAddressData.errorMessage);
       onSidebarCloseShippingAddress();
     }
   }, [isUpdateOrderAddressSuccess, isUpdateOrderAddressData]);
@@ -78,9 +78,9 @@ const OrderInfoAddressModel = ({
     GetAddresssByCustomerIdData,
   ]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setSelectedAddressId(defaultId);
-  },[defaultId]);
+  }, [defaultId]);
 
   const handleCheckboxChange = (id) => {
     if (selectedAddressId === id) {
@@ -119,13 +119,13 @@ const OrderInfoAddressModel = ({
         "Cancel"
       ).then((confirmed) => {
         if (confirmed) {
-          
+
           const req = {
             orderAddressId: orderDetails.orderAddressId,
             orderId: orderDetails.orderId,
             billingAddressId: addressContactType === "Billing" ? selectedAddressId : 0,
             shippingAddressId: addressContactType === "Shipping" ? selectedAddressId : 0,
-            orderItemId: orderItemId ? orderItemId : null
+            orderItemId: orderItemId ? orderItemId : 0
           };
           updateOrderAddress(req);
         }
@@ -160,12 +160,12 @@ const OrderInfoAddressModel = ({
                 </div>
                 <div className="add-line-part">{address.addressLine2}</div>
                 <div className="add-line-part">{address.addressLine3}</div>
-        
-              <span> {address?.cityName},{" "}
-                        {address.stateCode
-                          ? address.stateCode
-                          : address.stateName}{" "}
-                        {address?.zipCode}</span>
+
+                <span> {address?.cityName},{" "}
+                  {address.stateCode
+                    ? address.stateCode
+                    : address.stateName}{" "}
+                  {address?.zipCode}</span>
               </div>
             </div>
           </div>
