@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useImperativeHandle, useState } from "react";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
 import { AppIcons } from "../../../../../data/appIcons";
@@ -14,7 +14,7 @@ import {
 } from "../../../../../app/services/addressAPI";
 import AddEditAddress from "../../../../../common/features/component/Address/feature/AddEditAddress";
 
-const OrderInformation = ({ orderDetails }) => {
+const OrderInformation = ({ orderDetails, orderItemShippingAddRef }) => {
   const [orderInfo, setOrderInfo] = useState(null);
   const [orderAddressDetails, setOrderAddressDetails] = useState(null);
   const [orderContactDetails, setOrderContactDetails] = useState(null);
@@ -27,21 +27,29 @@ const OrderInformation = ({ orderDetails }) => {
   const [isModelOpenUpdateAddress, setIsModelOpenUpdateAddress] =
     useState(false);
   const [isModelOpenModelUserModel, setIsModelOpenUserModel] = useState(false);
+  const [orderItemId, setOrderItemId] = useState(null);
 
   const onSidebarCloseShippingAddress = () => {
     setIsModelOpenShippingAddress(false);
     setAddressContactType("");
+    setOrderItemId(null);
   };
 
-  const handleToggleModalShippingAddress = (type) => {
+  const handleToggleModalShippingAddress = (type, orderItemId) => {
+    setOrderItemId(orderItemId);
     setIsModelOpenShippingAddress(true);
     setAddressContactType(type);
   };
+
+  useImperativeHandle(orderItemShippingAddRef, () => ({
+    handleToggleModalShippingAddress
+  }))
 
   const onSidebarCloseUpdateAddress = () => {
     setIsModelOpenUpdateAddress(false);
     setEditMode(false);
     setIsModelOpenShippingAddress(true);
+    setOrderItemId(null);
   };
 
   const handleUpdateAddress = () => {
@@ -180,6 +188,7 @@ const OrderInformation = ({ orderDetails }) => {
           orderDetails={orderDetails}
           addressContactType={addressContactType}
           customerId={customerId}
+          orderItemId={orderItemId}
         />
       </SidebarModel>
       {isModelOpenUpdateAddress ? (

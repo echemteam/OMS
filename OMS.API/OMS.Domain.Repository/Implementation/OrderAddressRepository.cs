@@ -35,6 +35,7 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.OrderId,
                 requestData.BillingAddressId,
                 requestData.ShippingAddressId,
+                requestData.OrderItemId,
                 requestData.UpdatedBy,
             }, CommandType.StoredProcedure);
         }

@@ -5,12 +5,13 @@ import Buttons from "../../../../../components/ui/button/Buttons";
 import FormCreator from "../../../../../components/Forms/FormCreator";
 //** Service's */
 import ToastService from "../../../../../services/toastService/ToastService";
-import { ModulePathName } from "../../../../../utils/Enums/commonEnums";
+import { FieldSettingType, ModulePathName } from "../../../../../utils/Enums/commonEnums";
 import PropTypes from 'prop-types';
 import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleResetForm";
 import { useValidateAndAddApprovalRequests } from "../../../../../utils/CustomHook/useValidateAndAddApproval";
 import { FunctionalitiesName } from "../../../../../utils/Enums/ApprovalFunctionalities";
 import { isCustomerOrSupplierApprovedStatus } from "../../../../../utils/CustomerSupplier/CustomerSupplierUtils";
+import { setFieldSetting } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 
 const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleModal, onSuccess, isEditablePage, customerStatusId }) => {
 
@@ -45,31 +46,35 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
             ToastService.success(isAddData.errorMessage);
         }
     }, [isAddSuccess, isAddData]);
-
-    const handleSave = async () => {
     
+    const handleSave = async () => {
         const data = ref.current.getFormData();
-        if (data) {
-            const documentList = [
-                {
-                    name: data.name,
-                    attachment: data.attachment.fileName,
-                    base64File: data.attachment.base64Data,
-                    documentTypeId: data.documentTypeId && typeof data.documentTypeId === "object" ? data.documentTypeId.value : data.documentTypeId,
-                }
-            ]
-            const requestData = {
-                storagePath: isSupplier ? ModulePathName.SUPPLIER : ModulePathName.CUSTOMER,
-                [isSupplier ? 'supplierId' : 'customerId']: keyId,
-                documentInfoList: documentList
-            };
-            // if (!isSupplier && isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
-            //     await handleApprovalRequest(requestData, null);
-            // } else {
-                add(requestData);
-            // }
-        }
+        const transformedData = buildTransformedDocumentData(data, isSupplier, keyId,);
+    
+        const documentList = [
+            {
+                name: data.name,
+                attachment: data.attachment.fileName,
+                base64File: data.attachment.base64Data,
+                documentTypeId : transformedData.documentTypeId
+            }
+        ];
+    
+        const requestData = {
+            storagePath: isSupplier ? ModulePathName.SUPPLIER : ModulePathName.CUSTOMER,
+            [isSupplier ? 'supplierId' : 'customerId']: keyId,
+            documentInfoList: documentList,
+            // ...transformedData,  
+        };
+    
+        // Uncomment the following lines if you need to handle approval requests
+        // if (!isSupplier && isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
+        //     await handleApprovalRequest(requestData, null);
+        // } else {
+        add(requestData);
+        // }
     };
+    
 
     const handleApprovalRequest = async (newValue) => {
         const request = { newValue, oldValue: null, isFunctional: true, eventName: FunctionalitiesName.UPLOADCUSTOMERDOCUMENT };
@@ -80,7 +85,34 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
         }
     };
 
+    const buildTransformedDocumentData = (data, isSupplier, keyId) => {
 
+        const transformDocumentTypeData = (data) => {
+            if (data && typeof data === 'object') {
+                return {
+                    id: data.value || data.id || 0,  
+                    name: data.text || "",  
+                };
+            }
+            return {
+                id: data || 0,  
+                name: "",  
+            };
+        };
+    
+         
+        const { id: documentTypeId, name: type } = transformDocumentTypeData(data.documentTypeId);
+    
+        return {
+            ...data,
+            [isSupplier ? 'supplierId' : 'customerId']: keyId,
+            documentTypeId ,  
+            type, 
+            createdAt: data.createdAt || new Date(),  
+              
+        };
+    };
+    
     const onFormDataChange = (updatedData) => {
         const fileName =  (updatedData.attachment && updatedData.attachment.fileName )|| "";  
         setFormData(prevFormData => ({
@@ -91,10 +123,21 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
             }
         }));
     }
-
+    const handleDropdownAction = (data, dataField) => {
+           if (dataField === 'documentTypeId') {
+            if (!data) {
+                setFieldSetting(formData, 'documentTypeId', FieldSettingType.ISTEXT, data);
+                ref.current.updateFormFieldValue({ documentTypeId: null });
+            }
+        }
+    }
+    //** Action Handler */
+    const formActionHandler = { 
+        DA_CHANGED: handleDropdownAction
+    };
     return (
         <div className="row add-documentForm">
-            <FormCreator config={formData} ref={ref} {...formData} onFormDataChange={onFormDataChange} />
+            <FormCreator config={formData} ref={ref} {...formData} onFormDataChange={onFormDataChange} onDropdownAction={formActionHandler} />
             <div className="col-md-12 mt-2">
                 <div className="d-flex align-item-end justify-content-end">
                     <div className="d-flex align-item-end">

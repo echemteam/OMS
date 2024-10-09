@@ -75,8 +75,12 @@ namespace OMS.API.Controllers
         [HttpGet("GetOrderDetailByOrderId")]
         public async Task<IActionResult> GetOrderDetailByOrderId(int orderId)
         {
-            GetOrderDetailByOrderIdResponse responseData = await _serviceManager.orderServices.GetOrderDetailByOrderId(orderId).ConfigureAwait(true);
-            return APISucessResponce(responseData);
+            if (orderId > 0)
+            {
+                GetOrderDetailByOrderIdResponse responseData = await _serviceManager.orderServices.GetOrderDetailByOrderId(orderId).ConfigureAwait(true);
+                return APISucessResponce(responseData);
+            }
+            return APISucessResponce(orderId);
         }
         [HttpDelete("DeleteOrder")]
         public async Task<IActionResult> DeleteOrder(int orderId)

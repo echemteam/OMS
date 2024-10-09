@@ -517,6 +517,12 @@
         }
       }
 
+      .order-document {
+        .btn-part {
+          cursor: pointer;
+        }
+      }
+
       .file-actions {
         display: flex;
         justify-content: center;
