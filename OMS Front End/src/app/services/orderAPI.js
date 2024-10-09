@@ -101,14 +101,14 @@ const orderAPI = createApi({
             transformErrorResponse: transformErrorResponse
 
         }),
-        // getContactByCustomerId: builder.query({
-        //     query: (data) => ({
-        //         url: encryptQueryString(`/Contact/GetContactByCustomerId/?customerId=${Number(data.id)}&searchText=${data.searchText}&searchContactType=${data.contactType}`),
-        //         Method: 'GET',
-        //     }),
-        //     transformResponse: transformSucessResponse,
-        //     transformErrorResponse: transformErrorResponse
-        // }),
+        getContactByCustomerId: builder.query({
+            query: (data) => ({
+                url: encryptQueryString(`/Contact/GetContactByCustomerId/?customerId=${data.customerId}&searchText=${data.searchText}&searchContactType=${data.searchContactType}`),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
         
         updateOrderAddress: builder.mutation({
             query: (requestData) => ({
@@ -127,6 +127,16 @@ const orderAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        updateOrderContact: builder.mutation({
+            query: (requestData) => ({
+                url: '/Order/UpdateOrderContact',
+                method: 'POST',
+                body: transformRequest(requestData)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+
     })
 })
 
@@ -143,6 +153,7 @@ export const { useCheckPoNumberExistOrNotMutation,
     useLazyGetContactByCustomerIdQuery,
     useUpdateOrderAddressMutation,
     useDeleteOrderItemMutation,
+    useUpdateOrderContactMutation,
 } = orderAPI;
 
 export default orderAPI;
