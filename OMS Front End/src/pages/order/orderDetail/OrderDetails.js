@@ -59,9 +59,9 @@ const OrderDetails = () => {
     }
   }, [isOrderDetailsFetching, isOrderDetailsFetched, orderByOrderIdDetails]);
 
-  const handleOrderItemShippingAddress = (type, orderItemId) => {
+  const handleOrderItemShippingAddress = (type, addressId, orderItemId) => {
     if (orderItemShippingAddRef) {
-      orderItemShippingAddRef.current.handleToggleModalShippingAddress(type, orderItemId);
+      orderItemShippingAddRef.current.handleToggleModalShippingAddress(type, addressId, orderItemId);
     }
   }
 

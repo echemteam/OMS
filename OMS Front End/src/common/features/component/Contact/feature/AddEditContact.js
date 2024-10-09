@@ -17,7 +17,7 @@ import { ErrorMessage } from "../../../../../data/appMessages";
 const EmailAddressGrid = React.lazy(() => import("../../EmailAddress/EmailAddressGrid"));
 const ContactNumbersGrid = React.lazy(() => import("../../ContactNumber/ContactNumbersGrid"));
 
-const AddEditContact = forwardRef(({ keyId,selectedContactId,isUpdateContact, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, SecurityKey, customerStatusId, allGetAllContactTypesData,
+const AddEditContact = forwardRef(({ keyId,selectedContactId,isUpdateContactModel, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, SecurityKey, customerStatusId, allGetAllContactTypesData,
     isEditablePage, isSupplier, isEdit, isOpen, getContactById, getContectTypeId, customerId, isOrderManage, onhandleApiCall, contryIdCode, orderResetValue,
     getCompletionCount }) => {
 
@@ -45,6 +45,11 @@ const AddEditContact = forwardRef(({ keyId,selectedContactId,isUpdateContact, ad
     const handleAddEdit = async () => {
         handlWithoutApprovalAddEdit();
     }
+    useEffect(()=>{
+        if(isUpdateContactModel){
+                 getById(selectedContactId)
+            }
+        },[selectedContactId])
 
     const handlWithoutApprovalAddEdit = () => {
         const data = ref.current.getFormData();
