@@ -75,6 +75,7 @@ const OrderDetails = () => {
           {/* Order Document Start */}
           <OrderDocument
             orderDetails={orderDetails}
+            isOrderDetailsFetching={isOrderDetailsFetching}
             onRefreshOrderDetails={handleRefreshOrderDetails}
           />
           {/* Order Document End */}

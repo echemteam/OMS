@@ -469,6 +469,12 @@
         }
       }
 
+      .order-document {
+        .btn-part {
+          cursor: pointer;
+        }
+      }
+
       .file-actions {
         display: flex;
         justify-content: center;
@@ -979,16 +985,18 @@
           color: var(--textColor2);
           line-height: normal;
           display: flex;
-          align-items: center;
+          align-items: flex-start;
+          word-break: break-all;
 
           &.email {}
 
           &.number {
-            margin-top: 3px;
+            margin-top: 2px;
             font-size: var(--commonFont-medium);
 
             span {
               font-size: var(--commonFont-small);
+              padding-top: 4px;
             }
           }
 
@@ -1028,6 +1036,9 @@
   }
 
   &.card-list-popup {
+    height: 100%;
+    margin-bottom: 0;
+
     .info-user {
       .customer-popup-sec {
         right: -10px;
@@ -1056,6 +1067,7 @@
           .user-name {
             margin-bottom: 2px;
           }
+
           .btn-sec {
             width: 25px;
           }

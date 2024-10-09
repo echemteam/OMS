@@ -192,6 +192,8 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.OrderMethodId,
                 requestData.OrderReceivedDate,
                 requestData.ReferenceNumber,
+                requestData.PoNumber,
+                requestData.CustomerId,
                 requestData.UpdatedBy,
             }, CommandType.StoredProcedure);
         }

@@ -10,8 +10,8 @@
         public DateTime? PromiseDate { get; set; }
         public string? OrderPriority { get; set; }
         public long? ReferenceEntityId { get; set; }
-        public short? OrderItemStatusId { get; set; }
-        public short? OrderItemSubStatusId { get; set; }
+        //public short? OrderItemStatusId { get; set; }
+        //public short? OrderItemSubStatusId { get; set; }
         public decimal? Quantity { get; set; }
         public decimal? PackSize { get; set; }
         public string? Unit { get; set; }

@@ -49,7 +49,7 @@ const EditInputColumn = ({
         const newRowData = updatedData
           ? { ...updatedData, [col.fieldName]: newValue }
           : { ...rowData, [col.fieldName]: newValue };
-        onChange(rowIndex, newRowData);
+          onChange(rowIndex, newRowData, col?.fieldName);
       }
     };
   
