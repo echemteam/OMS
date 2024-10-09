@@ -66,18 +66,15 @@ const determineFileType = (fileName) => {
   }
 };
 
-const OrderDocument = ({ orderDetails, onRefreshOrderDetails }) => {
+const OrderDocument = ({ orderDetails, onRefreshOrderDetails, isOrderDetailsFetching }) => {
+
   const [documentDetails, setDocumentDetails] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [getFileType, setGetFileType] = useState([]);
   const [selectedDocument, setSelectedDocument] = useState(null);
   const [isModelOpenPDF, setIsModelOpenPDF] = useState(false);
-  const OrderDocument = ({ orderDetails, onRefreshOrderDetails, isOrderDetailsFetching }) => {
 
     const { confirm } = SwalAlert();
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [documentDetails, setDocumentDetails] = useState(null);
-
     const [deleteOrderDocument, { isSuccess: isDeleteSuccess, data: isDeleteData }] = useDeleteOrderDocuementByIdMutation();
 
     const [Downalod, { isFetching: isDownalodFetching, isSuccess: isDownalodSucess, data: isDownalodData, }] = useLazyDownloadDocumentQuery();
@@ -136,7 +133,6 @@ const OrderDocument = ({ orderDetails, onRefreshOrderDetails }) => {
       }
     }, [isDownalodFetching, isDownalodSucess, isDownalodData]);
 
-    const handleViewClick = () => { };
 
     const handleDeleteDocumentClick = (orderDocumentId) => {
       confirm(
@@ -248,7 +244,6 @@ const OrderDocument = ({ orderDetails, onRefreshOrderDetails }) => {
         </SidebarModel>
       </>
     );
-  }
-};
+  };
 
 export default OrderDocument;
