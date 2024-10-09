@@ -144,7 +144,6 @@ const OrderItemList = ({ orderDetails, handleOrderItemShippingAddress }) => {
                           <span>{item.unit ? item.unit : "-"}</span>
                           <span>{item.packSize ? item.packSize : "-"}</span>
                           <span>{item.itemUnitPrice ? `$${item.itemUnitPrice}` : "-"}</span>
-
                           <span>
                             <div className={`status-btn ${item.statusClass}`}>
                               {item.itemStatus}
@@ -179,7 +178,7 @@ const OrderItemList = ({ orderDetails, handleOrderItemShippingAddress }) => {
                                         handleOrderItemShippingAddress={handleOrderItemShippingAddress} />
                                     </span>
                                   </span>
-                                  <span className="info-btn tooltip-div" onClick={() => handleOrderItemShippingAddress("Shipping", item?.orderItemId)}>
+                                  <span className="info-btn tooltip-div" onClick={() => handleOrderItemShippingAddress("Shipping", item?.orderShippingAddress?.addressId, item?.orderItemId)}>
                                     <Iconify
                                       icon="icon-park-outline:change"
                                       className="swap-icon"
