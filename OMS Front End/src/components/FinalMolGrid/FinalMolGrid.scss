@@ -228,7 +228,9 @@ table {
           div {
             justify-content: center;
             align-items: center;
-
+            &.input-validation{
+              text-align: center;
+            }
             a {
               &:last-child {
                 margin-right: 0;

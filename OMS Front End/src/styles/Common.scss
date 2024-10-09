@@ -3759,14 +3759,14 @@ input[type="checkbox"]:disabled {
 }
 
 .order-body {
-  max-height: calc(100vh - 130px);
+  max-height: calc(100vh - 138px);
 
   .stepper-section {
     .stepper-content {
       max-height: calc(100vh - 150px);
 
       @media only screen and (max-width: 1750px) {
-        max-height: calc(100vh - 155px) !important;
+        max-height: calc(100vh - 170px) !important;
       }
     }
   }
@@ -4108,6 +4108,10 @@ input[type="checkbox"]:disabled {
 
       tr {
         td {
+          padding: 2px 10px 2px 20px;
+          @media only screen and (max-width: 1750px) {
+            padding: 2px 10px;
+          }
           span {
             padding: 4px 0;
           }

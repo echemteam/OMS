@@ -15,6 +15,7 @@ using OMS.Domain.Entities.Entity.OrderItems;
 using OMS.Domain.Entities.Entity.Orders;
 using OMS.Domain.Repository;
 using OMS.FileManger.Services;
+using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Entities.CommonEntity;
 using OMS.Shared.Services.Contract;
 using System.Data;
@@ -127,7 +128,24 @@ namespace OMS.Application.Services.Order
         }
         public async Task<List<GetOrderItemsByOrderIdResponse>> GetOrderItemsByOrderId(int orderId)
         {
-            return await repositoryManager.order.GetOrderItemsByOrderId(orderId);
+            var orderItem =  await repositoryManager.order.GetOrderItemsByOrderId(orderId);
+
+            //if (orderItem == null)
+           // {
+           //     return orderItem!;
+            //}
+            
+            foreach (var item in orderItem)
+            {
+                 
+                if (item.ShippingAddressId > 0)  
+                {
+                    AddressResponse orderShippingAddress = await repositoryManager.order.GetOrderAddressesByOrderId(item.ShippingAddressId);
+                    item.OrderShippingAddress = orderShippingAddress; 
+                }
+            }
+            return orderItem!;
+
         }
         public async Task<GetOrderDetailByOrderIdResponse> GetOrderDetailByOrderId(int orderId)
         {
@@ -210,18 +228,6 @@ namespace OMS.Application.Services.Order
         public async Task<GetOrderItemByOrderItemIdResponse> GetOrderItemByOrderItemId(long orderItemId)
         {
             var orderItemDetails = await repositoryManager.order.GetOrderItemByOrderItemId(orderItemId);
-            if (orderItemDetails == null)
-            {
-                return orderItemDetails!;
-            }
-
-            // Get Address Information
-            AddressResponse orderShippingAddresses = await repositoryManager.order.GetOrderAddressesByOrderId(orderItemDetails.ShippingAddressId);
-
-            orderItemDetails.OrderAddressInformation = new GetOrderAddressByOrderIdResponse
-            {
-                ShippingAddress = orderShippingAddresses
-            };
             return orderItemDetails!;
         }
         public async Task<AddEntityDto<long>> UpdateOrderItemByOrderItemId(UpdateOrderItemByOrderItemIdRequest updateOrderItemRequest, short CurrentUserId)

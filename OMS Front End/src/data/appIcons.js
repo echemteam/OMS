@@ -89,6 +89,7 @@ import backArrow from "../assets/images/BackArrow.svg";
 import pencilIcon from "../assets/images/pencil.png";
 import businessIcon from "../assets/images/Business-icon.png"
 import dummyLogo from "../assets/images/dummy-logo.png"
+import noStructureImg from "../assets/images/NoStructure.png"
 
 
 
@@ -180,4 +181,6 @@ export const AppIcons = {
   CompanyIcon:businessIcon,
   DummyLogo:dummyLogo,
   
+
+  NoStructureImg:noStructureImg,
 };
