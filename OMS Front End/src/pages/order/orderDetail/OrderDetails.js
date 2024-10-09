@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { lazy, useEffect, useState } from "react";
+import React, { lazy, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 
 /** Common Services & Data files */
@@ -27,8 +27,8 @@ const OrderInformation = lazy(() =>
 const OrderDetails = () => {
 
   const { id } = useParams();
+  const orderItemShippingAddRef = useRef();
   const orderId = id ? decryptUrlData(id) : 0;
-
   const [orderDetails, setOrderDetails] = useState();
 
   const [getOrderDetailByOrderId, {
@@ -59,6 +59,12 @@ const OrderDetails = () => {
     }
   }, [isOrderDetailsFetching, isOrderDetailsFetched, orderByOrderIdDetails]);
 
+  const handleOrderItemShippingAddress = (type, orderItemId) => {
+    if (orderItemShippingAddRef) {
+      orderItemShippingAddRef.current.handleToggleModalShippingAddress(type, orderItemId);
+    }
+  }
+
   return (
     <div className="order-review-section">
       <div className="row">
@@ -71,7 +77,7 @@ const OrderDetails = () => {
           {/* Order Summery End */}
 
           {/* Order Information Start */}
-          <OrderInformation orderDetails={orderDetails} />
+          <OrderInformation orderItemShippingAddRef={orderItemShippingAddRef} orderDetails={orderDetails} />
           {/* Order Information End */}
 
           {/* Order Document Start */}
@@ -87,7 +93,7 @@ const OrderDetails = () => {
         {/* Right Side Section Start */}
         <div className="col-xxl-7 col-lg-7 col-md-7 col-12">
           <OrderAction />
-          <OrderItemList />
+          <OrderItemList orderDetails={orderDetails} handleOrderItemShippingAddress={handleOrderItemShippingAddress} />
         </div>
         {/* Right Side Section End */}
       </div>
