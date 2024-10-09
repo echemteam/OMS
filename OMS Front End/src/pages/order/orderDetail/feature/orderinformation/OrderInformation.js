@@ -9,7 +9,7 @@ import UsercardModel from "./feature/UsercardModel";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import { useAddAddressMutation, useLazyGetCustomerAddresssByAddressIdQuery, useUpdateAddAddressMutation } from "../../../../../app/services/addressAPI";
 import AddEditAddress from "../../../../../common/features/component/Address/feature/AddEditAddress";
-import { useAddEditContactMutation, useLazyGetCustomerContactByContactIdQuery } from "../../../../../app/services/contactAPI";
+import { useAddEditContactMutation, useLazyGetAllContactTypesQuery, useLazyGetCustomerContactByContactIdQuery } from "../../../../../app/services/contactAPI";
 import AddEditContact from "../../../../../common/features/component/Contact/feature/AddEditContact";
 
 
@@ -26,12 +26,15 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef }) => {
   const [isModelOpenShippingAddress, setIsModelOpenShippingAddress] = useState(false);
   const [isModelOpenUpdateAddress, setIsModelOpenUpdateAddress] = useState(false);
   const [isModelOpenModelUserModel, setIsModelOpenUserModel] = useState(false);
-  const [isUpdateContactModel,setIsUpdateContactModel]=useState(false);
-  const [selectedContactId,setSelectedContactId]=useState(null)
-  const [defaultId,setDefaultId]=useState(null);
+  const [isUpdateContactModel, setIsUpdateContactModel] = useState(false);
+  const [selectedContactId, setSelectedContactId] = useState(null)
+  const [defaultId, setDefaultId] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
   const [orderContactId, setOrderContactId] = useState(null)
   const [orderItemId, setOrderItemId] = useState(0);
+  const [getAllContactTypes, { isSuccess: isGetAllContactTypesSucess, data: allGetAllContactTypesData },] = useLazyGetAllContactTypesQuery();
+
+
 
   const onSidebarCloseShippingAddress = () => {
     setIsModelOpenShippingAddress(false);
@@ -94,6 +97,7 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef }) => {
 
   const handleUpdateContact = () => {
 
+    getAllContactTypes();
     setIsModelOpenUserModel(false);
     setIsUpdateContactModel(true);
     setIsEdit(true);
@@ -133,6 +137,8 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef }) => {
     setSelectedAddressId(id);
 
   };
+
+
 
 
   return (
@@ -262,31 +268,31 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef }) => {
         </SidebarModel>
       ) : null}
       {isModelOpenModelUserModel ?
-      <SidebarModel
-        modalTitle="Update Users"
-        contentClass="content-50"
-        onClose={onSidebarCloseUserModel}
-        modalTitleIcon={AppIcons.AddIcon}
-        isOpen={isModelOpenModelUserModel}
-      >
-        <UsercardModel 
-        orderContactId={orderContactId}
-        onGetContactId={onGetContactId}
-        onUpdate={handleUpdateContact}
-           orderDetails={orderDetails}
-           contactTypeId={contactTypeId}
-           handleAddContact={handleAddContact}
-           selectedContactId={selectedContactId}
-          addressContactType={addressContactType} 
-          setSelectedContactId={setSelectedContactId}
-          onSidebarCloseUserModel={onSidebarCloseUserModel}
-          customerId={customerId}
-          defaultId={defaultId} />
-      </SidebarModel>
-      : null
-}
-{isUpdateContactModel ?
-          <SidebarModel
+        <SidebarModel
+          modalTitle="Update Users"
+          contentClass="content-50"
+          onClose={onSidebarCloseUserModel}
+          modalTitleIcon={AppIcons.AddIcon}
+          isOpen={isModelOpenModelUserModel}
+        >
+          <UsercardModel
+            orderContactId={orderContactId}
+            onGetContactId={onGetContactId}
+            onUpdate={handleUpdateContact}
+            orderDetails={orderDetails}
+            contactTypeId={contactTypeId}
+            handleAddContact={handleAddContact}
+            selectedContactId={selectedContactId}
+            addressContactType={addressContactType}
+            setSelectedContactId={setSelectedContactId}
+            onSidebarCloseUserModel={onSidebarCloseUserModel}
+            customerId={customerId}
+            defaultId={defaultId} />
+        </SidebarModel>
+        : null
+      }
+      {isUpdateContactModel ?
+        <SidebarModel
           modalTitle="Add/Edit Contact"
           contentClass="content-40"
           onClose={onSidebarCloseUpdateContact}
@@ -301,8 +307,10 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef }) => {
             isUpdateContactModel={isUpdateContactModel}
             selectedContactId={selectedContactId}
             isEdit={isEdit}
+            isGetAllContactTypesSucess={isGetAllContactTypesSucess}
+            allGetAllContactTypesData={allGetAllContactTypesData}
             onSidebarClose={onSidebarCloseUpdateContact}
-
+            isSupplier={false}
           />
         </SidebarModel>
         : null}
