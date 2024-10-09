@@ -61,7 +61,7 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
         ];
     
         const requestData = {
-            storagePath: isSupplier ? ModulePathName.SUPPLIER : ModulePathName.CUSTOMER;,
+            storagePath: isSupplier ? ModulePathName.SUPPLIER : ModulePathName.CUSTOMER,
             [isSupplier ? 'supplierId' : 'customerId']: keyId,
             documentInfoList: documentList,
             // ...transformedData,  
