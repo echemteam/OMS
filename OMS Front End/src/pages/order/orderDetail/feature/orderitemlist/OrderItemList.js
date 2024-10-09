@@ -121,9 +121,9 @@ const OrderItemList = ({ orderDetails, handleOrderItemShippingAddress }) => {
             <div className="accordian-title">
               <span>Catalog ID</span>
               <span>Cas Number</span>
-              <span>Unit</span>
               <span>Pack Size</span>
-              <span>Price</span>
+              <span>Unit Price</span>
+              <span>Total Price</span>
               <span>Status</span>
             </div>
           </div>
@@ -141,9 +141,13 @@ const OrderItemList = ({ orderDetails, handleOrderItemShippingAddress }) => {
                         <div className="header-items">
                           <span>{item.catalogId ? item.catalogId : "-"}</span>
                           <span>{item.casNumber ? item.casNumber : "-"}</span>
-                          <span>{item.unit ? item.unit : "-"}</span>
-                          <span>{item.packSize ? item.packSize : "-"}</span>
-                          <span>{item.itemUnitPrice ? `$${item.itemUnitPrice}` : "-"}</span>
+                          <span>
+                            {`${item?.quantity} X ${item?.packSize} ${item?.unit}`}
+                          </span>
+                          <span>{item.itemUnitPrice ? `$${item.itemUnitPrice?.toFixed(2)}` : "-"}</span>
+                          <span>
+                            ${((item?.quantity || 0) * (item?.itemUnitPrice || 0))?.toFixed(2)}
+                          </span>
                           <span>
                             <div className={`status-btn ${item.statusClass}`}>
                               {item.itemStatus}
@@ -165,11 +169,8 @@ const OrderItemList = ({ orderDetails, handleOrderItemShippingAddress }) => {
                               </span>
                             </div>
                             <div className="key-value-se">
-                              <span className="key-sec">Shipping Add.</span>&nbsp;:&nbsp;
-                              <div className="value-right-btn">
-                                {/* <span className="value-sec add-value">
-                                  &nbsp;:&nbsp; {item.orderShippingAddress}
-                                </span> */}
+                              <span className="key-sec">Shipping Add.</span>
+                              &nbsp;:&nbsp;<div className="value-right-btn">
                                 <span className="right-btn">
                                   <span className="info-btn hover-model">
                                     <Iconify icon="ep:info-filled" className="swap-icon" />
@@ -193,16 +194,10 @@ const OrderItemList = ({ orderDetails, handleOrderItemShippingAddress }) => {
                             </div>
                             <div className="key-value-se">
                               <span className="key-sec">Order Notes</span>
-                              <div className="value-right-btn">
-                                <span className="value-sec add-value">
-                                  &nbsp;:&nbsp; {item.shippingAddress}
-                                </span>
+                              &nbsp;:&nbsp;<div className="value-right-btn">
                                 <span className="right-btn">
                                   <span className="info-btn hover-model">
-                                    <Iconify
-                                      icon="ep:info-filled"
-                                      className="swap-icon"
-                                    />
+                                    <Iconify icon="ep:info-filled" className="swap-icon" />
                                     <span className="note-card">
                                       <OrderNoteDetailsModel orderNote={item?.orderNote} />
                                     </span>

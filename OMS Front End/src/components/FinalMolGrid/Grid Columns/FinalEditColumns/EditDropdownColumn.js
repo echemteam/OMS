@@ -50,7 +50,7 @@ const EditDropdownColumn = ({
 
   return (
     <GridDropDown
-      placeholder={`Please Enter ${col.fieldName}`}
+      placeholder={`Please Select ${col.fieldName}`}
       isMultiSelect={editColumn.isMultiSelect}
       options={editColumn.options}
       value={value}

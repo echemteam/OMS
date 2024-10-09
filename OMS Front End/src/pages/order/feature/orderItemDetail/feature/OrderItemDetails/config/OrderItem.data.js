@@ -25,22 +25,41 @@ export const orderItemSelectList = {
       },
     },
     {
-      name: "Size",
-      fieldName: "Size",
+      name: "Pack Size",
+      fieldName: "Pack Size",
       colType: GridColumnType.CUSTOM,
       colStyle: {
         width: "15%",
       },
       renderCustomCol: (rowData) => {
-        return `${rowData?.["Size"]} ${rowData?.["Unit"]}`;
+        return `${rowData?.["Quantity"]} X ${rowData?.["Size"]} ${rowData?.["Unit"]}`;
       }
     },
     {
-      name: "Order Total",
+      name: "Unit Total",
       fieldName: "Price",
+      colType: GridColumnType.CUSTOM,
       colStyle: {
-        width: "Price",
+        width: "10%",
       },
+      renderCustomCol: (rowData) => {
+        const priceValue = parseFloat(rowData?.["Price"]) || 0;
+        return priceValue?.toFixed(2);
+      }
+    },
+    {
+      name: "Total Price",
+      fieldName: "Price",
+      colType: GridColumnType.CUSTOM,
+      colStyle: {
+        width: "10%",
+      },
+      renderCustomCol: (rowData) => {
+        const packageValue = parseFloat(rowData?.["Quantity"]) || 0;
+        const priceValue = parseFloat(rowData?.["Price"]) || 0;
+        const result = packageValue * priceValue;
+        return result?.toFixed(2);
+      }
     }
   ],
 };

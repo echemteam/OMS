@@ -17,5 +17,6 @@ namespace OMS.Domain.Entities.API.Response.Orders
         public DateTime? RequestDate {  get; set; }
         public DateTime? PromiseDate {  get; set; }
         //public int? EntityId {  get; set; }
+        public string? Note { get; set; }
     }
 }
