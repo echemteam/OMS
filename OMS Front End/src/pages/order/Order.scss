@@ -1388,7 +1388,12 @@
                 &::before {
                   position: absolute;
                   right: -17px;
-                  top: 4px;
+                  top: 3px;
+                  min-height: 12px;
+                  min-width: 12px;
+                  max-height: 12px;
+                  max-width: 12px;
+                  font-size: 8px;
                 }
               }
             }
@@ -1407,7 +1412,12 @@
                 &::before {
                   position: absolute;
                   right: -17px;
-                  top: 4px;
+                  top: 2px;
+                  min-height: 12px;
+                  min-width: 12px;
+                  max-height: 12px;
+                  max-width: 12px;
+                  font-size: 8px;
                 }
               }
             }
