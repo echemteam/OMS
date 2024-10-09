@@ -25,12 +25,11 @@ export const orderItemFormData = {
             fieldSetting: {
                 placeholder: "Enter Chemical Name",
                 allowSpace: true,
-                maxLength: 65,
+                maxLength: 1000,
                 isDisable: false
             },
-            validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl- col-xl-6 col-md-6 mb-input",
+                containerCss: "col-xxl-9 col-xl-9 col-md-9 mb-input",
             },
         },
         {
@@ -41,12 +40,11 @@ export const orderItemFormData = {
             dataField: "catalogId",
             fieldSetting: {
                 placeholder: "Enter Catalog",
-                allowSpace: true,
-                maxLength: 65,
+                maxLength: 15,
+                allowSpace: false
             },
-            validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl- col-xl-6 col-md-6 mb-input",
+                containerCss: "col-xxl-3 col-xl-3 col-md-3 mb-input",
             },
         },
         {
@@ -57,13 +55,11 @@ export const orderItemFormData = {
             dataField: "mdlNumber",
             fieldSetting: {
                 placeholder: "Enter MDL Number",
-                allowSpace: true,
-                maxLength: 65,
-                isDisable: false
+                maxLength: 15,
+                allowSpace: false
             },
-            validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl- col-xl-6 col-md-6 mb-input",
+                containerCss: "col-xxl-4 col-xl-4 col-md-4 mb-input",
             },
         },
         {
@@ -74,12 +70,11 @@ export const orderItemFormData = {
             dataField: "casNumber",
             fieldSetting: {
                 placeholder: "Enter CAS Number",
-                allowSpace: true,
-                maxLength: 65,
+                maxLength: 10,
+                allowSpace: false
             },
-            validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-6 col-xl-6 col-md-6 mb-input",
+                containerCss: "col-xxl-4 col-xl-4 col-md-4 mb-input",
             },
         },
         {
@@ -98,7 +93,7 @@ export const orderItemFormData = {
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-input",
+                containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
             },
         },
         {
@@ -111,7 +106,6 @@ export const orderItemFormData = {
                 placeholder: "Enter Request Date",
                 options: [],
             },
-            validation: [{ type: "require" }],
             style: { containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-input" },
         },
         {
@@ -124,7 +118,6 @@ export const orderItemFormData = {
                 placeholder: "Enter Promise Date",
                 options: [],
             },
-            validation: [{ type: "require" }],
             style: { containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-input" },
         },
         {

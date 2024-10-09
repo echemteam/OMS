@@ -179,7 +179,7 @@ const OrderItemList = ({ orderDetails, handleOrderItemShippingAddress }) => {
                                         handleOrderItemShippingAddress={handleOrderItemShippingAddress} />
                                     </span>
                                   </span>
-                                  <span className="info-btn tooltip-div" onClick={() => handleOrderItemShippingAddress("Shipping")}>
+                                  <span className="info-btn tooltip-div" onClick={() => handleOrderItemShippingAddress("Shipping", item?.orderItemId)}>
                                     <Iconify
                                       icon="icon-park-outline:change"
                                       className="swap-icon"
@@ -240,16 +240,16 @@ const OrderItemList = ({ orderDetails, handleOrderItemShippingAddress }) => {
                               </div>
                               <div className="right-action-section">
                                 <div className="file-actions">
-                                  <div className="btn-part pdf-view" onClick={() => handleEdit(item.orderItemId)}>
+                                  <div className="btn-part pdf-view cursor-pointer" onClick={() => handleEdit(item.orderItemId)}>
                                     <Iconify icon="wpf:edit" className="swap-icon" />
                                   </div>
-                                  <div className="btn-part dollar-view">
+                                  <div className="btn-part dollar-view cursor-pointer">
                                     <Iconify
                                       icon="mingcute:refund-dollar-line"
                                       className="swap-icon"
                                     />
                                   </div>
-                                  <div className="btn-part delete-icon" onClick={() => handleDeleteClick(item.orderItemId)}>
+                                  <div className="btn-part delete-icon cursor-pointer" onClick={() => handleDeleteClick(item.orderItemId)}>
                                     <Iconify
                                       icon="mi:delete"
                                       className="swap-icon"

@@ -27,13 +27,16 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef }) => {
   const [isModelOpenUpdateAddress, setIsModelOpenUpdateAddress] =
     useState(false);
   const [isModelOpenModelUserModel, setIsModelOpenUserModel] = useState(false);
+  const [orderItemId, setOrderItemId] = useState(null);
 
   const onSidebarCloseShippingAddress = () => {
     setIsModelOpenShippingAddress(false);
     setAddressContactType("");
+    setOrderItemId(null);
   };
 
-  const handleToggleModalShippingAddress = (type) => {
+  const handleToggleModalShippingAddress = (type, orderItemId) => {
+    setOrderItemId(orderItemId);
     setIsModelOpenShippingAddress(true);
     setAddressContactType(type);
   };
@@ -46,6 +49,7 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef }) => {
     setIsModelOpenUpdateAddress(false);
     setEditMode(false);
     setIsModelOpenShippingAddress(true);
+    setOrderItemId(null);
   };
 
   const handleUpdateAddress = () => {
@@ -184,6 +188,7 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef }) => {
           orderDetails={orderDetails}
           addressContactType={addressContactType}
           customerId={customerId}
+          orderItemId={orderItemId}
         />
       </SidebarModel>
       {isModelOpenUpdateAddress ? (

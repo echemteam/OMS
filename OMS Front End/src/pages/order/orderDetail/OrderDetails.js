@@ -59,9 +59,9 @@ const OrderDetails = () => {
     }
   }, [isOrderDetailsFetching, isOrderDetailsFetched, orderByOrderIdDetails]);
 
-  const handleOrderItemShippingAddress = (type) => {
+  const handleOrderItemShippingAddress = (type, orderItemId) => {
     if (orderItemShippingAddRef) {
-      orderItemShippingAddRef.current.handleToggleModalShippingAddress(type);
+      orderItemShippingAddRef.current.handleToggleModalShippingAddress(type, orderItemId);
     }
   }
 
@@ -81,6 +81,7 @@ const OrderDetails = () => {
           {/* Order Document Start */}
           <OrderDocument
             orderDetails={orderDetails}
+            isOrderDetailsFetching={isOrderDetailsFetching}
             onRefreshOrderDetails={handleRefreshOrderDetails}
           />
           {/* Order Document End */}

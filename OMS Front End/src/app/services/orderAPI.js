@@ -144,6 +144,14 @@ const orderAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        deleteOrderDocuementById: builder.mutation({
+            query: (id) => ({
+                url: encryptQueryString(`/Order/DeleteOrderDocuementById/?OrderDocumentId=${id}`),
+                method: 'DELETE'
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
@@ -162,6 +170,7 @@ export const { useCheckPoNumberExistOrNotMutation,
     useDeleteOrderItemMutation,
     useLazyGetOrderItemByOrderItemIdQuery,
     useUpdateOrderItemByOrderItemIdMutation,
+    useDeleteOrderDocuementByIdMutation
 } = orderAPI;
 
 export default orderAPI;
