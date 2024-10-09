@@ -56,6 +56,15 @@ const orderAPI = createApi({
             transformErrorResponse: transformErrorResponse,
         }),
 
+        getOrderInformationByOrderId: builder.query({
+            query: (orderId) => ({
+                url: encryptQueryString(`Order/GetOrderDetailByOrderId?orderId=${orderId}`),
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse,
+        }),
+
         getOrderItemsByOrderId: builder.query({
             query: (orderId) => ({
                 url: encryptQueryString(`/Order/GetOrderItemsByOrderId/?orderId=${orderId}`),
@@ -136,6 +145,40 @@ const orderAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        getOrderItemByOrderItemId: builder.query({
+            query: (id) => ({
+                url: encryptQueryString(`/Order/GetOrderItemByOrderItemId/?orderItemId=${id}`),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        updateOrderItemByOrderItemId: builder.mutation({
+            query: (requestData) => ({
+                url: '/Order/UpdateOrderItemByOrderItemId',
+                method: 'POST',
+                body: transformRequest(requestData)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        deleteOrderDocuementById: builder.mutation({
+            query: (id) => ({
+                url: encryptQueryString(`/Order/DeleteOrderDocuementById/?OrderDocumentId=${id}`),
+                method: 'DELETE'
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        updateOrderDetail: builder.mutation({
+            query: (requestData) => ({
+                url: '/Order/UpdateOrderDetail',
+                method: 'POST',
+                body: transformRequest(requestData)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
 
     })
 })
@@ -145,6 +188,7 @@ export const { useCheckPoNumberExistOrNotMutation,
     useAddOrderMutation,
     useGetOrdersMutation,
     useLazyGetOrderDetailByOrderIdQuery,
+    useLazyGetOrderInformationByOrderIdQuery,
     useLazyGetOrderItemsByOrderIdQuery,
     useDeleteOrderMutation,
     useLazyDownloadDocumentQuery,
@@ -154,6 +198,10 @@ export const { useCheckPoNumberExistOrNotMutation,
     useUpdateOrderAddressMutation,
     useDeleteOrderItemMutation,
     useUpdateOrderContactMutation,
+    useLazyGetOrderItemByOrderItemIdQuery,
+    useUpdateOrderItemByOrderItemIdMutation,
+    useDeleteOrderDocuementByIdMutation,
+    useUpdateOrderDetailMutation
 } = orderAPI;
 
 export default orderAPI;

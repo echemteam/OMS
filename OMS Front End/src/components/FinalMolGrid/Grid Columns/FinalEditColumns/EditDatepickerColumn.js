@@ -52,7 +52,7 @@ const EditDatepickerColumn = ({
         ? { ...updatedData, [col.fieldName]: formattedDate }
         : { ...rowData, [col.fieldName]: formattedDate };
 
-      onChange(rowIndex, newRowData);
+      onChange(rowIndex, newRowData, col?.fieldName);
     }
   };
 

@@ -111,7 +111,7 @@ const [ getContactByCustomerId, {   isFetching: isGetContactByCustomerIdFetching
     <>
       <div className="row mt-3">
         {dataList.map((contact)=>(
-        <div className="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-12" key={contact.contactId}>
+        <div className="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-12 mb-3" key={contact.contactId}>
           <UserCardList contact={contact} 
           onGetContactId={onGetContactId} 
           handleCheckboxChange={handleCheckboxChange} 

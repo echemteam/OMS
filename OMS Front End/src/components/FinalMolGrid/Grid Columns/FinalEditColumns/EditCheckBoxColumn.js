@@ -38,7 +38,7 @@ const EditCheckBoxColumn = ({
       const newRowData = updatedData
         ? { ...updatedData, [col.fieldName]: newValue }
         : { ...rowData, [col.fieldName]: newValue };
-      onChange(rowIndex, newRowData, dataField);
+      onChange(rowIndex, newRowData, col?.fieldName);
     }
   };
 

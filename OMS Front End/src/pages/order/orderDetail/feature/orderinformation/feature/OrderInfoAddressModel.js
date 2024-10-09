@@ -17,7 +17,8 @@ const OrderInfoAddressModel = ({
   customerId,
   orderDetails,
   onGetData,
-  defaultId
+  defaultId,
+  orderItemId
 }) => {
   const [dataList, setDataList] = useState([]);
   const { confirm } = SwalAlert();
@@ -65,8 +66,8 @@ const OrderInfoAddressModel = ({
       ) {
         const filteredData = addressContactType
           ? GetAddresssByCustomerIdData.filter(
-              (address) => address.type === addressContactType
-            )
+            (address) => address.type === addressContactType
+          )
           : GetAddresssByCustomerIdData;
         setDataList(filteredData);
       }
@@ -111,7 +112,6 @@ const OrderInfoAddressModel = ({
 
   const handleChangeAddress = () => {
     if (selectedAddressId) {
-    
       confirm(
         "Change?",
         "Are you sure you want to Change Address?",
@@ -125,6 +125,7 @@ const OrderInfoAddressModel = ({
             orderId: orderDetails.orderId,
             billingAddressId: addressContactType === "Billing" ? selectedAddressId : 0,
             shippingAddressId: addressContactType === "Shipping" ? selectedAddressId : 0,
+            orderItemId: orderItemId ? orderItemId : null
           };
           updateOrderAddress(req);
         }
@@ -143,9 +144,8 @@ const OrderInfoAddressModel = ({
             key={address.id}
           >
             <div
-              className={`address-card-main ${
-                selectedAddressId === address.addressId ? "active-card" : ""
-              }`}
+              className={`address-card-main ${selectedAddressId === address.addressId ? "active-card" : ""
+                }`}
             >
               <div className="add-desc">
                 <div className="add-line-part first-add-sec">

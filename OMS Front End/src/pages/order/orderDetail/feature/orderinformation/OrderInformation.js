@@ -1,4 +1,4 @@
-import React, { useEffect, useState ,useRef} from "react";
+import React, { useEffect, useState ,useImperativeHandle,useRef} from "react";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
 import { AppIcons } from "../../../../../data/appIcons";
@@ -13,7 +13,7 @@ import { useAddEditContactMutation, useLazyGetCustomerContactByContactIdQuery } 
 import AddEditContact from "../../../../../common/features/component/Contact/feature/AddEditContact";
 
 
-const OrderInformation = ({ orderDetails }) => {
+const OrderInformation = ({ orderDetails, orderItemShippingAddRef }) => {
   const editRef = useRef();
   const [orderInfo, setOrderInfo] = useState(null);
   const [orderAddressDetails, setOrderAddressDetails] = useState(null);
@@ -31,24 +31,32 @@ const OrderInformation = ({ orderDetails }) => {
   const [defaultId,setDefaultId]=useState(null);
   const [isEdit, setIsEdit] = useState(false);
   const [orderContactId,setOrderContactId]=useState(null)
+  const [orderItemId, setOrderItemId] = useState(null);
 
   const onSidebarCloseShippingAddress = () => {
     setIsModelOpenShippingAddress(false);
     setAddressContactType("");
     setDefaultId("");
+    setOrderItemId(null);
   };
 
-  const handleToggleModalShippingAddress = (type,id) => {
+  const handleToggleModalShippingAddress = (type,id, orderItemId) => {
+    setOrderItemId(orderItemId);
     setIsModelOpenShippingAddress(true);
     setAddressContactType(type);
     setDefaultId(id);
 
   };
 
+  useImperativeHandle(orderItemShippingAddRef, () => ({
+    handleToggleModalShippingAddress
+  }))
+
   const onSidebarCloseUpdateAddress = () => {
     setIsModelOpenUpdateAddress(false);
     setEditMode(false);
     setIsModelOpenShippingAddress(true);
+    setOrderItemId(null);
   };
 
   const handleUpdateAddress = (selectedAddressId) => {
@@ -229,6 +237,7 @@ const onGetContactId=(id)=>{
           addressContactType={addressContactType}
           customerId={customerId}
           defaultId={defaultId}
+          orderItemId={orderItemId}
         />
       </SidebarModel>
       {isModelOpenUpdateAddress ? (

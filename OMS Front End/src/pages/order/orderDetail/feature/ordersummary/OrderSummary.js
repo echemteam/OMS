@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { lazy, useEffect, useRef, useState } from "react";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
 import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel";
@@ -10,11 +10,15 @@ import ToastService from "../../../../../services/toastService/ToastService";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import FileViewer from "react-file-viewer";
 
-const OrderSummary = ({ orderDetails }) => {
-  const [isModelOpenPDF, setIsModelOpenPDF] = useState(false);
-  const [ordersummaryDetails, setOrderSummaryDetails] = useState(null);
+const UpdateOrderDetails = lazy(() => import("./feature/UpdateOrderDetails"))
+
+const OrderSummary = ({ orderId, orderDetails, onRefreshOrderDetails, isOrderDetailsFetch }) => {
+
+  const orderDetailRef = useRef();
   const [getFileType, setGetFileType] = useState([]);
+  const [isModelOpenPDF, setIsModelOpenPDF] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState(null);
+  const [ordersummaryDetails, setOrderSummaryDetails] = useState(null);
 
   const [
     Downalod,
@@ -97,6 +101,12 @@ const OrderSummary = ({ orderDetails }) => {
     }
   };
 
+  const handleEdit = () => {
+    if (orderDetailRef) {
+      orderDetailRef.current.handleToggleModal();
+    }
+  }
+
   return (
     <div>
       <CardSection
@@ -105,14 +115,14 @@ const OrderSummary = ({ orderDetails }) => {
         buttonClassName="theme-button"
         isIcon={true}
         iconClass="wpf:edit"
-        // titleButtonClick={}
+        titleButtonClick={handleEdit}
         isCenterTile={true}
         CenterTitleTxt={ordersummaryDetails?.poNumber}
         CenterBtnIcon="icomoon-free:file-pdf"
         centerBtnTitle="Purchase Order Details"
         centerBtnOnClick={handleToggleModalPDF}
       >
-        {ordersummaryDetails ? (
+        {(!isOrderDetailsFetch && orderDetails) ? (
           <div className="order-summery-list">
             <div className="row">
               <div className="col-xxl-7 col-xl-6 col-lg-6 col-md-6 col-12 custom-col-6">
@@ -238,6 +248,7 @@ const OrderSummary = ({ orderDetails }) => {
           ) : null}
         </div>
       </SidebarModel>
+      <UpdateOrderDetails orderId={orderId} orderDetailRef={orderDetailRef} onRefreshOrderDetails={onRefreshOrderDetails} />
     </div>
   );
 };
