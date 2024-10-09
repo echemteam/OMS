@@ -19,7 +19,7 @@ export const DocumentFormData = {
       lable: "Document Type ",
       Field_Name: "Document Type",
       fieldType: FormFieldTypes.SELECT,
-      // fieldType: FormFieldTypes.EDITABLEDROPDOWN,
+       fieldType: FormFieldTypes.EDITABLEDROPDOWN,
       dataField: "documentTypeId",
       fieldSetting: {
         placeholder: "Select Document Type",
