@@ -17,7 +17,7 @@ import { ErrorMessage } from "../../../../../data/appMessages";
 const EmailAddressGrid = React.lazy(() => import("../../EmailAddress/EmailAddressGrid"));
 const ContactNumbersGrid = React.lazy(() => import("../../ContactNumber/ContactNumbersGrid"));
 
-const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, SecurityKey, customerStatusId, allGetAllContactTypesData,
+const AddEditContact = forwardRef(({ keyId,selectedContactId,isUpdateContact, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, SecurityKey, customerStatusId, allGetAllContactTypesData,
     isEditablePage, isSupplier, isEdit, isOpen, getContactById, getContectTypeId, customerId, isOrderManage, onhandleApiCall, contryIdCode, orderResetValue,
     getCompletionCount }) => {
 
@@ -78,6 +78,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
     useEffect(() => {
         if (isAddEditSuccess && isAddEditData) {
             if (isAddEditData.errorMessage.includes('EXISTS')) {
+        
                 ToastService.warning(isAddEditData.errorMessage);
                 return;
             }
