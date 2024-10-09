@@ -47,7 +47,7 @@ export const productDetailsList = {
       // validation: [{ type: "require" }],
       style: {
         containerCss:
-          "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-input mb-0 custom-file-upload-section",
+          "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-input mb-0 custom-file-upload-section order-attachment",
       },
     },
   ],

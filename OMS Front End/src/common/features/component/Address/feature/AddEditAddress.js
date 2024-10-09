@@ -346,6 +346,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier,isModelOpenUpdateAddress,
     };
 
     const handleEdit = (addressId) => {
+        
         addressId && getById(addressId);
     }
 
