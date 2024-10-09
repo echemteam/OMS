@@ -469,6 +469,12 @@
         }
       }
 
+      .order-document {
+        .btn-part {
+          cursor: pointer;
+        }
+      }
+
       .file-actions {
         display: flex;
         justify-content: center;
@@ -981,6 +987,7 @@
           display: flex;
           align-items: flex-start;
           word-break: break-all;
+
           &.email {}
 
           &.number {
@@ -1031,6 +1038,7 @@
   &.card-list-popup {
     height: 100%;
     margin-bottom: 0;
+
     .info-user {
       .customer-popup-sec {
         right: -10px;
@@ -1059,6 +1067,7 @@
           .user-name {
             margin-bottom: 2px;
           }
+
           .btn-sec {
             width: 25px;
           }
