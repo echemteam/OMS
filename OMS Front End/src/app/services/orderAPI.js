@@ -56,6 +56,15 @@ const orderAPI = createApi({
             transformErrorResponse: transformErrorResponse,
         }),
 
+        getOrderInformationByOrderId: builder.query({
+            query: (orderId) => ({
+                url: encryptQueryString(`Order/GetOrderDetailByOrderId?orderId=${orderId}`),
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse,
+        }),
+
         getOrderItemsByOrderId: builder.query({
             query: (orderId) => ({
                 url: encryptQueryString(`/Order/GetOrderItemsByOrderId/?orderId=${orderId}`),
@@ -152,6 +161,15 @@ const orderAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        updateOrderDetail: builder.mutation({
+            query: (requestData) => ({
+                url: '/Order/UpdateOrderDetail',
+                method: 'POST',
+                body: transformRequest(requestData)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
@@ -160,6 +178,7 @@ export const { useCheckPoNumberExistOrNotMutation,
     useAddOrderMutation,
     useGetOrdersMutation,
     useLazyGetOrderDetailByOrderIdQuery,
+    useLazyGetOrderInformationByOrderIdQuery,
     useLazyGetOrderItemsByOrderIdQuery,
     useDeleteOrderMutation,
     useLazyDownloadDocumentQuery,
@@ -170,7 +189,8 @@ export const { useCheckPoNumberExistOrNotMutation,
     useDeleteOrderItemMutation,
     useLazyGetOrderItemByOrderItemIdQuery,
     useUpdateOrderItemByOrderItemIdMutation,
-    useDeleteOrderDocuementByIdMutation
+    useDeleteOrderDocuementByIdMutation,
+    useUpdateOrderDetailMutation
 } = orderAPI;
 
 export default orderAPI;

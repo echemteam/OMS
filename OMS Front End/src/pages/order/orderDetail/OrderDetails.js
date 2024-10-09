@@ -65,7 +65,9 @@ const OrderDetails = () => {
         {/* Left Side Section Start */}
         <div className="col-xxl-5 col-lg-5 col-md-5 col-12">
           {/* Order Summery Start */}
-          <OrderSummary orderDetails={orderDetails} />
+          <OrderSummary
+            orderId={orderId} isOrderDetailsFetch={isOrderDetailsFetching}
+            orderDetails={orderDetails} onRefreshOrderDetails={handleRefreshOrderDetails} />
           {/* Order Summery End */}
 
           {/* Order Information Start */}
