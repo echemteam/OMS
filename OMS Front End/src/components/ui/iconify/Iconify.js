@@ -11,7 +11,7 @@ const Iconify = forwardRef(
       <div
         ref={ref}
         className={`component-iconify ${className}`}
-        style={{ width, height: width, display: "inline-flex", ...style }}
+        style={{ width, height: width, display: "inline-flex", alignItems:"center", ...style }}
         {...other}
       >
         {icon ? (

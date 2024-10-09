@@ -1552,19 +1552,24 @@
 
       .msg-desc {
         ul {
+          &::before{
+            background: #e2e2e7;
+          }
           li {
-            background: var(--bg-main-content);
-
+            background: #e2e2e7;
+            &::before{
+              background: #e2e2e7;
+            }
             .notes-desc {
               &::before {
-                border-left-color: var(--bg-main-content) !important;
+                border-left-color: #e2e2e7 !important;
               }
             }
 
             &:nth-child(even) {
               .notes-desc {
                 &::before {
-                  border-right-color: var(--bg-main-content) !important;
+                  border-right-color: #e2e2e7 !important;
                 }
               }
             }

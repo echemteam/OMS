@@ -41,10 +41,14 @@ function Buttons(props) {
                   <Image imagePath={imagePath} altText="button Icon" />
                 )}
                 {textWithIcon && buttonText ? (
-                  <span className={`${textWithIcon ? "label-l-space" : ""}`}>{textWithIcon && buttonText}</span>
+                  <span className={`${textWithIcon ? "label-l-space" : ""}`}>
+                    {textWithIcon && buttonText}
+                  </span>
                 ) : null}
                 {!textWithIcon && buttonText ? (
-                  <span className={`${textWithIcon ? "label-l-space" : ""}`}>{!textWithIcon && buttonText}</span>
+                  <span className={`${textWithIcon ? "label-l-space" : ""}`}>
+                    {!textWithIcon && buttonText}
+                  </span>
                 ) : null}
 
                 {isIcon && <Iconify icon={iconClass} className="button-icon" />}
@@ -74,10 +78,14 @@ function Buttons(props) {
                 <Image imagePath={imagePath} altText="button Icon" />
               )}
               {textWithIcon && buttonText ? (
-                <span className={`${textWithIcon ? "label-l-space" : ""}`}>{textWithIcon && buttonText}</span>
+                <span className={`${textWithIcon ? "label-l-space" : ""}`}>
+                  {textWithIcon && buttonText}
+                </span>
               ) : null}
               {!textWithIcon && buttonText ? (
-                <span className={`${textWithIcon ? "label-l-space" : ""}`}>{!textWithIcon && buttonText}</span>
+                <span className={`${textWithIcon ? "label-l-space" : ""}`}>
+                  {!textWithIcon && buttonText}
+                </span>
               ) : null}
 
               {isIcon && <Iconify icon={iconClass} className="button-icon" />}

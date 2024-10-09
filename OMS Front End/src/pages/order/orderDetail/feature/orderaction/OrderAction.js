@@ -52,7 +52,7 @@ const OrderAction = () => {
         showModal={showModal}
         handleToggleModal={handleToggleHistoryModal}
         modalTitle="History"
-        modelSizeClass="w-45"
+        modelSizeClass="w-55"
       >
         <OrderHistory />
       </CenterModel>
