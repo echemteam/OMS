@@ -97,6 +97,7 @@ const AddMultipleDocument = ({
   const buildTransformedDocumentData = (data, isSupplier, keyId) => {
     const transformDocumentTypeData = (data) => {
         if (data && typeof data === 'object') {
+          console.log("Original Document Type Data:", data);
             return {
                 id: data.value || data.id || 0,
                 type: data.text || "",
@@ -108,21 +109,22 @@ const AddMultipleDocument = ({
         };
     };
 
-    const { id: documentTypeId, type: type } = transformDocumentTypeData(data.documentTypeId);
+    const { id: documentTypeId, type: documentType } = transformDocumentTypeData(data.documentTypeId,data.documentType);
 
     return {
         ...data,
         [isSupplier ? 'supplierId' : 'customerId']: keyId,
         documentTypeId,
-        type,
+        documentType:data.documentType,
         createdAt: data.createdAt || new Date(),
       };
     };
 
   const handleSave = async () => {
-
     const modifyData = uploadedFiles.map((data,index) => {
+      
       const matchingAttachment = attachment.find((att, ind) => ind === index);
+      
       return {
         ...data,
         base64File: matchingAttachment ? matchingAttachment.base64Data : null,
@@ -138,6 +140,7 @@ const AddMultipleDocument = ({
         storagePath: isSupplier ? ModulePathName.SUPPLIER : ModulePathName.CUSTOMER,
         [isSupplier ? "supplierId" : "customerId"]: keyId,
         documentInfoList: modifyData,
+        
       };
   
       // Uncomment and handle approval if needed
@@ -184,10 +187,10 @@ const AddMultipleDocument = ({
 
   const handleTypeChange = (index, selectedOption) => {
     const newType = selectedOption ? selectedOption.value : "";
-    setUploadedFiles((prevFiles) =>
-      prevFiles.map((file, i) =>
-        i === index ? { ...file, documentTypeId: newType } : file
-      )
+        setUploadedFiles((prevFiles) =>
+        prevFiles.map((file, i) =>
+            i === index ? { ...file, documentTypeId: newType } : file
+        )
     );
     setOpenDropdownIndex(index);
   };
@@ -205,7 +208,18 @@ const AddMultipleDocument = ({
   const handleFileNameChange = (index, newName) => {
     setUploadedFiles((prevFiles) =>
       prevFiles.map((file, i) =>
-        i === index ? { ...file, name: newName } : file
+        i === index ? { ...file, name: newName} : file,
+
+      )
+    );
+  };
+
+  const handleDocumemtTypeChange = (index, documentTypeInput) => {
+    
+    setUploadedFiles((prevFiles) =>
+      prevFiles.map((documentType, i) =>
+        i === index ? { ...documentType, documentType: documentTypeInput} : documentType,
+
       )
     );
   };
@@ -214,7 +228,7 @@ const formActionHandler = {
   DDL_FILE: handleFileUpload,
 };
 
-  return (
+    return (
     <div className="row">
       <FormCreator
         config={DocumentMultipleFormData}
@@ -273,11 +287,10 @@ const formActionHandler = {
                 <div className="d-flex align-items-center">
                   <Input
                     type="text"
-                    value={documentTypeInput || ""}
-                    onChange={(e) => {
-                      const newValue = e.target.value;
-                      setDocumentTypeInput(newValue);
-                    }}
+                    value={file.documentType }
+                    onChange={(e) =>
+                      handleDocumemtTypeChange(index, e.target.value)
+                    }
                   />
                   <button onClick={() => toggleEdit(index)} 
                           style={{

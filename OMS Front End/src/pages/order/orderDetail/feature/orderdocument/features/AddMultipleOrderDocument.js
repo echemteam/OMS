@@ -128,7 +128,7 @@ const AddMultipleOrderDocument = ({
         );
     };
     return (
-        <div className="row">
+        <div className="row add-order-doc-se">
             <FormCreator
                 config={DocumentMultipleFormData}
                 ref={ref}
