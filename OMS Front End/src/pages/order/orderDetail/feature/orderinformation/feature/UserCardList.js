@@ -17,7 +17,7 @@ const UserCardList = ({contact,handleCheckboxChange,selectedContactId}) => {
               <div className="btn-sec">
                 <div className="info-display info-user user-card">
                   <Iconify icon="ep:info-filled" className="info" />
-                  <UserDetailsModel />
+                  <UserDetailsModel contact={contact} />
                 </div>
               </div>
             </div>
