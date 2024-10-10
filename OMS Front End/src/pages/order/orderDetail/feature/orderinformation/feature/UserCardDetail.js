@@ -36,7 +36,7 @@ const UserCardDetail = ({ contact, handleToggleModalUsers }) => {
                 </div>
                 <div className="info-display info-user user-card">
                   <Iconify icon="ep:info-filled" className="info" />
-                  <UserDetailsModel />
+                  <UserDetailsModel contact={contact} />
                 </div>
               </div>
             </div>

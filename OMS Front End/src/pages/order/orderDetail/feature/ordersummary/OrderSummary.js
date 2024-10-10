@@ -108,7 +108,7 @@ const OrderSummary = ({ orderId, orderDetails, onRefreshOrderDetails, isOrderDet
   }
 
   return (
-    <div>
+    <div className="icon-btn-header">
       <CardSection
         cardTitle="Order Summary"
         rightButton={true}
@@ -254,17 +254,3 @@ const OrderSummary = ({ orderId, orderDetails, onRefreshOrderDetails, isOrderDet
 };
 
 export default OrderSummary;
-
-{
-  /* <span className="name-ellipsis">{ordersummaryDetails?.subCustomerName || "N/A"}</span> */
-}
-// {
-//   ordersummaryDetails?.subCustomerId ? (
-//     <div className="info-icon info-user">
-//       <Iconify icon="ep:info-filled" className="info" />
-//       {/* Customer Detail Model Start */}
-//       <CustomerDetailsModel />
-//       {/* Customer Detail Model End */}
-//     </div>)
-//   : null
-// }

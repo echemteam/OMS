@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "../../../../customerDetail/CustomerSupplier.scss";
 import { useSelector } from "react-redux";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
@@ -72,8 +72,13 @@ const CustomerDetails = () => {
   const onSidebarClose = () => {
     setIsModelOpen(false);
   };
+  const location = useLocation();
+
+
   const handleBackClick = () => {
-    navigate("/Customers");
+    const paginationObj = location.state?.paginationObj;
+    const tabIndex = location.state?.tabIndex;
+    navigate("/Customers", { state: { paginationObj, tabIndex } });
   };
 
   return (
