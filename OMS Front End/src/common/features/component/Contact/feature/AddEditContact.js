@@ -7,7 +7,7 @@ import FormCreator from "../../../../../components/Forms/FormCreator";
 import { contactDetailFormData } from "../config/ContactDetailForm.data";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import { getDropDownId, modifyEmailAddressData, modifyPhoneNumberData } from "../../../../../utils/TransformData/TransformAPIData";
-import { setFieldSetting } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { setDropDownOptionField, setFieldSetting } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import PropTypes from "prop-types";
 //** Service's */
@@ -17,7 +17,7 @@ import { ErrorMessage } from "../../../../../data/appMessages";
 const EmailAddressGrid = React.lazy(() => import("../../EmailAddress/EmailAddressGrid"));
 const ContactNumbersGrid = React.lazy(() => import("../../ContactNumber/ContactNumbersGrid"));
 
-const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, SecurityKey, customerStatusId, allGetAllContactTypesData,
+const AddEditContact = forwardRef(({ keyId, selectedContactId, isUpdateContactModel, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, SecurityKey, customerStatusId, allGetAllContactTypesData, isGetAllContactTypesSucess,
     isEditablePage, isSupplier, isEdit, isOpen, getContactById, getContectTypeId, customerId, isOrderManage, onhandleApiCall, contryIdCode, orderResetValue,
     getCompletionCount }) => {
 
@@ -44,6 +44,18 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
     const handleAddEdit = async () => {
         handlWithoutApprovalAddEdit();
     }
+    useEffect(() => {
+        if (isUpdateContactModel && isGetAllContactTypesSucess) {
+            const filterCondition = (item) => {
+                let condition = isSupplier ? item.isForSuppliers : item.isForCustomers;
+                return condition;
+            };
+            setDropDownOptionField(allGetAllContactTypesData, "contactTypeId", "type", formData, "contactTypeId", filterCondition);
+           if(isEdit){
+            getById(selectedContactId)
+           }
+        }
+    }, [selectedContactId, isGetAllContactTypesSucess])
 
     const handlWithoutApprovalAddEdit = () => {
         const data = ref.current.getFormData();
@@ -79,6 +91,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
     useEffect(() => {
         if (isAddEditSuccess && isAddEditData) {
             if (isAddEditData.errorMessage.includes('EXISTS')) {
+
                 ToastService.warning(isAddEditData.errorMessage);
                 return;
             }

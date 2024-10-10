@@ -25,5 +25,8 @@ namespace OMS.Domain.Entities.API.Response.Orders
         public decimal Quantity {  get; set; }
         public string? Unit { get; set; }
         public byte? Unitid { get; set; }
+        public int ShippingAddressId { get; set; }
+        public string? OrderNote { get; set; }
+        public AddressResponse? OrderShippingAddress { get; set; }
     }
 }

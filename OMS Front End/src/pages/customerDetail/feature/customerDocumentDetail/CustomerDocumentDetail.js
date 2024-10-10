@@ -1,28 +1,16 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useState, useEffect } from "react";
 import { securityKey } from "../../../../data/SecurityKey";
 import PropTypes from "prop-types";
 //** Service */
-import {
-  useAddCustomerDocumentsMutation,
-  useDeleteCustomerDocumentsByIdMutation,
-  useLazyDownloadDocumentQuery,
-  useLazyGetCustomerDocumentsByIdQuery,
-} from "../../../../app/services/documentAPI";
+import { useAddCustomerDocumentsMutation, useDeleteCustomerDocumentsByIdMutation, useLazyDownloadDocumentQuery, useLazyGetCustomerDocumentsByIdQuery, } from "../../../../app/services/documentAPI";
+
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
-//** Component's */
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 
-const DocumentGrid = React.lazy(() =>
-  import("../../../../common/features/component/Document/DocumentGrid")
-);
-
-const Unauthorize = React.lazy(() =>
-  import("../../../../pages/unauthorize/Unauthorize.js")
-);
-
-const CardSection = React.lazy(() =>
-  import("../../../../components/ui/card/CardSection.js")
-);
+const DocumentGrid = React.lazy(() => import("../../../../common/features/component/Document/DocumentGrid"));
+const Unauthorize = React.lazy(() => import("../../../../pages/unauthorize/Unauthorize.js"));
+const CardSection = React.lazy(() => import("../../../../components/ui/card/CardSection.js"));
 
 const customerSecurityKey = {
   ADD: securityKey.ADDCUSTOMERDOCUMENT,

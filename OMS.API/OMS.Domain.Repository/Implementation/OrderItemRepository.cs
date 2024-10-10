@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using OMS.Domain.Entities.Entity.CommonEntity;
+using OMS.Domain.Entities.Entity.OrderAddress;
 using OMS.Domain.Entities.Entity.OrderItems;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
@@ -32,8 +33,8 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.PromiseDate,
                 requestData.OrderPriority,
                 requestData.ReferenceEntityId,
-                requestData.OrderItemStatusId,
-                requestData.OrderItemSubStatusId,
+                //requestData.OrderItemStatusId,
+                //requestData.OrderItemSubStatusId,
                 requestData.Quantity,
                 requestData.PackSize,
                 requestData.Unit,

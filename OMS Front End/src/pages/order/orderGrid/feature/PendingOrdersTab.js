@@ -11,7 +11,7 @@ const PendingOrdersTab=({statusId})=>{
      
     const tabs = [
         {
-          sMenuItemCaption: "Customer Not valid",
+          sMenuItemCaption: "Customer Not Valid",
           component: (
             <div className="mt-2">
               <Orders orderStatusId={statusId}
@@ -21,7 +21,7 @@ const PendingOrdersTab=({statusId})=>{
           ),
         },
         {
-          sMenuItemCaption: "Review pending",
+          sMenuItemCaption: "Review Pending",
           component: (
             <div className="mt-2">
               <Orders  orderStatusId={statusId} orderSubStatusId={OrderSubStatusEnums.ReviewPending}
@@ -43,7 +43,7 @@ const PendingOrdersTab=({statusId})=>{
     
     return(     <div className="main-inactive-grid">
     <div className="row">
-      <div className="col-xxl-12 col-xl-12 col-md-12 col-12 other-info-tab">
+      <div className="col-xxl-12 col-xl-12 col-md-12 col-12 other-info-tab sub-tab-section">
         <CardSection
         //   cardTitle="Other Information"
         >

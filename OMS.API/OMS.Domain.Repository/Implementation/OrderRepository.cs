@@ -30,6 +30,8 @@ namespace OMS.Domain.Repository.Implementation
         const string GETORDERDETAILBYORDERITEMID = "GetOrderItemByOrderItemId";
         const string UPDATEORDERITEMSBYORDERITEMID = "UpdateOrderItemByOrderItemId";
         const string DELETEORDERDOCUMENTSBYID = "DeleteOrderDocuementById";
+        const string UPDATEORDERDETAIL = "UpdateOrderDetail";
+        const string DELETEORDERITEM = "DeleteOrderItem";
         #endregion
 
         public OrderRepository(DapperContext dapperContext) : base(dapperContext)
@@ -161,9 +163,13 @@ namespace OMS.Domain.Repository.Implementation
             return await _context.GetSingleAsync<AddEntityDto<long>>(UPDATEORDERITEMSBYORDERITEMID, new
             {
                 orderItemsDto.OrderItemId,
+                orderItemsDto.OrderId,
                 orderItemsDto.ChemicalName,
+                orderItemsDto.CatalogId,
+                orderItemsDto.CasNumber,
                 orderItemsDto.MdlNumber,
                 orderItemsDto.Note,
+                orderItemsDto.EntityType,
                 orderItemsDto.OrderPriority,
                 orderItemsDto.RequestDate,
                 orderItemsDto.PromiseDate,
@@ -175,6 +181,27 @@ namespace OMS.Domain.Repository.Implementation
             return await _context.GetSingleAsync<AddEntityDto<int>>(DELETEORDERDOCUMENTSBYID, new
             {
                 OrderDocumentId,
+                deletedBy
+            }, CommandType.StoredProcedure);
+        }
+        public async Task<AddEntityDto<int>> UpdateOrderDetail(OrderDto requestData)
+        {
+            return await _context.GetSingleAsync<AddEntityDto<int>>(UPDATEORDERDETAIL, new
+            {
+                requestData.OrderId,
+                requestData.OrderMethodId,
+                requestData.OrderReceivedDate,
+                requestData.ReferenceNumber,
+                requestData.PoNumber,
+                requestData.CustomerId,
+                requestData.UpdatedBy,
+            }, CommandType.StoredProcedure);
+        }
+        public async Task<AddEntityDto<long>> DeleteOrderItems(long orderItemId, int deletedBy)
+        {
+            return await _context.GetSingleAsync<AddEntityDto<long>>(DELETEORDERITEM, new
+            {
+                orderItemId,
                 deletedBy
             }, CommandType.StoredProcedure);
         }

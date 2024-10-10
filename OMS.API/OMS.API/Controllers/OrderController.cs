@@ -4,7 +4,8 @@ using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Address;
 using OMS.Domain.Entities.API.Request.CustomerDocuments;
 using OMS.Domain.Entities.API.Request.OrderAddress;
- 
+using OMS.Domain.Entities.API.Request.OrderContact;
+using OMS.Domain.Entities.API.Request.OrderItem;
 using OMS.Domain.Entities.API.Request.Orders;
 using OMS.Domain.Entities.API.Response.Orders;
 using OMS.Domain.Entities.Entity.CommonEntity;
@@ -15,7 +16,7 @@ namespace OMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-   [Authorize]
+    //[Authorize]
     //[CheckClientIpActionFilter]
     public class OrderController : BaseController
     {
@@ -74,8 +75,12 @@ namespace OMS.API.Controllers
         [HttpGet("GetOrderDetailByOrderId")]
         public async Task<IActionResult> GetOrderDetailByOrderId(int orderId)
         {
-            GetOrderDetailByOrderIdResponse responseData = await _serviceManager.orderServices.GetOrderDetailByOrderId(orderId).ConfigureAwait(true);
-            return APISucessResponce(responseData);
+            if (orderId > 0)
+            {
+                GetOrderDetailByOrderIdResponse responseData = await _serviceManager.orderServices.GetOrderDetailByOrderId(orderId).ConfigureAwait(true);
+                return APISucessResponce(responseData);
+            }
+            return APISucessResponce(orderId);
         }
         [HttpDelete("DeleteOrder")]
         public async Task<IActionResult> DeleteOrder(int orderId)
@@ -136,6 +141,39 @@ namespace OMS.API.Controllers
                 return APISucessResponce<object>(deleteItem);
             }
             return APISucessResponce(OrderDocumentId);
+        }
+        [HttpPost("UpdateOrderContact")]
+        public async Task<IActionResult> UpdateOrderContact(UpdateOrderContactRequest requestData)
+        {
+            AddEntityDto<int> responseData = new();
+            if (requestData != null)
+            {
+                responseData = await _serviceManager.orderServices.UpdateOrderContact(requestData);
+                return APISucessResponce(responseData);
+            }
+            return APISucessResponce(responseData);
+        }
+        [HttpPost("UpdateOrderDetail")]
+        public async Task<IActionResult> UpdateOrderDetail(UpdateOrderDetailRequest requestData)
+        {
+            AddEntityDto<int> responseData = new();
+            if (requestData != null)
+            {
+                responseData = await _serviceManager.orderServices.UpdateOrderDetail(requestData, CurrentUserId);
+                return APISucessResponce(responseData);
+            }
+            return APISucessResponce(responseData);
+        }
+        [HttpDelete("DeleteOrderItems")]
+        public async Task<IActionResult> DeleteOrderItems(long orderItemId)
+        {
+            if (orderItemId > 0)
+            {
+                int deletedBy = CurrentUserId;
+                var deleteItem = await _serviceManager.orderServices.DeleteOrderItems(orderItemId, deletedBy).ConfigureAwait(true);
+                return APISucessResponce<object>(deleteItem);
+            }
+            return APISucessResponce(orderItemId);
         }
         #endregion
     }

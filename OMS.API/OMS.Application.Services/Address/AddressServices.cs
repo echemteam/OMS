@@ -75,6 +75,7 @@ namespace OMS.Application.Services.Address
                         if (approvalEventName != null && !approvalEventNames.Contains(approvalEventName))
                         {
                             approvalEventNames.Add(approvalEventName);
+                            var updatedJsonData = await ModifyUpdateAddressJson(requestData, addressTypeId);
 
                             var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
                             var matchingRule = approvalRules?.FirstOrDefault(rule => rule.EventName == approvalEventName);
@@ -185,27 +186,37 @@ namespace OMS.Application.Services.Address
                         approvalEventNames.Add(ApprovalEvent.UpdateSupplierBankAddress);
                         break;
                 }
-                var existingSupplierAddressData = await repositoryManager.address.GetSupplierAddresssByAddressId(addressId);
-                var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
-                var matchingRule = approvalRules?.FirstOrDefault(rule => approvalEventNames.Contains(rule.EventName!));
+                GetSupplierAddresssByAddressIdResponse existingSupplierAddressData = await repositoryManager.address.GetSupplierAddresssByAddressId(addressId);
+                var updatedExstingJsonData = await ModifyAddAddressJson(existingSupplierAddressData);
+                var updatedJsonData = await ModifyAddAddressJson(requestData);
 
-                if (matchingRule != null)
+                bool changesValues = ApprovalRuleHelper.CheckValuesChanged(updatedExstingJsonData, updatedJsonData);
+                if (changesValues)
                 {
-                    var oldJsonData = JsonConvert.SerializeObject(existingSupplierAddressData);
-                    var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
-                    var approvalResponseData = await ApprovalRuleHelper.ProcessApprovalRequest(
-                        oldJsonData,
-                        requestData,
-                        CurrentUserId,
-                        formatTemplate,
-                        matchingRule
-                    );
+                    var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
+                    var matchingRule = approvalRules?.FirstOrDefault(rule => approvalEventNames.Contains(rule.EventName!));
 
-                    responseData = await repositoryManager.approval.AddApprovalRequests(approvalResponseData);
+                    if (matchingRule != null)
+                    {
+                        var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
+                        var approvalResponseData = await ApprovalRuleHelper.ProcessApprovalRequest(
+                            updatedExstingJsonData,
+                            updatedJsonData,
+                            CurrentUserId,
+                            formatTemplate,
+                            matchingRule
+                        );
+
+                        responseData = await repositoryManager.approval.AddApprovalRequests(approvalResponseData);
+                    }
+                    else
+                    {
+                        responseData = await UpdateAddressDirectly(requestData, CurrentUserId);
+                    }
                 }
                 else
                 {
-                    responseData = await UpdateAddressDirectly(requestData, CurrentUserId);
+                    responseData.ErrorMessage = "No changes detected";
                 }
             }
             else
@@ -216,6 +227,90 @@ namespace OMS.Application.Services.Address
             return responseData;
         }
 
+        public async Task<string> ModifyAddAddressJson(object requestData)
+        {
+            var newJsonData = JsonConvert.SerializeObject(requestData);
+            var jObject = JObject.Parse(newJsonData);
+
+            var getAllCountriesResponse = await repositoryManager.commonRepository.GetAllCountries();
+            var getAllCitiesResponse = await repositoryManager.commonRepository.GetAllCities(Convert.ToInt16((jObject["StateId"] ?? 0)));
+            var getAllStatesResponse = await repositoryManager.commonRepository.GetAllStates();
+            var getAllAddressTypesResponse = await repositoryManager.commonRepository.GetAllAddressTypes();
+
+            var countryData = getAllCountriesResponse.FirstOrDefault(p => p.CountryId == (int)(jObject["CountryId"] ?? 0));
+            var stateData = getAllStatesResponse.FirstOrDefault(p => p.StateId == (int)(jObject["StateId"] ?? 0));
+            var cityData = getAllCitiesResponse.FirstOrDefault(p => p.CityId == (int)(jObject["CityId"] ?? 0));
+            var addressData = getAllAddressTypesResponse.FirstOrDefault(p => p.AddressTypeId == (int)(jObject["AddressTypeId"] ?? 0));
+
+            if (countryData != null)
+            {
+                jObject["CountryName"] = countryData.Name;
+            }
+            if (stateData != null)
+            {
+                jObject["StateName"] = stateData.Name;
+            }
+            if (cityData != null)
+            {
+                jObject["CityName"] = cityData.Name;
+            }
+            if (addressData != null)
+            {
+                jObject["AddressType"] = addressData.Type;
+            }
+            return jObject.ToString(Formatting.None);
+        }
+        public async Task<string> ModifyUpdateAddressJson(object requestData, string addressTypeIds)
+        {
+            var newJObject = JObject.FromObject(requestData);
+
+            var getAllCountriesResponse = await repositoryManager.commonRepository.GetAllCountries();
+            var getAllCitiesResponse = await repositoryManager.commonRepository.GetAllCities(Convert.ToInt16((newJObject["StateId"] ?? 0)));
+            var getAllStatesResponse = await repositoryManager.commonRepository.GetAllStates();
+            var getAllAddressTypesResponse = await repositoryManager.commonRepository.GetAllAddressTypes();
+
+            var countryDictionary = getAllCountriesResponse.ToDictionary(
+                p => p.CountryId.ToString(),
+                p => p.Name
+            );
+            var stateDictionary = getAllStatesResponse.ToDictionary(
+                p => p.StateId.ToString(),
+                p => p.Name
+            );
+            var cityDictionary = getAllCitiesResponse.ToDictionary(
+                p => p.CityId.ToString(),
+                p => p.Name
+            );
+            var addressTypeDictionary = getAllAddressTypesResponse.ToDictionary(
+                p => p.AddressTypeId.ToString(),
+                p => p.Type
+            );
+
+
+            var countryId = (newJObject["CountryId"] ?? 0).ToString();
+            if (countryDictionary.TryGetValue(countryId, out var countryName))
+            {
+                newJObject["CountryName"] = countryName;
+            }
+
+            var stateId = (newJObject["StateId"] ?? 0).ToString();
+            if (stateDictionary.TryGetValue(stateId, out var stateName))
+            {
+                newJObject["StateName"] = stateName;
+            }
+
+            var cityId = (newJObject["CityId"] ?? 0).ToString();
+            if (cityDictionary.TryGetValue(cityId, out var cityName))
+            {
+                newJObject["CityName"] = cityName;
+            }
+            var addressType = (newJObject["AddressTypeId"] ?? 0).ToString();
+            if (addressTypeDictionary.TryGetValue(addressType, out var type))
+            {
+                newJObject["AddressType"] = type;
+            }
+            return newJObject.ToString(Formatting.None);
+        }
         private async Task<AddEntityDto<int>> UpdateAddressDirectly(UpdateAddressRequest requestData, short CurrentUserId)
         {
             var addressDto = requestData.ToMapp<UpdateAddressRequest, AddressDto>();

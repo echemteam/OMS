@@ -10,6 +10,9 @@ namespace OMS.Domain.Entities.API.Request.Orders
     public class UpdateOrderItemByOrderItemIdRequest
     {
         public long? OrderItemId {  get; set; }
+        public int? OrderId { get; set; }
+        public string? CatalogId { get; set; }
+        public string? CasNumber { get; set; }
         public string? ChemicalName { get; set; }
         public string? MdlNumber { get; set; }
         public string? Note { get; set; }

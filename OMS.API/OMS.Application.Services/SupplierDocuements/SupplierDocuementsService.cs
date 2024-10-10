@@ -52,7 +52,7 @@ namespace OMS.Application.Services.SupplierDocuements
                 // Map the request to the DTO and add it to the repository
                 SupplierDocumentsDto supplierDocumentsDto = requestData.ToMapp<AddSupplierDocumentsRequest, SupplierDocumentsDto>();
                 supplierDocumentsDto.CreatedBy = CurrentUserId;
-                var modifyData = requestData.DocumentInfoList.Select(data => new { data.Name, data.Attachment, data.DocumentTypeId }).ToList();
+                var modifyData = requestData.DocumentInfoList.Select(data => new { data.Name, data.Attachment, data.DocumentTypeId,data.DocumentType }).ToList();
                 DataTable documentDataTable = ExportHelper.ListToDataTable(modifyData);
                 responseData = await repositoryManager.supplierdocuements.AddSupplierDocuments(supplierDocumentsDto, documentDataTable);
             }

@@ -19,8 +19,8 @@ const SetInitialCountry = {
     value: 233
 }
 
-const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddress, getAddresssById, isModelOpen, editMode, isButtonDisable, getCompletionCount,
-    onSidebarClose, editRef, isOrderManage, getAddressTypeIdOrder, onHandleOrderInfoRepeatCall, orderCustomerId, isEditablePage, customerStatusId }) => {
+const AddEditAddress = forwardRef(({ keyId, isSupplier,isModelOpenUpdateAddress, updateAddress, addAddress, getAddresssById, isModelOpen, editMode, isButtonDisable, getCompletionCount,
+    onSidebarClose, editRef, isOrderManage, getAddressTypeIdOrder, onHandleOrderInfoRepeatCall, orderCustomerId, isEditablePage, customerStatusId ,selectedAddressId}) => {
 
     //** States */
     const ref = useRef();
@@ -57,6 +57,12 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         fetchData();
     }, [editMode, isModelOpen]);
 
+    useEffect(()=>{
+        if(isModelOpenUpdateAddress && editMode ){
+        getById(selectedAddressId)
+        }
+    },[selectedAddressId,editMode])
+
     useEffect(() => {
         if (isOrderManage) {
             setFieldSetting(addressFormData, 'addressTypeId', FieldSettingType.DISABLED, true);
@@ -71,6 +77,8 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
                 addressTypeId: getAddressTypeIdOrder,
             }
             setFormData(form);
+        } else {
+            setFieldSetting(addressFormData, 'addressTypeId', FieldSettingType.DISABLED);
         }
     }, [isOrderManage, isModelOpen])
 
@@ -318,7 +326,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     };
 
     const handleAddEdit = async () => {
-        const data = ref.current.getFormData();
+            const data = ref.current.getFormData();
         if (!data) return;
         const transformedData = buildTransformedData(data, isSupplier, keyId, editMode);
         if (editMode) {
@@ -340,6 +348,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     };
 
     const handleEdit = (addressId) => {
+        
         addressId && getById(addressId);
     }
 

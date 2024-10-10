@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
@@ -5,6 +6,14 @@ import Image from "../../../../../components/image/Image";
 import { AppIcons } from "../../../../../data/appIcons";
 import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
 import AddMultipleOrderDocument from "./features/AddMultipleOrderDocument";
+import { useLazyDownloadDocumentQuery } from "../../../../../app/services/orderAPI";
+import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel";
+import FileViewer from "react-file-viewer";
+import { useDeleteOrderDocuementByIdMutation } from "../../../../../app/services/orderAPI";
+import ToastService from "../../../../../services/toastService/ToastService";
+import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
+import SwalAlert from "../../../../../services/swalService/SwalService";
+import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
 
 const getFileExtension = (filename) => {
   const parts = filename.split(".");
@@ -34,102 +43,207 @@ const getFileIcon = (extension) => {
   }
 };
 
-const OrderDocument = ({ orderDetails, onRefreshOrderDetails }) => {
+const determineFileType = (fileName) => {
+  const extension = fileName.split(".").pop().toLowerCase();
+  switch (extension) {
+    case "pdf":
+      return "pdf";
+    case "docx":
+      return "docx";
+    case "ppt":
+    case "pptx":
+      return "pptx";
+    case "xlsx":
+      return "xlsx";
+    case "csv":
+      return "csv";
+    case "xls":
+      return "xls";
+    case "doc":
+      return "doc";
+    default:
+      return null;
+  }
+};
+
+const OrderDocument = ({ orderDetails, onRefreshOrderDetails, isOrderDetailsFetching }) => {
+
   const [documentDetails, setDocumentDetails] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [getFileType, setGetFileType] = useState([]);
+  const [selectedDocument, setSelectedDocument] = useState(null);
+  const [isModelOpenPDF, setIsModelOpenPDF] = useState(false);
 
-  useEffect(() => {
-    if (orderDetails?.orderDocumentList) {
-      setDocumentDetails(orderDetails.orderDocumentList);
-    }
-  }, [orderDetails]);
+    const { confirm } = SwalAlert();
+    const [deleteOrderDocument, { isSuccess: isDeleteSuccess, data: isDeleteData }] = useDeleteOrderDocuementByIdMutation();
 
-  const handleSuccess = () => {
-    handleCloseDocumentModel();
-    if (onRefreshOrderDetails) {
-      onRefreshOrderDetails();
-    }
-  };
+    const [Downalod, { isFetching: isDownalodFetching, isSuccess: isDownalodSucess, data: isDownalodData, }] = useLazyDownloadDocumentQuery();
+    useEffect(() => {
+      if (orderDetails?.orderDocumentList) {
+        setDocumentDetails(orderDetails.orderDocumentList);
+      }
+    }, [orderDetails]);
 
-  const handleCloseDocumentModel = () => {
-    setIsModalOpen(false);
-  };
+    useEffect(() => {
+      if (isDeleteSuccess && isDeleteData) {
+        ToastService.success(isDeleteData.errorMessage);
+        handleSuccess();
+      }
+    }, [isDeleteSuccess, isDeleteData]);
 
-  const handleAddDocumentClick = () => {
-    setIsModalOpen(true);
-  };
+    const handleSuccess = () => {
+      handleCloseDocumentModel();
+      if (onRefreshOrderDetails) {
+        onRefreshOrderDetails();
+      }
+    };
 
-  const handleViewClick = () => {};
+    const handleCloseDocumentModel = () => {
+      setIsModalOpen(false);
+    };
 
-  const handleDeleteDocumentClick = () => {};
+    const handleAddDocumentClick = () => {
+      setIsModalOpen(true);
+    };
 
-  return (
-    <>
-      <div>
-        <CardSection
-          cardTitle="Order Documents"
-          rightButton={true}
-          buttonClassName="theme-button"
-          isIcon={true}
-          iconClass="heroicons-solid:plus"
-          titleButtonClick={handleAddDocumentClick}
-        >
-          <div className="document-list">
-            <div className="row">
-              {documentDetails?.map((doc) => {
-                const extension = getFileExtension(doc.documentName);
-                const fileIcon = getFileIcon(extension);
+    const handleDocumentAction = (fileName) => {
+      setSelectedDocument(null);
+      let request = {
+        folderName: "Order",
+        keyId: orderDetails?.orderId,
+        fileName: fileName,
+      };
 
-                return (
-                  <div className="col-12" key={doc.documentName}>
-                    <div className="document-view-sec">
-                      <div className="file-item">
-                        <div className="left-sec">
-                          <Image imagePath={fileIcon} alt="Document Icon" />{" "}
-                          {/* Dynamic icon */}
-                          <div className="file-name">{doc.documentName}</div>
-                        </div>
-                        <div className="file-actions">
-                          <div
-                            onClick={handleViewClick}
-                            className="btn-part pdf-view"
-                          >
-                            <Iconify
-                              icon="icomoon-free:file-pdf"
-                              className="swap-icon"
-                            />
+      Downalod(request);
+    };
+
+    const onSidebarClosePDF = () => {
+      setIsModelOpenPDF(false);
+      setSelectedDocument(null);
+    };
+
+    useEffect(() => {
+      if (!isDownalodFetching && isDownalodSucess && isDownalodData) {
+        const fileData = isDownalodData.fileData;
+        const blob = new Blob([fileData], { type: fileData.type });
+        const fileURL = URL.createObjectURL(blob);
+        setSelectedDocument(fileURL);
+        setIsModelOpenPDF(true);
+        setGetFileType(determineFileType(isDownalodData.fileName));
+      }
+    }, [isDownalodFetching, isDownalodSucess, isDownalodData]);
+
+
+    const handleDeleteDocumentClick = (orderDocumentId) => {
+      confirm(
+        "Delete?", "Are you sure you want to Delete?",
+        "Delete", "Cancel"
+      ).then((confirmed) => {
+        if (confirmed) {
+          deleteOrderDocument(orderDocumentId);
+        }
+      });
+
+    };
+
+    return (
+      <>
+        <div>
+          <CardSection cardTitle="Order Documents" rightButton={true}
+            buttonClassName="theme-button" isIcon={true}
+            iconClass="heroicons-solid:plus" titleButtonClick={handleAddDocumentClick}>
+            <div className="document-list">
+              <div className="row">
+                {!isOrderDetailsFetching ?
+                  <>
+                    {documentDetails && documentDetails.length > 0 ?
+                      <> {documentDetails?.map((doc) => {
+                        const extension = getFileExtension(doc.documentName);
+                        const fileIcon = getFileIcon(extension);
+                        return (
+                          <div className="col-12" key={doc.documentName}>
+                            <div className="document-view-sec">
+                              <div className="file-item">
+                                <div className="left-sec">
+                                  <Image imagePath={fileIcon} alt="Document Icon" />{" "}
+                                  {/* Dynamic icon */}
+                                  <div className="file-name">{doc.documentName}</div>
+                                </div>
+                                <div className="file-actions order-document">
+                                  <div
+                                    onClick={() => handleDocumentAction(doc.documentName)}
+                                    className="btn-part pdf-view"
+                                  >
+                                    <Iconify
+                                      icon="icomoon-free:file-pdf"
+                                      className="swap-icon"
+                                    />
+                                  </div>
+                                  <div
+                                    onClick={() => handleDeleteDocumentClick(doc.orderDocumentId)}
+                                    className="btn-part delete-icon"
+                                  >
+                                    <Iconify icon="mi:delete" className="swap-icon" />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                           </div>
-                          <div
-                            onClick={handleDeleteDocumentClick}
-                            className="btn-part delete-icon"
-                          >
-                            <Iconify icon="mi:delete" className="swap-icon" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+                        );
+                      })}
+                      </>
+                      :
+                      <NoRecordFound />}
+                  </>
+                  : <DataLoader />}
+              </div>
             </div>
-          </div>
-        </CardSection>
-      </div>
+          </CardSection>
+        </div>
 
-      <CenterModel
-        showModal={isModalOpen}
-        handleToggleModal={handleCloseDocumentModel}
-        modalTitle="Add Multiple Order Document"
-        modelSizeClass="w-50s"
-      >
-        <AddMultipleOrderDocument
-          orderDetails={orderDetails}
-          onClose={handleCloseDocumentModel}
-          onSuccess={handleSuccess}
-        />
-      </CenterModel>
-    </>
-  );
-};
+        <CenterModel
+          showModal={isModalOpen}
+          handleToggleModal={handleCloseDocumentModel}
+          modalTitle="Add Multiple Order Document"
+          modelSizeClass="w-50s"
+        >
+          <AddMultipleOrderDocument
+            orderDetails={orderDetails}
+            onClose={handleCloseDocumentModel}
+            onSuccess={handleSuccess}
+          />
+        </CenterModel>
+
+        <SidebarModel
+          modalTitle="PO PDF"
+          contentClass="content-50"
+          onClose={onSidebarClosePDF}
+          modalTitleIcon={AppIcons.AddIcon}
+          isOpen={isModelOpenPDF}
+          showToggle={true}
+        >
+          <div className="model-height-fix doc-view">
+            {selectedDocument && getFileType ? (
+              getFileType === "pdf" ? (
+                <div className="pdf-iframe">
+                  <iframe
+                    src={selectedDocument}
+                    title="PDF Preview"
+                    style={{ width: "100%", height: "200%" }}
+                  />
+                </div>
+              ) : (
+                <FileViewer
+                  fileType={getFileType}
+                  filePath={selectedDocument}
+                  onError={(error) => console.error("Error:", error)}
+                />
+              )
+            ) : null}
+          </div>
+        </SidebarModel>
+      </>
+    );
+  };
 
 export default OrderDocument;

@@ -187,6 +187,21 @@ export const orderInformationData = {
     //   },
     // },
     {
+      id: "orderReceivedDate",
+      lable: "Order Received Date :",
+      Field_Name: "Order Received Date",
+      fieldType: FormFieldTypes.DATEPICKER,
+      dataField: "orderReceivedDate",
+      fieldSetting: {
+        placeholder: "Enter Order Received Date",
+        options: [],
+      },
+      validation: [{ type: "require" }, { type: "text" }],
+      style: {
+        containerCss: "col-4 mb-2",
+      },
+    },
+    {
       id: "isBillingId",
       lable: "Billing Address ",
       Field_Name: "Billing Address ",
@@ -226,20 +241,6 @@ export const orderInformationData = {
         GetByID: AddressType.SHIPPING
       }
     },
-    {
-      id: "orderReceivedDate",
-      lable: "Order Received Date :",
-      Field_Name: "Order Received Date",
-      fieldType: FormFieldTypes.DATEPICKER,
-      dataField: "orderReceivedDate",
-      fieldSetting: {
-        placeholder: "Enter Order Received Date",
-        options: [],
-      },
-      validation: [{ type: "require" }, { type: "text" }],
-      style: {
-        containerCss: "col-4 mb-2",
-      },
-    },
+    
   ],
 };

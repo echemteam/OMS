@@ -111,7 +111,8 @@ const MolGridDataRows = ({
     }
     updatedRowData[rowIndex] = { ...updatedRowData[rowIndex], ...newRowData };
     setEditRowData(updatedRowData);
-    if (onColumnDataChange) {
+    const editSettings = columns.find((x) => x.fieldName === fieldName)
+    if (onColumnDataChange && editSettings?.editColumn?.allowOnChange) {
       onColumnDataChange(fieldName, newRowData, rowIndex);
     }
   },

@@ -172,19 +172,28 @@ namespace OMS.Application.Services.CustomerAccountingSettings
 
                 var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
                 var matchingRule = approvalRules?.FirstOrDefault(rule => approvalEventName.Contains(rule.EventName));
+                var oldJsonData = JsonConvert.SerializeObject(carrierData);
 
-                if (matchingRule != null)
+                bool changesValues = ApprovalRuleHelper.CheckValuesChanged(oldJsonData, updatedJsonData);
+                if (changesValues)
                 {
-                    var oldJsonData = JsonConvert.SerializeObject(carrierData);
-                    var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
-                    ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
-                        oldJsonData,
-                        updatedJsonData,
-                        CurrentUserId,
-                        formatTemplate,
-                        matchingRule
-                    );
-                    responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponceData);
+                    if (matchingRule != null)
+                    {
+
+                        var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
+                        ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
+                            oldJsonData,
+                            updatedJsonData,
+                            CurrentUserId,
+                            formatTemplate,
+                            matchingRule
+                        );
+                        responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponceData);
+                    }
+                }
+                else
+                {
+                    responceData.ErrorMessage = "No changes detected";
                 }
             }
             else
@@ -243,19 +252,28 @@ namespace OMS.Application.Services.CustomerAccountingSettings
 
                 var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
                 var matchingRule = approvalRules?.FirstOrDefault(rule => approvalEventName.Contains(rule.EventName));
+                var oldJsonData = JsonConvert.SerializeObject(deliveryMethodData);
 
-                if (matchingRule != null)
+                bool changesValues = ApprovalRuleHelper.CheckValuesChanged(oldJsonData, updatedJsonData);
+                if (changesValues)
                 {
-                    var oldJsonData = JsonConvert.SerializeObject(deliveryMethodData);
-                    var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
-                    ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
-                        oldJsonData,
-                        updatedJsonData,
-                        CurrentUserId,
-                        formatTemplate,
-                        matchingRule
-                    );
-                    responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponceData);
+                    if (matchingRule != null)
+                    {
+
+                        var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
+                        ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
+                            oldJsonData,
+                            updatedJsonData,
+                            CurrentUserId,
+                            formatTemplate,
+                            matchingRule
+                        );
+                        responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponceData);
+                    }
+                }
+                else
+                {
+                    responceData.ErrorMessage = "No changes detected";
                 }
             }
             else

@@ -13,6 +13,11 @@ export const Menu = [
         securityKey: securityKey.DASHBOARD,
         children: [],
       },
+    ],
+  },
+  {
+    groupLabel: "Administration ",
+    items: [
       {
         name: "Organization",
         id: "Organization",
@@ -22,33 +27,27 @@ export const Menu = [
         securityKey: securityKey.ORGANIZATION,
         children: [],
       },
+      {
+        name: "User Management",
+        id: "User Management",
+        to: "/Users",
+        iconClass: "mdi:account-group-outline",
+        securityKey: securityKey.USERMANAGEMENT,
+      },
+      {
+        name: "Role Management",
+        id: "SecurityRoleManagement",
+        submenuName: "Role Management",
+        iconClass: "mdi:shield-account-outline",
+        to: "/SecurityRoleManagement",
+        securityKey: securityKey.SECURITYROLEMANAGEMENT,
+      },
     ],
   },
+
   {
     groupLabel: "Management",
     items: [
-      {
-        id: "Security",
-        name: "Security",
-        iconClass: "mdi:security-lock-outline",
-        subMenu: true,
-        to: "#",
-        securityKey: securityKey.SECURITY,
-        children: [
-          {
-            id: "User Management",
-            submenuName: "User Management",
-            to: "/Users",
-            securityKey: securityKey.USERMANAGEMENT,
-          },
-          {
-            id: "SecurityRoleManagement",
-            submenuName: "Role Management",
-            to: "/SecurityRoleManagement",
-            securityKey: securityKey.SECURITYROLEMANAGEMENT,
-          },
-        ],
-      },
       {
         id: "customer",
         name: "Customer Details",

@@ -50,6 +50,13 @@ namespace OMS.Application.Services.CustomerDocuments
                             AESIV
                         );
                     }
+
+                    // Map the request to the DTO and add it to the repository
+                    CustomerDocumentsDto customerDocumentsDto = requestData.ToMapp<AddCustomerDocumentsRequest, CustomerDocumentsDto>();
+                    customerDocumentsDto.CreatedBy = CurrentUserId;
+                    var modifyData = requestData.DocumentInfoList.Select(data => new { data.Name, data.Attachment, data.DocumentTypeId,data.DocumentType }).ToList();
+                    DataTable documentDataTable = ExportHelper.ListToDataTable(modifyData);
+                    responseData = await repositoryManager.customerDocuments.AddCustomerDocuments(customerDocumentsDto, documentDataTable);
                 }
 
                 // Map the request to the DTO and add it to the repository

@@ -81,8 +81,8 @@ export const setFieldSetting = (formFieldsData, fieldId, fieldSettingType, value
             case 'isMultiSelect':
                 selectField.fieldSetting.isMultiSelect = value;
                 break;
-            case 'isDisabled':
-                selectField.fieldSetting.isDisabled = value;
+            case 'isDisable':
+                selectField.fieldSetting.isDisable = value;
                 break;
             case 'isPrimaryButtonVisible':
                 selectField.inputButtonGroupConfig.isPrimaryButtonVisible = value;

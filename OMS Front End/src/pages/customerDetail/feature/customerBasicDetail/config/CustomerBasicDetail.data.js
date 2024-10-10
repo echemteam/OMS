@@ -41,18 +41,18 @@ export const customerbasicData = {
       },
       style: {
         containerCss:
-          "col-xxl-4 col-xl-4 col-md-4 col-4 col-4 mb-input mb-0 custom-file-upload-section validation-image-uploader",
+          "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input mb-0 custom-file-upload-section validation-image-uploader customer-logo-sec",
       },
     },
-    {
-      id: "",
-      lable: "",
-      Field_Name: "",
-      dataField: "",
-      style: {
-        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-4 col-4 remove-line",
-      },
-    },
+    // {
+    //   id: "",
+    //   lable: "",
+    //   Field_Name: "",
+    //   dataField: "",
+    //   style: {
+    //     containerCss: "col-xxl-4 col-xl-4 col-md-4 col-4 col-4 remove-line",
+    //   },
+    // },
     {
       id: "name",
       lable: "Customer Name ",

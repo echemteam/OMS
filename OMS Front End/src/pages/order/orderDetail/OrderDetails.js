@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { lazy, useEffect, useState } from "react";
+import React, { lazy, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 
 /** Common Services & Data files */
@@ -27,8 +27,8 @@ const OrderInformation = lazy(() =>
 const OrderDetails = () => {
 
   const { id } = useParams();
+  const orderItemShippingAddRef = useRef();
   const orderId = id ? decryptUrlData(id) : 0;
-
   const [orderDetails, setOrderDetails] = useState();
 
   const [getOrderDetailByOrderId, {
@@ -59,22 +59,31 @@ const OrderDetails = () => {
     }
   }, [isOrderDetailsFetching, isOrderDetailsFetched, orderByOrderIdDetails]);
 
+  const handleOrderItemShippingAddress = (type, addressId, orderItemId) => {
+    if (orderItemShippingAddRef) {
+      orderItemShippingAddRef.current.handleToggleModalShippingAddress(type, addressId, orderItemId);
+    }
+  }
+
   return (
     <div className="order-review-section">
       <div className="row">
         {/* Left Side Section Start */}
         <div className="col-xxl-5 col-lg-5 col-md-5 col-12">
           {/* Order Summery Start */}
-          <OrderSummary orderDetails={orderDetails} />
+          <OrderSummary
+            orderId={orderId} isOrderDetailsFetch={isOrderDetailsFetching}
+            orderDetails={orderDetails} onRefreshOrderDetails={handleRefreshOrderDetails} />
           {/* Order Summery End */}
 
           {/* Order Information Start */}
-          <OrderInformation orderDetails={orderDetails} />
+          <OrderInformation orderItemShippingAddRef={orderItemShippingAddRef} orderDetails={orderDetails} handleRefreshOrderDetails={handleRefreshOrderDetails} />
           {/* Order Information End */}
 
           {/* Order Document Start */}
           <OrderDocument
             orderDetails={orderDetails}
+            isOrderDetailsFetching={isOrderDetailsFetching}
             onRefreshOrderDetails={handleRefreshOrderDetails}
           />
           {/* Order Document End */}
@@ -84,7 +93,7 @@ const OrderDetails = () => {
         {/* Right Side Section Start */}
         <div className="col-xxl-7 col-lg-7 col-md-7 col-12">
           <OrderAction />
-          <OrderItemList />
+          <OrderItemList orderDetails={orderDetails} handleOrderItemShippingAddress={handleOrderItemShippingAddress} />
         </div>
         {/* Right Side Section End */}
       </div>
