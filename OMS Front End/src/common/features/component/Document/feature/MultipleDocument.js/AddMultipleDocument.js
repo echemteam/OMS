@@ -9,7 +9,7 @@ import Iconify from "../../../../../../components/ui/iconify/Iconify";
 import NoRecordFound from "../../../../../../components/ui/noRecordFound/NoRecordFound";
 import { AppIcons } from "../../../../../../data/appIcons";
 import Select from "react-select";
-import { ModulePathName } from "../../../../../../utils/Enums/commonEnums";
+import {  ModulePathName } from "../../../../../../utils/Enums/commonEnums";
 import ToastService from "../../../../../../services/toastService/ToastService";
 import { ErrorMessage } from "../../../../../../data/appMessages";
 import { useValidateAndAddApprovalRequests } from "../../../../../../utils/CustomHook/useValidateAndAddApproval";
@@ -57,6 +57,7 @@ const AddMultipleDocument = ({
   const [attachment, setAttachment] = useState([]);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
+  const [editableIndexes, setEditableIndexes] = useState([]);
   const { ValidateRequestByApprovalRules, isApprovelLoading } =
     useValidateAndAddApprovalRequests();
 
@@ -69,6 +70,18 @@ const AddMultipleDocument = ({
     { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData },
   ] = addDocuments();
 
+  const [documentTypeInput, setDocumentTypeInput] = useState("");
+
+  const toggleEdit = (index) => {
+    const updatedEditableIndexes = [...editableIndexes];
+    if (updatedEditableIndexes.includes(index)) {
+      updatedEditableIndexes.splice(updatedEditableIndexes.indexOf(index), 1);
+    } else {
+      updatedEditableIndexes.push(index);
+    }
+    setEditableIndexes(updatedEditableIndexes);
+  };
+
   useEffect(() => {
     if (isAddSuccess && isAddData) {
       if (isAddData.errorMessage.includes("exists")) {
@@ -80,35 +93,68 @@ const AddMultipleDocument = ({
     }
   }, [isAddSuccess, isAddData]);
 
+  // Transform the document data before submitting
+  const buildTransformedDocumentData = (data, isSupplier, keyId) => {
+    const transformDocumentTypeData = (data) => {
+        if (data && typeof data === 'object') {
+            return {
+                id: data.value || data.id || 0,
+                type: data.text || "",
+            };
+        }
+        return {
+            id: data || 0,
+            type: "",
+        };
+    };
+
+    const { id: documentTypeId, type: type } = transformDocumentTypeData(data.documentTypeId);
+
+    return {
+        ...data,
+        [isSupplier ? 'supplierId' : 'customerId']: keyId,
+        documentTypeId,
+        type,
+        createdAt: data.createdAt || new Date(),
+      };
+    };
+
   const handleSave = async () => {
-    const modifyData = uploadedFiles.map((data, index) => {
+
+    const modifyData = uploadedFiles.map((data,index) => {
       const matchingAttachment = attachment.find((att, ind) => ind === index);
       return {
         ...data,
         base64File: matchingAttachment ? matchingAttachment.base64Data : null,
+        ...buildTransformedDocumentData(data, isSupplier, keyId),  
       };
     });
     const IsAllDetailExist = modifyData.every(
-      (data) => data.name && data.base64File && data.documentTypeId !== null
-    );
+          (data) => data.name && data.base64File && data.documentTypeId !== null
+        );
+  
     if (IsAllDetailExist) {
       const requestData = {
-        storagePath: isSupplier
-          ? ModulePathName.SUPPLIER
-          : ModulePathName.CUSTOMER,
+        storagePath: isSupplier ? ModulePathName.SUPPLIER : ModulePathName.CUSTOMER,
         [isSupplier ? "supplierId" : "customerId"]: keyId,
         documentInfoList: modifyData,
       };
+  
+      // Uncomment and handle approval if needed
       // if (!isSupplier && isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
       //   await handleApprovalRequest(requestData, null);
       // } else {
-      add(requestData);
+        add(requestData);
       // }
-    } else {
-      ToastService.warning(ErrorMessage.DocumentDetailMissing);
     }
+    else {
+           ToastService.warning(ErrorMessage.DocumentDetailMissing);
+         }
   };
-
+  
+  
+  
+  
   const handleApprovalRequest = async (newValue) => {
     const request = {
       newValue,
@@ -148,10 +194,7 @@ const AddMultipleDocument = ({
   const handleFileRemove = (index) => {
     setUploadedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
   };
-  const formActionHandler = {
-    DDL_FILE: handleFileUpload,
-  };
-
+  
   const onFormDataChange = (updatedData) => {
     setAttachment((prevAttachments) => [
       ...prevAttachments,
@@ -166,6 +209,11 @@ const AddMultipleDocument = ({
       )
     );
   };
+
+const formActionHandler = {
+  DDL_FILE: handleFileUpload,
+};
+
   return (
     <div className="row">
       <FormCreator
@@ -173,6 +221,7 @@ const AddMultipleDocument = ({
         ref={ref}
         onActionChange={formActionHandler}
         onFormDataChange={onFormDataChange}
+        //onDropdownAction={DDLActionHandler}
       />
       <table className="custom-table mt-4">
         <thead>
@@ -220,17 +269,40 @@ const AddMultipleDocument = ({
                   />
                 </td>
                 <td>
+              {editableIndexes.includes(index) ? (
+                <div className="d-flex align-items-center">
+                  <Input
+                    type="text"
+                    value={documentTypeInput || ""}
+                    onChange={(e) => {
+                      const newValue = e.target.value;
+                      setDocumentTypeInput(newValue);
+                    }}
+                  />
+                  <button onClick={() => toggleEdit(index)} 
+                          style={{
+                            background: 'none',  
+                            border: 'none', 
+                            cursor: 'pointer',  
+                            padding: '10px' 
+                      }}>
+                  <img src="/static/media/cancel.0c96fd8d030cbf121ac0.png" style={{
+                          width: '20px',  
+                          height: '20px',  
+                          
+                      }}/>
+                  </button>
+                </div>
+              ) : (
+                <div className="d-flex align-items-center">
                   <Select
                     value={
-                      file.documentTypeId
-                        ? documentTypes.find(
-                            (option) => option.value === file.type
-                          )
-                        : null
+                      documentTypes.find(option => option.value === file.documentTypeId) || null
                     }
-                    onChange={(selectedOption) =>
-                      handleTypeChange(index, selectedOption)
-                    }
+                    onChange={(selectedOption) => {
+                      handleTypeChange(index, selectedOption);
+                      
+                    }}
                     options={documentTypes}
                     className="react-select"
                     classNamePrefix="react-select"
@@ -243,6 +315,23 @@ const AddMultipleDocument = ({
                       menuPortal: (base) => ({ ...base, zIndex: 9999 }),
                     }}
                   />
+                  <button onClick={() => toggleEdit(index)} style={{
+                        background: 'none',  
+                        border: 'none', 
+                        cursor: 'pointer',  
+                        padding: '10px' 
+                  }}>
+                  <img src="/static/media/pencil.3c8bbd8b96aa6f946db1.png"  
+                         style={{
+                          width: '20px',  
+                          height: '20px',  
+                          
+                      }} />
+                  </button>
+                </div>
+              )}
+            
+                  
                   {/* <select
                     value={file.documentTypeId || ""}
                     onChange={(e) =>
