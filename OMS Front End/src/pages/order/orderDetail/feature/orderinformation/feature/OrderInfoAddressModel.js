@@ -106,9 +106,9 @@ const OrderInfoAddressModel = ({
       return;
     }
   };
-  const handleEditAddress = (selectedAddressId) => {
+  const handleEditAddress = () => {
     if (selectedAddressId) {
-      onUpdate(selectedAddressId);
+      onUpdate();
     } else {
       handlevalidate();
     }
@@ -185,7 +185,7 @@ const OrderInfoAddressModel = ({
         <Buttons
           buttonTypeClassName="theme-button ml-3"
           buttonText="Edit Address"
-          onClick={() => handleEditAddress(selectedAddressId)}
+          onClick={ handleEditAddress}
         />
         <Buttons
           buttonTypeClassName="theme-button ml-3"
