@@ -55,7 +55,8 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
                 name: data.name,
                 attachment: data.attachment.fileName,
                 base64File: data.attachment.base64Data,
-                documentTypeId: transformedData.documentTypeId
+                documentTypeId: transformedData.documentTypeId,
+                documentType:transformedData.documentType
             }
         ];
 
@@ -100,13 +101,13 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
         };
 
 
-        const { id: documentTypeId, type: type } = transformDocumentTypeData(data.documentTypeId);
+        const { id: documentTypeId, type: documentType } = transformDocumentTypeData(data.documentTypeId);
 
         return {
             ...data,
             [isSupplier ? 'supplierId' : 'customerId']: keyId,
             documentTypeId,
-            type,
+            documentType,
             createdAt: data.createdAt || new Date(),
 
         };

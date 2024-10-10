@@ -1,4 +1,5 @@
-﻿using OMS.Domain.Entities.API.Response.Common;
+﻿using OMS.Domain.Entities.API.Request.User;
+using OMS.Domain.Entities.API.Response.Common;
 using OMS.Domain.Entities.API.Response.User;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.User;
@@ -20,6 +21,9 @@ namespace OMS.Domain.Repository.Implementation
         const string GETUSERS = "GetUsers";
         const string UPDATEUSERPASSWORD = "UpdateUserPassword";
         const string GETUSERLOGINLOGOUTHISTORYBYUSERID = "GetUserLoginLogoutHistoryByUserId";
+        const string GETUNASSIGNEDROLEBYUSERID = "GetUnAssignedRoleByUserId";
+        const string GETASSIGNEDROLEBYUSERID = "GetAssignedRoleByUserId";
+        const string ADDASSIGNROLETOUSER = "AddAssignRoleToUser";
         #endregion
 
         public UserRepository(DapperContext dapperContext) : base(dapperContext)
@@ -102,6 +106,36 @@ namespace OMS.Domain.Repository.Implementation
             }, commandType: CommandType.StoredProcedure);
             return getUserLoginLogoutHistoryByUserId;
         }
+
+        public async Task<List<GetUnassignRoleByUserIdResponse>> GetUnAssignedRoleByUserId(short userId)
+        {
+            List<GetUnassignRoleByUserIdResponse> roles = await _context.GetList<GetUnassignRoleByUserIdResponse>(GETUNASSIGNEDROLEBYUSERID, new
+            {
+                userId
+            }, CommandType.StoredProcedure);
+            return roles;
+        }
+
+        public async Task<EntityList<GetUnassignRoleByUserIdResponse>> GetAssignedRoleByUserId(GetAssignedRoleByUserIdRequest request)
+        {
+            return await _context.GetListSP<GetUnassignRoleByUserIdResponse>(GETASSIGNEDROLEBYUSERID, new
+            {
+                request.Pagination?.PageNumber,
+                request.Pagination?.PageSize,
+                request.Filters?.SearchText,
+                request.UserId
+            }, true);
+        }
+        public async Task<AddEntityDto<int>> AddAssignRoleToUser(AssignUserDTO userRequest)
+        {
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDASSIGNROLETOUSER, new
+            {
+                userRequest.RoleId,
+                userRequest.UserId,
+                userRequest.CreatedBy
+            }, CommandType.StoredProcedure);
+        }
+
         #endregion
     }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import UserCardList from "./UserCardList";
 import SwalAlert from "../../../../../../services/swalService/SwalService";
@@ -6,7 +7,7 @@ import { toast } from "react-toastify";
 import Buttons from "../../../../../../components/ui/button/Buttons";
 import ToastService from "../../../../../../services/toastService/ToastService";
 
-const UsercardModel = ({onGetContactId,handleAddContact,orderContactId,onSidebarCloseUserModel,  defaultId, onUpdate,selectedContactId,setSelectedContactId, contactTypeId, addressContactType,customerId,orderDetails,}) => {
+const UsercardModel = ({onGetContactId,handleAddContact,handleRefreshOrderDetails,orderContactId,onSidebarCloseUserModel,onSidebarCloseUpdateContact,  defaultId, onUpdate,selectedContactId,setSelectedContactId, contactTypeId, addressContactType,customerId,orderDetails,}) => {
   const [dataList, setDataList] = useState([]);
   const { confirm } = SwalAlert();
 
@@ -24,6 +25,7 @@ const [ getContactByCustomerId, {   isFetching: isGetContactByCustomerIdFetching
     if (isUpdateOrderContactSuccess && isUpdateOrderContactData) {
       ToastService.success(isUpdateOrderContactData.errorMessage);   
       onSidebarCloseUserModel();
+      handleRefreshOrderDetails();
     }
   }, [isUpdateOrderContactSuccess, isUpdateOrderContactData]);
 
@@ -60,7 +62,7 @@ const [ getContactByCustomerId, {   isFetching: isGetContactByCustomerIdFetching
       }
       getContactByCustomerId(req);
      }
-  }, [addressContactType]);
+  }, [addressContactType,onSidebarCloseUpdateContact]);
 
   useEffect(()=>{
     setSelectedContactId(defaultId)

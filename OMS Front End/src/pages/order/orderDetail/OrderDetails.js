@@ -77,7 +77,7 @@ const OrderDetails = () => {
           {/* Order Summery End */}
 
           {/* Order Information Start */}
-          <OrderInformation orderItemShippingAddRef={orderItemShippingAddRef} orderDetails={orderDetails} />
+          <OrderInformation orderItemShippingAddRef={orderItemShippingAddRef} orderDetails={orderDetails} handleRefreshOrderDetails={handleRefreshOrderDetails} />
           {/* Order Information End */}
 
           {/* Order Document Start */}

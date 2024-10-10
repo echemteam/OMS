@@ -101,6 +101,7 @@ export const documentTransformData = (data) => {
       documentIcon,
       createdAt,
       isArchive,
+      type
     };
 
     if (!acc[type]) {

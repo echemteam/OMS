@@ -48,21 +48,21 @@ const UserDetailsModel = ({contact}) => {
                 <div class="values">   {contact?.phoneNumberList?.find((number) => number.isPrimary)
                     ? `${contact?.phoneNumberList.find(
                       (number) => !number.isPrimary
-                    )?.phoneCode
+                    )?.phoneCode || ''
                     } ${contact?.phoneNumberList.find(
                       (number) => !number.isPrimary
-                    )?.phoneNumber
+                    )?.phoneNumber || ''
                     }`
-                    : ""}</div>
+                    : null}</div>
                 <div class="values primary-email">   {contact?.phoneNumberList?.find((number) => number.isPrimary)
                     ? `${contact?.phoneNumberList.find(
                       (number) => number.isPrimary
-                    )?.phoneCode
+                    )?.phoneCode || ''
                     } ${contact?.phoneNumberList.find(
                       (number) => number.isPrimary
-                    )?.phoneNumber
+                    )?.phoneNumber || ''
                     }`
-                    : ""}</div>
+                    : null}</div>
                 {/* <span class="primary-email"></span> */}
               </span>
             </div>

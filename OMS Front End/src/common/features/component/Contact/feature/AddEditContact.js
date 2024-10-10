@@ -51,7 +51,9 @@ const AddEditContact = forwardRef(({ keyId, selectedContactId, isUpdateContactMo
                 return condition;
             };
             setDropDownOptionField(allGetAllContactTypesData, "contactTypeId", "type", formData, "contactTypeId", filterCondition);
+           if(isEdit){
             getById(selectedContactId)
+           }
         }
     }, [selectedContactId, isGetAllContactTypesSucess])
 

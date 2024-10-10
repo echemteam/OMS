@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useImperativeHandle, useRef } from "react";
+import React, { useEffect, useState, useImperativeHandle } from "react";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
 import { AppIcons } from "../../../../../data/appIcons";
@@ -13,8 +13,7 @@ import { useAddEditContactMutation, useLazyGetAllContactTypesQuery, useLazyGetCu
 import AddEditContact from "../../../../../common/features/component/Contact/feature/AddEditContact";
 
 
-const OrderInformation = ({ orderDetails, orderItemShippingAddRef }) => {
-  const editRef = useRef();
+const OrderInformation = ({ orderDetails, orderItemShippingAddRef,handleRefreshOrderDetails }) => {
   const [orderInfo, setOrderInfo] = useState(null);
   const [orderAddressDetails, setOrderAddressDetails] = useState(null);
   const [orderContactDetails, setOrderContactDetails] = useState(null);
@@ -32,9 +31,7 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [orderContactId, setOrderContactId] = useState(null)
   const [orderItemId, setOrderItemId] = useState(0);
-  const [getAllContactTypes, { isSuccess: isGetAllContactTypesSucess, data: allGetAllContactTypesData },] = useLazyGetAllContactTypesQuery();
-
-
+  const [getAllContactTypes, { isSuccess: isGetAllContactTypesSucess, data: allGetAllContactTypesData }] = useLazyGetAllContactTypesQuery();
 
   const onSidebarCloseShippingAddress = () => {
     setIsModelOpenShippingAddress(false);
@@ -62,14 +59,12 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef }) => {
     setOrderItemId(0);
   };
 
-  const handleUpdateAddress = (selectedAddressId) => {
+  const handleUpdateAddress = () => {
 
     setIsModelOpenShippingAddress(false);
     setEditMode(true);
     setIsModelOpenUpdateAddress(true);
-    if (editRef.current) {
-      editRef.current.callChildEditFunction(selectedAddressId);
-    }
+   
   };
   const handleAddClick = () => {
     setIsModelOpenShippingAddress(false);
@@ -101,9 +96,6 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef }) => {
     setIsModelOpenUserModel(false);
     setIsUpdateContactModel(true);
     setIsEdit(true);
-    // if (editRef.current) {
-    //   editRef.current.callEditFunction(selectedContactId);
-    // }
   }
 
   const onSidebarCloseUpdateContact = () => {
@@ -137,7 +129,9 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef }) => {
     setSelectedAddressId(id);
 
   };
-
+const onSuccess =()=>{
+  onSidebarCloseUpdateContact();
+}
 
 
 
@@ -234,6 +228,7 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef }) => {
         isOpen={isModelOpenShippingAddress}
       >
         <OrderInfoAddressModel
+        handleRefreshOrderDetails={handleRefreshOrderDetails}
           onSidebarCloseUpdateAddress={onSidebarCloseUpdateAddress}
           onUpdate={handleUpdateAddress}
           handleAddClick={handleAddClick}
@@ -256,7 +251,6 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef }) => {
         >
           <AddEditAddress
             editMode={editMode}
-            editRef={editRef}
             selectedAddressId={selectedAddressId}
             isModelOpenUpdateAddress={isModelOpenUpdateAddress}
             keyId={customerId}
@@ -276,8 +270,11 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef }) => {
           isOpen={isModelOpenModelUserModel}
         >
           <UsercardModel
+          handleRefreshOrderDetails={handleRefreshOrderDetails}
             orderContactId={orderContactId}
+            isUpdateContactModel={isUpdateContactModel}
             onGetContactId={onGetContactId}
+            onSidebarCloseUpdateContact={onSidebarCloseUpdateContact}
             onUpdate={handleUpdateContact}
             orderDetails={orderDetails}
             contactTypeId={contactTypeId}
@@ -300,7 +297,8 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef }) => {
           isOpen={isUpdateContactModel}
         >
           <AddEditContact
-            editRef={editRef}
+            
+            onSuccess={onSuccess}
             addEditContactMutation={useAddEditContactMutation}
             customerId={customerId}
             getContactById={useLazyGetCustomerContactByContactIdQuery}

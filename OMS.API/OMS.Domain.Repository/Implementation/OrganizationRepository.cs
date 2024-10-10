@@ -56,6 +56,7 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.SortString,
                 requestData.ToDate,
                 requestData.FromDate,
+                requestData.EventName
             }, true);
         }
         #endregion
