@@ -13,7 +13,7 @@ import { useAddEditContactMutation, useLazyGetAllContactTypesQuery, useLazyGetCu
 import AddEditContact from "../../../../../common/features/component/Contact/feature/AddEditContact";
 
 
-const OrderInformation = ({ orderDetails, orderItemShippingAddRef }) => {
+const OrderInformation = ({ orderDetails, orderItemShippingAddRef,handleRefreshOrderDetails }) => {
   const [orderInfo, setOrderInfo] = useState(null);
   const [orderAddressDetails, setOrderAddressDetails] = useState(null);
   const [orderContactDetails, setOrderContactDetails] = useState(null);
@@ -130,7 +130,6 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef }) => {
 
   };
 const onSuccess =()=>{
-  //setIsUpdateContactModel(false);
   onSidebarCloseUpdateContact();
 }
 
@@ -229,6 +228,7 @@ const onSuccess =()=>{
         isOpen={isModelOpenShippingAddress}
       >
         <OrderInfoAddressModel
+        handleRefreshOrderDetails={handleRefreshOrderDetails}
           onSidebarCloseUpdateAddress={onSidebarCloseUpdateAddress}
           onUpdate={handleUpdateAddress}
           handleAddClick={handleAddClick}
@@ -270,6 +270,7 @@ const onSuccess =()=>{
           isOpen={isModelOpenModelUserModel}
         >
           <UsercardModel
+          handleRefreshOrderDetails={handleRefreshOrderDetails}
             orderContactId={orderContactId}
             isUpdateContactModel={isUpdateContactModel}
             onGetContactId={onGetContactId}

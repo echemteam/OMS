@@ -161,12 +161,12 @@ const OrderItemList = ({ orderDetails, handleOrderItemShippingAddress }) => {
                           <div className="col-xxl-6 col-lg-6 col-md-6 col-12 custom-col-5">
                             <div className="key-value-se align-items-start">
                               <span className="key-sec">Name</span>&nbsp;:&nbsp;
-                              <span className="value-sec">{item.chemicalName ? item.chemicalName : "NA"}</span>
+                              <span className="value-sec">{item.chemicalName ? item.chemicalName : "N/A"}</span>
                             </div>
                             <div className="key-value-se">
                               <span className="key-sec">MDL Number </span>
                               <span className="value-sec">
-                                &nbsp;:&nbsp; {item.mdlNumber ? item.mdlNumber : "NA"}
+                                &nbsp;:&nbsp; {item.mdlNumber ? item.mdlNumber : "N/A"}
                               </span>
                             </div>
                             <div className="key-value-se">
@@ -223,13 +223,13 @@ const OrderItemList = ({ orderDetails, handleOrderItemShippingAddress }) => {
                                 <div className="key-value-se">
                                   <span className="key-sec">Req-Date</span>
                                   <span className="value-sec">
-                                    &nbsp;:&nbsp; {item.requestDate ? formatDate(item.requestDate, "MM/DD/YYYY hh:mm A") : "NA"}
+                                    &nbsp;:&nbsp; {item.requestDate ? formatDate(item.requestDate, "MM/DD/YYYY hh:mm A") : "N/A"}
                                   </span>
                                 </div>
                                 <div className="key-value-se">
                                   <span className="key-sec">Promise Date</span>
                                   <span className="value-sec">
-                                    &nbsp;:&nbsp;  {item.promiseDate ? formatDate(item.promiseDate, "MM/DD/YYYY hh:mm A") : "NA"}
+                                    &nbsp;:&nbsp;  {item.promiseDate ? formatDate(item.promiseDate, "MM/DD/YYYY hh:mm A") : "N/A"}
                                   </span>
                                 </div>
                               </div>

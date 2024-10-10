@@ -14,6 +14,7 @@ const OrderInfoAddressModel = ({
   onSidebarCloseUpdateAddress,
   addressContactType,
   onSidebarCloseShippingAddress,
+  handleRefreshOrderDetails,
   customerId,
   orderDetails,
   onGetData,
@@ -45,6 +46,7 @@ const OrderInfoAddressModel = ({
     if (isUpdateOrderAddressSuccess && isUpdateOrderAddressData) {
       ToastService.success(isUpdateOrderAddressData.errorMessage);
       onSidebarCloseShippingAddress();
+      handleRefreshOrderDetails();
     }
   }, [isUpdateOrderAddressSuccess, isUpdateOrderAddressData]);
 
@@ -122,7 +124,7 @@ const OrderInfoAddressModel = ({
         "Cancel"
       ).then((confirmed) => {
         if (confirmed) {
-          const req = {
+                    const req = {
             orderAddressId: orderDetails.orderAddressId,
             orderId: orderDetails.orderId,
             billingAddressId: addressContactType === "Billing" ? selectedAddressId : 0,
