@@ -68,6 +68,22 @@ namespace OMS.Application.Services.User
         {
             return repositoryManager.user.GetUserLoginLogoutHistoryByUserId(userId);
         }
+
+        public async Task<List<GetUnassignRoleByUserIdResponse>> GetUnAssignedRoleByUserId(short userId)
+        {
+            return await repositoryManager.user.GetUnAssignedRoleByUserId(userId);
+        }
+
+        public async Task<EntityList<GetUnassignRoleByUserIdResponse>> GetAssignedRoleByUserId(GetAssignedRoleByUserIdRequest request)
+        {
+            return await repositoryManager.user.GetAssignedRoleByUserId(request);
+        }
+        public async Task<AddEntityDto<int>> AddAssignRoleToUser(AddAssignRoleToUserRequest userRequest, short CurrentUserId)
+        {
+            AssignUserDTO userDto = userRequest.ToMapp<AddAssignRoleToUserRequest, AssignUserDTO>();
+            userDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.user.AddAssignRoleToUser(userDto);
+        }
         #endregion
     }
 }
