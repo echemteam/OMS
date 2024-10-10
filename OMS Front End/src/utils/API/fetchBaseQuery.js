@@ -30,7 +30,6 @@ const baseQuery = fetchBaseQuery({
   }
 });
 
-
 export const defaultBaseQuery = fetchBaseQuery({
   baseUrl: APIUrl,
   prepareHeaders: (headers) => {
