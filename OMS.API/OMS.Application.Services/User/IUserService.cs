@@ -14,5 +14,8 @@ namespace OMS.Application.Services.User
         Task<EntityList<UserListResponse>> GetUsers(ListEntityRequest<BaseFilter> requestData);
         Task<AddEntityDto<int>> UpdateUserPassword(UpdateUserPasswordRequest updateUserPassword, short CurrentUserId);
         Task<List<GetUserLoginLogoutHistoryByUserIdResponse>> GetUserLoginLogoutHistoryByUserId(short userId);
+        Task<List<GetUnassignRoleByUserIdResponse>> GetUnAssignedRoleByUserId(short userId);
+        Task<EntityList<GetUnassignRoleByUserIdResponse>> GetAssignedRoleByUserId(GetAssignedRoleByUserIdRequest request);
+        Task<AddEntityDto<int>> AddAssignRoleToUser(AddAssignRoleToUserRequest userRequest, short CurrentUserId);
     }
 }
