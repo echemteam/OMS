@@ -61,11 +61,11 @@ export const modifyTimeLineData = (timelineData) => {
       formatDate(data.changedAt, "MM/DD/YYYY hh:mm A"),
   }));
   return newArray;
-};
+};  
 
 export const getFileTypeIcon = (filename) => {
-  const parts = filename.split(".");
-  const fileType = parts.length > 1 ? parts[parts.length - 1] : "";
+  const parts = filename?.split(".");
+  const fileType = parts?.length > 1 ? parts[parts.length - 1] : "";
   return getIconForFileType(fileType);
 };
 

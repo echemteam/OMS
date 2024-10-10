@@ -196,7 +196,7 @@ const DocumentList = forwardRef(
     };
 
     const determineFileType = (fileName) => {
-      const extension = fileName.split(".").pop().toLowerCase();
+      const extension = fileName?.split(".").pop().toLowerCase();
       switch (extension) {
         case "pdf":
           return "pdf";
