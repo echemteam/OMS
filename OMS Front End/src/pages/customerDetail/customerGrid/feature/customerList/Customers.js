@@ -12,11 +12,13 @@ import { BasicDetailContextProvider } from "../../../../../utils/ContextAPIs/Cus
 import CustomerListContext from "../../../../../utils/ContextAPIs/Customer/CustomerListContext";
 import { AllCustomerGridConfig, ApprovedCustomerGridConfig, PendingCustomerGridConfig, RejectedCustomerGridConfig, SubmittedCustomerGridConfig } from "../../../../../common/features/component/CustomerSupplierListConfig/CustomerSupplierListConfig.data";
 import InActiveCustomerTab from "../customerInActiveTabs/InActiveCustomerTab";
+import { useLocation } from "react-router-dom";
 
 const Customers = () => {
-  const [activeTab, setActiveTab] = useState("0");
   const listRef = useRef();
+  const location = useLocation();
   const [search, setSearch] = useState("");
+  const [activeTab, setActiveTab] = useState("0");
   const [statusOptions, setStatusOptions] = useState([]);
   const [selectedDrpvalues, setSelectedDrpvalues] = useState("")
   const [selectedStatusOptions, setSelectedStatusOptions] = useState("");
@@ -31,13 +33,10 @@ const Customers = () => {
 
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex.toString());
-    // saveData('selectedTab', tabIndex.toString());
   };
 
   const getListApi = () => {
-    if (listRef.current) {
-      listRef.current.getListApi();
-    }
+    handleStorePaginationObj();
   };
 
   useEffect(() => {
@@ -93,19 +92,32 @@ const Customers = () => {
     // handleTabClick(tabIndex);
   }, [activeTab]);
 
+  const handleStorePaginationObj = () => {
+    const pagination = location.state?.paginationObj;
+    if (listRef.current) {
+      if (pagination) {
+        const tabIndex = location.state?.tabIndex;
+        listRef.current.getListApi(pagination.pagination, pagination.sortString, true);
+        handleTabClick(tabIndex);
+      } else {
+        listRef.current.getListApi();
+      }
+    }
+  }
+
   const handleSearch = () => {
     if (search.length >= 3 || selectedDrpvalues.length > 0) {
-      getListApi();
+      handleStorePaginationObj();
     } else {
       ToastService.warning(ErrorMessage.CommonErrorMessage)
     }
   };
 
   const handleChange = (event) => {
-      setSearch(event.target.value.trim());   
+    setSearch(event.target.value.trim());
   };
 
-  const handleKeyPress=(event)=>{
+  const handleKeyPress = (event) => {
     if (event.code === "Enter") {
       handleSearch();
     }
@@ -140,7 +152,7 @@ const Customers = () => {
 
   useEffect(() => {
     if (debouncedSearch === "" && selectedDrpvalues === "") {
-      getListApi();
+      handleStorePaginationObj();
     }
   }, [debouncedSearch, selectedDrpvalues]);
 
@@ -163,6 +175,7 @@ const Customers = () => {
             handleClear={handleClear}
             shouldRerenderFormCreator={shouldRerenderFormCreator}
             handleKeyPress={handleKeyPress}
+            tabIndex={0}
           />
         </div>
       ),
@@ -185,6 +198,7 @@ const Customers = () => {
             handleClear={handleClear}
             shouldRerenderFormCreator={shouldRerenderFormCreator}
             handleKeyPress={handleKeyPress}
+            tabIndex={1}
           />
         </div>
       ),
@@ -207,6 +221,7 @@ const Customers = () => {
             handleClear={handleClear}
             shouldRerenderFormCreator={shouldRerenderFormCreator}
             handleKeyPress={handleKeyPress}
+            tabIndex={2}
           />
         </div>
       ),
@@ -229,6 +244,7 @@ const Customers = () => {
             handleClear={handleClear}
             shouldRerenderFormCreator={shouldRerenderFormCreator}
             handleKeyPress={handleKeyPress}
+            tabIndex={3}
           />
         </div>
       ),
@@ -243,6 +259,7 @@ const Customers = () => {
               StatusEnums.Block,
               StatusEnums.Disable,
             ]}
+            tabIndex={4}
           />
         </div>
       ),
@@ -265,6 +282,7 @@ const Customers = () => {
             handleClear={handleClear}
             shouldRerenderFormCreator={shouldRerenderFormCreator}
             handleKeyPress={handleKeyPress}
+            tabIndex={5}
           />
         </div>
       ),
