@@ -11,7 +11,7 @@ const PendingOrdersTab=({statusId})=>{
      
     const tabs = [
         {
-          sMenuItemCaption: "Customer Not valid",
+          sMenuItemCaption: "Customer Not Valid",
           component: (
             <div className="mt-2">
               <Orders orderStatusId={statusId}
@@ -21,7 +21,7 @@ const PendingOrdersTab=({statusId})=>{
           ),
         },
         {
-          sMenuItemCaption: "Review pending",
+          sMenuItemCaption: "Review Pending",
           component: (
             <div className="mt-2">
               <Orders  orderStatusId={statusId} orderSubStatusId={OrderSubStatusEnums.ReviewPending}
