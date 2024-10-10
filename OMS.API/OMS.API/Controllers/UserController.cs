@@ -11,7 +11,7 @@ namespace OMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+  [Authorize]
     //[CheckClientIpActionFilter]
     public class UserController : BaseController
     {
@@ -93,6 +93,31 @@ namespace OMS.API.Controllers
             List<GetUserLoginLogoutHistoryByUserIdResponse> responseData = await _serviceManager.userService.GetUserLoginLogoutHistoryByUserId(userId).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
+        [HttpGet("GetUnAssignedRoleByUserId")]
+
+        public async Task<IActionResult> GetUnAssignedRoleByUserId(short userId)
+        {
+            if (userId > 0)
+            {
+                var roles = await _serviceManager.userService.GetUnAssignedRoleByUserId(userId).ConfigureAwait(true);
+                return APISucessResponce<object>(roles);
+            }
+            return APISucessResponce(userId);
+        }
+        [HttpPost("GetAssignedRoleByUserId")]
+        public async Task<IActionResult> GetAssignedRoleByUserId(GetAssignedRoleByUserIdRequest request)
+        {
+            var role = await _serviceManager.userService.GetAssignedRoleByUserId(request).ConfigureAwait(true);
+            return APISucessResponce<object>(role);
+        }
+        [HttpPost("AddAssignRoleToUser")]
+
+        public async Task<IActionResult> AddAssignRoleToUser(AddAssignRoleToUserRequest userRequest)
+        {
+            var addrole = await _serviceManager.userService.AddAssignRoleToUser(userRequest, CurrentUserId);
+            return APISucessResponce(addrole);
+        }
+
         #endregion 
     }
 }
