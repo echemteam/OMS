@@ -20,7 +20,6 @@ const VerifyProductDetail = React.lazy(() =>
 const OrderItemDetail = ({ onhandleAddOrderData }) => {
   const { productId, itemRef, documentRef } = useContext(AddOrderContext);
 
-  const { confirm } = SwalAlert();
   const [priceList, setPriceList] = useState([]);
   const [isDocumentData, setIsDocumentData] = useState(false);
   const [isVerifyProduct, setIsVerifyProduct] = useState(false);
