@@ -278,7 +278,7 @@ export const CustomersList = ({
     const currentPageObject = pageObject || molGridRef.current.getCurrentPageObject();
     const sortingStringObject = sortingString || molGridRef.current.generateSortingString();
     if (isPreivewsValue) {
-      molGridRef.current.handleGetPreviesPage(currentPageObject.pageNumber);
+      // molGridRef.current.handleGetPreviesPage(currentPageObject.pageNumber);
     }
     const request = {
       pagination: {

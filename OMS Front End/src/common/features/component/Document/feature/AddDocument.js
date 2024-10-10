@@ -48,14 +48,15 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
 
     const handleSave = async () => {
         const data = ref.current.getFormData();
+        if(data){
         const transformedData = buildTransformedDocumentData(data, isSupplier, keyId,);
 
         const documentList = [
-            {
-                name: data.name,
-                attachment: data.attachment.fileName,
-                base64File: data.attachment.base64Data,
-                documentTypeId: transformedData.documentTypeId,
+            {   
+                name: data?.name,
+                attachment: data?.attachment.fileName,
+                base64File: data?.attachment.base64Data,
+                documentTypeId: transformedData?.documentTypeId,
                 documentType:transformedData.documentType
             }
         ];
@@ -72,6 +73,7 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
         //     await handleApprovalRequest(requestData, null);
         // } else {
         add(requestData);
+    }
         // }
     };
 
@@ -101,14 +103,14 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
         };
 
 
-        const { id: documentTypeId, type: documentType } = transformDocumentTypeData(data.documentTypeId);
+        const { id: documentTypeId, type: documentType } = transformDocumentTypeData(data?.documentTypeId);
 
         return {
             ...data,
             [isSupplier ? 'supplierId' : 'customerId']: keyId,
             documentTypeId,
             documentType,
-            createdAt: data.createdAt || new Date(),
+            createdAt:  new Date(),
 
         };
     };
