@@ -46,9 +46,9 @@ const AddOrderTab = () => {
     setFinalOrderContactData(data)
   }
 
-  const handleTabClick = (index) => {
-    setActiveTab(index);
-  };
+  // const handleTabClick = (index) => {
+  //   setActiveTab(index);
+  // };
 
   const onSidebarClose = () => {
     setIsModelOpen(false);
@@ -134,7 +134,7 @@ const AddOrderTab = () => {
                   >
                     <button
                       className="step-button"
-                      onClick={() => handleTabClick(index)}
+                      // onClick={() => handleTabClick(index)}
                     >
                       <span className="stepper-box">{index + 1}</span>
                       <span className="stepper-label">
