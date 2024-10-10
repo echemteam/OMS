@@ -147,7 +147,7 @@ const AddSupplierTab = () => {
                     <div className="row">
                       <div className="col-12 mx-auto ">
                         {step.content}
-                        <div className="d-flex justify-content-end mt-2">
+                        <div className="d-flex justify-content-end mt-5">
                           {index > 0 && (
                             <button
                               type="button"
