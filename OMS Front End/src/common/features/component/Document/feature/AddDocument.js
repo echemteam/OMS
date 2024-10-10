@@ -10,7 +10,6 @@ import PropTypes from 'prop-types';
 import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleResetForm";
 import { useValidateAndAddApprovalRequests } from "../../../../../utils/CustomHook/useValidateAndAddApproval";
 import { FunctionalitiesName } from "../../../../../utils/Enums/ApprovalFunctionalities";
-import { isCustomerOrSupplierApprovedStatus } from "../../../../../utils/CustomerSupplier/CustomerSupplierUtils";
 import { setFieldSetting } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 
 const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleModal, onSuccess, isEditablePage, customerStatusId }) => {
@@ -91,17 +90,17 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
             if (data && typeof data === 'object') {
                 return {
                     id: data.value || data.id || 0,
-                    name: data.text || "",
+                    type: data.text || "",
                 };
             }
             return {
                 id: data || 0,
-                name: "",
+                type: "",
             };
         };
 
 
-        const { id: documentTypeId, name: type } = transformDocumentTypeData(data.documentTypeId);
+        const { id: documentTypeId, type: type } = transformDocumentTypeData(data.documentTypeId);
 
         return {
             ...data,
