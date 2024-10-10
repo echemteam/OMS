@@ -78,11 +78,11 @@ namespace OMS.Application.Services.Address
                             requestData.AddressTypeId = addressTypeId;
                             approvalEventNames.Add(approvalEventName);
                             var updatedJsonData = await ModifyUpdateAddressJson(requestData, addressTypeId);
-           
+
                             var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
                             var matchingRule = approvalRules?.FirstOrDefault(rule => rule.EventName == approvalEventName);
                             if (matchingRule != null)
-                           {
+                            {
                                 requestData.AddressTypeId = addressTypeId;
                                 var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
                                 var approvalRequest = await ApprovalRuleHelper.ProcessApprovalRequest(
@@ -200,29 +200,36 @@ namespace OMS.Application.Services.Address
                         break;
                 }
                 GetSupplierAddresssByAddressIdResponse existingSupplierAddressData = await repositoryManager.address.GetSupplierAddresssByAddressId(addressId);
- 
                 var updatedExstingJsonData = await ModifyAddAddressJson(existingSupplierAddressData);
                 var updatedJsonData = await ModifyAddAddressJson(requestData);
 
-                var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
-                var matchingRule = approvalRules?.FirstOrDefault(rule => approvalEventNames.Contains(rule.EventName!));
-
-                if (matchingRule != null)
+                bool changesValues = ApprovalRuleHelper.CheckValuesChanged(updatedExstingJsonData, updatedJsonData);
+                if (changesValues)
                 {
-                    var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
-                    var approvalResponseData = await ApprovalRuleHelper.ProcessApprovalRequest(
-                        updatedExstingJsonData,
-                        updatedJsonData,
-                        CurrentUserId,
-                        formatTemplate,
-                        matchingRule
-                    );
+                    var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
+                    var matchingRule = approvalRules?.FirstOrDefault(rule => approvalEventNames.Contains(rule.EventName!));
 
-                    responseData = await repositoryManager.approval.AddApprovalRequests(approvalResponseData);
+                    if (matchingRule != null)
+                    {
+                        var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
+                        var approvalResponseData = await ApprovalRuleHelper.ProcessApprovalRequest(
+                            updatedExstingJsonData,
+                            updatedJsonData,
+                            CurrentUserId,
+                            formatTemplate,
+                            matchingRule
+                        );
+
+                        responseData = await repositoryManager.approval.AddApprovalRequests(approvalResponseData);
+                    }
+                    else
+                    {
+                        responseData = await UpdateAddressDirectly(requestData, CurrentUserId);
+                    }
                 }
                 else
                 {
-                    responseData = await UpdateAddressDirectly(requestData, CurrentUserId);
+                    responseData.ErrorMessage = "No changes detected";
                 }
             }
             else
@@ -231,7 +238,6 @@ namespace OMS.Application.Services.Address
             }
             return responseData;
         }
-
         public async Task<string> ModifyAddAddressJson(object requestData)
         {
             var newJsonData = JsonConvert.SerializeObject(requestData);
