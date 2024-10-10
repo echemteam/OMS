@@ -43,7 +43,7 @@ const PendingOrdersTab=({statusId})=>{
     
     return(     <div className="main-inactive-grid">
     <div className="row">
-      <div className="col-xxl-12 col-xl-12 col-md-12 col-12 other-info-tab">
+      <div className="col-xxl-12 col-xl-12 col-md-12 col-12 other-info-tab sub-tab-section">
         <CardSection
         //   cardTitle="Other Information"
         >
