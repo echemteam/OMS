@@ -58,10 +58,10 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier,isModelOpenUpdateAddress,
     }, [editMode, isModelOpen]);
 
     useEffect(()=>{
-        if(isModelOpenUpdateAddress){
+        if(isModelOpenUpdateAddress && editMode ){
         getById(selectedAddressId)
         }
-    },[selectedAddressId])
+    },[selectedAddressId,editMode])
 
     useEffect(() => {
         if (isOrderManage) {

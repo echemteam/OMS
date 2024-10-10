@@ -79,7 +79,10 @@ const OrderInfoAddressModel = ({
   ]);
 
   useEffect(() => {
+    if(defaultId){
     setSelectedAddressId(defaultId);
+    onGetData(defaultId);
+    }
   }, [defaultId]);
 
   const handleCheckboxChange = (id) => {
@@ -119,7 +122,6 @@ const OrderInfoAddressModel = ({
         "Cancel"
       ).then((confirmed) => {
         if (confirmed) {
-
           const req = {
             orderAddressId: orderDetails.orderAddressId,
             orderId: orderDetails.orderId,
