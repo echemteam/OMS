@@ -45,27 +45,27 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
             ToastService.success(isAddData.errorMessage);
         }
     }, [isAddSuccess, isAddData]);
-    
+
     const handleSave = async () => {
         const data = ref.current.getFormData();
         const transformedData = buildTransformedDocumentData(data, isSupplier, keyId,);
-    
+
         const documentList = [
             {
                 name: data.name,
                 attachment: data.attachment.fileName,
                 base64File: data.attachment.base64Data,
-                documentTypeId : transformedData.documentTypeId
+                documentTypeId: transformedData.documentTypeId
             }
         ];
-    
+
         const requestData = {
             storagePath: isSupplier ? ModulePathName.SUPPLIER : ModulePathName.CUSTOMER,
             [isSupplier ? 'supplierId' : 'customerId']: keyId,
             documentInfoList: documentList,
             // ...transformedData,  
         };
-    
+
         // Uncomment the following lines if you need to handle approval requests
         // if (!isSupplier && isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
         //     await handleApprovalRequest(requestData, null);
@@ -73,7 +73,7 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
         add(requestData);
         // }
     };
-    
+
 
     const handleApprovalRequest = async (newValue) => {
         const request = { newValue, oldValue: null, isFunctional: true, eventName: FunctionalitiesName.UPLOADCUSTOMERDOCUMENT };
@@ -89,41 +89,45 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
         const transformDocumentTypeData = (data) => {
             if (data && typeof data === 'object') {
                 return {
-                    id: data.value || data.id || 0,  
-                    type: data.text || "",  
+                    id: data.value || data.id || 0,
+                    type: data.text || "",
                 };
             }
             return {
-                id: data || 0,  
-                type: "",  
+                id: data || 0,
+                type: "",
             };
         };
-    
-         
+
+
         const { id: documentTypeId, type: type } = transformDocumentTypeData(data.documentTypeId);
-    
+
         return {
             ...data,
             [isSupplier ? 'supplierId' : 'customerId']: keyId,
-            documentTypeId ,  
-            type, 
-            createdAt: data.createdAt || new Date(),  
-              
+            documentTypeId,
+            type,
+            createdAt: data.createdAt || new Date(),
+
         };
     };
-    
+
     const onFormDataChange = (updatedData) => {
-        const fileName =  (updatedData.attachment && updatedData.attachment.fileName )|| "";  
+        const fileName = updatedData.name ? updatedData.name : (updatedData.attachment && updatedData.attachment.fileName) || "";
         setFormData(prevFormData => ({
             ...prevFormData,
             initialState: {
                 ...updatedData,
-                name: updatedData.name || fileName, 
+                name: updatedData.name || fileName,
+                attachment: {
+                    base64Data: updatedData.attachment.base64Data,
+                    fileName: fileName
+                }
             }
         }));
     }
     const handleDropdownAction = (data, dataField) => {
-           if (dataField === 'documentTypeId') {
+        if (dataField === 'documentTypeId') {
             if (!data) {
                 setFieldSetting(formData, 'documentTypeId', FieldSettingType.ISTEXT, data);
                 ref.current.updateFormFieldValue({ documentTypeId: null });
@@ -131,7 +135,7 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
         }
     }
     //** Action Handler */
-    const formActionHandler = { 
+    const formActionHandler = {
         DA_CHANGED: handleDropdownAction
     };
     return (
