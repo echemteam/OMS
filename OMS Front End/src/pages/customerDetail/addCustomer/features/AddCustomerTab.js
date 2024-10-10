@@ -146,7 +146,7 @@ const AddCustomerTab = () => {
               {tabContent.map((step, index) => (
                 <div key={index} className={`content ${activeTab === index ? "active" : ""}`} >
                   {step.content}
-                  <div className="d-flex justify-content-end pt-2">
+                  <div className="d-flex justify-content-end pt-2 bottom-nex-button">
                     {index > 0 && (
                       <button type="button" className="btn dark-btn mr-3 btn-prev" onClick={movePreviewPage} >
                         <Image imagePath={AppIcons.nextArrowIcon} /> Back
