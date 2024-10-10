@@ -1603,3 +1603,20 @@
     }
   }
 }
+
+.sub-tab-section{
+  .order-listing {
+    .card {
+      .card-body-sec {
+        table {
+          tbody{
+            max-height: calc(100vh - 410px);
+            @media only screen and (max-width: 1750px) {
+              max-height: calc(100vh - 350px);
+            }
+          }
+        }
+      }
+    }
+  }
+}
