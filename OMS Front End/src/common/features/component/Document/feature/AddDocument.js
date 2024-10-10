@@ -91,17 +91,17 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
             if (data && typeof data === 'object') {
                 return {
                     id: data.value || data.id || 0,  
-                    name: data.text || "",  
+                    type: data.text || "",  
                 };
             }
             return {
                 id: data || 0,  
-                name: "",  
+                type: "",  
             };
         };
     
          
-        const { id: documentTypeId, name: type } = transformDocumentTypeData(data.documentTypeId);
+        const { id: documentTypeId, type: type } = transformDocumentTypeData(data.documentTypeId);
     
         return {
             ...data,
