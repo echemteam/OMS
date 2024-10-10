@@ -669,6 +669,10 @@ a {
       button {
         margin-left: 12px;
         min-width: auto;
+        .component-iconify{
+          width: 15px !important;
+          height: 15px !important;
+        }
       }
     }
   }

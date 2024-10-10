@@ -9,7 +9,6 @@ import CardSection from "../../../../../../components/ui/card/CardSection";
 import ToastService from "../../../../../../services/toastService/ToastService";
 import { useThirdPartyAPICallMutation } from "../../../../../../app/services/thirdPartyAPI";
 import FinalMolGrid from "../../../../../../components/FinalMolGrid/FinalMolGrid";
-import Buttons from "../../../../../../components/ui/button/Buttons";
 import SwalAlert from "../../../../../../services/swalService/SwalService";
 
 const ProductPriceList = ({ productId, onPriceListUpdate, isVerifyProduct }) => {
@@ -27,7 +26,7 @@ const ProductPriceList = ({ productId, onPriceListUpdate, isVerifyProduct }) => 
         Price: '',
         Size: '',
         Unit: '',
-        Package: ''
+        Quantity: 1
       };
 
       setPriceList([...priceList, blankRow]);
@@ -110,12 +109,15 @@ const ProductPriceList = ({ productId, onPriceListUpdate, isVerifyProduct }) => 
         index === rowIndex ? updatedRow : row
       );
       setPriceList(updatedPriceList);
-      if (updatedRow.Size === '' || !updatedRow.Size) {
-        return ToastService.warning("Please enter size");
-      } else if (updatedRow.Unit === '' || !updatedRow.Unit) {
-        return ToastService.warning("Please enter unit");
-      } else if (updatedRow.Price === '' || !updatedRow.Price) {
-        return ToastService.warning("Please enter price");
+      const isEmptyOrInvalid = (value) => value === '' || !value || value <= 0;
+      if (isEmptyOrInvalid(updatedRow.Quantity)) {
+        return ToastService.warning("Please enter valid quantity");
+      } else if (isEmptyOrInvalid(updatedRow.Size)) {
+        return ToastService.warning("Please enter valid size");
+      } else if (isEmptyOrInvalid(updatedRow.Unit)) {
+        return ToastService.warning("Please select unit");
+      } else if (isEmptyOrInvalid(updatedRow.Price)) {
+        return ToastService.warning("Please enter valid price");
       } else {
         onPriceListUpdate(updatedRow);
       }

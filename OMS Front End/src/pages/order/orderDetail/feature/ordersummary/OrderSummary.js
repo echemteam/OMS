@@ -108,7 +108,7 @@ const OrderSummary = ({ orderId, orderDetails, onRefreshOrderDetails, isOrderDet
   }
 
   return (
-    <div>
+    <div className="icon-btn-header">
       <CardSection
         cardTitle="Order Summary"
         rightButton={true}
