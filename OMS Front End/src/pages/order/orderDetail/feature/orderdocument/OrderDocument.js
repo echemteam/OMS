@@ -173,11 +173,18 @@ const OrderDocument = ({ orderDetails, onRefreshOrderDetails, isOrderDetailsFetc
                                   <div
                                     onClick={() => handleDocumentAction(doc.documentName)}
                                     className="btn-part pdf-view"
+                                    title="View Order Document"
                                   >
-                                    <Iconify
+                                    {!isDownalodFetching ? (
+                                      <Iconify icon="icomoon-free:file-pdf" className="swap-icon" />
+                                  ) : (
+                                    <Iconify icon="mdi:loading" />
+                                    
+                                  )}
+                                    {/* <Iconify
                                       icon="icomoon-free:file-pdf"
                                       className="swap-icon"
-                                    />
+                                    /> */}
                                   </div>
                                   <div
                                     onClick={() => handleDeleteDocumentClick(doc.orderDocumentId)}

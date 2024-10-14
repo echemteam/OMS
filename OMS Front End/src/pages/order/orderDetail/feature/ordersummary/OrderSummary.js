@@ -124,8 +124,8 @@ const OrderSummary = ({ orderId, orderDetails, onRefreshOrderDetails, isOrderDet
         isCenterTile={true}
         CenterTitleTxt={ordersummaryDetails?.poNumber}
         // CenterBtnIcon= "icomoon-free:file-pdf" 
-        CenterBtnIcon={documentNames ? "" : "icomoon-free:file-pdf"}
-        centerBtnTitle="Purchase Order Details"
+       CenterBtnIcon={!isDownalodFetching ? (documentNames ? "" : "icomoon-free:file-pdf") :"mdi:loading" }
+        centerBtnTitle="View Purchase Order"
         centerBtnOnClick={handleToggleModalPDF}
       >
         {(!isOrderDetailsFetch && orderDetails) ? (
@@ -240,6 +240,8 @@ const OrderSummary = ({ orderId, orderDetails, onRefreshOrderDetails, isOrderDet
           <DataLoader />
         )}
       </CardSection>
+
+      
       <SidebarModel
         modalTitle="PO PDF"
         contentClass="content-50"
