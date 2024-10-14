@@ -1,15 +1,15 @@
 import React from 'react'
 import NoRecordFound from "../../../../../../components/ui/noRecordFound/NoRecordFound"
 
-const OrderNoteDetailsModel = ({ orderNote }) => {
+const OrderNoteDetailsModel = ({ orderNoteDetails }) => {
   return (
     <div className='order-notes'>
       <div className='ordercard-title'>Order Notes</div>
-      {orderNote ?
+      {orderNoteDetails && orderNoteDetails.note ?
         <div className='ordercard-body'>
-          <span>{orderNote}</span>
+          <span>{orderNoteDetails?.note}</span>
         </div>
-        : <NoRecordFound message="Notes unavailable."/>
+        : <NoRecordFound message="Notes unavailable." />
       }
     </div>
   )

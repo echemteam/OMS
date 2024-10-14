@@ -18,6 +18,8 @@ namespace OMS.Domain.Repository.Contract
         Task<List<GetOrderItemsByOrderIdResponse>> GetOrderItemsByOrderId(int orderId);
         Task<GetOrderDetailByOrderIdResponse> GetOrderDetailByOrderId(int orderId);
         Task<AddressResponse> GetOrderAddressesByOrderId(int addressId);
+        Task<AddressResponse> GetOrderItemAddressesByOrderItemId(long orderItemId);
+        Task<OrderNotesResponse> GetOrderItemNotesByOrderItemId(long orderItemId);
         Task<List<GetOrderContactByOrderIdResponse>> GetOrderContactByOrderId(int orderId);
         Task<List<GetOrderDocumentByOrderIdResponse>> GetOrderDocumentByOrderId(int orderId);
         Task<AddEntityDto<int>> DeleteOrder(int orderId, int deletedBy);
