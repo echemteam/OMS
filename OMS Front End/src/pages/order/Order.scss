@@ -1,7 +1,7 @@
 .address-group {
   margin-bottom: 25px;
   margin-top: 5px;
-  h6{
+  h6 {
     font-size: var(--commonFont);
     color: var(--textColor);
     font-weight: 500;
@@ -27,7 +27,6 @@
 }
 
 .verify-product-group {
-
   // margin-top: 36px;
   .loader-section {
     padding: 0;
@@ -121,10 +120,6 @@
           display: flex;
           align-items: center;
           padding: 8px 0;
-
-
-
-
 
           &:nth-child(odd) {
             background-color: var(--themeColorLightGridRow);
@@ -843,6 +838,16 @@
                         display: none;
                         z-index: 99;
 
+                        &.top {
+                          top: auto;
+                          bottom: 100%;
+                        }
+
+                        &.bottom {
+                          top: 100%;
+                          bottom: auto;
+                        }
+
                         .order-notes {
                           color: var(--textColor);
                           box-shadow: 0px 3px 21px 0px rgba(0, 0, 0, 0.2);
@@ -894,7 +899,7 @@
                       cursor: pointer;
                       display: flex;
                       align-items: center;
-                      .component-iconify{
+                      .component-iconify {
                         width: 15px !important;
                         height: 15px !important;
                         align-items: center;
@@ -1049,7 +1054,8 @@
           align-items: flex-start;
           word-break: break-all;
 
-          &.email {}
+          &.email {
+          }
 
           &.number {
             margin-top: 2px;
@@ -1164,7 +1170,8 @@
     .add-line-part {
       white-space: normal;
       span {
-        &.add-info {}
+        &.add-info {
+        }
       }
 
       &.first-add-sec {
@@ -1443,7 +1450,7 @@
             font-weight: 700;
             min-width: 77px;
             position: relative;
-            &::after{
+            &::after {
               content: ":";
               position: absolute;
               top: 0px;
@@ -1471,11 +1478,11 @@
       width: 250px;
       @media only screen and (max-width: 1560px) {
         width: 225px;
-      }  
+      }
       @media only screen and (max-width: 1400px) {
         width: 205px;
         right: -30px !important;
-      }      
+      }
     }
   }
 }
@@ -1557,7 +1564,7 @@
   }
 
   .custom-col-7 {
-    width: 58.0%;
+    width: 58%;
     flex: 0 0 auto;
   }
 }
@@ -1569,12 +1576,12 @@
 
       .msg-desc {
         ul {
-          &::before{
+          &::before {
             background: #e2e2e7;
           }
           li {
             background: #e2e2e7;
-            &::before{
+            &::before {
               background: #e2e2e7;
             }
             .notes-desc {
@@ -1611,12 +1618,12 @@
   }
 }
 
-.sub-tab-section{
+.sub-tab-section {
   .order-listing {
-  .card {
+    .card {
       .card-body-sec {
         table {
-          tbody{
+          tbody {
             max-height: calc(100vh - 410px);
             @media only screen and (max-width: 1750px) {
               max-height: calc(100vh - 350px);
