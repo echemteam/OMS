@@ -11,7 +11,7 @@ function OrganizationChargesDetails() {
                 <OrganizationAccountingDetail isEditablePage={true}/>
             </CardSection>
 
-            <CardSection cardTitle="Billing">
+            <CardSection cardTitle="Shipping">
                 <OrganizationShippingChargesDetail isEditablePage={true}/>
             </CardSection>
             
