@@ -1,5 +1,5 @@
 export const FieldSettingType = {
-    ISDISABLE: "isDisable",
+    DISABLED: "isDisable",
     ISTEXT: "isText",
     MULTISELECT: "isMultiSelect",
     ISPRIMARYBUTTONVISIBLE: "isPrimaryButtonVisible",
@@ -176,7 +176,7 @@ export const MyTaskKeyNames = {
     PAYMENTTERMID: "PaymentTerm"
 }
 
-export const EmailProviders=[
+export const EmailProviders = [
 
     { value: "Gmail", label: "Gmail" },
     { value: "Office365", label: "Office 365" },
