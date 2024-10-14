@@ -14,7 +14,7 @@ export const addressFormData = {
         placeholder: "Select Address Type",
         isEnableOnChange: true,
         isMultiSelect: false,
-      
+
       },
       validation: [{ type: "require" }],
       style: {
@@ -124,7 +124,7 @@ export const addressFormData = {
       fieldType: FormFieldTypes.SELECT,
       dataField: "stateId",
       fieldSetting: {
-        isDisabled: false,
+        isDisable: false,
         placeholder: "Select State",
         isEnableOnChange: true,
         isText: false
@@ -141,7 +141,7 @@ export const addressFormData = {
       fieldType: FormFieldTypes.EDITABLEDROPDOWN,
       dataField: "cityId",
       fieldSetting: {
-        isDisabled: true,
+        isDisable: true,
         placeholder: "Select City",
         isEnableOnChange: true,
         isText: false,
