@@ -106,7 +106,7 @@ const OrderItemList = ({ isUpdateOrderItemShippingAddRef, orderDetails, handleOr
     getOrderItemsByOrderId(orderId);
   };
 const getStatusClass=(itemstatus)=>{
-  return `status-btn ${itemstatus.join('-').toLowerCase()}`;
+  return `status-btn ${itemstatus.toLowerCase()}`;
 }
 
   return (
