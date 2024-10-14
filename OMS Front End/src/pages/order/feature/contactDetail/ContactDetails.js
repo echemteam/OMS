@@ -145,6 +145,9 @@ const ContactDetails = (props) => {
     setEndUserEnableDisableButton(true);
     setInvoiceEnableDisableButton(true);
     setPurchasingEnableDisableButton(true);
+    setFieldSetting(formData, 'endUserId', FieldSettingType.DISABLED, false);
+    setFieldSetting(formData, 'invoiceSubmissionId', FieldSettingType.DISABLED, false);
+    setFieldSetting(formData, 'purchasingId', FieldSettingType.DISABLED, false);
   }, []);
 
   useEffect(() => {
@@ -181,16 +184,6 @@ const ContactDetails = (props) => {
     setIsModelOpen(false);
     setOrderResetValue(false)
   };
-
-  // useEffect(() => {
-  //   if (activeTab === 0) {
-  //     let updatedFormData = { ...formData };
-  //     setFieldSetting(updatedFormData, 'endUserId', FieldSettingType.DISABLED, false);
-  //     setFieldSetting(updatedFormData, 'invoiceSubmissionId', FieldSettingType.DISABLED, false);
-  //     setFieldSetting(updatedFormData, 'purchasingId', FieldSettingType.DISABLED, false);
-  //     setFormData(updatedFormData)
-  //   }
-  // }, [activeTab])
 
   const handleCheckboxChanges = (data, dataField) => {
     let updatedFormData = { ...formData };
