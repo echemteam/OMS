@@ -66,9 +66,8 @@ function CardSection({
 }) {
   return (
     <div
-      className={`card ${cardTitle ? "card-section-left" : ""}${
-        searchInput && rightButton ? "card-section-between" : ""
-      }${rightButton ? "card-button-only" : ""}`}
+      className={`card ${cardTitle ? "card-section-left" : ""}${searchInput && rightButton ? "card-section-between" : ""
+        }${rightButton ? "card-button-only" : ""}`}
     >
       {(cardTitle || rightButton || searchFilter || searchInput) && (
         <div className="card-top-title-btn responsive-grid-title">
@@ -139,14 +138,16 @@ function CardSection({
               <>
                 <div className="center-title-text">
                   <h4>{CenterTitleTxt}</h4>
+                  {CenterBtnIcon && (
                   <Buttons
-                    isIcon={true}
+                    isIcon={isIcon}
                     iconClass={CenterBtnIcon}
                     titleText={centerBtnTitle}
                     onClick={centerBtnOnClick}
                     isTooltip={isTooltip}
                     tootipText={tootipText}
                   />
+                  )}
                 </div>
               </>
             )}
