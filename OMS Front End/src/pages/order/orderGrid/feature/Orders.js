@@ -22,7 +22,7 @@ import ToastService from "../../../../services/toastService/ToastService";
 import { ErrorMessage } from "../../../../data/appMessages";
 import SwalAlert from "../../../../services/swalService/SwalService";
 
-const Orders = ({ orderStatusId,  orderItemStatusId ,orderSubStatusId}) => {
+const Orders = ({ orderStatusId, orderItemStatusId, orderSubStatusId }) => {
 
   const molGridRef = useRef();
   const navigate = useNavigate();
@@ -33,14 +33,14 @@ const Orders = ({ orderStatusId,  orderItemStatusId ,orderSubStatusId}) => {
   const [totalRowCount, setTotalRowCount] = useState(0);
   const [itemListDataSource, setItemListDataSource] = useState([]);
   const [getOrders, { isLoading: isGetOrderListLoading, isSuccess: isGetOrderListSuccess, data: isGetOrderListData }] = useGetOrdersMutation();
-  const [deleteOrder, {  isSuccess: isDeleteOrderSuccess, data: isDeleteOrderData }] = useDeleteOrderMutation();
+  const [deleteOrder, { isSuccess: isDeleteOrderSuccess, data: isDeleteOrderData }] = useDeleteOrderMutation();
   useEffect(() => {
     onGetData();
 
-  }, [orderStatusId,orderSubStatusId, orderItemStatusId]);
+  }, [orderStatusId, orderSubStatusId, orderItemStatusId]);
 
   const handleSearch = () => {
-    if (search.length >= 3 ) {
+    if (search.length >= 3) {
       onGetData();
     } else {
       ToastService.warning(ErrorMessage.CommonErrorMessage)
@@ -55,29 +55,28 @@ const Orders = ({ orderStatusId,  orderItemStatusId ,orderSubStatusId}) => {
   }, [isDeleteOrderSuccess, isDeleteOrderData]);
 
   const handleChange = (event) => {
-      setSearch(event.target.value.trim());   
+    setSearch(event.target.value.trim());
   };
 
-  const handleKeyPress=(event)=>{
+  const handleKeyPress = (event) => {
     if (event.code === "Enter") {
       handleSearch();
     }
   }
-const handleClear = () => 
-{
-     setSearch(""); 
-};
+  const handleClear = () => {
+    setSearch("");
+  };
 
-useEffect(() => {
-if (debouncedSearch === "" ) {
-  onGetData();
-}
-}, [debouncedSearch]);
+  useEffect(() => {
+    if (debouncedSearch === "") {
+      onGetData();
+    }
+  }, [debouncedSearch]);
 
 
   useEffect(() => {
     if (isGetOrderListSuccess && isGetOrderListData) {
-    
+
       if (isGetOrderListData) {
         setDataSource(isGetOrderListData.orderList);
 
@@ -85,12 +84,13 @@ if (debouncedSearch === "" ) {
           ...data,
           catalog: data.catalog === "" ? "-" : data.catalog,
           casNumber: data.casNumber === "" ? "-" : data.casNumber,
-          itemUnitPrice:data.itemUnitPrice === "" ? "-" :`$${data.itemUnitPrice}`,
-          status:data.status === "" ? "-" : data.status,
-          deliveryMethod:data.deliveryMethod === "" ? "-" : data.deliveryMethod,
+          itemUnitPrice: data.itemUnitPrice === "" ? "-" : `$${data.itemUnitPrice}`,
+          status: data.status === "" ? "-" : data.status,
+          deliveryMethod: data.deliveryMethod === "" ? "-" : data.deliveryMethod,
+          quantity: data.quantity ? data.quantity : null
         }));
         setItemListDataSource(modifyCustomerData);
-       
+
       }
       if (isGetOrderListData.totalRecord) {
         setTotalRowCount(isGetOrderListData.totalRecord);
@@ -135,12 +135,12 @@ if (debouncedSearch === "" ) {
 
   const handleDeleteClick = (data) => {
     confirm("Delete?",
-    "Are you sure you want to Delete?",
-    "Delete", "Cancel"
+      "Are you sure you want to Delete?",
+      "Delete", "Cancel"
     ).then((confirmed) => {
-    if (confirmed) {
-      deleteOrder(data.orderId);
-    }
+      if (confirmed) {
+        deleteOrder(data.orderId);
+      }
     });
   };
 
