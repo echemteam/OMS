@@ -29,14 +29,18 @@ const OrderSummary = ({ orderId, orderDetails, onRefreshOrderDetails, isOrderDet
     },
   ] = useLazyDownloadDocumentQuery();
 
+  const details = orderDetails?.orderDocumentList;
+  const documentNames = details?.find((doc) => doc.documentName === "")  
+
+
   const handleToggleModalPDF = () => {
-    if (orderDetails?.poNumber) {
+        if (orderDetails?.poNumber) {
       // const documentNames = orderDetails.orderDocumentList?.filter(doc => doc.documentName).map(doc => doc.documentName)[0];
-      const details = orderDetails.orderDocumentList?.find(
+      const detail = details.find(
         (doc) => doc.documentTypeId === 0 || doc.documentTypeId === ""
       );
-      if (details) {
-        handleDocumentAction(details?.documentName);
+      if (detail) {
+        handleDocumentAction(detail?.documentName);
       } else {
         ToastService.error("File not found");
       }
@@ -113,12 +117,14 @@ const OrderSummary = ({ orderId, orderDetails, onRefreshOrderDetails, isOrderDet
         cardTitle="Order Summary"
         rightButton={true}
         buttonClassName="theme-button"
+        // isIcon={ordersummaryDetails?.documentName ? true : false }
         isIcon={true}
         iconClass="wpf:edit"
         titleButtonClick={handleEdit}
         isCenterTile={true}
         CenterTitleTxt={ordersummaryDetails?.poNumber}
-        CenterBtnIcon="icomoon-free:file-pdf"
+        // CenterBtnIcon= "icomoon-free:file-pdf" 
+        CenterBtnIcon={documentNames ? "" : "icomoon-free:file-pdf"}
         centerBtnTitle="Purchase Order Details"
         centerBtnOnClick={handleToggleModalPDF}
       >
