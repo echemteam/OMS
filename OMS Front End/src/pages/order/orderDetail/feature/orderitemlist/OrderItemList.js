@@ -105,9 +105,10 @@ const OrderItemList = ({ isUpdateOrderItemShippingAddRef, orderDetails, handleOr
   const onGetData = () => {
     getOrderItemsByOrderId(orderId);
   };
-const getStatusClass=(itemstatus)=>{
-  return `status-btn ${itemstatus.toLowerCase()}`;
-}
+  const getStatusClass = (itemStatus) => {
+    const formattedStatus = itemStatus.toLowerCase().replace(/\s+/g, '-');
+    return `status-btn ${formattedStatus}`;
+  };
 
   return (
     <div>
