@@ -77,6 +77,8 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier,isModelOpenUpdateAddress,
                 addressTypeId: getAddressTypeIdOrder,
             }
             setFormData(form);
+        } else {
+            setFieldSetting(addressFormData, 'addressTypeId', FieldSettingType.DISABLED);
         }
     }, [isOrderManage, isModelOpen])
 

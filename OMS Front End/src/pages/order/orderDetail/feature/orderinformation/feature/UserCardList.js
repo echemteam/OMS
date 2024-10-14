@@ -5,12 +5,16 @@ import UserDetailsModel from "./UserDetailsModel";
 
 
 const UserCardList = ({contact,handleCheckboxChange,selectedContactId}) => {
-
+  const getInitials = (firstName, lastName) => {
+    return (
+      (firstName?.[0] || "").toUpperCase() + (lastName?.[0] || "").toUpperCase()
+    );
+  };
   return (
     <>
       <div className="contact-card card-list-popup">
         <div className="profile-name-btn">
-          <div className="profile-icon-sec">PC</div>
+          <div className="profile-icon-sec">{getInitials(contact?.firstName, contact?.lastName)}</div>
           <div className="right-info">
             <div className="right-name-btn">
               <div className="user-name text-ellipsis">{`${contact.firstName} ${contact.lastName}`}</div>

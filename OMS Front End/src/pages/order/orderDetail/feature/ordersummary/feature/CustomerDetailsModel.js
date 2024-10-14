@@ -89,25 +89,25 @@ const CustomerDetailsModel = ({ customerId }) => {
             <div className="key-value">
               <div className="key-part">R-User</div>
               <div className="value-part">
-                &nbsp;:&nbsp; {customerBasicDetails?.responsibleUserName}
+                {customerBasicDetails?.responsibleUserName}
               </div>
             </div>
             <div className="key-value">
               <div className="key-part">Country</div>
               <div className="value-part">
-                &nbsp;:&nbsp; {customerBasicDetails?.countryName}
+                {customerBasicDetails?.countryName}
               </div>
             </div>
             <div className="key-value">
-              <div className="key-part">tax Id</div>
+              <div className="key-part">Tax Id</div>
               <div className="value-part">
-                &nbsp;:&nbsp; {customerBasicDetails?.taxId}
+                {customerBasicDetails?.taxId}
               </div>
             </div>
             <div className="key-value">
               <div className="key-part">Group Type</div>
               <div className="value-part">
-                &nbsp;:&nbsp; {customerBasicDetails?.type}
+                {customerBasicDetails?.type}
               </div>
             </div>
           </div>
