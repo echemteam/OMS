@@ -99,7 +99,7 @@ const CustomerDetailsModel = ({ customerId }) => {
               </div>
             </div>
             <div className="key-value">
-              <div className="key-part">tax Id</div>
+              <div className="key-part">Tax Id</div>
               <div className="value-part">
                 &nbsp;:&nbsp; {customerBasicDetails?.taxId}
               </div>
