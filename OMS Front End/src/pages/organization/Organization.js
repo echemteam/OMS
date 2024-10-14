@@ -3,23 +3,16 @@ import CardSection from "../../components/ui/card/CardSection";
 import RenderTabs from "../../components/ui/tabs/RenderTabs";
 import { AppIcons } from "../../data/appIcons";
 import Image from "../../components/image/Image";
+ 
 const OrganizationBusinessAddressDetail = React.lazy(() =>
   import(
     "./feature/organizationBusinessAddressDetail/OrganizationBusinessAddressDetail"
   )
 );
-const OrganizationOtherChargesDetail = React.lazy(() =>
+const OrganizationChargesDetails = React.lazy(() =>
   import(
-    "./feature/organizationOtherChargesDetail/OrganizationOtherChargesDetail"
+    "./feature/organizationChargesDetails/OrganizationChargesDetails"
   )
-);
-const OrganizationShippingChargesDetail = React.lazy(() =>
-  import(
-    "./feature/organizationShippingCharges/OrganizationShippingChargesDetail"
-  )
-);
-const OrganizationAccountingDetail = React.lazy(() =>
-  import("./feature/organizationAccountingDetail/OrganizationAccountingDetail")
 );
 const OrganizationLogisticDetail = React.lazy(() =>
   import("./feature/organizationLogisticDetail/OrganizationLogisticDetail")
@@ -95,29 +88,29 @@ const Organization = () => {
             ),
         },
         {
-            sMenuItemCaption: "Accounting Details",
+            sMenuItemCaption: "Charges",
             component: (
                 <div className="mt-2">
-                    <OrganizationAccountingDetail  isEditablePage={true}/>
+                    <OrganizationChargesDetails/>
                 </div>
             ),
         },
-        {
-            sMenuItemCaption: "Shipping Charges",
-            component: (
-                <div className="mt-2">
-                    <OrganizationShippingChargesDetail  isEditablePage={true}/>
-                </div>
-            ),
-        },
-        {
-            sMenuItemCaption: "Other Charges",
-            component: (
-                <div className="mt-2">
-                    <OrganizationOtherChargesDetail  isEditablePage={true}/>
-                </div>
-            ),
-        },
+        // {
+        //     sMenuItemCaption: "Shipping Charges",
+        //     component: (
+        //         <div className="mt-2">
+        //             <OrganizationShippingChargesDetail  isEditablePage={true}/>
+        //         </div>
+        //     ),
+        // },
+        // {
+        //     sMenuItemCaption: "Other Charges",
+        //     component: (
+        //         <div className="mt-2">
+        //             <OrganizationOtherChargesDetail  isEditablePage={true}/>
+        //         </div>
+        //     ),
+        // },
         // organizationId > 0 &&
         {
             sMenuItemCaption: "SMTP Settings",

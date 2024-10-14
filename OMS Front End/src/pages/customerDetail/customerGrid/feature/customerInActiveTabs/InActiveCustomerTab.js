@@ -128,7 +128,7 @@ const InActiveCustomerTab = ({ statusId }) => {
 
   const tabs = [
     {
-      sMenuItemCaption: "All",
+      sMenuItemCaption: "ALL",
       component: (
         <div className="mt-2">
           <InActiveCustomersList
@@ -150,7 +150,7 @@ const InActiveCustomerTab = ({ statusId }) => {
       ),
     },
     {
-      sMenuItemCaption: "Freezed",
+      sMenuItemCaption: "FREEZED",
       component: (
         <div className="mt-2">
           <InActiveCustomersList
@@ -172,7 +172,7 @@ const InActiveCustomerTab = ({ statusId }) => {
       ),
     },
     {
-      sMenuItemCaption: "Block",
+      sMenuItemCaption: "BLOCK",
       component: (
         <div className="mt-2">
           <InActiveCustomersList
@@ -194,7 +194,7 @@ const InActiveCustomerTab = ({ statusId }) => {
       ),
     },
     {
-      sMenuItemCaption: "Disable",
+      sMenuItemCaption: "DISABLE",
       component: (
         <div className="mt-2">
           <InActiveCustomersList

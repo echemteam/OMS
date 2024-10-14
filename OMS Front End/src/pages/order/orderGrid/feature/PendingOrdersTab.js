@@ -11,7 +11,7 @@ const PendingOrdersTab=({statusId})=>{
      
     const tabs = [
         {
-          sMenuItemCaption: "Customer Not Valid",
+          sMenuItemCaption: "CUSTOMER NOT VALID",
           component: (
             <div className="mt-2">
               <Orders orderStatusId={statusId}
@@ -21,7 +21,7 @@ const PendingOrdersTab=({statusId})=>{
           ),
         },
         {
-          sMenuItemCaption: "Review Pending",
+          sMenuItemCaption: "REVIEW PENDING",
           component: (
             <div className="mt-2">
               <Orders  orderStatusId={statusId} orderSubStatusId={OrderSubStatusEnums.ReviewPending}
@@ -30,7 +30,7 @@ const PendingOrdersTab=({statusId})=>{
           ),
         },
         {
-          sMenuItemCaption: "Billing Address Pending Approval",
+          sMenuItemCaption: "BILLING ADDRESS PENDING APPROVAL",
           component: (
             <div className="mt-2">
               <Orders orderStatusId={statusId}  orderSubStatusId={OrderSubStatusEnums.BillingAddressPendingApproval}
