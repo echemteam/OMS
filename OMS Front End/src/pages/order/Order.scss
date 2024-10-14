@@ -1436,12 +1436,19 @@
 
         .key-value {
           display: flex;
-          align-items: center;
+          align-items: flex-start;
           font-size: var(--commonFont-medium);
 
           .key-part {
             font-weight: 700;
             min-width: 77px;
+            position: relative;
+            &::after{
+              content: ":";
+              position: absolute;
+              top: 0px;
+              right: 1px;
+            }
           }
 
           .value-part {
@@ -1606,7 +1613,7 @@
 
 .sub-tab-section{
   .order-listing {
-    .card {
+  .card {
       .card-body-sec {
         table {
           tbody{
