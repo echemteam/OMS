@@ -29,7 +29,9 @@ const OrderDetails = () => {
   const { id } = useParams();
   const orderItemShippingAddRef = useRef();
   const orderId = id ? decryptUrlData(id) : 0;
+  const isUpdateOrderItemShippingAddRef = useRef();
   const [orderDetails, setOrderDetails] = useState();
+  const [isOrderItemAddUpdate, setIsOrderItemAddUpdate] = useState(false);
 
   const [getOrderDetailByOrderId, {
     isFetching: isOrderDetailsFetching,
@@ -45,23 +47,25 @@ const OrderDetails = () => {
 
   useEffect(() => {
     if (orderId) {
-      getOrderDetailByOrderId(orderId);
+      handleRefreshOrderDetails();
     }
   }, [orderId]);
 
   useEffect(() => {
-    if (
-      !isOrderDetailsFetching &&
-      isOrderDetailsFetched &&
-      orderByOrderIdDetails
-    ) {
+    if (!isOrderDetailsFetching && isOrderDetailsFetched && orderByOrderIdDetails) {
       setOrderDetails(orderByOrderIdDetails);
+      // This is used for the Order Item Address Update Then Re-fetch the order items list API.
+      if (isOrderItemAddUpdate) {
+        isUpdateOrderItemShippingAddRef.current.getOrderItemList();
+      }
+      setIsOrderItemAddUpdate(false);
     }
   }, [isOrderDetailsFetching, isOrderDetailsFetched, orderByOrderIdDetails]);
 
   const handleOrderItemShippingAddress = (type, addressId, orderItemId) => {
     if (orderItemShippingAddRef) {
       orderItemShippingAddRef.current.handleToggleModalShippingAddress(type, addressId, orderItemId);
+      setIsOrderItemAddUpdate(true);
     }
   }
 
@@ -93,7 +97,8 @@ const OrderDetails = () => {
         {/* Right Side Section Start */}
         <div className="col-xxl-7 col-lg-7 col-md-7 col-12">
           <OrderAction />
-          <OrderItemList orderDetails={orderDetails} handleOrderItemShippingAddress={handleOrderItemShippingAddress} />
+          <OrderItemList isUpdateOrderItemShippingAddRef={isUpdateOrderItemShippingAddRef} orderDetails={orderDetails}
+            handleOrderItemShippingAddress={handleOrderItemShippingAddress} />
         </div>
         {/* Right Side Section End */}
       </div>

@@ -129,20 +129,17 @@ namespace OMS.Application.Services.Order
         }
         public async Task<List<GetOrderItemsByOrderIdResponse>> GetOrderItemsByOrderId(int orderId)
         {
-            var orderItem =  await repositoryManager.order.GetOrderItemsByOrderId(orderId);
+            List<GetOrderItemsByOrderIdResponse> orderItem =  await repositoryManager.order.GetOrderItemsByOrderId(orderId);
 
-            //if (orderItem == null)
-           // {
-           //     return orderItem!;
-            //}
-            
             foreach (var item in orderItem)
-            {
-                 
-                if (item.ShippingAddressId > 0)  
+            { 
+                if (item.OrderItemId > 0)  
                 {
-                    AddressResponse orderShippingAddress = await repositoryManager.order.GetOrderAddressesByOrderId(item.ShippingAddressId);
-                    item.OrderShippingAddress = orderShippingAddress; 
+                    // Get Order Items Address If Exists
+                    item.OrderShippingAddress = await repositoryManager.order.GetOrderItemAddressesByOrderItemId(item.OrderItemId);
+
+                    // Get Order Items Notes If Exists
+                    item.OrderNote = await repositoryManager.order.GetOrderItemNotesByOrderItemId(item.OrderItemId);
                 }
             }
             return orderItem!;
@@ -150,7 +147,7 @@ namespace OMS.Application.Services.Order
         }
         public async Task<GetOrderDetailByOrderIdResponse> GetOrderDetailByOrderId(int orderId)
         {
-            var orderDetails = await repositoryManager.order.GetOrderDetailByOrderId(orderId);
+            GetOrderDetailByOrderIdResponse orderDetails = await repositoryManager.order.GetOrderDetailByOrderId(orderId);
             if (orderDetails == null)
             {
                 return orderDetails!;
