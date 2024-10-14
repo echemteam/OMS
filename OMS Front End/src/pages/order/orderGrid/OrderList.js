@@ -16,7 +16,7 @@ const OrderList = () => {
       };
     const tabs = [
         {
-          sMenuItemCaption: " Pending Order",
+          sMenuItemCaption: "PENDING ORDER",
           component: (
             <div className="mt-2 customer-list-all">
             <PendingOrdersTab 
@@ -26,7 +26,7 @@ const OrderList = () => {
           ),
         },
         {
-          sMenuItemCaption: " Review Order ",
+          sMenuItemCaption: "REVIEW ORDER ",
           component: (
             <div className="mt-2 customer-list-all">
                      <ReviewOrdersTab 
@@ -36,7 +36,7 @@ const OrderList = () => {
           ),
         },
         {
-          sMenuItemCaption: "In Approval ",
+          sMenuItemCaption: "IN APPROVAL",
           component: (
             <div className="mt-2 customer-list-submitted customer-list-all">
              <InApprovalOrdersTab

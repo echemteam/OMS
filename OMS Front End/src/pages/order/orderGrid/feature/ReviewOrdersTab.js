@@ -11,7 +11,7 @@ const ReviewOrdersTab=({statusId})=>{
     
     const tabs = [
         {
-          sMenuItemCaption: " Price Verification",
+          sMenuItemCaption: "PRICE VERIFICATION",
           component: (
             <div className="mt-2">
               <Orders  orderStatusId={statusId} orderItemStatusId={OrderItemStatusEnum.PriceVerification}
@@ -21,7 +21,7 @@ const ReviewOrdersTab=({statusId})=>{
           ),
         },
         {
-          sMenuItemCaption: "Stock Verifiaction",
+          sMenuItemCaption: "STOCK VERIFICATION",
           component: (
             <div className="mt-2">
               <Orders  orderStatusId={statusId} orderItemStatusId={OrderItemStatusEnum.StockVerifiaction}

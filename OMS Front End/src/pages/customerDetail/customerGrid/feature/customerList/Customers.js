@@ -158,7 +158,7 @@ const Customers = () => {
 
   const tabs = [
     {
-      sMenuItemCaption: "All",
+      sMenuItemCaption: "ALL",
       component: (
         <div className="mt-2 customer-list-all">
           <CustomersList
@@ -181,7 +181,7 @@ const Customers = () => {
       ),
     },
     {
-      sMenuItemCaption: "Pending",
+      sMenuItemCaption: "PENDING",
       component: (
         <div className="mt-2 customer-list-all">
           <CustomersList
@@ -204,7 +204,7 @@ const Customers = () => {
       ),
     },
     {
-      sMenuItemCaption: "Submitted",
+      sMenuItemCaption: "SUBMITTED",
       component: (
         <div className="mt-2 customer-list-submitted customer-list-all">
           <CustomersList
@@ -227,7 +227,7 @@ const Customers = () => {
       ),
     },
     {
-      sMenuItemCaption: "Approved",
+      sMenuItemCaption: "APPROVED",
       component: (
         <div className="mt-2 customer-list-all">
           <CustomersList
@@ -250,7 +250,7 @@ const Customers = () => {
       ),
     },
     {
-      sMenuItemCaption: "InActive",
+      sMenuItemCaption: "INACTIVE",
       component: (
         <div className="mt-2 inactive-list-sec">
           <InActiveCustomerTab
@@ -265,7 +265,7 @@ const Customers = () => {
       ),
     },
     {
-      sMenuItemCaption: "Rejected",
+      sMenuItemCaption: "REJECTED",
       component: (
         <div className="mt-2 customer-list-all">
           <CustomersList
