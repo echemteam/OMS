@@ -105,7 +105,9 @@ const OrderItemList = ({ isUpdateOrderItemShippingAddRef, orderDetails, handleOr
   const onGetData = () => {
     getOrderItemsByOrderId(orderId);
   };
-
+const getStatusClass=(itemstatus)=>{
+  return `status-btn ${itemstatus.join('-').toLowerCase()}`;
+}
 
   return (
     <div>
@@ -146,7 +148,7 @@ const OrderItemList = ({ isUpdateOrderItemShippingAddRef, orderDetails, handleOr
                                 ${((item?.quantity || 0) * (item?.itemUnitPrice || 0))?.toFixed(2)}
                               </span>
                               <span>
-                                <div className={`status-btn ${item.statusClass}`}>
+                                <div className={getStatusClass(item.itemStatus)}>
                                   {item.itemStatus}
                                 </div>
                               </span>
