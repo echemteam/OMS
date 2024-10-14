@@ -57,6 +57,7 @@ export const CustomersList = ({
   handleClear,
   handleKeyPress,
   shouldRerenderFormCreator,
+  tabIndex
 }) => {
   const navigate = useNavigate();
   const molGridRef = useRef();
@@ -208,8 +209,7 @@ export const CustomersList = ({
   };
 
   const handlePageChange = (page, sortingString) => {
-    const sortingStringObject =
-      sortingString || molGridRef.current.generateSortingString();
+    const sortingStringObject = sortingString || molGridRef.current.generateSortingString();
     const request = {
       pagination: {
         pageNumber: page.pageNumber,
@@ -274,11 +274,12 @@ export const CustomersList = ({
     getListApi,
   }));
 
-  const getListApi = (pageObject, sortingString) => {
-    const currentPageObject =
-      pageObject || molGridRef.current.getCurrentPageObject();
-    const sortingStringObject =
-      sortingString || molGridRef.current.generateSortingString();
+  const getListApi = (pageObject, sortingString, isPreivewsValue) => {
+    const currentPageObject = pageObject || molGridRef.current.getCurrentPageObject();
+    const sortingStringObject = sortingString || molGridRef.current.generateSortingString();
+    if (isPreivewsValue) {
+      // molGridRef.current.handleGetPreviesPage(currentPageObject.pageNumber);
+    }
     const request = {
       pagination: {
         pageNumber: currentPageObject.pageNumber,
@@ -296,7 +297,18 @@ export const CustomersList = ({
   };
 
   const handleEditClick = (data) => {
-    navigate(`/CustomerDetails/${encryptUrlData(data.customerId)}`, "_blank");
+    const currentPageObject = molGridRef.current.getCurrentPageObject();
+    const sortingStringObject = molGridRef.current.generateSortingString();
+    const paginationObj = {
+      pagination: {
+        pageNumber: currentPageObject.pageNumber,
+        pageSize: currentPageObject.pageSize,
+      },
+      filters: { searchText: search },
+      statusId: Array.isArray(statusId) ? statusId.join(",") : String(statusId),
+      sortString: sortingStringObject,
+    };
+    navigate(`/CustomerDetails/${encryptUrlData(data.customerId)}`, { state: { paginationObj, tabIndex } });
   };
 
   const handleGridCheckBoxChange = (fieldName, rowData) => {
@@ -366,8 +378,8 @@ export const CustomersList = ({
       // removeFields();
       // setAssignRUser(true);
       const responsibleUserIds = customerData?.responsibleUserId
-      ?.split(",")
-      .map((id) => Number(id.trim()));
+        ?.split(",")
+        .map((id) => Number(id.trim()));
       const formNew = { ...formData }
       formNew.initialState = {
         ...formNew.initialState,

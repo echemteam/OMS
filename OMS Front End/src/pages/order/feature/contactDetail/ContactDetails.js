@@ -24,11 +24,7 @@ const ContactDetails = (props) => {
   const [orderResetValue, setOrderResetValue] = useState(false)
 
   const { conatctRef, orderCustomerId, moveNextPage, orderId } = useContext(AddOrderContext);
-
-  const [
-    getAllContactTypes,
-    { isSuccess: isGetAllContactTypesSucess, data: allGetAllContactTypesData },
-  ] = useLazyGetAllContactTypesQuery();
+  const [getAllContactTypes, { isSuccess: isGetAllContactTypesSucess, data: allGetAllContactTypesData }] = useLazyGetAllContactTypesQuery();
 
   const [getAllEndUserId, { isFetching: isGetAllEndUserFetching, isSuccess: isgetAllEndUserSuccess, data: isgetAllEndUserData }] = useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery();
   const [getAllInvoiceSubmissionId, { isFetching: isGetAllInvoiceSubmissionFetching, isSuccess: isgetAllInvoiceSubmissionSuccess, data: isgetAllInvoiceSubmissionData }] = useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery();
@@ -146,6 +142,12 @@ const ContactDetails = (props) => {
 
   useEffect(() => {
     getAllContactTypes();
+    setEndUserEnableDisableButton(true);
+    setInvoiceEnableDisableButton(true);
+    setPurchasingEnableDisableButton(true);
+    setFieldSetting(formData, 'endUserId', FieldSettingType.DISABLED, false);
+    setFieldSetting(formData, 'invoiceSubmissionId', FieldSettingType.DISABLED, false);
+    setFieldSetting(formData, 'purchasingId', FieldSettingType.DISABLED, false);
   }, []);
 
   useEffect(() => {
@@ -183,67 +185,80 @@ const ContactDetails = (props) => {
     setOrderResetValue(false)
   };
 
-  // useEffect(() => {
-  //   if (activeTab === 0) {
-  //     let updatedFormData = { ...formData };
-  //     setFieldSetting(updatedFormData, 'endUserId', FieldSettingType.DISABLED, false);
-  //     setFieldSetting(updatedFormData, 'invoiceSubmissionId', FieldSettingType.DISABLED, false);
-  //     setFieldSetting(updatedFormData, 'purchasingId', FieldSettingType.DISABLED, false);
-  //     setFormData(updatedFormData)
-  //   }
-  // }, [activeTab])
-
   const handleCheckboxChanges = (data, dataField) => {
     let updatedFormData = { ...formData };
     switch (dataField) {
       case "isEndUser":
         if (data) {
+          updatedFormData.formFields = manageRequiredFieldsValidation(updatedFormData.formFields, 'endUserId', false);
           setFieldSetting(updatedFormData, 'endUserId', FieldSettingType.DISABLED, false);
-          setEndUserEnableDisableButton(true)
+          setEndUserEnableDisableButton(true);
         } else {
+          updatedFormData.formFields = manageRequiredFieldsValidation(updatedFormData.formFields, 'endUserId', true);
           setFieldSetting(updatedFormData, 'endUserId', FieldSettingType.DISABLED, true);
           basicInformation.current.updateFormFieldValue({
             endUserId: null,
             isEndUser: false
           });
-          setEndUserEnableDisableButton(false)
+          setEndUserEnableDisableButton(false);
         }
         break;
-
       case "isInvoiceSubmission":
         if (data) {
+          updatedFormData.formFields = manageRequiredFieldsValidation(updatedFormData.formFields, 'invoiceSubmissionId', false);
           setFieldSetting(updatedFormData, 'invoiceSubmissionId', FieldSettingType.DISABLED, false);
-          setInvoiceEnableDisableButton(true)
+          setInvoiceEnableDisableButton(true);
         } else {
+          updatedFormData.formFields = manageRequiredFieldsValidation(updatedFormData.formFields, 'invoiceSubmissionId', true);
+          updatedFormData.formFields = updatedFormData.formFields.map((field) => {
+            if (field.id === 'invoiceSubmissionId') {
+              const { validation, ...rest } = field;
+              return rest;
+            }
+            return field;
+          });
           setFieldSetting(updatedFormData, 'invoiceSubmissionId', FieldSettingType.DISABLED, true);
           basicInformation.current.updateFormFieldValue({
             invoiceSubmissionId: null,
             isInvoiceSubmission: false
           });
-          setInvoiceEnableDisableButton(false)
+          setInvoiceEnableDisableButton(false);
         }
         break;
-
       case "isPurchasingGiven":
         if (data) {
+          updatedFormData.formFields = manageRequiredFieldsValidation(updatedFormData.formFields, 'purchasingId', false);
           setFieldSetting(updatedFormData, 'purchasingId', FieldSettingType.DISABLED, false);
-          setPurchasingEnableDisableButton(true)
+          setPurchasingEnableDisableButton(true);
         } else {
+          updatedFormData.formFields = manageRequiredFieldsValidation(updatedFormData.formFields, 'purchasingId', true);
           setFieldSetting(updatedFormData, 'purchasingId', FieldSettingType.DISABLED, true);
           basicInformation.current.updateFormFieldValue({
             purchasingId: null,
             isPurchasingGiven: false
           });
-          setPurchasingEnableDisableButton(false)
+          setPurchasingEnableDisableButton(false);
         }
         break;
-
       default:
         break;
     }
-
     setFormData(updatedFormData);
   };
+
+  const manageRequiredFieldsValidation = (formFields, fieldsId, isRemove) => {
+    return formFields.map((field) => {
+      if (field.id === fieldsId) {
+        if (isRemove) {
+          const { validation, ...rest } = field;
+          return rest;
+        } else {
+          return { ...field, validation: [{ type: "require" }] };
+        }
+      }
+      return field;
+    });
+  }
 
   const formActionHandler = {
     CB_CHANGE: handleCheckboxChanges

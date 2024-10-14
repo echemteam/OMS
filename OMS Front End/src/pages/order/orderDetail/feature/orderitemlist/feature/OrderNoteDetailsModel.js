@@ -1,12 +1,16 @@
 import React from 'react'
+import NoRecordFound from "../../../../../../components/ui/noRecordFound/NoRecordFound"
 
-const OrderNoteDetailsModel = () => {
+const OrderNoteDetailsModel = ({ orderNoteDetails }) => {
   return (
     <div className='order-notes'>
       <div className='ordercard-title'>Order Notes</div>
-      <div className='ordercard-body'>
-        <span>Order Notes Description</span>
-      </div>
+      {orderNoteDetails && orderNoteDetails.note ?
+        <div className='ordercard-body'>
+          <span>{orderNoteDetails?.note}</span>
+        </div>
+        : <NoRecordFound message="Notes unavailable." />
+      }
     </div>
   )
 }

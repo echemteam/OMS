@@ -135,7 +135,7 @@ const InActiveSupplierTab = ({ statusId }) => {
 
   const tabs = [
     {
-      sMenuItemCaption: "All",
+      sMenuItemCaption: "ALL",
       component: (
         <div className="mt-2 ">
           <InActiveSuppliersList statusId={statusId} configFile={allManageData}
@@ -155,7 +155,7 @@ const InActiveSupplierTab = ({ statusId }) => {
       ),
     },
     {
-      sMenuItemCaption: "Freezed",
+      sMenuItemCaption: "FREEZED",
       component: (
         <div className="mt-2">
           <InActiveSuppliersList statusId={StatusEnums.Freeze} configFile={freezeManageData}
@@ -175,7 +175,7 @@ const InActiveSupplierTab = ({ statusId }) => {
       ),
     },
     {
-      sMenuItemCaption: "Block",
+      sMenuItemCaption: "BLOCK",
       component: (
         <div className="mt-2">
           <InActiveSuppliersList statusId={StatusEnums.Block} configFile={blockManageData}
@@ -195,7 +195,7 @@ const InActiveSupplierTab = ({ statusId }) => {
       ),
     },
     {
-      sMenuItemCaption: "Disable",
+      sMenuItemCaption: "DISABLE",
       component: (
         <div className="mt-2">
           <InActiveSuppliersList statusId={StatusEnums.Disable} configFile={disableManageData}

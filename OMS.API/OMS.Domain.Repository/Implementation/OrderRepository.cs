@@ -32,6 +32,8 @@ namespace OMS.Domain.Repository.Implementation
         const string DELETEORDERDOCUMENTSBYID = "DeleteOrderDocuementById";
         const string UPDATEORDERDETAIL = "UpdateOrderDetail";
         const string DELETEORDERITEM = "DeleteOrderItem";
+        const string GETORDERITEMADDRESSESBYORDERITEMID = "GetOrderItemAddressesByOrderItemId";
+        const string GETORDERITEMNOTESBYORDERITEMID = "GetOrderItemNotesByOrderItemId";
         #endregion
 
         public OrderRepository(DapperContext dapperContext) : base(dapperContext)
@@ -115,6 +117,24 @@ namespace OMS.Domain.Repository.Implementation
             return addressDetails;
         }
 
+        public async Task<AddressResponse> GetOrderItemAddressesByOrderItemId(long orderItemId)
+        {
+            AddressResponse addressDetails = await _context.GetFrist<AddressResponse>(GETORDERITEMADDRESSESBYORDERITEMID, new
+            {
+                orderItemId
+            }, commandType: CommandType.StoredProcedure);
+            return addressDetails;
+        }
+
+        public async Task<OrderNotesResponse> GetOrderItemNotesByOrderItemId(long orderItemId)
+        {
+            OrderNotesResponse notesDetails = await _context.GetFrist<OrderNotesResponse>(GETORDERITEMNOTESBYORDERITEMID, new
+            {
+                orderItemId
+            }, commandType: CommandType.StoredProcedure);
+            return notesDetails;
+        }
+
         public async Task<List<GetOrderContactByOrderIdResponse>> GetOrderContactByOrderId(int orderId)
         {
             List<GetOrderContactByOrderIdResponse> contactDetails = await _context.GetList<GetOrderContactByOrderIdResponse>(GETORDERCONTACTBYORDERID, new
@@ -192,6 +212,8 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.OrderMethodId,
                 requestData.OrderReceivedDate,
                 requestData.ReferenceNumber,
+                requestData.PoNumber,
+                requestData.CustomerId,
                 requestData.UpdatedBy,
             }, CommandType.StoredProcedure);
         }

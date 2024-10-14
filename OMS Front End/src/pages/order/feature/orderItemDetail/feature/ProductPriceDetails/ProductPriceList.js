@@ -9,13 +9,11 @@ import CardSection from "../../../../../../components/ui/card/CardSection";
 import ToastService from "../../../../../../services/toastService/ToastService";
 import { useThirdPartyAPICallMutation } from "../../../../../../app/services/thirdPartyAPI";
 import FinalMolGrid from "../../../../../../components/FinalMolGrid/FinalMolGrid";
-import Buttons from "../../../../../../components/ui/button/Buttons";
 import SwalAlert from "../../../../../../services/swalService/SwalService";
 
 const ProductPriceList = ({ productId, onPriceListUpdate, isVerifyProduct }) => {
   const molGridRef = useRef();
   const [priceList, setPriceList] = useState([]);
-  const [originalPriceList, setOriginalPriceList] = useState([]); // To store original data
   const { confirm } = SwalAlert();
 
   useEffect(() => {
@@ -28,6 +26,7 @@ const ProductPriceList = ({ productId, onPriceListUpdate, isVerifyProduct }) => 
         Price: '',
         Size: '',
         Unit: '',
+        Quantity: 1
       };
 
       setPriceList([...priceList, blankRow]);
@@ -43,6 +42,7 @@ const ProductPriceList = ({ productId, onPriceListUpdate, isVerifyProduct }) => 
       Price: '',
       Size: '',
       Unit: '',
+      Quantity: 1
     };
     setPriceList(prevData => [...prevData, blankRow]);
   };
@@ -71,6 +71,7 @@ const ProductPriceList = ({ productId, onPriceListUpdate, isVerifyProduct }) => 
       Price: item.Price || '',
       Size: item.Size || '',
       Unit: item.Unit || '', // Ensure this is mapped properly
+      Quantity: 1
     }));
   };
 
@@ -80,7 +81,6 @@ const ProductPriceList = ({ productId, onPriceListUpdate, isVerifyProduct }) => 
         const responseData = JSON.parse(isApiResponseData.data);
         const mappedData = mapApiResponseToPriceList(responseData?.data || []);
         setPriceList(mappedData);
-        setOriginalPriceList(mappedData); // Store the original data
       } else {
         ToastService.warning(isApiResponseData.message || ErrorMessage.DefaultMessage);
       }
@@ -109,15 +109,17 @@ const ProductPriceList = ({ productId, onPriceListUpdate, isVerifyProduct }) => 
         index === rowIndex ? updatedRow : row
       );
       setPriceList(updatedPriceList);
-      if (updatedRow.Size === '' || !updatedRow.Size) {
-        return ToastService.warning("Please enter size");
-      } else if (updatedRow.Unit === '' || !updatedRow.Unit) {
-        return ToastService.warning("Please enter unit");
-      } else if (updatedRow.Price === '' || !updatedRow.Price) {
-        return ToastService.warning("Please enter price");
+      const isEmptyOrInvalid = (value) => value === '' || !value || value <= 0;
+      if (isEmptyOrInvalid(updatedRow.Quantity)) {
+        return ToastService.warning("Please enter valid quantity");
+      } else if (isEmptyOrInvalid(updatedRow.Size)) {
+        return ToastService.warning("Please enter valid size");
+      } else if (isEmptyOrInvalid(updatedRow.Unit)) {
+        return ToastService.warning("Please select unit");
+      } else if (isEmptyOrInvalid(updatedRow.Price)) {
+        return ToastService.warning("Please enter valid price");
       } else {
         onPriceListUpdate(updatedRow);
-        ToastService.success("Details updated successfully!");
       }
     } else {
       ToastService.warning(SuccessMessage.VerifyProduct)
@@ -144,7 +146,13 @@ const ProductPriceList = ({ productId, onPriceListUpdate, isVerifyProduct }) => 
   // };
 
   return (
-    <CardSection cardTitle="Product Price List">
+    <CardSection
+      cardTitle="Product Price List"
+      rightButton={true}
+      buttonClassName="theme-button my-2"
+      titleButtonClick={handleAddRow}
+      buttonText="Add Row"
+    >
       <div className="order-price-list responsive-grid">
         <FinalMolGrid
           key={JSON.stringify(priceList)}
@@ -157,11 +165,11 @@ const ProductPriceList = ({ productId, onPriceListUpdate, isVerifyProduct }) => 
           allowPagination={false}
         // onActionChange={actionHandler}
         />
-        <Buttons
+        {/* <Buttons
           onClick={handleAddRow}
           buttonTypeClassName="theme-button my-2"
           buttonText={"Add Row"}
-        />
+        /> */}
       </div>
     </CardSection>
   );

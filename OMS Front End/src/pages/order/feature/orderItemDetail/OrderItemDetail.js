@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useImperativeHandle, useState } from "react";
 import AddOrderContext from "../../../../utils/Order/AddOrderContext";
+import SwalAlert from "../../../../services/swalService/SwalService";
 
 //** Component's */
 const OrderItemsList = React.lazy(() =>
@@ -30,11 +31,46 @@ const OrderItemDetail = ({ onhandleAddOrderData }) => {
     const listToAdd = Array.isArray(updatedPriceList) ? updatedPriceList : [updatedPriceList];
     const newPriceList = [...priceList];
     newPriceList.push(...listToAdd);
-    // const priceListMap = new Map(newPriceList.map(item => [item.Size, item]));
-    // listToAdd.forEach(item => { priceListMap.set(item.Size, item) });
-    // const mergedPriceList = Array.from(priceListMap.values());
     setPriceList(newPriceList);
   };
+
+  //** This Code for the duplicates size found  */
+  // const handlePriceListUpdate = (updatedPriceList) => {
+  //   const listToAdd = Array.isArray(updatedPriceList) ? updatedPriceList : [updatedPriceList];
+  //   const newPriceList = [...priceList];
+  //   // Check for duplicates
+  //   const duplicates = listToAdd.filter(itemToAdd =>
+  //     newPriceList.some(existingItem =>
+  //       existingItem.Size === itemToAdd.Size && existingItem.Unit === itemToAdd.Unit && existingItem.Price === itemToAdd.Price
+  //     )
+  //   );
+  //   if (duplicates.length > 0) {
+  //     confirm(
+  //       "Duplicate items found?",
+  //       "Are you sure you want to add the same package size and unit",
+  //       "Yes",
+  //       "Cancel"
+  //     ).then((confirmed) => {
+  //       if (confirmed) {
+  //         duplicates.forEach(itemToAdd => {
+  //           const index = newPriceList.findIndex(existingItem =>
+  //             existingItem.Size === itemToAdd.Size && existingItem.Unit === itemToAdd.Unit && existingItem.Price === itemToAdd.Price
+  //           );
+  //           if (index !== -1) {
+  //             newPriceList[index].Package = (newPriceList[index].Package || 1) * (itemToAdd.Package || 1);
+  //           }
+  //         });
+  //         setPriceList(newPriceList);
+  //         ToastService.success(SuccessMessage.Add_Success.replace("{0}", "Order Item"));
+  //       }
+  //     });
+  //   } else {
+  //     newPriceList.push(...listToAdd);
+  //     setPriceList(newPriceList);
+  //     ToastService.success(SuccessMessage.Add_Success.replace("{0}", "Order Item"));
+  //   }
+
+  // };
 
   const handleVerifyProductDetail = (productlist) => {
     setVerifyProductData(productlist);
@@ -65,7 +101,7 @@ const OrderItemDetail = ({ onhandleAddOrderData }) => {
       referenceEntityId: item.referenceEntityId || 0,
       orderItemStatusId: item.orderItemStatusId || 0,
       orderItemSubStatusId: item.orderItemSubStatusId || 0,
-      quantity: item.quantity || 0,
+      quantity: Number(item.Quantity) || 0,
       packSize: Number(item.Size) || 0,
       unit: item.Unit || 0,
       itemUnitPrice: item.Price || 0,
@@ -97,7 +133,7 @@ const OrderItemDetail = ({ onhandleAddOrderData }) => {
   return (
     <div className="row">
       <ProductDetailsList onhandleProductDetailsListData={handleProductDetailsListData} isDocumentData={isDocumentData} />
-      <div className="col-xl-6 col-2xl-6 col-lg-12 col-12 mb-2">
+      <div className="col-xl-6 col-2xl-6 col-lg-12 col-12">
         <VerifyProductDetail productId={productId} onVerifyProductList={handleVerifyProductDetail} setIsVerifyProduct={setIsVerifyProduct} />
       </div>
       <div className="col-12">

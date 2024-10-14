@@ -110,22 +110,42 @@ namespace OMS.Application.Services.Contact
                             var updatedExistingJsonData = "";
                             if (existingContactData != null)
                             {
-                                // Ensure existingContactData.ContactTypeId is not null before updating
-                                existingContactData.ContactTypeId ??= contactTypeId?.ToString(); // Assign if null
+                                existingContactData.ContactTypeId ??= contactTypeId?.ToString();
                                 updatedExistingJsonData = await UpdateContactData(existingContactData);
                             }
 
-                            if (matchingRule != null)
+                            var processApprovalRequest = async () =>
                             {
-                                var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
-                                var approvalRequest = await ApprovalRuleHelper.ProcessApprovalRequest(
-                                   updatedExistingJsonData,
-                                    updatedJsonData,
-                                    CurrentUserId,
-                                    formatTemplate,
-                                    matchingRule
-                                );
-                                approvalRequests.Add(approvalRequest);
+                                if (matchingRule != null)
+                                {
+                                    var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
+                                    var approvalRequest = await ApprovalRuleHelper.ProcessApprovalRequest(
+                                        updatedExistingJsonData,
+                                        updatedJsonData,
+                                        CurrentUserId,
+                                        formatTemplate,
+                                        matchingRule
+                                    );
+                                    approvalRequests.Add(approvalRequest);
+                                }
+                            };
+
+                            if ((customerId > 0 || supplierId > 0) && requestData.ContactId > 0)
+                            {
+                                bool changesValues = ApprovalRuleHelper.CheckValuesChanged(updatedExistingJsonData, updatedJsonData);
+
+                                if (changesValues)
+                                {
+                                    await processApprovalRequest();
+                                }
+                                else
+                                {
+                                    responseData.ErrorMessage = "No changes detected";
+                                }
+                            }
+                            else
+                            {
+                                await processApprovalRequest();
                             }
                         }
                     }
@@ -235,7 +255,7 @@ namespace OMS.Application.Services.Contact
         }
 
         public async Task<string> UpdateContactData(object requestData)
-         {
+        {
             var newJObject = JObject.FromObject(requestData);
             string contactTypeIds = "";
             // Check if ContactTypeId exists in the JObject and update it if needed

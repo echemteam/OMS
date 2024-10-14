@@ -6,19 +6,25 @@ import { useLazyGetAddresssByCustomerIdQuery } from "../../../../../../app/servi
 import { useUpdateOrderAddressMutation } from "../../../../../../app/services/orderAPI";
 import SwalAlert from "../../../../../../services/swalService/SwalService";
 import { toast } from "react-toastify";
+import ToastService from "../../../../../../services/toastService/ToastService";
 
 const OrderInfoAddressModel = ({
   handleAddClick,
   onUpdate,
   onSidebarCloseUpdateAddress,
   addressContactType,
+  onSidebarCloseShippingAddress,
+  handleRefreshOrderDetails,
   customerId,
   orderDetails,
   onGetData,
+  defaultId,
+  orderItemId
 }) => {
   const [dataList, setDataList] = useState([]);
   const { confirm } = SwalAlert();
   const [selectedAddressId, setSelectedAddressId] = useState(null);
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
   const [
     getAddresssByCustomerId,
     {
@@ -35,6 +41,23 @@ const OrderInfoAddressModel = ({
       data: isUpdateOrderAddressData,
     },
   ] = useUpdateOrderAddressMutation();
+
+useEffect(()=>{
+  if(defaultId===selectedAddressId){
+    setIsButtonDisable(true);
+  }
+  else{
+    setIsButtonDisable(false);
+  }
+},[selectedAddressId])
+
+  useEffect(() => {
+    if (isUpdateOrderAddressSuccess && isUpdateOrderAddressData) {
+      ToastService.success(isUpdateOrderAddressData.errorMessage);
+      onSidebarCloseShippingAddress();
+      handleRefreshOrderDetails();
+    }
+  }, [isUpdateOrderAddressSuccess, isUpdateOrderAddressData]);
 
   useEffect(() => {
     if (customerId) {
@@ -54,8 +77,8 @@ const OrderInfoAddressModel = ({
       ) {
         const filteredData = addressContactType
           ? GetAddresssByCustomerIdData.filter(
-              (address) => address.type === addressContactType
-            )
+            (address) => address.type === addressContactType
+          )
           : GetAddresssByCustomerIdData;
         setDataList(filteredData);
       }
@@ -65,6 +88,13 @@ const OrderInfoAddressModel = ({
     isGetAddresssByCustomerId,
     GetAddresssByCustomerIdData,
   ]);
+
+  useEffect(() => {
+    if(defaultId){
+    setSelectedAddressId(defaultId);
+    onGetData(defaultId);
+    }
+  }, [defaultId]);
 
   const handleCheckboxChange = (id) => {
     if (selectedAddressId === id) {
@@ -93,14 +123,9 @@ const OrderInfoAddressModel = ({
     }
   };
 
+
   const handleChangeAddress = () => {
     if (selectedAddressId) {
-      const req = {
-        //orderAddressId: ,
-        orderId: orderDetails.orderId,
-        billingAddressId: dataList.addressId,
-        shippingAddressId: dataList.addressId,
-      };
       confirm(
         "Change?",
         "Are you sure you want to Change Address?",
@@ -108,6 +133,13 @@ const OrderInfoAddressModel = ({
         "Cancel"
       ).then((confirmed) => {
         if (confirmed) {
+                    const req = {
+            orderAddressId: orderDetails.orderAddressId,
+            orderId: orderDetails.orderId,
+            billingAddressId: addressContactType === "Billing" ? selectedAddressId : 0,
+            shippingAddressId: addressContactType === "Shipping" ? selectedAddressId : 0,
+            orderItemId: orderItemId ? orderItemId : 0
+          };
           updateOrderAddress(req);
         }
       });
@@ -125,26 +157,28 @@ const OrderInfoAddressModel = ({
             key={address.id}
           >
             <div
-              className={`address-card-main ${
-                selectedAddressId === address.addressId ? "active-card" : ""
-              }`}
+              className={`address-card-main ${selectedAddressId === address.addressId ? "active-card" : ""
+                }`}
             >
               <div className="add-desc">
                 <div className="add-line-part first-add-sec">
-                  <span className="add-info">{address.name}</span>
+                  <span className="add-info">{address.addressLine1}</span>
                   <span className="checkbox-part">
                     <Checkbox
                       name={`addressId_${address.addressId}`}
-                      checked={selectedAddressId === address.addressId}
+                      checked={selectedAddressId ? selectedAddressId === address.addressId : selectedAddressId}
                       onChange={() => handleCheckboxChange(address.addressId)}
                     />
                   </span>
                 </div>
-                <div className="add-line-part">{address.addressLine1}</div>
                 <div className="add-line-part">{address.addressLine2}</div>
                 <div className="add-line-part">{address.addressLine3}</div>
-                <div className="add-line-part">{address.addressLine4}</div>
-                <div className="add-line-part">{address.addressLine5}</div>
+
+                <span className="add-line-part"> {address?.cityName},{" "}
+                  {address.stateCode
+                    ? address.stateCode
+                    : address.stateName}{" "}
+                  {address?.zipCode}</span>
               </div>
             </div>
           </div>
@@ -156,11 +190,12 @@ const OrderInfoAddressModel = ({
           buttonText="Change Address"
           isLoading={isUpdateOrderAddressLoading}
           onClick={handleChangeAddress}
+          isDisable={isButtonDisable}
         />
         <Buttons
           buttonTypeClassName="theme-button ml-3"
           buttonText="Edit Address"
-          onClick={handleEditAddress}
+          onClick={ handleEditAddress}
         />
         <Buttons
           buttonTypeClassName="theme-button ml-3"

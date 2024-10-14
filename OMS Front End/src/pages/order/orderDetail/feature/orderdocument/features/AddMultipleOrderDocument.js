@@ -67,27 +67,25 @@ const AddMultipleOrderDocument = ({
     }, [isAddSuccess, isAddData]);
 
     const handleSave = async () => {
-        const modifyData = uploadedFiles.map((data, index) => {
-            const matchingAttachment = attachment.find((att, ind) => ind === index);
-            return {
-                ...data,
-                base64File: matchingAttachment ? matchingAttachment.base64Data : null,
-            };
-        });
-
-        const IsAllDetailExist = modifyData.every(
-            (data) => data.documentName && data.base64File && data.documentType !== null
-        );
-
-        if (IsAllDetailExist) {
-            const requestData = {
-                orderId: orderDetails.orderId,
-                storagePath: "Order",
-                documentOrderList: modifyData,
+        if (uploadedFiles.length > 0 && attachment.length > 0) {
+            const modifyData = uploadedFiles.map((data, index) => {
+                const matchingAttachment = attachment.find((att, ind) => ind === index);
+                return {
+                    ...data,
+                    base64File: matchingAttachment ? matchingAttachment.base64Data : null,
+                };
+            });
+            const IsAllDetailExist = modifyData.every((data) => data.documentName && data.base64File && data.documentType !== null);
+            if (IsAllDetailExist) {
+                const requestData = {
+                    orderId: orderDetails.orderId,
+                    storagePath: "Order",
+                    documentOrderList: modifyData,
+                }
+                add(requestData);
+            } else {
+                ToastService.warning(ErrorMessage.DocumentDetailMissing);
             }
-            add(requestData);
-        } else {
-            ToastService.warning(ErrorMessage.DocumentDetailMissing);
         }
     };
 
@@ -108,6 +106,7 @@ const AddMultipleOrderDocument = ({
 
     const handleFileRemove = (index) => {
         setUploadedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+        setAttachment((prevFiles) => prevFiles.filter((_, i) => i !== index));
     };
 
     const formActionHandler = {
@@ -129,7 +128,7 @@ const AddMultipleOrderDocument = ({
         );
     };
     return (
-        <div className="row">
+        <div className="row add-order-doc-se">
             <FormCreator
                 config={DocumentMultipleFormData}
                 ref={ref}

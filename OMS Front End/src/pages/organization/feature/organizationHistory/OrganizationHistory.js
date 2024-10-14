@@ -8,9 +8,15 @@ import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 import DateRangePicker from "@wojtekmaj/react-daterange-picker";
 import "@wojtekmaj/react-daterange-picker/dist/DateRangePicker.css";
 import "react-calendar/dist/Calendar.css";
+import DropDown from "../../../../components/ui/dropdown/DropDrown";
+import Buttons from "../../../../components/ui/button/Buttons";
+import ToastService from "../../../../services/toastService/ToastService";
+import { AppIcons } from "../../../../data/appIcons";
 
 const OrganizationHistory = () => {
   const [historyData, setHistoryData] = useState([]);
+  const [eventNameOptions, setEventNameOptions] = useState([]);
+  const [selectedEventName, setSelectedEventName] = useState("");
   const [
     getOrganizationHistorys,
     {
@@ -28,13 +34,13 @@ const OrganizationHistory = () => {
     getListApi(1);
   }, []);
 
-  useEffect(() => {
-    if (selectedDateRange.fromDate !== null && selectedDateRange.toDate !== null) {
-      getListApi(1);
-    } else if (selectedDateRange.fromDate === null && selectedDateRange.toDate === null) {
-      getListApi(1);
-    }
-  }, [selectedDateRange]);
+  // useEffect(() => {
+  //   if (selectedDateRange.fromDate !== null && selectedDateRange.toDate !== null) {
+  //     getListApi(1);
+  //   } else if (selectedDateRange.fromDate === null && selectedDateRange.toDate === null) {
+  //     getListApi(1);
+  //   }
+  // }, [selectedDateRange]);
   
 
   const getListApi = (page) => {
@@ -47,6 +53,9 @@ const OrganizationHistory = () => {
         searchText: "",
         
       },
+      eventName: selectedEventName.length > 0 
+      ? selectedEventName.join(",")   
+      : null,
       fromDate: selectedDateRange.fromDate
         ? formatDate(selectedDateRange.fromDate, "YYYY-MM-DD")
         : null,
@@ -55,15 +64,24 @@ const OrganizationHistory = () => {
         : null,
       sortString: "",
     };
-    getOrganizationHistorys(request);
+        getOrganizationHistorys(request);
   };
 
   useEffect(() => {
     if (isGetOrganizationHistorysSuccess && isGetOrganizationHistorysData) {
       setHistoryData(isGetOrganizationHistorysData.dataSource);
+      const uniqueEventNames = [
+        ...new Set(isGetOrganizationHistorysData.dataSource.map((event) => event.eventName))
+      ].map((eventName) => ({
+        value: eventName,
+        label: eventName,
+      }));
+      
+      setEventNameOptions(uniqueEventNames);
+ 
     }
   }, [isGetOrganizationHistorysSuccess, isGetOrganizationHistorysData]);
-
+  
   const renderContent = () => {
     if (isGetOrganizationHistorysLoading) {
       return (
@@ -108,14 +126,68 @@ const OrganizationHistory = () => {
       getOrganizationHistorys(request);
     };
      
+   
+    const handleEventNameChange = (selectedOptions) => {
+      const selectedValues = selectedOptions ? selectedOptions.map(option => option.value) : [];
+      setSelectedEventName(selectedValues);
+      
+    };
+
+    const handleSearch = () => {
+      if (
+        (selectedDateRange.fromDate && selectedDateRange.toDate) ||
+        selectedEventName.length > 0
+      ) {
+        getListApi(1);
+      } else {
+        ToastService.warning("Please select value ");
+      }
+    };
+
+    const handleClear = () => {
+      setSelectedEventName("");
+      setSelectedDateRange({
+        fromDate: null,
+        toDate: null,
+      });
+    
+       
+      const request = {
+        pagination: {
+          pageNumber: 1,
+          pageSize: 25,
+        },
+        filters: {
+          searchText: "",    
+        },
+        eventName: null,   
+        fromDate: null,    
+        toDate: null,      
+      
+      };
+    
+      getOrganizationHistorys(request);
+    };
+    
+    
       return (
         <>
             {/* <h4 className="organization-tab-title">History</h4> */}
             <h4 className="organization-tab-title">History</h4>
             <div className="serach-bar-history">
             <div className="card w-100">
-              <div className="d-flex ">
-              <div className="custom-datepicker date-field input-padding-comman mb-4">
+              <div className="d-flex align-items-start">
+              <div className="pr-0 name-field">
+              <DropDown
+                placeholder="Search By Event Name"
+                options={eventNameOptions}
+                value={selectedEventName}
+                onChange={handleEventNameChange}
+                isMultiSelect={true}
+                closeMenuOnSelect={false}
+              />
+            </div> 
+              <div className="custom-datepicker date-field input-padding-comman mb-4 ml-5">
                   <DateRangePicker
                     onChange={handleDateRangeChange}
                     value={[selectedDateRange.fromDate, selectedDateRange.toDate]}
@@ -127,6 +199,22 @@ const OrganizationHistory = () => {
                     yearPlaceholder="YYYY"
                   />
                 </div>
+                <div className="refresh-btn-history pl-0 ml-2">
+                <Buttons
+                  buttonTypeClassName="theme-button"
+                  buttonText="Search"
+                  onClick={handleSearch}
+                  imagePath={AppIcons.SearchIcone}
+                  textWithIcon={true}
+                ></Buttons>
+                <Buttons
+                  buttonTypeClassName="dark-btn ml-2"
+                  buttonText="Clear"
+                  onClick={handleClear}
+                  imagePath={AppIcons.ClearIcone}
+                  textWithIcon={true}
+                ></Buttons>
+            </div>
               </div>
             </div>
             </div>

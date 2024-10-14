@@ -15,6 +15,7 @@ using OMS.Domain.Entities.Entity.OrderItems;
 using OMS.Domain.Entities.Entity.Orders;
 using OMS.Domain.Repository;
 using OMS.FileManger.Services;
+using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Entities.CommonEntity;
 using OMS.Shared.Services.Contract;
 using System.Data;
@@ -85,6 +86,7 @@ namespace OMS.Application.Services.Order
                         orderItemsDto.OrderId = responseData.KeyValue;
                         orderItemsDto.CreatedBy = CurrentUserId;
                         orderItemsDto.EntityType = "OrderItem";
+                        orderItemsDto.SubTotalPrice = (orderItemsDto.ItemUnitPrice * orderItemsDto.Quantity);
                         await repositoryManager.orderItem.AddOrderItem(orderItemsDto);
                     }
                 }
@@ -127,11 +129,25 @@ namespace OMS.Application.Services.Order
         }
         public async Task<List<GetOrderItemsByOrderIdResponse>> GetOrderItemsByOrderId(int orderId)
         {
-            return await repositoryManager.order.GetOrderItemsByOrderId(orderId);
+            List<GetOrderItemsByOrderIdResponse> orderItem =  await repositoryManager.order.GetOrderItemsByOrderId(orderId);
+
+            foreach (var item in orderItem)
+            { 
+                if (item.OrderItemId > 0)  
+                {
+                    // Get Order Items Address If Exists
+                    item.OrderShippingAddress = await repositoryManager.order.GetOrderItemAddressesByOrderItemId(item.OrderItemId);
+
+                    // Get Order Items Notes If Exists
+                    item.OrderNote = await repositoryManager.order.GetOrderItemNotesByOrderItemId(item.OrderItemId);
+                }
+            }
+            return orderItem!;
+
         }
         public async Task<GetOrderDetailByOrderIdResponse> GetOrderDetailByOrderId(int orderId)
         {
-            var orderDetails = await repositoryManager.order.GetOrderDetailByOrderId(orderId);
+            GetOrderDetailByOrderIdResponse orderDetails = await repositoryManager.order.GetOrderDetailByOrderId(orderId);
             if (orderDetails == null)
             {
                 return orderDetails!;
@@ -210,18 +226,6 @@ namespace OMS.Application.Services.Order
         public async Task<GetOrderItemByOrderItemIdResponse> GetOrderItemByOrderItemId(long orderItemId)
         {
             var orderItemDetails = await repositoryManager.order.GetOrderItemByOrderItemId(orderItemId);
-            if (orderItemDetails == null)
-            {
-                return orderItemDetails!;
-            }
-
-            // Get Address Information
-            AddressResponse orderShippingAddresses = await repositoryManager.order.GetOrderAddressesByOrderId(orderItemDetails.ShippingAddressId);
-
-            orderItemDetails.OrderAddressInformation = new GetOrderAddressByOrderIdResponse
-            {
-                ShippingAddress = orderShippingAddresses
-            };
             return orderItemDetails!;
         }
         public async Task<AddEntityDto<long>> UpdateOrderItemByOrderItemId(UpdateOrderItemByOrderItemIdRequest updateOrderItemRequest, short CurrentUserId)

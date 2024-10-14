@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { Accordion } from "react-bootstrap";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
-import { useDeleteOrderItemMutation, useLazyGetOrderItemsByOrderIdQuery } from "../../../../../app/services/orderAPI";
+import {
+  useDeleteOrderItemMutation,
+  useLazyGetOrderItemsByOrderIdQuery,
+} from "../../../../../app/services/orderAPI";
 import { decryptUrlData } from "../../../../../services/CryptoService";
 import { useParams } from "react-router-dom";
 import formatDate from "../../../../../lib/formatDate";
@@ -11,13 +15,19 @@ import OrderNoteDetailsModel from "./feature/OrderNoteDetailsModel";
 import ToastService from "../../../../../services/toastService/ToastService";
 import SwalAlert from "../../../../../services/swalService/SwalService";
 import NoRecordFound from "../../../../../components/FinalMolGrid/ui/noRecordFound/NoRecordFound";
+import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 
-const OrderItemList = () => {
-  const [activeKey, setActiveKey] = useState([]);
-  const [itemList, setItemList] = useState([]);
-  const { confirm } = SwalAlert();
+/** Lazily Loaded Components */
+const UpdateOrderItem = React.lazy(() => import("./feature/UpdateOrderItem"));
+
+const OrderItemList = ({ isUpdateOrderItemShippingAddRef, orderDetails, handleOrderItemShippingAddress }) => {
+
   const { id } = useParams();
+  const orderItemref = useRef();
+  const { confirm } = SwalAlert();
   const orderId = id ? decryptUrlData(id) : 0;
+  const [itemList, setItemList] = useState([]);
+  const [activeKey, setActiveKey] = useState([]);
 
   const handleToggle = (key) => {
     if (activeKey.includes(key)) {
@@ -28,6 +38,10 @@ const OrderItemList = () => {
   };
 
   const [
+    deleteOrderItem,
+    { isSuccess: isDeleteOrderItemSuccess, data: isDeleteOrderItemData },
+  ] = useDeleteOrderItemMutation();
+  const [
     getOrderItemsByOrderId,
     {
       isFetching: isGetOrderItemsByOrderIdFetching,
@@ -36,11 +50,17 @@ const OrderItemList = () => {
     },
   ] = useLazyGetOrderItemsByOrderIdQuery();
 
-  const [deleteOrderItem, {  isSuccess: isDeleteOrderItemSuccess, data: isDeleteOrderItemData }] = useDeleteOrderItemMutation();
-
   useEffect(() => {
-    getOrderItemsByOrderId(orderId);
-  }, []);
+    getOrderItemList();
+  }, [orderId]);
+
+  useImperativeHandle(isUpdateOrderItemShippingAddRef, () => ({
+    getOrderItemList
+  }))
+
+  const getOrderItemList = () => {
+    orderId && getOrderItemsByOrderId(orderId);
+  };
 
   useEffect(() => {
     if (
@@ -50,7 +70,11 @@ const OrderItemList = () => {
     ) {
       setItemList(isGetOrderItemsByOrderIdData);
     }
-  },[isGetOrderItemsByOrderIdFetching,isGetOrderItemsByOrderIdSuccess,isGetOrderItemsByOrderIdData])
+  }, [
+    isGetOrderItemsByOrderIdFetching,
+    isGetOrderItemsByOrderIdSuccess,
+    isGetOrderItemsByOrderIdData,
+  ]);
 
   useEffect(() => {
     if (isDeleteOrderItemSuccess && isDeleteOrderItemData) {
@@ -60,56 +84,32 @@ const OrderItemList = () => {
   }, [isDeleteOrderItemSuccess, isDeleteOrderItemData]);
 
   const handleDeleteClick = (orderItemId) => {
-    confirm("Delete?",
-    "Are you sure you want to Delete?",
-    "Delete", "Cancel"
+    confirm(
+      "Delete?",
+      "Are you sure you want to Delete?",
+      "Delete",
+      "Cancel"
     ).then((confirmed) => {
-    if (confirmed) {
-      
-      deleteOrderItem(orderItemId);
-    }
+      if (confirmed) {
+        deleteOrderItem(orderItemId);
+      }
     });
+  };
+
+  const handleEdit = (orderItemId) => {
+    if (orderItemref.current) {
+      orderItemref.current.handleToggleModal(orderItemId);
+    }
   };
 
   const onGetData = () => {
     getOrderItemsByOrderId(orderId);
-  };  
-  // const data = [
-  //   {
-  //     eventKey: "0",
-  //     id: "Y-2520",
-  //     casNumber: "19679-75-5",
-  //     price: "$51.75",
-  //     quantity: "2 x 50MG",
-  //     totalCost: "1X$20",
-  //     status: "Complete",
-  //     statusClass: "complete-bg",
-  //     name: "2-amino-3 5-dibromobenzaldehyde",
-  //     mdlNumber: "12002452003584",
-  //     shippingAddress: "2-amino-3 5-dibromobenzaldehyde",
-  //     priority: "High",
-  //     requestDate: "10/28/2024",
-  //     promiseDate: "11/15/2024",
-  //   },
-  //   {
-  //     eventKey: "1",
-  //     id: "Y-2520",
-  //     casNumber: "19679-75-5",
-  //     price: "$51.75",
-  //     quantity: "2 x 50MG",
-  //     totalCost: "1X$20",
-  //     status: "Pending",
-  //     statusClass: "pending-bg",
-  //     name: "2-amino-3 5-dibromobenzaldehyde",
-  //     mdlNumber: "12002452003584",
-  //     shippingAddress: "2-amino-3 5-dibromobenzaldehyde",
-  //     priority: "High",
-  //     requestDate: "10/28/2024",
-  //     promiseDate: "11/15/2024",
-  //   },
-  //   // Add more data as needed
-  // ];
-    return (
+  };
+const getStatusClass=(itemstatus)=>{
+  return `status-btn ${itemstatus.join('-').toLowerCase()}`;
+}
+
+  return (
     <div>
       <div className="order-item-list">
         <CardSection>
@@ -117,159 +117,158 @@ const OrderItemList = () => {
             <div className="accordian-title">
               <span>Catalog ID</span>
               <span>Cas Number</span>
-              <span>Unit</span>
               <span>Pack Size</span>
-              <span>Price</span>
+              <span>Unit Price</span>
+              <span>Total Price</span>
               <span>Status</span>
             </div>
           </div>
           <div className="accordian-desc">
-          {itemList?.length === 0 ? (
-              <NoRecordFound />  
-            ) : (
-            <Accordion activeKey={activeKey}>
-              {itemList.map((item, index) => (
-                <Accordion.Item eventKey={item.orderItemId} key={index}>
-                  <Accordion.Header
-                    onClick={() => handleToggle(item.orderItemId)}
-                  >
-                    <div className="header-items">
-                      <span>{item.catalogId? item.catalogId: "-"}</span>
-                      <span>{item.casNumber ? item.casNumber :"-"}</span>
-                      <span>{item.unit ? item.unit : "-"}</span>
-                      <span>{item.packSize ? item.packSize: "-"}</span>
-                      <span>{item.itemUnitPrice ?`$${item.itemUnitPrice}` :"-"}</span>
-                  
-                      <span>
-                        <div className={`status-btn ${item.statusClass}`}>
-                          {item.itemStatus}
-                        </div>
-                      </span>
-                    </div>
-                  </Accordion.Header>
-                  <Accordion.Body>
-                    <div className="row">
-                      <div className="col-xxl-6 col-lg-6 col-md-6 col-12 custom-col-5">
-                        <div className="key-value-se align-items-start">
-                          <span className="key-sec">Name</span>&nbsp;:&nbsp;
-                          <span className="value-sec">{item.chemicalName ? item.chemicalName : "NA"}</span>
-                        </div>
-                        <div className="key-value-se">
-                          <span className="key-sec">MDL Number </span>
-                          <span className="value-sec">
-                            &nbsp;:&nbsp; {item.mdlNumber ? item.mdlNumber : "NA"}
-                          </span>
-                        </div>
-                        <div className="key-value-se">
-                          <span className="key-sec">Shipping Add.</span>
-                          <div className="value-right-btn">
-                            <span className="value-sec add-value">
-                              &nbsp;:&nbsp; {item.shippingAddress}
-                            </span>
-                            <span className="right-btn">
-                              {item.shippingAddress ?(
-                              <span className="info-btn hover-model">
-                                <Iconify
-                                  icon="ep:info-filled"
-                                  className="swap-icon"
-                                />
-                                <span className="address-card">
-                                  <ShippingAddressDetailsModel />
-                                </span>
-                              </span>): null
-                      }
-                              <span className="info-btn tooltip-div">
-                                <Iconify
-                                  icon="icon-park-outline:change"
-                                  className="swap-icon"
-                                />
-                                <div className="tooltip-show">
-                                  <p>Change Address</p>
+            {!isGetOrderItemsByOrderIdFetching ?
+              <Accordion activeKey={activeKey}>
+                {itemList?.length >= 0 ?
+                  <>
+                    {/* */}
+                    {itemList.map((item, index) => {
+                      const address = item?.orderShippingAddress ? item?.orderShippingAddress : orderDetails?.orderAddressInformation?.shippingAddress;
+                      const addressId = item?.orderShippingAddress?.addressId ? item?.orderShippingAddress.addressId : orderDetails?.orderAddressInformation?.shippingAddress?.addressId;
+                      return (
+                        <Accordion.Item eventKey={item.orderItemId} key={index}>
+                          <Accordion.Header
+                            onClick={() => handleToggle(item.orderItemId)}
+                          >
+                            <div className="header-items">
+                              <span>{item.catalogId ? item.catalogId : "-"}</span>
+                              <span>{item.casNumber ? item.casNumber : "-"}</span>
+                              <span>
+                                {`${item?.quantity} X ${item?.packSize} ${item?.unit}`}
+                              </span>
+                              <span>{item.itemUnitPrice ? `$${item.itemUnitPrice?.toFixed(2)}` : "-"}</span>
+                              <span>
+                                ${((item?.quantity || 0) * (item?.itemUnitPrice || 0))?.toFixed(2)}
+                              </span>
+                              <span>
+                                <div className={getStatusClass(item.itemStatus)}>
+                                  {item.itemStatus}
                                 </div>
-                                <div className="tooltip-arrow-icon"></div>
-                              </span>
-                            </span>
-                          </div>
-                        </div>
-                        <div className="key-value-se">
-                          <span className="key-sec">Order Notes</span>
-                          <div className="value-right-btn">
-                            <span className="value-sec add-value">
-                              &nbsp;:&nbsp; {item.shippingAddress}
-                            </span>
-                            <span className="right-btn">
-                              <span className="info-btn hover-model">
-                                <Iconify
-                                  icon="ep:info-filled"
-                                  className="swap-icon"
-                                />
-                                <span className="note-card">
-                                  <OrderNoteDetailsModel />
-                                </span>
-                              </span>
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-xxl-6 col-lg-6 col-md-6 col-12">
-                        <div className="accordian-right-full-sec">
-                          <div className="left-section">
-                            <div className="key-value-se">
-                              <span className="key-sec">Priority</span>
-                              <span className="value-sec">
-                                &nbsp;:&nbsp;{item.orderPriority ? 
-                                <span className="status-btn heigh-bg">
-                                  {item.orderPriority}
-                                </span>
-                                : "NA"}
                               </span>
                             </div>
-                            <div className="key-value-se">
-                              <span className="key-sec">Req-Date</span>
-                              <span className="value-sec">
-                                &nbsp;:&nbsp; {item.requestDate ? formatDate(item.requestDate, "MM/DD/YYYY hh:mm A"): "NA"}
-                              </span>
-                            </div>
-                            <div className="key-value-se">
-                              <span className="key-sec">Promise Date</span>
-                              <span className="value-sec">
-                                &nbsp;:&nbsp;  {item.promiseDate ? formatDate(item.promiseDate, "MM/DD/YYYY hh:mm A"):"NA"}
-                              </span>
-                            </div>
-                          </div>
-                          <div className="right-action-section">
-                            <div className="file-actions">
-                              <div className="btn-part pdf-view">
-                                <Iconify
-                                  icon="wpf:edit"
-                                  className="swap-icon"
-                                />
+                          </Accordion.Header>
+                          <Accordion.Body>
+                            <div className="row">
+                              <div className="col-xxl-6 col-lg-6 col-md-6 col-12 custom-col-5">
+                                <div className="key-value-se align-items-start">
+                                  <span className="key-sec">Name</span>&nbsp;:&nbsp;
+                                  <span className="value-sec">{item.chemicalName ? item.chemicalName : "N/A"}</span>
+                                </div>
+                                <div className="key-value-se">
+                                  <span className="key-sec">MDL Number </span>
+                                  <span className="value-sec">
+                                    &nbsp;:&nbsp; {item.mdlNumber ? item.mdlNumber : "N/A"}
+                                  </span>
+                                </div>
+                                <div className="key-value-se">
+                                  <span className="key-sec">Shipping Add.</span>
+                                  &nbsp;:&nbsp;<div className="value-right-btn">
+                                    <span className="right-btn">
+                                      <span className="info-btn hover-model">
+                                        <Iconify icon="ep:info-filled" className="swap-icon" />
+                                        <span className="address-card">
+                                          <ShippingAddressDetailsModel address={address} />
+                                        </span>
+                                      </span>
+                                      <span className="info-btn tooltip-div" onClick={() => handleOrderItemShippingAddress("Shipping", addressId, item?.orderItemId)}>
+                                        <Iconify
+                                          icon="icon-park-outline:change"
+                                          className="swap-icon"
+                                        />
+                                        <div className="tooltip-show">
+                                          <p>Change Address</p>
+                                        </div>
+                                        <div className="tooltip-arrow-icon"></div>
+                                      </span>
+                                    </span>
+                                  </div>
+                                </div>
+                                <div className="key-value-se">
+                                  <span className="key-sec">Order Notes</span>
+                                  &nbsp;:&nbsp;<div className="value-right-btn">
+                                    <span className="right-btn">
+                                      <span className="info-btn hover-model">
+                                        <Iconify icon="ep:info-filled" className="swap-icon" />
+                                        <span className="note-card">
+                                          <OrderNoteDetailsModel orderNoteDetails={item?.orderNote} />
+                                        </span>
+                                      </span>
+                                    </span>
+                                  </div>
+                                </div>
                               </div>
-                              <div className="btn-part dollar-view">
-                                <Iconify
-                                  icon="mingcute:refund-dollar-line"
-                                  className="swap-icon"
-                                />
-                              </div>
-                              <div className="btn-part delete-icon" onClick={() => handleDeleteClick(item.orderItemId)}>
-                                <Iconify
-                                  icon="mi:delete"
-                                  className="swap-icon"
-                                />
+                              <div className="col-xxl-6 col-lg-6 col-md-6 col-12 custom-col-7">
+                                <div className="accordian-right-full-sec">
+                                  <div className="left-section">
+                                    <div className="key-value-se">
+                                      <span className="key-sec">Priority</span>
+                                      <span className="value-sec">
+                                        &nbsp;:&nbsp;{item.orderPriority ?
+                                          <span className="status-btn heigh-bg">
+                                            {item.orderPriority}
+                                          </span>
+                                          : "NA"}
+                                      </span>
+                                    </div>
+                                    <div className="key-value-se">
+                                      <span className="key-sec">Req-Date</span>
+                                      <span className="value-sec">
+                                        &nbsp;:&nbsp; {item.requestDate ? formatDate(item.requestDate, "MM/DD/YYYY hh:mm A") : "N/A"}
+                                      </span>
+                                    </div>
+                                    <div className="key-value-se">
+                                      <span className="key-sec">Promise Date</span>
+                                      <span className="value-sec">
+                                        &nbsp;:&nbsp;  {item.promiseDate ? formatDate(item.promiseDate, "MM/DD/YYYY hh:mm A") : "N/A"}
+                                      </span>
+                                    </div>
+                                  </div>
+                                  <div className="right-action-section">
+                                    <div className="file-actions">
+                                      <div className="btn-part pdf-view cursor-pointer" onClick={() => handleEdit(item.orderItemId)}>
+                                        <Iconify icon="wpf:edit" className="swap-icon" />
+                                      </div>
+                                      <div className="btn-part dollar-view cursor-pointer">
+                                        <Iconify
+                                          icon="mingcute:refund-dollar-line"
+                                          className="swap-icon"
+                                        />
+                                      </div>
+                                      <div className="btn-part delete-icon cursor-pointer" onClick={() => handleDeleteClick(item.orderItemId)}>
+                                        <Iconify
+                                          icon="mi:delete"
+                                          className="swap-icon"
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </Accordion.Body>
-                </Accordion.Item>
-              ))}
-            </Accordion>
-           )}
+                          </Accordion.Body>
+                        </Accordion.Item>
+                      )
+                    })
+                    }
+                  </>
+                  : <NoRecordFound />}
+              </Accordion>
+              : <DataLoader />}
           </div>
         </CardSection>
       </div>
+      <UpdateOrderItem
+        orderItemref={orderItemref}
+        getOrderItemList={getOrderItemList}
+        orderId={orderId}
+      />
     </div>
   );
 };

@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OMS.Domain.Entities.API.Response.Orders
+﻿namespace OMS.Domain.Entities.API.Response.Orders
 {
     public class GetOrderItemsByOrderIdResponse
     {   
-        public long? OrderItemId { get; set; }
+        public long OrderItemId { get; set; }
         public int? OrderId { get; set; }   
         public string? CatalogId {  get; set; }
         public string? CasNumber { get; set; }
@@ -25,5 +19,8 @@ namespace OMS.Domain.Entities.API.Response.Orders
         public decimal Quantity {  get; set; }
         public string? Unit { get; set; }
         public byte? Unitid { get; set; }
+        public int ShippingAddressId { get; set; }
+        public OrderNotesResponse OrderNote { get; set; }
+        public AddressResponse? OrderShippingAddress { get; set; }
     }
 }

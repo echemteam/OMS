@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { lazy, useEffect, useRef, useState } from "react";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
 import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel";
@@ -10,11 +10,15 @@ import ToastService from "../../../../../services/toastService/ToastService";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import FileViewer from "react-file-viewer";
 
-const OrderSummary = ({ orderDetails }) => {
-  const [isModelOpenPDF, setIsModelOpenPDF] = useState(false);
-  const [ordersummaryDetails, setOrderSummaryDetails] = useState(null);
+const UpdateOrderDetails = lazy(() => import("./feature/UpdateOrderDetails"))
+
+const OrderSummary = ({ orderId, orderDetails, onRefreshOrderDetails, isOrderDetailsFetch }) => {
+
+  const orderDetailRef = useRef();
   const [getFileType, setGetFileType] = useState([]);
+  const [isModelOpenPDF, setIsModelOpenPDF] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState(null);
+  const [ordersummaryDetails, setOrderSummaryDetails] = useState(null);
 
   const [
     Downalod,
@@ -25,14 +29,18 @@ const OrderSummary = ({ orderDetails }) => {
     },
   ] = useLazyDownloadDocumentQuery();
 
+  const details = orderDetails?.orderDocumentList;
+  const documentNames = details?.find((doc) => doc.documentName === "")  
+
+
   const handleToggleModalPDF = () => {
-    if (orderDetails?.poNumber) {
+        if (orderDetails?.poNumber) {
       // const documentNames = orderDetails.orderDocumentList?.filter(doc => doc.documentName).map(doc => doc.documentName)[0];
-      const details = orderDetails.orderDocumentList?.find(
+      const detail = details.find(
         (doc) => doc.documentTypeId === 0 || doc.documentTypeId === ""
       );
-      if (details) {
-        handleDocumentAction(details?.documentName);
+      if (detail) {
+        handleDocumentAction(detail?.documentName);
       } else {
         ToastService.error("File not found");
       }
@@ -97,22 +105,30 @@ const OrderSummary = ({ orderDetails }) => {
     }
   };
 
+  const handleEdit = () => {
+    if (orderDetailRef) {
+      orderDetailRef.current.handleToggleModal();
+    }
+  }
+
   return (
-    <div>
+    <div className="icon-btn-header">
       <CardSection
         cardTitle="Order Summary"
         rightButton={true}
         buttonClassName="theme-button"
+        // isIcon={ordersummaryDetails?.documentName ? true : false }
         isIcon={true}
         iconClass="wpf:edit"
-        // titleButtonClick={}
+        titleButtonClick={handleEdit}
         isCenterTile={true}
         CenterTitleTxt={ordersummaryDetails?.poNumber}
-        CenterBtnIcon="icomoon-free:file-pdf"
-        centerBtnTitle="Purchase Order Details"
+        // CenterBtnIcon= "icomoon-free:file-pdf" 
+       CenterBtnIcon={!isDownalodFetching ? (documentNames ? "" : "icomoon-free:file-pdf") :"mdi:loading" }
+        centerBtnTitle="View Purchase Order"
         centerBtnOnClick={handleToggleModalPDF}
       >
-        {ordersummaryDetails ? (
+        {(!isOrderDetailsFetch && orderDetails) ? (
           <div className="order-summery-list">
             <div className="row">
               <div className="col-xxl-7 col-xl-6 col-lg-6 col-md-6 col-12 custom-col-6">
@@ -173,7 +189,21 @@ const OrderSummary = ({ orderDetails }) => {
                   </div>
                 </div>
               </div>
+
               <div className="col-xxl-5 col-xl-6 col-lg-6 col-md-6 col-12 custom-col-6">
+              <div className="desc-section right-status-sec">
+                <div className="key-icon-part">
+                  <Iconify icon="f7:status" className="open-bar" />
+                  <span>Status</span>
+                </div>
+                <div className="desc-detail">
+                  &nbsp;:&nbsp;
+                  {/* <span className="status pending">Pending</span> */}
+                  <span className="status pending">
+                    {ordersummaryDetails?.status}
+                  </span>
+                </div>
+              </div>
                 <div className="desc-section right-status-sec">
                   <div className="key-icon-part">
                     <Iconify icon="f7:status" className="open-bar" />
@@ -210,6 +240,8 @@ const OrderSummary = ({ orderDetails }) => {
           <DataLoader />
         )}
       </CardSection>
+
+      
       <SidebarModel
         modalTitle="PO PDF"
         contentClass="content-50"
@@ -238,22 +270,9 @@ const OrderSummary = ({ orderDetails }) => {
           ) : null}
         </div>
       </SidebarModel>
+      <UpdateOrderDetails orderId={orderId} orderDetailRef={orderDetailRef} onRefreshOrderDetails={onRefreshOrderDetails} />
     </div>
   );
 };
 
 export default OrderSummary;
-
-{
-  /* <span className="name-ellipsis">{ordersummaryDetails?.subCustomerName || "N/A"}</span> */
-}
-// {
-//   ordersummaryDetails?.subCustomerId ? (
-//     <div className="info-icon info-user">
-//       <Iconify icon="ep:info-filled" className="info" />
-//       {/* Customer Detail Model Start */}
-//       <CustomerDetailsModel />
-//       {/* Customer Detail Model End */}
-//     </div>)
-//   : null
-// }

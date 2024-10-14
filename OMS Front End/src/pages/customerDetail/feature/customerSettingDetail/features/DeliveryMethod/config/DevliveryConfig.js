@@ -105,7 +105,7 @@ export const OurAccountGridConfig = {
                 width: "20%",
             },
             colSettings: {
-                isDisabled: true,
+                isDisabled: false,
                 allowEdit: true
             },
             allowEditColumn: true,
@@ -114,6 +114,7 @@ export const OurAccountGridConfig = {
                 editColFieldName: "isPrimary",
                 isDisable: false,
                 editColValidation: [],
+                allowOnChange: false,
             },
             allowShort: false
         },

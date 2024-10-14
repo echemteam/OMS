@@ -192,7 +192,7 @@
   }
 
   .tooltip-arrow-icon {
-    top: 29px;
+    top: 30px;
     right: 10px;
     left: unset;
     transform: translateX(-50%);
@@ -201,6 +201,9 @@
     
     @media only screen and (max-width: 1750px) {
       top: 22px;
+    }
+    @media only screen and (max-width: 1650px) {
+      top: 23px;
     }
   }
 }

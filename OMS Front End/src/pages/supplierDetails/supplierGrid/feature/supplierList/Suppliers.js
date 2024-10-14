@@ -105,7 +105,7 @@ const Suppliers = () => {
   };
   const handleKeyPress=(event)=>{
     
-    if (event.code === "Enter") {
+    if (event.key === "Enter") {
       handleSearch();
     }
   }

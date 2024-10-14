@@ -58,10 +58,10 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier,isModelOpenUpdateAddress,
     }, [editMode, isModelOpen]);
 
     useEffect(()=>{
-        if(isModelOpenUpdateAddress){
+        if(isModelOpenUpdateAddress && editMode ){
         getById(selectedAddressId)
         }
-    },[selectedAddressId])
+    },[selectedAddressId,editMode])
 
     useEffect(() => {
         if (isOrderManage) {
@@ -77,6 +77,8 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier,isModelOpenUpdateAddress,
                 addressTypeId: getAddressTypeIdOrder,
             }
             setFormData(form);
+        } else {
+            setFieldSetting(addressFormData, 'addressTypeId', FieldSettingType.DISABLED);
         }
     }, [isOrderManage, isModelOpen])
 
@@ -346,6 +348,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier,isModelOpenUpdateAddress,
     };
 
     const handleEdit = (addressId) => {
+        
         addressId && getById(addressId);
     }
 

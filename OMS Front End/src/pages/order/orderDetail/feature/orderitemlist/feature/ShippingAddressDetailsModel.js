@@ -1,15 +1,24 @@
 import React from 'react'
 
-const ShippingAddressDetailsModel = () => {
+const ShippingAddressDetailsModel = ({ address }) => {
+
   return (
     <div className='shipping-address'>
-      <div className='addresscard-title'>Shipping Address</div>
-      <div className='addresscard-body'>
-        <span>Chemical Research Laboratory</span>
-        <span>Mansfield Road</span>
-        <span>Oxford</span>
-        <span>United Kingdom, Oxfordshire OX1 3TA</span>
-      </div>
+      {address &&
+        <>
+          <div className='addresscard-title'>{`${address.type} Address`}</div>
+          <div className='addresscard-body'>
+            <span>{address.addressLine1}</span>
+            <span>{address?.addressLine2}</span>
+            <span>
+              {address?.cityName},{" "}
+              {address?.stateCode ? address?.stateCode : address?.stateName}{" "}
+              {address?.zipCode}
+            </span>
+            <span>{address?.countryName}</span>
+          </div>
+        </>
+      }
     </div>
   )
 }

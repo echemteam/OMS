@@ -1,4 +1,5 @@
-﻿using OMS.Domain.Entities.API.Response.User;
+﻿using OMS.Domain.Entities.API.Request.User;
+using OMS.Domain.Entities.API.Response.User;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.User;
 using OMS.Shared.Entities.CommonEntity;
@@ -14,5 +15,9 @@ namespace OMS.Domain.Repository.Contract
         Task<EntityList<UserListResponse>> GetUsers(ListEntityRequest<BaseFilter> requestData);
         Task<AddEntityDto<int>> UpdateUserPassword(UserDto updateUserPassword);
         Task<List<GetUserLoginLogoutHistoryByUserIdResponse>> GetUserLoginLogoutHistoryByUserId(short userId);
+        Task<List<GetUnassignRoleByUserIdResponse>> GetUnAssignedRoleByUserId(short userId);
+        Task<EntityList<GetUnassignRoleByUserIdResponse>> GetAssignedRoleByUserId(GetAssignedRoleByUserIdRequest request);
+        Task<AddEntityDto<int>> AddAssignRoleToUser(AssignUserDTO userRequest);
+
     }
 }

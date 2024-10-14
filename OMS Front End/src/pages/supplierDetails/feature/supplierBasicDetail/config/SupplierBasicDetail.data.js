@@ -16,6 +16,25 @@ export const excludingRoles = ['Admin', 'manager'];
 export const supplierBasicData = {
   initialState: { name: "", groupTypeId: "", supplierTypeId: "", countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", taxId: "", dbaName: "", responsibleUserId: "", supplierNoteId: "", incotermId: 11 },
   formFields: [
+    
+    {
+      id: "attachment",
+      lable: "Supplier Logo",
+      Field_Name: "Attachment",
+      fieldType: FormFieldTypes.IMAGE,
+      dataField: "attachment",
+      fieldSetting: {
+        placeholder: "Upload Attachment",
+        allowSpace: true,
+        isImageUpload: true,
+        isButtonVisible: true,
+        isCustomButtonVisible: false,
+        acceptedFiles: '.png , .jpg ',
+      },
+      style: {
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-4 col-4 mb-input mb-0 custom-file-upload-section customer-logo-sec",
+      },
+    },
     {
       id: "name",
       lable: "Supplier Name ",
@@ -41,24 +60,6 @@ export const supplierBasicData = {
           infoButtonTooltip: "Customer Information"
         }
       }
-    },
-    {
-      id: "attachment",
-      lable: "Supplier Logo",
-      Field_Name: "Attachment",
-      fieldType: FormFieldTypes.IMAGE,
-      dataField: "attachment",
-      fieldSetting: {
-        placeholder: "Upload Attachment",
-        allowSpace: true,
-        isImageUpload: true,
-        isButtonVisible: true,
-        isCustomButtonVisible: false,
-        acceptedFiles: '.png , .jpg ',
-      },
-      style: {
-        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-4 col-4 mb-input mb-0 custom-file-upload-section",
-      },
     },
     {
       id: "dbaName",

@@ -20,6 +20,7 @@ const ProductDetailsList = ({ onhandleProductDetailsListData, isDocumentData }) 
   const molGridRef = useRef();
   const [showModal, setShowModal] = useState(false);
   const [productSearch, setProductSearch] = useState("");
+  // const [selectedProduct, setSelectedProduct] = useState();
   const [productDetailList, setProductDetailList] = useState([]);
   const { setProductId, documentRef } = useContext(AddOrderContext);
 

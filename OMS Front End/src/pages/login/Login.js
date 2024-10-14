@@ -15,20 +15,15 @@ const Login = () => {
               imagePath={AppIcons.logoText}
               altText="logo image"
             ></Image> */}
-            <h1>OMS Lite</h1>
-            <p>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley.
-            </p>
+            <h1>OMS </h1>
             <p className="copyright">
-              © {currentYear} <span>OMS Lite</span>. All rights reserved
+              © {currentYear} <span>OMS </span>. All rights reserved
             </p>
           </div>
         </div>
         <div className="col-xxl-5 col-lg-5 col-md-6 col-12 p-0">
           <div className="right-form-section">
-            <LoginForm/>
+            <LoginForm />
           </div>
         </div>
       </div>

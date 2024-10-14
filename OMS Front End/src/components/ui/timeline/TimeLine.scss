@@ -101,7 +101,7 @@
           margin: 0 33px;
           background: var(--lightDarkblack);
           width: 2px;
-          left: 46.2%;
+          left: 47%;
           transform: translateX(-50%);
           z-index: 99;
         }
@@ -111,11 +111,11 @@
           width: 46%;
 
           &::before {
-            left: calc(100% + 27px);
+            left: calc(100% + 35px);
           }
 
           &::after {
-            left: calc(100% + 31px);
+            left: calc(100% + 39px);
             top: 50%;
             transform: translateY(-50%);
           }
@@ -191,17 +191,16 @@
             }
 
             .date-time-sec {
-              left: calc(100% + 62px);
+              left: calc(100% + 73px);
             }
           }
 
           &:nth-child(even) {
-            left: 46%;
+            left: 47%;
             margin-left: 70px;
 
             &::before {
               left: -44px;
-
             }
 
             &::after {
@@ -218,7 +217,7 @@
               }
 
               .date-time-sec {
-                right: calc(100% + 62px);
+                right: calc(100% + 65px);
                 text-align: right;
                 left: unset
               }

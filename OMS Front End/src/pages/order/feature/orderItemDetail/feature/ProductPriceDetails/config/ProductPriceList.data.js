@@ -4,6 +4,21 @@ import { EditGridColumnType } from "../../../../../../../components/FinalMolGrid
 export const priceListConfig = {
   columns: [
     {
+      name: "Quantity",
+      colStyle: {
+        width: "7%",
+      },
+      fieldName: "Quantity",
+      allowEditColumn: true,
+      editColumn: {
+        editColType: EditGridColumnType.NUMERIC,
+        editColFieldName: "Quantity",
+        isDisable: false,
+      },
+      colSettings: {},
+      allowShort: false
+    },
+    {
       name: "Size",
       colStyle: {
         width: "7%",
@@ -11,12 +26,9 @@ export const priceListConfig = {
       fieldName: "Size",
       allowEditColumn: true,
       editColumn: {
-        editColType: EditGridColumnType.INPUT,
+        editColType: EditGridColumnType.NUMERIC,
         editColFieldName: "Size",
         isDisable: false,
-        // editColValidation: [
-        //   // { type: "required", message: "Size is required." },
-        // ],
       },
       colSettings: {},
       allowShort: false
@@ -40,19 +52,19 @@ export const priceListConfig = {
         // ],
       },
       colStyle: {
-        width: "15%",
+        width: "10%",
       },
       allowShort: false
     },
     {
       name: "Price",
       colStyle: {
-        width: "7%",
+        width: "12%",
       },
       fieldName: "Price",
       allowEditColumn: true,
       editColumn: {
-        editColType: EditGridColumnType.INPUT,
+        editColType: EditGridColumnType.NUMERIC,
         editColFieldName: "Price",
         isDisable: false,
         // editColValidation: [
@@ -78,7 +90,7 @@ export const priceListConfig = {
         // editColValidation: [{ type: "required", message: "Order Note ." }],
       },
       colStyle: {
-        width: "19%",
+        width: "29%",
         textAlign: "center",
       },
       allowShort: false,
@@ -153,7 +165,7 @@ export const priceListConfig = {
         // ],
       },
       colStyle: {
-        width: "20%",
+        width: "10%",
       },
       allowShort: false
     },
