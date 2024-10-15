@@ -7,7 +7,7 @@ const UserManagementViewTab = () => {
   
   const tabs = [
     {
-      sMenuItemCaption: "User Management",
+      sMenuItemCaption: "User Details",
       icon: "fa fa-tasks",
       component: (
         <div className="mt-2 contact-accrodiaon-scroll">
@@ -17,7 +17,7 @@ const UserManagementViewTab = () => {
       isVisible: true,
     },
     {
-      sMenuItemCaption: "User History",
+      sMenuItemCaption: "History",
       icon: "fa fa-tasks",
       component: (
         <div className="mt-2 contact-accrodiaon-scroll contact-card-section-new">
