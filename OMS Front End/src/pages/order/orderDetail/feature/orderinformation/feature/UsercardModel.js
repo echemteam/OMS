@@ -97,13 +97,13 @@ const [ getContactByCustomerId, {   isFetching: isGetContactByCustomerIdFetching
       return;
     }
   };
-  const handleEditContact = () => {
-    if (selectedContactId) {
-      onUpdate();
-    } else {
-      handlevalidate();
-    }
-  };
+  // const handleEditContact = () => {
+  //   if (selectedContactId) {
+  //     onUpdate();
+  //   } else {
+  //     handlevalidate();
+  //   }
+  // };
   const handleCheckboxChange = (id) => {
     if (selectedContactId === id) {
       setSelectedContactId(null);
@@ -139,11 +139,11 @@ const [ getContactByCustomerId, {   isFetching: isGetContactByCustomerIdFetching
           onClick={handleChangeContact}
           isDisable={isButtonDisable}
         />
-        <Buttons
+        {/* <Buttons
           buttonTypeClassName="theme-button ml-3"
           buttonText="Edit Contact"
           onClick={handleEditContact}
-        />
+        /> */}
         <Buttons
           buttonTypeClassName="theme-button ml-3"
           buttonText="Add Contact"
