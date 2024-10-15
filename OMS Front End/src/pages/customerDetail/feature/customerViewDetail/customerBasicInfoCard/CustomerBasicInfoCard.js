@@ -517,6 +517,7 @@ const CustomerBasicInfoCard = ({
                       <div className="tooltip-arrow-icon"></div>
                     </span>
                   </div>
+                  
 
                   <div className="field-desc ">
                     <i className="fa fa-globe"></i>
@@ -591,6 +592,15 @@ const CustomerBasicInfoCard = ({
                 />
               </div>
             </div>
+            <div className="field-desc">
+              <div className="inf-label">List Code</div>
+              <b>&nbsp;:&nbsp;</b>
+              <div className="info-desc">
+                {customerData?.listCode
+                  ? customerData?.listCode
+                  : ErrorMessage.NotAvailabe}
+              </div>
+            </div>
           </div>
 
           {/* second no */}
@@ -616,7 +626,6 @@ const CustomerBasicInfoCard = ({
               <div className="info-desc">{customerData?.incotermName}</div>
             </div>
           </div>
-
           {/* third no */}
 
           <div className="col-3">
