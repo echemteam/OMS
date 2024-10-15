@@ -115,13 +115,13 @@ useEffect(()=>{
       return;
     }
   };
-  const handleEditAddress = () => {
-    if (selectedAddressId) {
-      onUpdate();
-    } else {
-      handlevalidate();
-    }
-  };
+  // const handleEditAddress = () => {
+  //   if (selectedAddressId) {
+  //     onUpdate();
+  //   } else {
+  //     handlevalidate();
+  //   }
+  // };
 
 
   const handleChangeAddress = () => {
@@ -192,11 +192,11 @@ useEffect(()=>{
           onClick={handleChangeAddress}
           isDisable={isButtonDisable}
         />
-        <Buttons
+        {/* <Buttons
           buttonTypeClassName="theme-button ml-3"
           buttonText="Edit Address"
           onClick={ handleEditAddress}
-        />
+        /> */}
         <Buttons
           buttonTypeClassName="theme-button ml-3"
           buttonText="Add Address"

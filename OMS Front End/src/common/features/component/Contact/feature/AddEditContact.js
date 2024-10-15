@@ -17,7 +17,7 @@ import { ErrorMessage } from "../../../../../data/appMessages";
 const EmailAddressGrid = React.lazy(() => import("../../EmailAddress/EmailAddressGrid"));
 const ContactNumbersGrid = React.lazy(() => import("../../ContactNumber/ContactNumbersGrid"));
 
-const AddEditContact = forwardRef(({ keyId, selectedContactId, isUpdateContactModel, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, SecurityKey, customerStatusId, allGetAllContactTypesData, isGetAllContactTypesSucess,
+const AddEditContact = forwardRef(({ keyId, isUpdateContactModel, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, SecurityKey, customerStatusId, allGetAllContactTypesData, isGetAllContactTypesSucess,
     isEditablePage, isSupplier, isEdit, isOpen, getContactById, getContectTypeId, customerId, isOrderManage, onhandleApiCall, contryIdCode, orderResetValue,
     getCompletionCount }) => {
 
@@ -30,6 +30,7 @@ const AddEditContact = forwardRef(({ keyId, selectedContactId, isUpdateContactMo
     const [supplierContactId, setSupplierContactId] = useState(0);
     const [isButtonDisable, setIsButtonDisable] = useState(false);
     const [phoneNumberList, setPhoneNumberList] = useState([]);
+    const [, setShouldRerenderFormCreator] = useState(false);
     const [emailAddressList, setEmailAddressList] = useState([]);
     const [formData, setFormData] = useState(contactDetailFormData);
 
@@ -51,11 +52,10 @@ const AddEditContact = forwardRef(({ keyId, selectedContactId, isUpdateContactMo
                 return condition;
             };
             setDropDownOptionField(allGetAllContactTypesData, "contactTypeId", "type", formData, "contactTypeId", filterCondition);
-           if(isEdit){
-            getById(selectedContactId)
-           }
+            setShouldRerenderFormCreator((prevState) => !prevState);
+     
         }
-    }, [selectedContactId, isGetAllContactTypesSucess])
+    }, [ isGetAllContactTypesSucess,isUpdateContactModel])
 
     const handlWithoutApprovalAddEdit = () => {
         const data = ref.current.getFormData();

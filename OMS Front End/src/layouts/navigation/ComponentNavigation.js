@@ -9,6 +9,7 @@ import ApiProviderViewDetail from "../../pages/apiConfiguration/apiProviders/fea
 import { ThirdPartyApiConfigurationViewDetails } from "../../pages/thirdPartyApi/thirdPartyApiConfigurationGrid/feature/thirdPartyApiConfigurationList/feature/thirdPartyApiConfigurationViewDetails/ThirdPartyApiConfigurationViewDetails";
 import EmailTemplate from "../../pages/configuration/emailTemplate/EmailTemplate";
 import OrdersGrid from "../../pages/order/orderGrid/OrdersGrid";
+import UserManagementViewTab from "../../pages/Security/userManagement/features/UserManagementViewTab";
 
 const ApiProviders = React.lazy(() => import("../../pages/apiConfiguration/apiProviders/ApiProviders"));
 //** Not Found */
@@ -181,7 +182,7 @@ export const ComponentNavigation = [
     path: '/EditUser/:id',
     exact: true,
     title: 'Edit User',
-    component: AddEditUser,
+    component: UserManagementViewTab,
     hasParams: false,
     text: 'Edit User',
     securityKey: securityKey.USERMANAGEMENT,

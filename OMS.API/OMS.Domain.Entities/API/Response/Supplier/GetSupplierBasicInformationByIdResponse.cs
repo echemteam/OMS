@@ -24,5 +24,7 @@
         public string? IncotermName { get; set; }
         public string? Base64File { get; set; }
         public string? AttachmentName { get; set; }
+        public string? ListCode { get; set; }
+        public string? RefCode { get; set; }
     }
 }
