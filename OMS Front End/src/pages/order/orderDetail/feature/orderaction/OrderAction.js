@@ -1,13 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
 import OrderHistory from "./feature/OrderHistory";
+import { useLazyGetOrderHistoryByOrderIdQuery } from "../../../../../app/services/orderAPI";
 
-const OrderAction = () => {
+const OrderAction = ({orderId}) => {
   const [showModal, setShowModal] = useState(false);
+  const [historyList,setHistortyList]=useState([]);
+
+  const [
+    getOrderHistory,
+    {
+      isFetching: isGetOrderHistoryByOrderIdFetching,
+      isSuccess: isGetOrderHistoryByOrderIdSuccess,
+      data: isGetOrderHistoryByOrderIdData,
+    },
+  ] = useLazyGetOrderHistoryByOrderIdQuery();
+
+  useEffect(() => { 
+    if (!isGetOrderHistoryByOrderIdFetching && isGetOrderHistoryByOrderIdSuccess && isGetOrderHistoryByOrderIdData) {
+      if(isGetOrderHistoryByOrderIdData){
+        setHistortyList(isGetOrderHistoryByOrderIdData);
+      }
+    }
+  }, [isGetOrderHistoryByOrderIdFetching, isGetOrderHistoryByOrderIdSuccess, isGetOrderHistoryByOrderIdData]);
 
   const handleToggleHistoryModal = () => {
     setShowModal(!showModal);
+    if (!showModal) {
+      getOrderHistory(orderId);
+    }
   };
 
   return (
@@ -54,7 +76,7 @@ const OrderAction = () => {
         modalTitle="History"
         modelSizeClass="w-55"
       >
-        <OrderHistory />
+        <OrderHistory historyList={historyList}/>
       </CenterModel>
     </>
   );

@@ -96,7 +96,7 @@ const OrderDetails = () => {
 
         {/* Right Side Section Start */}
         <div className="col-xxl-7 col-lg-7 col-md-7 col-12">
-          <OrderAction />
+          <OrderAction orderId={orderId}/>
           <OrderItemList isUpdateOrderItemShippingAddRef={isUpdateOrderItemShippingAddRef} orderDetails={orderDetails}
             handleOrderItemShippingAddress={handleOrderItemShippingAddress} />
         </div>
