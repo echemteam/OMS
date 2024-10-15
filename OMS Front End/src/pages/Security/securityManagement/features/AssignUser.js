@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {  useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from 'prop-types';
-import FormCreator from "../../../../components/Forms/FormCreator";
+import FormCreator from "../../../../components/FinalForms/FormCreator";
 import {
   assignUserFormData,
   assignUserListData,
@@ -19,6 +19,7 @@ import CardSection from "../../../../components/ui/card/CardSection";
 import { securityKey } from "../../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import FinalMolGrid from "../../../../components/FinalMolGrid/FinalMolGrid";
+import { setDropDownOptionField } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 
 
 const AssignUser = (props) => {
@@ -88,29 +89,13 @@ const AssignUser = (props) => {
   }, [props.isOpen]);
 
   useEffect(() => {
-    if (
-      !isGetUnAssignedUserByRoleIdFetching &&
-      isGetUnAssignedUserByRoleId &&
-      GetUnAssignedUserByRoleIdData
-    ) {
-      const listdata = GetUnAssignedUserByRoleIdData.map((item) => ({
-        value: item.userId,
-        label: item.userName,
-      }));
-      const dropdownField = assignUserFormData.formFields.find(
-        (item) => item.dataField === "userName"
-      );
-      dropdownField.fieldSetting.options = listdata;
-      // setUserForm(listdata)
+    if (!isGetUnAssignedUserByRoleIdFetching && isGetUnAssignedUserByRoleId && GetUnAssignedUserByRoleIdData) {
+      setDropDownOptionField(GetUnAssignedUserByRoleIdData, 'userId', 'userName', assignUserFormData, 'userName');
       setShouldRerenderFormCreator((prevState) => !prevState);
     }
-  }, [
-    isGetUnAssignedUserByRoleIdFetching,
-    isGetUnAssignedUserByRoleId,
-    GetUnAssignedUserByRoleIdData,
-  ]);
+  }, [isGetUnAssignedUserByRoleIdFetching, isGetUnAssignedUserByRoleId, GetUnAssignedUserByRoleIdData]);
 
-  const getLists = (pageObject,sortingString) => {
+  const getLists = (pageObject, sortingString) => {
     const request = {
       pagination: {
         pageNumber: pageObject.pageNumber,
@@ -124,7 +109,7 @@ const AssignUser = (props) => {
   };
 
   const handlePageChange = (page) => {
-    getLists(page,molGridRef.current.generateSortingString());
+    getLists(page, molGridRef.current.generateSortingString());
   };
 
   const handleSorting = (shortString) => {
@@ -145,7 +130,7 @@ const AssignUser = (props) => {
   useEffect(() => {
     if (molGridRef.current) {
       const defaultPageObject = molGridRef.current.getCurrentPageObject();
-      getLists(defaultPageObject,molGridRef.current.generateSortingString());
+      getLists(defaultPageObject, molGridRef.current.generateSortingString());
     }
   }, [props.isOpen]);
 
@@ -179,7 +164,7 @@ const AssignUser = (props) => {
     if (isUserAddRoleMapping && AddRoleMappingData) {
       ToastService.success(AddRoleMappingData.errorMessage);
       const currentPageObject = molGridRef.current.getCurrentPageObject();
-      getLists(currentPageObject,molGridRef.current.generateSortingString());
+      getLists(currentPageObject, molGridRef.current.generateSortingString());
       getUnAssignedUserByRoleId(props.initData.roleId);
     }
   }, [isUserAddRoleMapping, AddRoleMappingData]);
@@ -188,7 +173,7 @@ const AssignUser = (props) => {
     if (isDeleteSuccess && isDeletData) {
       ToastService.success(isDeletData.errorMessage);
       const currentPageObject = molGridRef.current.getCurrentPageObject();
-      getLists(currentPageObject,molGridRef.current.generateSortingString());
+      getLists(currentPageObject, molGridRef.current.generateSortingString());
       getUnAssignedUserByRoleId(props.initData.roleId);
     }
   }, [isDeleteSuccess, isDeletData]);

@@ -1,3 +1,4 @@
+import { validationTypes } from "../../../../../components/FinalForms/libs/data/ValidationTypes";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../data/gridColumnType";
 
@@ -5,23 +6,31 @@ import { GridColumnType } from "../../../../../data/gridColumnType";
 export const addEditRoleFormData = {
   name: "Add Edit Role Form",
   initialState: { roleName: "" },
-  formFields: [
+  section: [
     {
-      id: "roleName",
-      lable: "Role Name ",
-      Field_Name: "Role Name",
-      fieldType: FormFieldTypes.INPUT,
-      dataField: "roleName",
-      fieldSetting: {
-        placeholder: "Enter Role Name",
-        allowSpace: true,
-      },
-      validation: [{ type: "require" }],
+      title: "Role Information Section",
+      row: {},
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-input",
+        sectionStyle: "col-lg-12 row mb-3",
       },
-    },
-
+      fields: [
+        {
+          id: "roleName",
+          label: "Role Name ",
+          Field_Name: "Role Name",
+          fieldType: FormFieldTypes.INPUT,
+          dataField: "roleName",
+          fieldSetting: {
+            placeholder: "Enter Role Name",
+            allowSpace: true,
+          },
+          validation: [{ type: validationTypes.REQUIRE }],
+          style: {
+            containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-input",
+          },
+        },
+      ]
+    }
   ],
   formSetting: {
     isViewOnly: false

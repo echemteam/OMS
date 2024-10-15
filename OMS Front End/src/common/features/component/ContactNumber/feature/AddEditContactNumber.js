@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 //** Lib's */
 import { Message } from "../../EmailAddress/utils/ContactMessages";
 import Buttons from "../../../../../components/ui/button/Buttons";
-import FormCreator from "../../../../../components/Forms/FormCreator";
+import FormCreator from "../../../../../components/FinalForms/FormCreator";
 import { addEditContactsFormData, initialPhoneTypeState } from "../config/AddEditContactsForm.data";
 import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
 import {
@@ -133,7 +133,7 @@ const AddEditContactNumber = ({
       <div className="row  phone-numer-card">
         <div className="col-md-12 add-edit-phoneForm">
           <div className="row vertical-form">
-            <FormCreator config={formData} ref={ref} {...formData} />
+            <FormCreator config={formData} ref={ref} />
           </div>
         </div>
         <div className="col-md-12 mt-2">

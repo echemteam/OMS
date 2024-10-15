@@ -3,7 +3,7 @@ import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } f
 //** Lib's */
 import Buttons from "../../../../../components/ui/button/Buttons";
 import { FieldSettingType } from "../../../../../utils/Enums/commonEnums";
-import FormCreator from "../../../../../components/Forms/FormCreator";
+import FormCreator from "../../../../../components/FinalForms/FormCreator";
 import { contactDetailFormData } from "../config/ContactDetailForm.data";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import { getDropDownId, modifyEmailAddressData, modifyPhoneNumberData } from "../../../../../utils/TransformData/TransformAPIData";
@@ -26,11 +26,11 @@ const AddEditContact = forwardRef(({ keyId, isUpdateContactModel, addEditContact
     const { formSetting } = contactDetailFormData;
     const [contactId, setContactId] = useState(0);
     const [editMode, setEditMode] = useState(false);
+    const [, setShouldRerenderFormCreator] = useState(false);
+    const [phoneNumberList, setPhoneNumberList] = useState([]);
     const [customerContactId, setCustomerContactId] = useState(0);
     const [supplierContactId, setSupplierContactId] = useState(0);
     const [isButtonDisable, setIsButtonDisable] = useState(false);
-    const [phoneNumberList, setPhoneNumberList] = useState([]);
-    const [, setShouldRerenderFormCreator] = useState(false);
     const [emailAddressList, setEmailAddressList] = useState([]);
     const [formData, setFormData] = useState(contactDetailFormData);
 
@@ -53,9 +53,9 @@ const AddEditContact = forwardRef(({ keyId, isUpdateContactModel, addEditContact
             };
             setDropDownOptionField(allGetAllContactTypesData, "contactTypeId", "type", formData, "contactTypeId", filterCondition);
             setShouldRerenderFormCreator((prevState) => !prevState);
-     
+
         }
-    }, [ isGetAllContactTypesSucess,isUpdateContactModel])
+    }, [isGetAllContactTypesSucess, isUpdateContactModel])
 
     const handlWithoutApprovalAddEdit = () => {
         const data = ref.current.getFormData();
@@ -229,7 +229,7 @@ const AddEditContact = forwardRef(({ keyId, isUpdateContactModel, addEditContact
             {!isGetByIdFetching ?
                 <React.Fragment>
                     <div className="row mt-2 addEditContact-form">
-                        <FormCreator config={formData} ref={ref} {...formData} />
+                        <FormCreator config={formData} ref={ref} />
                     </div>
                     <div className="row">
                         <EmailAddressGrid isButtonDisable={isButtonDisable} emailAddressList={emailAddressList}

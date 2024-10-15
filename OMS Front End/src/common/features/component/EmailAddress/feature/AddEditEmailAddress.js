@@ -3,7 +3,7 @@ import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
 //** Lib's */
 import { Message } from '../utils/ContactMessages';
 import Buttons from '../../../../../components/ui/button/Buttons';
-import FormCreator from '../../../../../components/Forms/FormCreator';
+import FormCreator from '../../../../../components/FinalForms/FormCreator';
 import { addEditEmailFormData } from '../config/AddEditEmailForm.data';
 import CenterModel from '../../../../../components/ui/centerModel/CenterModel';
 import { addData, updateData } from '../utils/ContactEmailAddressUtil';
@@ -71,7 +71,7 @@ const AddEditEmailModal = ({ contactId, emailAddressList, setEmailAddressList, e
             <div className="row">
                 <div className="col-md-12 add-edit-emailAddressForm">
                     <div className="row vertical-form add-edit-contactForm">
-                        <FormCreator config={formData} ref={ref} {...formData} />
+                        <FormCreator config={formData} ref={ref} />
                     </div>
                 </div>
                 <div className="col-md-12 mt-2">

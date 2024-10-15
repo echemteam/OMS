@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react'
 import { addEditRoleFormData } from './config/AddEditRoleForm.data';
-import FormCreator from '../../../../components/Forms/FormCreator';
 import Buttons from '../../../../components/ui/button/Buttons';
 import { useAddRolesMutation, useUpdateRolesMutation } from '../../../../app/services/securityRoleAPI';
 import ToastService from '../../../../services/toastService/ToastService';
 import { securityKey } from '../../../../data/SecurityKey';
 import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
 import PropTypes from 'prop-types';
+import FormCreator from '../../../../components/FinalForms/FormCreator';
 
 const AddEditGroup = (props) => {
 
@@ -52,14 +52,6 @@ const AddEditGroup = (props) => {
     },
   ] = useUpdateRolesMutation();
 
-  // const [
-  //   getRoleByRoleId,
-  //   {
-  //     isFetching: isGetRoleByIdFetching,
-  //     isSuccess: isGetRoleByIdSuccess,
-  //     data: isGetRoleByIdData,
-  //   },
-  // ] = useLazyGetRoleByRoleIdQuery();
 
   const handleUser = () => {
     let roleData = roleFormRef.current.getFormData(); // Get form data from the FormCreator component.
@@ -81,13 +73,6 @@ const AddEditGroup = (props) => {
     setRoleForm(formData);
   };
 
-  // useEffect(() => {
-  //   // onreset();
-  //   if (descrypteId) {
-  //     getRoleByRoleId(descrypteId, false);
-  //   }
-  // }, [descrypteId]);
-
   useEffect(() => {
     if (isAddRoleSuccess && isAddRoleData) {
       if (props.onSuccess) {
@@ -106,14 +91,6 @@ const AddEditGroup = (props) => {
     }
   }, [isUpdateRoleSuccess, isUpdateRoleData]);
 
-  // useEffect(() => {
-  //   if (isGetRoleByIdSuccess && isGetRoleByIdData && !isGetRoleByIdFetching) {
-  //     const newFrom = { ...roleForm };
-  //     newFrom.initialState = isGetRoleByIdData;
-  //     setRoleForm(newFrom);
-  //   }
-  // }, [isGetRoleByIdSuccess, isGetRoleByIdData, isGetRoleByIdFetching]);
-
   return (
     <div>
       <div className="row">
@@ -121,9 +98,7 @@ const AddEditGroup = (props) => {
           <div className="row vertical-form">
             <FormCreator
               ref={roleFormRef}
-              config={roleForm}
-              {...roleForm}
-            />
+              config={roleForm} />
           </div>
         </div>
         <div className="col-md-12">

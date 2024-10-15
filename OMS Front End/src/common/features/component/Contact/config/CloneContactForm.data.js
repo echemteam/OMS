@@ -1,3 +1,4 @@
+import { validationTypes } from "../../../../../components/FinalForms/libs/data/ValidationTypes";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 export const cloneContactFormData = {
@@ -5,24 +6,33 @@ export const cloneContactFormData = {
     initialState: {
         contactTypeId: ""
     },
-    formFields: [
+    section: [
         {
-            id: "contactTypeId",
-            lable: "Contact Type ",
-            Field_Name: "Contact Type",
-            fieldType: FormFieldTypes.SELECT,
-            dataField: "contactTypeId",
-            fieldSetting: {
-                placeholder: "Select Contact Type",
-                isMultiSelect: true,
-                isDisabled: false,
-                isEnableOnChange: true
-            },
-            validation: [{ type: "require" }],
+            title: "Clone Contac Information Section",
+            row: {},
             style: {
-                containerCss: "col-xxl-8 col-xl-8 col-md-12 col-12 col-12 mb-input",
+                sectionStyle: "col-lg-12 row mb-3",
             },
-        },
+            fields: [
+                {
+                    id: "contactTypeId",
+                    label: "Contact Type ",
+                    Field_Name: "Contact Type",
+                    fieldType: FormFieldTypes.SELECT,
+                    dataField: "contactTypeId",
+                    fieldSetting: {
+                        placeholder: "Select Contact Type",
+                        isMultiSelect: true,
+                        isDisabled: false,
+                        isEnableOnChange: true
+                    },
+                    validation: [{ type: validationTypes.REQUIRE }],
+                    style: {
+                        containerCss: "col-xxl-8 col-xl-8 col-md-12 col-12 col-12 mb-input",
+                    },
+                },
+            ]
+        }
     ],
     formSetting: {
         isViewOnly: false

@@ -1,3 +1,4 @@
+import { validationTypes } from "../../../../../components/FinalForms/libs/data/ValidationTypes";
 import { AppIcons } from "../../../../../data/appIcons";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../data/gridColumnType";
@@ -13,62 +14,70 @@ export const DocumentFormData = {
     base64File: "",
     storagePath: ""
   },
-  formFields: [
+  section: [
     {
-      id: "documentTypeId",
-      lable: "Document Type ",
-      Field_Name: "Document Type",
-      fieldType: FormFieldTypes.SELECT,
-      fieldType: FormFieldTypes.EDITABLEDROPDOWN,
-      dataField: "documentTypeId",
-      fieldSetting: {
-        placeholder: "Select Document Type",
-        isEnableOnChange: true,
-        options: []
-      },
-      validation: [{ type: "require" }],
+      title: "User Information Section",
+      row: {},
       style: {
-        containerCss: "col-xxl-6 col-xl-12 col-md-6 col-12 mb-input",
+        sectionStyle: "col-lg-12 row mb-3",
       },
-    },
-    {
-      id: "name",
-      lable: "Document Name ",
-      Field_Name: "Document Name",
-      fieldType: FormFieldTypes.INPUT,
-      dataField: "name",
-      fieldSetting: {
-        placeholder: "Enter Document Name",
-        allowSpace: true,
-        maxLength: 50,
-        isDisable: true
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-6 col-xl-12 col-md-6 col-12 mb-input",
-      },
-    },
-    {
-      id: "attachment",
-      lable: "Attachment ",
-      Field_Name: "Attachment",
-      fieldType: FormFieldTypes.FILE,
-      dataField: "attachment",
-      fieldSetting: {
-        placeholder: "Upload Attachment",
-        allowSpace: true,
-        isButtonVisible: false,
-        isCustomButtonVisible: true,
-        acceptedFiles: '.pdf , .docx ',
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-input mb-0 custom-file-upload-section",
-      },
+      fields: [
+        {
+          id: "documentTypeId",
+          lable: "Document Type ",
+          Field_Name: "Document Type",
+          // fieldType: FormFieldTypes.SELECT,
+          fieldType: FormFieldTypes.EDITABLEDROPDOWN,
+          dataField: "documentTypeId",
+          fieldSetting: {
+            placeholder: "Select Document Type",
+            isEnableOnChange: true,
+            options: []
+          },
+          validation: [{ type: validationTypes.REQUIRE }],
+          style: {
+            containerCss: "col-xxl-6 col-xl-12 col-md-6 col-12 mb-input",
+          },
+        },
+        {
+          id: "name",
+          lable: "Document Name ",
+          Field_Name: "Document Name",
+          fieldType: FormFieldTypes.INPUT,
+          dataField: "name",
+          fieldSetting: {
+            placeholder: "Enter Document Name",
+            allowSpace: true,
+            maxLength: 50,
+            isDisable: true
+          },
+          validation: [{ type: validationTypes.REQUIRE }],
+          style: {
+            containerCss: "col-xxl-6 col-xl-12 col-md-6 col-12 mb-input",
+          },
+        },
+        {
+          id: "attachment",
+          lable: "Attachment ",
+          Field_Name: "Attachment",
+          fieldType: FormFieldTypes.FILE,
+          dataField: "attachment",
+          fieldSetting: {
+            placeholder: "Upload Attachment",
+            allowSpace: true,
+            isButtonVisible: false,
+            isCustomButtonVisible: true,
+            acceptedFiles: '.pdf , .docx ',
+          },
+          validation: [{ type: validationTypes.REQUIRE }],
+          style: {
+            containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-input mb-0 custom-file-upload-section",
+          },
 
-    },
-
-  ],
+        },
+      ]
+    }
+  ]
 };
 
 

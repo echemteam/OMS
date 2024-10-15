@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 //** Service's */
 import { useLazyGetAllDocumentTypesQuery } from "../../../../app/services/documentAPI";
 import AddMultipleDocument from "./feature/MultipleDocument.js/AddMultipleDocument";
+import { getFieldData } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 //** Component's */
 const AddDocument = React.lazy(() => import("./feature/AddDocument"));
 const DocumentList = React.lazy(() => import("./feature/DocumentList"));
@@ -66,15 +67,11 @@ const DocumentGrid = ({
   useEffect(() => {
     if (isGetAllDocumentTypesSucess && allGetAllDocumentTypesData) {
       const keyFilter = isSupplier ? "isForSuppliers" : "isForCustomers";
-      const getData = allGetAllDocumentTypesData
-        .filter((x) => x[keyFilter])
-        .map((item) => ({
-          value: item.documentTypeId,
-          label: item.type,
-        }));
-      const dropdownField = DocumentFormData.formFields.find(
-        (item) => item.dataField === "documentTypeId"
-      );
+      const getData = allGetAllDocumentTypesData.filter((x) => x[keyFilter]).map((item) => ({
+        value: item.documentTypeId,
+        label: item.type,
+      }));
+      const dropdownField = getFieldData(DocumentFormData, 'documentTypeId');
       dropdownField.fieldSetting.options = getData;
       setDocumentTypes(getData);
     }
@@ -102,14 +99,14 @@ const DocumentGrid = ({
     <React.Fragment>
       <div className="document-section">
         <CardSection
-         
+
           cardTitle={isArchive ? null : "Attachments"}
           titleButtonClick={isArchive ? null : handleToggleModal}
           textWithIcon={true}
           iconImg={isArchive ? null : AppIcons.PlusIcon}
-          buttonClassName = {isArchive ? null : "theme-button"}
+          buttonClassName={isArchive ? null : "theme-button"}
           rightButton={isArchive ? null : buttonVisible ? buttonVisible : false}
-          buttonText= {isArchive ? null : "Add Document"}
+          buttonText={isArchive ? null : "Add Document"}
           multipleButton={isArchive ? null : buttonVisible ? buttonVisible : false}
           rightButtonArray={isArchive ? null : [
             {
@@ -122,20 +119,20 @@ const DocumentGrid = ({
           ]}
         >
           <div className="right-side-sec-padding-0">
-          <DocumentList
-            childRef={childRef}
-            isEditablePage={isEditablePage}
-            SecurityKey={SecurityKey}
-            keyId={keyId}
-            isArchive={isArchive}
-            isSupplier={isSupplier}
-            showModal={showModal}
-            downloadDocument={downloadDocument}
-            deleteDocumentsById={deleteDocumentsById}
-            getDocumentsById={getDocumentsById}
-            setShowModal={setShowModal}
+            <DocumentList
+              childRef={childRef}
+              isEditablePage={isEditablePage}
+              SecurityKey={SecurityKey}
+              keyId={keyId}
+              isArchive={isArchive}
+              isSupplier={isSupplier}
+              showModal={showModal}
+              downloadDocument={downloadDocument}
+              deleteDocumentsById={deleteDocumentsById}
+              getDocumentsById={getDocumentsById}
+              setShowModal={setShowModal}
             // onHandleEditDocument={handleEditDocument}
-          />
+            />
           </div>
         </CardSection>
       </div>
@@ -155,7 +152,7 @@ const DocumentGrid = ({
           onSuccess={onSuccess}
           isEditablePage={isEditablePage}
           customerStatusId={customerStatusId}
-          // editDocumentData={editDocumentData}
+        // editDocumentData={editDocumentData}
         />
       </CenterModel>
       <CenterModel

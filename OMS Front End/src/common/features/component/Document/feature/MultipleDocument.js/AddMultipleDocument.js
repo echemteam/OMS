@@ -2,18 +2,16 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useRef, useState } from "react";
 import Buttons from "../../../../../../components/ui/button/Buttons";
-import FormCreator from "../../../../../../components/Forms/FormCreator";
+import FormCreator from "../../../../../../components/FinalForms/FormCreator";
 import { DocumentMultipleFormData } from "../../Config/MultipleDocuments.Data";
 import "../../Document.scss";
 import Iconify from "../../../../../../components/ui/iconify/Iconify";
 import NoRecordFound from "../../../../../../components/ui/noRecordFound/NoRecordFound";
 import { AppIcons } from "../../../../../../data/appIcons";
 import Select from "react-select";
-import {  ModulePathName } from "../../../../../../utils/Enums/commonEnums";
+import { ModulePathName } from "../../../../../../utils/Enums/commonEnums";
 import ToastService from "../../../../../../services/toastService/ToastService";
 import { ErrorMessage } from "../../../../../../data/appMessages";
-import { useValidateAndAddApprovalRequests } from "../../../../../../utils/CustomHook/useValidateAndAddApproval";
-import { FunctionalitiesName } from "../../../../../../utils/Enums/ApprovalFunctionalities";
 import Input from "../../../../../../components/ui/inputs/input/Input";
 
 const getFileIcon = (extension) => {
@@ -49,17 +47,13 @@ const AddMultipleDocument = ({
   keyId,
   handleMulDocToggleModal,
   addDocuments,
-  documentTypes,
-  isEditablePage,
-  customerStatusId,
+  documentTypes
 }) => {
   const ref = useRef();
   const [attachment, setAttachment] = useState([]);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
   const [editableIndexes, setEditableIndexes] = useState([]);
-  const { ValidateRequestByApprovalRules, isApprovelLoading } =
-    useValidateAndAddApprovalRequests();
 
   /**
    * This hook dynamically sets the API call based on the module (customer or supplier).
@@ -70,7 +64,6 @@ const AddMultipleDocument = ({
     { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData },
   ] = addDocuments();
 
-  const [documentTypeInput, setDocumentTypeInput] = useState("");
 
   const toggleEdit = (index) => {
     const updatedEditableIndexes = [...editableIndexes];
@@ -96,82 +89,58 @@ const AddMultipleDocument = ({
   // Transform the document data before submitting
   const buildTransformedDocumentData = (data, isSupplier, keyId) => {
     const transformDocumentTypeData = (data) => {
-        if (data && typeof data === 'object') {
-          console.log("Original Document Type Data:", data);
-            return {
-                id: data.value || data.id || 0,
-                type: data.text || "",
-            };
-        }
+      if (data && typeof data === 'object') {
+        console.log("Original Document Type Data:", data);
         return {
-            id: data || 0,
-            type: "",
+          id: data.value || data.id || 0,
+          type: data.text || "",
         };
-    };
-
-    const { id: documentTypeId, type: documentType } = transformDocumentTypeData(data.documentTypeId,data.documentType);
-
-    return {
-        ...data,
-        [isSupplier ? 'supplierId' : 'customerId']: keyId,
-        documentTypeId,
-        documentType:data.documentType,
-        createdAt: data.createdAt || new Date(),
+      }
+      return {
+        id: data || 0,
+        type: "",
       };
     };
 
+    const { id: documentTypeId, type: documentType } = transformDocumentTypeData(data.documentTypeId, data.documentType);
+
+    return {
+      ...data,
+      [isSupplier ? 'supplierId' : 'customerId']: keyId,
+      documentTypeId,
+      documentType: data.documentType,
+      createdAt: data.createdAt || new Date(),
+    };
+  };
+
   const handleSave = async () => {
-    const modifyData = uploadedFiles.map((data,index) => {
-      
+    const modifyData = uploadedFiles.map((data, index) => {
       const matchingAttachment = attachment.find((att, ind) => ind === index);
-      
       return {
         ...data,
         base64File: matchingAttachment ? matchingAttachment.base64Data : null,
-        ...buildTransformedDocumentData(data, isSupplier, keyId),  
+        ...buildTransformedDocumentData(data, isSupplier, keyId),
       };
     });
     const IsAllDetailExist = modifyData.every(
-          (data) => data.name && data.base64File && data.documentTypeId !== null
-        );
-  
+      (data) => data.name && data.base64File && data.documentTypeId !== null
+    );
     if (IsAllDetailExist) {
       const requestData = {
         storagePath: isSupplier ? ModulePathName.SUPPLIER : ModulePathName.CUSTOMER,
         [isSupplier ? "supplierId" : "customerId"]: keyId,
         documentInfoList: modifyData,
-        
+
       };
-  
-      // Uncomment and handle approval if needed
-      // if (!isSupplier && isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
-      //   await handleApprovalRequest(requestData, null);
-      // } else {
-        add(requestData);
-      // }
+      add(requestData);
     }
     else {
-           ToastService.warning(ErrorMessage.DocumentDetailMissing);
-         }
-  };
-  
-  
-  
-  
-  const handleApprovalRequest = async (newValue) => {
-    const request = {
-      newValue,
-      oldValue: null,
-      isFunctional: true,
-      eventName: FunctionalitiesName.UPLOADCUSTOMERDOCUMENT,
-    };
-    const modifyData = await ValidateRequestByApprovalRules(request);
-    if (modifyData.newValue) handleMulDocToggleModal();
+      ToastService.warning(ErrorMessage.DocumentDetailMissing);
+    }
   };
 
   const handleFileUpload = (value) => {
     const files = value.split(", ");
-
     const newFiles = files.map((file) => {
       const fileExtension = getFileExtension(file);
       return {
@@ -181,23 +150,22 @@ const AddMultipleDocument = ({
         documentTypeId: null,
       };
     });
-
     setUploadedFiles((prevFiles) => [...prevFiles, ...newFiles]);
   };
 
   const handleTypeChange = (index, selectedOption) => {
     const newType = selectedOption ? selectedOption.value : "";
-        setUploadedFiles((prevFiles) =>
-        prevFiles.map((file, i) =>
-            i === index ? { ...file, documentTypeId: newType } : file
-        )
+    setUploadedFiles((prevFiles) =>
+      prevFiles.map((file, i) =>
+        i === index ? { ...file, documentTypeId: newType } : file
+      )
     );
     setOpenDropdownIndex(index);
   };
   const handleFileRemove = (index) => {
     setUploadedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
   };
-  
+
   const onFormDataChange = (updatedData) => {
     setAttachment((prevAttachments) => [
       ...prevAttachments,
@@ -208,34 +176,31 @@ const AddMultipleDocument = ({
   const handleFileNameChange = (index, newName) => {
     setUploadedFiles((prevFiles) =>
       prevFiles.map((file, i) =>
-        i === index ? { ...file, name: newName} : file,
-
+        i === index ? { ...file, name: newName } : file,
       )
     );
   };
 
   const handleDocumemtTypeChange = (index, documentTypeInput) => {
-    
     setUploadedFiles((prevFiles) =>
       prevFiles.map((documentType, i) =>
-        i === index ? { ...documentType, documentType: documentTypeInput} : documentType,
+        i === index ? { ...documentType, documentType: documentTypeInput } : documentType,
 
       )
     );
   };
 
-const formActionHandler = {
-  DDL_FILE: handleFileUpload,
-};
+  const formActionHandler = {
+    DDL_FILE: handleFileUpload,
+  };
 
-    return (
+  return (
     <div className="row">
       <FormCreator
         config={DocumentMultipleFormData}
         ref={ref}
         onActionChange={formActionHandler}
         onFormDataChange={onFormDataChange}
-        //onDropdownAction={DDLActionHandler}
       />
       <table className="custom-table mt-4">
         <thead>
@@ -247,7 +212,6 @@ const formActionHandler = {
           </tr>
         </thead>
         <tbody>
-          {/* {console.log('uploadedFiles', uploadedFiles)} */}
           {uploadedFiles.length === 0 ? (
             <tr>
               <td colSpan="3">
@@ -264,14 +228,6 @@ const formActionHandler = {
                     className="file-icon"
                   />
                 </td>
-                {/* <td
-                  contentEditable="true"
-                  onBlur={(e) =>
-                    handleFileNameChange(index, e.target.textContent)
-                  }
-                >
-                  {file.name}
-                </td> */}
                 <td>
                   {" "}
                   <Input
@@ -283,84 +239,66 @@ const formActionHandler = {
                   />
                 </td>
                 <td>
-              {editableIndexes.includes(index) ? (
-                <div className="d-flex align-items-center">
-                  <Input
-                    type="text"
-                    value={file.documentType }
-                    onChange={(e) =>
-                      handleDocumemtTypeChange(index, e.target.value)
-                    }
-                  />
-                  <button onClick={() => toggleEdit(index)} 
-                          style={{
-                            background: 'none',  
-                            border: 'none', 
-                            cursor: 'pointer',  
-                            padding: '10px' 
+                  {editableIndexes.includes(index) ? (
+                    <div className="d-flex align-items-center">
+                      <Input
+                        type="text"
+                        value={file.documentType}
+                        onChange={(e) =>
+                          handleDocumemtTypeChange(index, e.target.value)
+                        }
+                      />
+                      <button onClick={() => toggleEdit(index)}
+                        style={{
+                          background: 'none',
+                          border: 'none',
+                          cursor: 'pointer',
+                          padding: '10px'
+                        }}>
+                        <img src="/static/media/cancel.0c96fd8d030cbf121ac0.png" style={{
+                          width: '20px',
+                          height: '20px',
+
+                        }} />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="d-flex align-items-center">
+                      <Select
+                        value={
+                          documentTypes.find(option => option.value === file.documentTypeId) || null
+                        }
+                        onChange={(selectedOption) => {
+                          handleTypeChange(index, selectedOption);
+
+                        }}
+                        options={documentTypes}
+                        className="react-select"
+                        classNamePrefix="react-select"
+                        menuPortalTarget={document.body}
+                        menuPosition="absolute"
+                        isOpen={openDropdownIndex === index}
+                        onMenuOpen={() => setOpenDropdownIndex(index)}
+                        onMenuClose={() => setOpenDropdownIndex(null)}
+                        styles={{
+                          menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+                        }}
+                      />
+                      <button onClick={() => toggleEdit(index)} style={{
+                        background: 'none',
+                        border: 'none',
+                        cursor: 'pointer',
+                        padding: '10px'
                       }}>
-                  <img src="/static/media/cancel.0c96fd8d030cbf121ac0.png" style={{
-                          width: '20px',  
-                          height: '20px',  
-                          
-                      }}/>
-                  </button>
-                </div>
-              ) : (
-                <div className="d-flex align-items-center">
-                  <Select
-                    value={
-                      documentTypes.find(option => option.value === file.documentTypeId) || null
-                    }
-                    onChange={(selectedOption) => {
-                      handleTypeChange(index, selectedOption);
-                      
-                    }}
-                    options={documentTypes}
-                    className="react-select"
-                    classNamePrefix="react-select"
-                    menuPortalTarget={document.body}
-                    menuPosition="absolute"
-                    isOpen={openDropdownIndex === index}
-                    onMenuOpen={() => setOpenDropdownIndex(index)}
-                    onMenuClose={() => setOpenDropdownIndex(null)}
-                    styles={{
-                      menuPortal: (base) => ({ ...base, zIndex: 9999 }),
-                    }}
-                  />
-                  <button onClick={() => toggleEdit(index)} style={{
-                        background: 'none',  
-                        border: 'none', 
-                        cursor: 'pointer',  
-                        padding: '10px' 
-                  }}>
-                  <img src="/static/media/pencil.3c8bbd8b96aa6f946db1.png"  
-                         style={{
-                          width: '20px',  
-                          height: '20px',  
-                          
-                      }} />
-                  </button>
-                </div>
-              )}
-            
-                  
-                  {/* <select
-                    value={file.documentTypeId || ""}
-                    onChange={(e) =>
-                      handleTypeChange(index, { value: e.target.value })
-                    }
-                    className="custom-select"
-                  >
-                    <option value="" disabled>
-                      Select Document Type
-                    </option>
-                    {documentTypes.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </select> */}
+                        <img src="/static/media/pencil.3c8bbd8b96aa6f946db1.png"
+                          style={{
+                            width: '20px',
+                            height: '20px',
+
+                          }} />
+                      </button>
+                    </div>
+                  )}
                 </td>
                 <td>
                   <button
@@ -382,7 +320,7 @@ const formActionHandler = {
       <div className="d-flex align-item-end justify-content-end mt-3">
         <Buttons
           buttonTypeClassName="theme-button"
-          isLoading={isApprovelLoading || isAddLoading}
+          isLoading={isAddLoading}
           buttonText="Save"
           onClick={handleSave}
         />

@@ -1,3 +1,4 @@
+import { validationTypes } from "../../../../../components/FinalForms/libs/data/ValidationTypes";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../data/gridColumnType";
 
@@ -6,22 +7,31 @@ import { GridColumnType } from "../../../../../data/gridColumnType";
 export const assignUserFormData = {
   name: "Add Edit Role Form",
   initialState: { userName: "" },
-  formFields: [
+  section: [
     {
-      id: "userId",
-      lable: "Users",
-      Field_Name: "Users",
-      fieldType: FormFieldTypes.SELECT,
-      dataField: "userName",
-      fieldSetting: {
-        placeholder: "Select Users",
-        isEnableOnChange: true
-      },
-      validation: [{ type: "require" }],
+      title: "Assign User Section",
+      row: {},
       style: {
-        containerCss: "col-xxl-10 col-xl-10 col-md-10",
+        sectionStyle: "col-lg-10 row mb-3",
       },
-    },
+      fields: [
+        {
+          id: "userId",
+          label: "Users",
+          Field_Name: "Users",
+          fieldType: FormFieldTypes.SELECT,
+          dataField: "userName",
+          fieldSetting: {
+            placeholder: "Select Users",
+            isEnableOnChange: true
+          },
+          validation: [{ type: validationTypes.REQUIRE }],
+          style: {
+            containerCss: "col-xxl-12 col-xl-12 col-md-12",
+          },
+        },
+      ]
+    }
   ],
   formSetting: {
     isViewOnly: false

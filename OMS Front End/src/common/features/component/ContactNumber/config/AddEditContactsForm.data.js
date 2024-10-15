@@ -1,3 +1,4 @@
+import { validationTypes } from "../../../../../components/FinalForms/libs/data/ValidationTypes";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../data/gridColumnType";
 
@@ -17,86 +18,75 @@ export const addEditContactsFormData = {
     id: 0,
     isPrimaryPhoneNumber: false
   },
-  formFields: [
+  section: [
     {
-      id: "phoneTypeId",
-      lable: "Phone Type",
-      Field_Name: "phoneType",
-      fieldType: FormFieldTypes.SELECT,
-      dataField: "phoneTypeId",
-      fieldSetting: {
-        placeholder: "Enter Phone Type",
-        isEnableOnChange: true
-      },
-      validation: [{ type: "require" }],
+      title: "Contact Information Section",
+      row: {},
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-input",
+        sectionStyle: "col-lg-12 row mb-3",
       },
-    },
-    // {
-    //   id: "phoneCode",
-    //   lable: "Contact Number ",
-    //   Field_Name: "Phone Code",
-    //   fieldType: FormFieldTypes.SELECT,
-    //   dataField: "phoneCode",
-    //   fieldSetting: {
-    //     placeholder: "",
-    //     isEnableOnChange: true
-    //   },
-    //   validation: [{ type: "require" }],
-    //   style: {
-    //     containerCss: "col-xxl-3 col-xl-3 col-md-4 mb-input pr-0 border-right-0",
-    //   },
-    // },
-    {
-      id: "phoneNumber",
-      lable: "Contact Number",
-      Field_Name: "Phone Number",
-      fieldType: FormFieldTypes.PHONE,
-      dataField: "phoneNumber",
-      fieldSetting: {
-        placeholder: "Enter Phone Number",
-        allowSpace: true,
-        maxLength: 15,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-6 col-xl-12 col-md-12 mb-input",
-      },
-    },
-    {
-      id: "extension",
-      lable: "",
-      Field_Name: "Extension",
-      fieldType: FormFieldTypes.NUMERIC,
-      dataField: "extension",
-      fieldSetting: {
-        placeholder: "Extension",
-        allowSpace: true,
-        minLength: 0,
-        maxLength: 6,
-      },
-      style: {
-        containerCss: "col-xxl-3 col-xl-12 col-md-12 mb-input ",
-      },
-    },
-    {
-      id: "isPrimaryPhoneNumber",
-      lable: "Is Primary",
-      Field_Name: "isPrimaryPhoneNumber",
-      fieldType: FormFieldTypes.CHECKBOX,
-      dataField: "isPrimaryPhoneNumber",
-      fieldSetting: {
-        placeholder: "",
-        allowSpace: true,
-      },
-      style: {
-        containerCss:
-          "col-xxl-6 col-xl-6 col-md-12 col-12 col-12 mb-input margin-left0-checkbox",
-      },
-    },
-
-  ],
+      fields: [
+        {
+          id: "phoneTypeId",
+          label: "Phone Type",
+          Field_Name: "phoneType",
+          fieldType: FormFieldTypes.SELECT,
+          dataField: "phoneTypeId",
+          fieldSetting: {
+            placeholder: "Enter Phone Type",
+            isEnableOnChange: true
+          },
+          validation: [{ type: validationTypes.REQUIRE }],
+          style: {
+            containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-input",
+          },
+        },
+        {
+          id: "phoneNumber",
+          label: "Contact Number",
+          Field_Name: "Phone Number",
+          fieldType: FormFieldTypes.PHONE,
+          dataField: "phoneNumber",
+          fieldSetting: {
+            placeholder: "Enter Phone Number",
+            allowSpace: true,
+            maxLength: 15,
+          },
+          validation: [{ type: validationTypes.REQUIRE }],
+          style: {
+            containerCss: "col-xxl-6 col-xl-12 col-md-12 mb-input",
+          },
+        },
+        {
+          id: "extension",
+          label: "",
+          Field_Name: "Extension",
+          fieldType: FormFieldTypes.NUMERIC,
+          dataField: "extension",
+          fieldSetting: {
+            placeholder: "Extension",
+            allowSpace: true,
+            minLength: 0,
+            maxLength: 6,
+          },
+          style: {
+            containerCss: "col-xxl-3 col-xl-12 col-md-12 mb-input ",
+          },
+        },
+        {
+          id: "isPrimaryPhoneNumber",
+          label: "Is Primary",
+          Field_Name: "isPrimaryPhoneNumber",
+          fieldType: FormFieldTypes.CHECKBOX,
+          dataField: "isPrimaryPhoneNumber",
+          style: {
+            containerCss:
+              "col-xxl-6 col-xl-6 col-md-12 col-12 col-12 mb-input margin-left0-checkbox",
+          },
+        }
+      ]
+    }
+  ]
 };
 
 
@@ -115,7 +105,7 @@ export const phoneNumberConfig = {
     {
       name: "Phone Number",
       fieldName: "phoneNumber",
-     // colType: GridColumnType.CUSTOM,
+      // colType: GridColumnType.CUSTOM,
       colStyle: {
         width: "30%",
       },

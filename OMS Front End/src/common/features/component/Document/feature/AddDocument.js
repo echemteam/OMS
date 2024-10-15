@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { DocumentFormData } from "../Config/DocuementsData";
 import Buttons from "../../../../../components/ui/button/Buttons";
-import FormCreator from "../../../../../components/Forms/FormCreator";
+import FormCreator from "../../../../../components/FinalForms/FormCreator";
 //** Service's */
 import ToastService from "../../../../../services/toastService/ToastService";
 import { FieldSettingType, ModulePathName } from "../../../../../utils/Enums/commonEnums";
@@ -125,7 +125,7 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
 
     return (
         <div className="row add-documentForm">
-            <FormCreator config={formData} ref={ref} {...formData} onFormDataChange={onFormDataChange}
+            <FormCreator config={formData} ref={ref} onFormDataChange={onFormDataChange}
                 onDropdownAction={formActionHandler} />
             <div className="col-md-12 mt-2">
                 <div className="d-flex align-item-end justify-content-end">

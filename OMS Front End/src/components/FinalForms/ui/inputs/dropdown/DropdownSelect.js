@@ -22,6 +22,7 @@ function DropdownSelect(props) {
         menuPortalTarget={document.body}
         menuPosition="absolute"
         menuPlacement="auto"
+        closeMenuOnSelect={props.isMultiSelect ? false : true}
         styles={{
           menuPortal: (base) => ({ ...base, zIndex: 9999 }),
         }}
