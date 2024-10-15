@@ -372,7 +372,7 @@
 
       .desc-detail {
         display: flex;
-        align-items: flex-start;
+        align-items: center;
 
         .name-ellipsis {
           white-space: nowrap;
@@ -837,16 +837,6 @@
                         top: 100%;
                         display: none;
                         z-index: 99;
-
-                        &.top {
-                          top: auto;
-                          bottom: 100%;
-                        }
-
-                        &.bottom {
-                          top: 100%;
-                          bottom: auto;
-                        }
 
                         .order-notes {
                           color: var(--textColor);

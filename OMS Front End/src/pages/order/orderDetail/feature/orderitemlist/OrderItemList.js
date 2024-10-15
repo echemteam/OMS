@@ -102,22 +102,41 @@ const OrderItemList = ({ orderDetails, handleOrderItemShippingAddress }) => {
   };
 
   // MenuPlacement Logic
-  const [placement, setPlacement] = useState("bottom");
   const hoverRef = useRef(null);
+  const noteCardRef = useRef(null);
+  const shippingHoverRef = useRef(null);
+  const shippingCardRef = useRef(null);
 
-  const handleHover = () => {
-    if (hoverRef.current) {
-      const hoverRect = hoverRef.current.getBoundingClientRect();
+  const handleHover = (hoverElement, cardElement) => {
+    if (hoverElement && cardElement) {
+      const hoverRect = hoverElement.getBoundingClientRect();
       const spaceBelow = window.innerHeight - hoverRect.bottom;
       const spaceAbove = hoverRect.top;
 
       if (spaceBelow < 200 && spaceAbove > 200) {
-        setPlacement("top");
+        cardElement.style.top = "auto";
+        cardElement.style.bottom = "100%";
       } else {
-        setPlacement("bottom");
+        cardElement.style.top = "100%";
+        cardElement.style.bottom = "auto";
       }
     }
   };
+
+  const resetHover = (cardElement) => {
+    if (cardElement) {
+      cardElement.style.top = "100%";
+      cardElement.style.bottom = "auto";
+    }
+  };
+
+  const handleShippingHover = () =>
+    handleHover(shippingHoverRef.current, shippingCardRef.current);
+  const resetShippingHover = () => resetHover(shippingCardRef.current);
+
+  const handleNoteHover = () =>
+    handleHover(hoverRef.current, noteCardRef.current);
+  const resetNoteHover = () => resetHover(noteCardRef.current);
 
   // const data = [
   //   {
@@ -218,7 +237,12 @@ const OrderItemList = ({ orderDetails, handleOrderItemShippingAddress }) => {
                               {item.mdlNumber ? item.mdlNumber : "N/A"}
                             </span>
                           </div>
-                          <div className="key-value-se">
+                          <div
+                            className="key-value-se"
+                            ref={shippingHoverRef}
+                            onMouseEnter={handleShippingHover}
+                            onMouseLeave={resetShippingHover}
+                          >
                             <span className="key-sec">Shipping Add.</span>
                             &nbsp;:&nbsp;
                             <div className="value-right-btn">
@@ -228,7 +252,10 @@ const OrderItemList = ({ orderDetails, handleOrderItemShippingAddress }) => {
                                     icon="ep:info-filled"
                                     className="swap-icon"
                                   />
-                                  <span className="address-card">
+                                  <span
+                                    className="address-card"
+                                    ref={shippingCardRef}
+                                  >
                                     <ShippingAddressDetailsModel
                                       orderItemShippingInfo={
                                         item?.orderShippingAddress
@@ -265,7 +292,8 @@ const OrderItemList = ({ orderDetails, handleOrderItemShippingAddress }) => {
                           <div
                             className="key-value-se"
                             ref={hoverRef}
-                            onMouseEnter={handleHover}
+                            onMouseEnter={handleNoteHover}
+                            onMouseLeave={resetNoteHover}
                           >
                             <span className="key-sec">Order Notes</span>
                             &nbsp;:&nbsp;
@@ -276,7 +304,7 @@ const OrderItemList = ({ orderDetails, handleOrderItemShippingAddress }) => {
                                     icon="ep:info-filled"
                                     className="swap-icon"
                                   />
-                                  <span className={`note-card ${placement}`}>
+                                  <span className="note-card" ref={noteCardRef}>
                                     <OrderNoteDetailsModel
                                       orderNote={item?.orderNote}
                                     />
