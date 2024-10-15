@@ -361,7 +361,6 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
         ToastService.warning(isCheckPoNumberExistOrNotData.errorMessage);
         return;
       }
-      ToastService.info(isCheckPoNumberExistOrNotData.errorMessage);
     }
   }, [isCheckPoNumberExistOrNotSucess, isCheckPoNumberExistOrNotData]);
 
@@ -424,41 +423,55 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
     handleAddOrderInformation,
   }));
 
-  const handleAddOrderInformation = () => {
+ const handleAddOrderInformation = async () => {
     let data = basicInformation.current.getFormData();
-    if (data) {
-      let req = {
-        orderId: orderId ? orderId : 0,
-        orderMethodId:
-          data.orderMethodId && typeof data.orderMethodId === "object"
-            ? data.orderMethodId.value
-            : data.orderMethodId,
-        orderReceivedDate: data.orderReceivedDate,
-        orderAddressId: 0,
-        customerId:
-          data.customerId && typeof data.customerId === "object"
-            ? data.customerId.value
-            : data.customerId,
-        subCustomerId:
-          data.subCustomerMainCustomerId &&
-            typeof data.subCustomerMainCustomerId === "object"
-            ? data.subCustomerMainCustomerId.value
-            : data.subCustomerMainCustomerId,
-        poNumber: data.poNumber,
-        billingAddressId:
-          data.isBillingId && typeof data.isBillingId === "object"
-            ? data.isBillingId.value
-            : data.isBillingId,
-        shippingAddressId:
-          data.isShippingId && typeof data.isShippingId === "object"
-            ? data.isShippingId.value
-            : data.isShippingId,
-      };
-      // addEditOrderInformation(req);
-      onHandleOrderInformation(req)
-      moveNextPage();
+    if (data && data.customerId && data.poNumber) {
+        let checkPoRequest = {
+            customerId: data.customerId && typeof data.customerId === "object"
+                ? data.customerId.value
+                : data.customerId,
+            poNumber: data.poNumber
+        };
+
+        let responseData = await checkPoNumberExistOrNot(checkPoRequest);
+        if (responseData.data) {
+            if (responseData.data.errorMessage.includes("PO Number already exists")) {
+              return ;
+            } else {
+                let req = {
+                    orderId: orderId ? orderId : 0,
+                    orderMethodId: data.orderMethodId && typeof data.orderMethodId === "object"
+                        ? data.orderMethodId.value
+                        : data.orderMethodId,
+                    orderReceivedDate: data.orderReceivedDate,
+                    orderAddressId: 0,
+                    customerId: data.customerId && typeof data.customerId === "object"
+                        ? data.customerId.value
+                        : data.customerId,
+                    subCustomerId: data.subCustomerMainCustomerId &&
+                        typeof data.subCustomerMainCustomerId === "object"
+                        ? data.subCustomerMainCustomerId.value
+                        : data.subCustomerMainCustomerId,
+                    poNumber: data.poNumber,
+                    billingAddressId: data.isBillingId && typeof data.isBillingId === "object"
+                        ? data.isBillingId.value
+                        : data.isBillingId,
+                    shippingAddressId: data.isShippingId && typeof data.isShippingId === "object"
+                        ? data.isShippingId.value
+                        : data.isShippingId
+                };
+                onHandleOrderInformation(req);
+                moveNextPage();
+            }
+        } 
     }
-  };
+};
+
+  
+  
+  
+  
+  
 
   return (
     <>

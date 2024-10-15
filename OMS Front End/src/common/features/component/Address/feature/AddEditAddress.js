@@ -19,8 +19,8 @@ const SetInitialCountry = {
     value: 233
 }
 
-const AddEditAddress = forwardRef(({ keyId, isSupplier,isModelOpenUpdateAddress, updateAddress, addAddress, getAddresssById, isModelOpen, editMode, isButtonDisable, getCompletionCount,
-    onSidebarClose, editRef, isOrderManage, getAddressTypeIdOrder, onHandleOrderInfoRepeatCall, orderCustomerId, isEditablePage, customerStatusId ,selectedAddressId}) => {
+const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddress, getAddresssById, isModelOpen, editMode, isButtonDisable, getCompletionCount,
+    onSidebarClose, editRef, isOrderManage, getAddressTypeIdOrder, onHandleOrderInfoRepeatCall, orderCustomerId, isEditablePage, customerStatusId }) => {
 
     //** States */
     const ref = useRef();
@@ -56,12 +56,6 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier,isModelOpenUpdateAddress,
         };
         fetchData();
     }, [editMode, isModelOpen]);
-
-    useEffect(()=>{
-        if(isModelOpenUpdateAddress && editMode ){
-        getById(selectedAddressId)
-        }
-    },[selectedAddressId,editMode])
 
     useEffect(() => {
         if (isOrderManage) {

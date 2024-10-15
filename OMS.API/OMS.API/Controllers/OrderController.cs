@@ -16,7 +16,7 @@ namespace OMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     //[CheckClientIpActionFilter]
     public class OrderController : BaseController
     {
@@ -174,6 +174,12 @@ namespace OMS.API.Controllers
                 return APISucessResponce<object>(deleteItem);
             }
             return APISucessResponce(orderItemId);
+        }
+        [HttpGet("GetOrderHistoryByOrderId")]
+        public async Task<IActionResult> GetOrderHistoryByOrderId(int orderId)
+        {
+            List<GetOrderHistoryByOrderIdResponse> responseData = await _serviceManager.orderServices.GetOrderHistoryByOrderId(orderId).ConfigureAwait(true);
+            return APISucessResponce(responseData); 
         }
         #endregion
     }

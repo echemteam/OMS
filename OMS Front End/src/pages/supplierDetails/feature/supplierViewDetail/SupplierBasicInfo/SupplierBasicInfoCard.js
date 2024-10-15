@@ -585,6 +585,15 @@ const SupplierBasicInfoCard = ({
                     />
                   </div>
                 </div>
+                <div className="field-desc">
+                  <div className="inf-label">List Code</div>
+                  <b>&nbsp;:&nbsp;</b>
+                  <div className="info-desc">
+                    {supplierData?.listCode
+                      ? supplierData?.listCode
+                      : ErrorMessage.NotAvailabe}
+                  </div>
+                </div>
               </div>
 
               {/* second no */}

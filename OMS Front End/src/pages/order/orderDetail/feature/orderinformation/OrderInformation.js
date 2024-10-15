@@ -31,6 +31,7 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef,handleRefreshO
   const [isEdit, setIsEdit] = useState(false);
   const [orderContactId, setOrderContactId] = useState(null)
   const [orderItemId, setOrderItemId] = useState(0);
+
   const [getAllContactTypes, { isSuccess: isGetAllContactTypesSucess, data: allGetAllContactTypesData }] = useLazyGetAllContactTypesQuery();
 
   const onSidebarCloseShippingAddress = () => {
@@ -59,13 +60,13 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef,handleRefreshO
     setOrderItemId(0);
   };
 
-  const handleUpdateAddress = () => {
+  // const handleUpdateAddress = () => {
 
-    setIsModelOpenShippingAddress(false);
-    setEditMode(true);
-    setIsModelOpenUpdateAddress(true);
+  //   setIsModelOpenShippingAddress(false);
+  //   setEditMode(true);
+  //   setIsModelOpenUpdateAddress(true);
    
-  };
+  // };
   const handleAddClick = () => {
     setIsModelOpenShippingAddress(false);
     setEditMode(false);
@@ -73,9 +74,13 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef,handleRefreshO
   };
 
   const handleAddContact = () => {
+
     setIsModelOpenUserModel(false);
     setEditMode(false);
     setIsUpdateContactModel(true);
+    getAllContactTypes();
+   
+    
   }
   const onSidebarCloseUserModel = () => {
     setIsModelOpenUserModel(false);
@@ -90,13 +95,13 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef,handleRefreshO
     setOrderContactId(orderContactId);
   };
 
-  const handleUpdateContact = () => {
+  // const handleUpdateContact = () => {
 
-    getAllContactTypes();
-    setIsModelOpenUserModel(false);
-    setIsUpdateContactModel(true);
-    setIsEdit(true);
-  }
+  //   getAllContactTypes();
+  //   setIsModelOpenUserModel(false);
+  //   setIsUpdateContactModel(true);
+  //   setIsEdit(true);
+  // }
 
   const onSidebarCloseUpdateContact = () => {
     setIsUpdateContactModel(false);
@@ -230,7 +235,7 @@ const onSuccess =()=>{
         <OrderInfoAddressModel
         handleRefreshOrderDetails={handleRefreshOrderDetails}
           onSidebarCloseUpdateAddress={onSidebarCloseUpdateAddress}
-          onUpdate={handleUpdateAddress}
+         // onUpdate={handleUpdateAddress}
           handleAddClick={handleAddClick}
           onSidebarCloseShippingAddress={onSidebarCloseShippingAddress}
           onGetData={onGetData}
@@ -250,7 +255,7 @@ const onSuccess =()=>{
           isOpen={isModelOpenUpdateAddress}
         >
           <AddEditAddress
-            editMode={editMode}
+           // editMode={editMode}
             selectedAddressId={selectedAddressId}
             isModelOpenUpdateAddress={isModelOpenUpdateAddress}
             keyId={customerId}
@@ -272,10 +277,10 @@ const onSuccess =()=>{
           <UsercardModel
           handleRefreshOrderDetails={handleRefreshOrderDetails}
             orderContactId={orderContactId}
-            isUpdateContactModel={isUpdateContactModel}
+            // isUpdateContactModel={isUpdateContactModel}
             onGetContactId={onGetContactId}
             onSidebarCloseUpdateContact={onSidebarCloseUpdateContact}
-            onUpdate={handleUpdateContact}
+            // onUpdate={handleUpdateContact}
             orderDetails={orderDetails}
             contactTypeId={contactTypeId}
             handleAddContact={handleAddContact}
@@ -304,7 +309,7 @@ const onSuccess =()=>{
             getContactById={useLazyGetCustomerContactByContactIdQuery}
             isUpdateContactModel={isUpdateContactModel}
             selectedContactId={selectedContactId}
-            isEdit={isEdit}
+            // isEdit={isEdit}
             isGetAllContactTypesSucess={isGetAllContactTypesSucess}
             allGetAllContactTypesData={allGetAllContactTypesData}
             onSidebarClose={onSidebarCloseUpdateContact}
