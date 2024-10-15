@@ -2,7 +2,7 @@ import { AppIcons } from "../../../data/appIcons";
 import PropTypes from "prop-types";
 import Image from "../../image/Image";
 import "./SidebarModel.scss";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 // import Iconify from "../iconify/Iconify";
 
 const SidebarModel = ({ children, modalTitleIcon, showToggle, ...props }) => {
@@ -20,7 +20,11 @@ const SidebarModel = ({ children, modalTitleIcon, showToggle, ...props }) => {
 
   return (
     <div className={`sidebar-model ${props.isOpen ? "active-model" : ""}`}>
-      <div className="side-model-section">
+      <div
+        className={`side-model-section ${
+          showToggle ? "scrollable-background" : ""
+        }`}
+      >
         <div
           className={`model-content ${props.contentClass} ${
             isRightPosition ? "right-position" : "left-position"

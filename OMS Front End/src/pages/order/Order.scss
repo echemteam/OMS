@@ -319,7 +319,7 @@
   margin-top: 10px;
 
   .manage-customer-dropdown {
-    justify-content: center;
+    justify-content: flex-start;
 
     .center-title-text {
       display: flex;
@@ -342,7 +342,7 @@
   .order-summery-list {
     .desc-section {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       margin-bottom: 5px;
       min-height: 24px;
 
@@ -384,7 +384,7 @@
         span {
           color: var(--textColor2);
           line-height: normal;
-          margin-top: 4px;
+          margin-top: 2px;
         }
 
         .info-icon {
@@ -441,6 +441,41 @@
     .order-title {
       display: flex;
       align-items: center;
+      position: absolute;
+      padding: 0px 5px;
+      top: -10px;
+      background: var(--themeColorLight);
+      color: var(--blackColor);
+      right: 20px;
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+      font-size: var(--commonFont-extraSmall);
+      font-weight: 600;
+
+      &.Billing {
+        background: var(--submitted-theme-btn) !important;
+        color: var(--whiteColor) !important;
+      }
+
+      &.Shipping {
+        background: var(--frozen-theme-btn) !important;
+        color: var(--whiteColor) !important;
+      }
+
+      &.enduser {
+        background-color: #ffedd7;
+        color: var(--pending-theme-btn);
+      }
+
+      &.invoice-submission {
+        background-color: #f5f7eb;
+        color: var(--submission-color-btn);
+      }
+
+      &.purchasing {
+        background-color: #d3f8f3;
+        color: var(--submitted-theme-btn);
+      }
 
       span {
         font-weight: 600;
@@ -961,7 +996,8 @@
   border: 1px solid var(--themeColorLight);
   padding: 10px;
   border-radius: 7px;
-  margin-bottom: 15px;
+  // margin-bottom: 15px;
+  height: 100%;
 
   .profile-name-btn {
     display: flex;
@@ -983,7 +1019,8 @@
     }
 
     .right-info {
-      width: calc(100% - 38px);
+      // width: calc(100% - 38px);
+      width: 100%;
       position: relative;
 
       .right-name-btn {
@@ -1217,7 +1254,8 @@
     background: var(--whiteColor);
     top: 28px;
     left: -10px;
-    width: fit-content;
+    // width: fit-content;
+    min-width: 300px;
     border-radius: 7px;
     box-shadow: 0px 3px 21px 0px rgba(0, 0, 0, 0.2);
     z-index: 11;
@@ -1276,12 +1314,12 @@
             font-weight: 700;
             white-space: normal;
             width: 100%;
-            padding-top: 5px;
+            // padding-top: 5px;
             text-transform: capitalize;
           }
 
           .status-sec {
-            margin-top: 5px;
+            // margin-top: 5px;
             margin-left: 5px;
             display: inline-block;
             padding: 2px 8px;
@@ -1292,6 +1330,11 @@
             &.pending {
               background-color: #ffe5cc;
               color: #ff9966;
+            }
+
+            &.approved {
+              background-color: #e6ffee;
+              color: #33cc33;
             }
           }
         }
@@ -1444,12 +1487,13 @@
               content: ":";
               position: absolute;
               top: 0px;
-              right: 1px;
+              right: -1px;
             }
           }
 
           .value-part {
             color: var(--textColor2);
+            padding-left: 5px;
           }
         }
       }
@@ -1465,12 +1509,14 @@
 
   &.user-card {
     .customer-popup-sec {
-      width: 250px;
+      // width: 250px;
+      min-width: unset;
+      padding-right: 30px;
       @media only screen and (max-width: 1560px) {
-        width: 225px;
+        // width: 225px;
       }
       @media only screen and (max-width: 1400px) {
-        width: 205px;
+        // width: 205px;
         right: -30px !important;
       }
     }
@@ -1478,6 +1524,22 @@
 }
 
 // Common User popup Section End
+
+//Order-Information
+
+.order-information-card {
+  .order-method {
+    color: var(--themeColor);
+    .order-method-value {
+      font-weight: 500;
+      font-size: var(--commonFont);
+      padding-left: 3px;
+    }
+  }
+  .manage-customer-dropdown {
+    display: none;
+  }
+}
 
 //Responsive Styling
 
@@ -1514,8 +1576,6 @@
       }
     }
   }
-
-  //Order-Information
 
   //UserCardDetail
   .contact-card {
