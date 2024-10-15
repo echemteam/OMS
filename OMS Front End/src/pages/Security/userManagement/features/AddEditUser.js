@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { forwardRef, useEffect, useRef, useState } from "react";
-import FormCreator from "../../../../components/Forms/FormCreator";
 import { useNavigate, useParams } from "react-router-dom";
 import Buttons from "../../../../components/ui/button/Buttons";
 import { userFormData } from "./config/UserForm.data";
@@ -17,6 +16,8 @@ import { useAddUserMutation, useLazyGetUserByUserIdQuery, useUpdateUserMutation 
 import { securityKey } from "../../../../data/SecurityKey";
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import FormCreator from "../../../../components/FinalForms/FormCreator";
+import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
 
 const AddEditUser = forwardRef(() => {
   const navigate = useNavigate();
@@ -27,26 +28,9 @@ const AddEditUser = forwardRef(() => {
   const [userForm, setUserForm] = useState(userFormData);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
 
-  const [
-    addUser,
-    { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData },
-  ] = useAddUserMutation();
-  const [
-    updateUser,
-    {
-      isLoading: isUpdateLoading,
-      isSuccess: isUpdateSuccess,
-      data: isUpdateData,
-    },
-  ] = useUpdateUserMutation();
-  const [
-    getUserByUserId,
-    {
-      isFetching: isGetByIdFetching,
-      isSuccess: isGetByIdSuccess,
-      data: isGetByIdData,
-    },
-  ] = useLazyGetUserByUserIdQuery();
+  const [addUser, { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData }] = useAddUserMutation();
+  const [updateUser, { isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, data: isUpdateData, }] = useUpdateUserMutation();
+  const [getUserByUserId, { isFetching: isGetByIdFetching, isSuccess: isGetByIdSuccess, data: isGetByIdData }] = useLazyGetUserByUserIdQuery();
 
   const { formSetting } = userFormData;
   const hasAddPermission = hasFunctionalPermission(securityKey.ADDUSER);
@@ -112,10 +96,10 @@ const AddEditUser = forwardRef(() => {
 
   useEffect(() => {
     if (isGetByIdSuccess && isGetByIdData && !isGetByIdFetching) {
+      let newFrom = { ...userForm };
       const removeFields = ['Password']
-      const newFrom = { ...userForm };
       newFrom.initialState = isGetByIdData;
-      newFrom.formFields = userFormData.formFields.filter(field => !removeFields.includes(field.id));
+      newFrom = removeFormFields(newFrom, removeFields);
       setUserForm(newFrom);
     }
   }, [isGetByIdSuccess, isGetByIdData, isGetByIdFetching]);
@@ -139,7 +123,7 @@ const AddEditUser = forwardRef(() => {
           <div className="col-md-12 add-edit-user-form">
             <div className="row vertical-form">
               {!isGetByIdFetching ?
-                < FormCreator
+                <FormCreator
                   config={userForm}
                   ref={userFormRef}
                   {...userForm}

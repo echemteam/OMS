@@ -1,4 +1,4 @@
-import React, { lazy, useCallback, useMemo, useState } from "react";
+import React, { lazy, useCallback, useState } from "react";
 import PropTypes from 'prop-types';
 
 import { FormFieldTypes } from "./libs/data/formFieldType";
@@ -46,28 +46,35 @@ const FormFields = ({
   onUpdateValidation,
   formSetting,
   onFormFieldChange,
-  onFieldBlure,
-  fieldValiadtionRules,
-  onActionChange
+  onFieldBlur,
+  fieldValiadtionRules
 }) => {
 
   const [overRideProps, setOverRideProps] = useState({});
+
   const handleInputChange = (dataField, value) => {
     let updatedData = { ...formData, [dataField]: value };
     updatedData = stateChangeAction(dataField, updatedData);
     onFormStateChange?.(updatedData);
     onFormFieldChange?.(dataField, updatedData);
   };
+
+
   const handleBlure = (dataField) => {
     let updatedData = { ...formData };
 
     if (onUpdateValidation) {
       onUpdateValidation(dataField);
     }
-    onFieldBlure?.(dataField, updatedData);
+    onFieldBlur?.(dataField, updatedData);
   };
+
+
+
   const stateChangeAction = (dataField, updatedState) => {
+
     const formField = memoizedSelectFormField(sections, dataField);
+
     formField?.changeAction?.resetValue?.forEach(({ dataField, value }) => {
       if (dataField && value) {
         updatedState[dataField] = value;
@@ -97,6 +104,8 @@ const FormFields = ({
 
     return updatedState;
   };
+
+
   const memoizedSelectFormField = useCallback((sections, dataField) => {
     // Helper function to search for a field inside an array of fields
     const searchFields = (fields, dataField) => {
@@ -125,7 +134,7 @@ const FormFields = ({
 
   const renderField = (field, index) => {
     const { containerCss = "col-md-6" } = field.style || {};
-    const isRequired = fieldValiadtionRules && fieldValiadtionRules[field.dataField]?.some(data => data.type === 'require');
+    const isRequired = fieldValiadtionRules?.[field.dataField]?.length > 0;
 
     const commonProps = {
       keyId: `${field.dataField}_${index}`,
@@ -143,8 +152,7 @@ const FormFields = ({
       fieldSetting: field.fieldSetting,
       onChange: handleInputChange,
       onValidation: onUpdateValidation,
-      onBlure: handleBlure,
-      fieldActions: onActionChange,
+      onBlur: handleBlure,
     };
 
     const FieldComponent = ComponentMap[field.fieldType];

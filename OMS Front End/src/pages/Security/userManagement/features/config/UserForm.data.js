@@ -1,97 +1,103 @@
 
+import { validationTypes } from "../../../../../components/FinalForms/libs/data/ValidationTypes";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../data/gridColumnType";
 
+const initialState = {
+  userName: "",
+  firstName: "",
+  lastName: "",
+  isActive: true,
+  password: "",
+}
 
 export const userFormData = {
   name: "User From",
-  initialState: {
-    userName: "",
-    firstName: "",
-    lastName: "",
-    isActive: true,
-    password: "",
-  },
-  formFields: [
+  initialState: initialState,
+  section: [
     {
-      id: "firstName",
-      lable: "First Name",
-      Field_Name: "First Name",
-      fieldType: FormFieldTypes.INPUT,
-      dataField: "firstName",
-      fieldSetting: {
-        placeholder: "Enter First Name",
-        allowSpace: true,
-        maxLength:65,
-      },
-      validation: [{ type: "require" }],
+      title: "User Information Section",
+      row: {},
       style: {
-        containerCss: "col-xxl- col-xl-6 col-md-6 mb-input",
+        sectionStyle: "col-lg-12 row mb-3",
       },
-    },
-    {
-      id: "lastName",
-      lable: "Last Name",
-      Field_Name: "Last Name",
-      fieldType: FormFieldTypes.INPUT,
-      dataField: "lastName",
-      fieldSetting: {
-        placeholder: "Enter Last Name",
-        allowSpace: true,
-        maxLength:65,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 mb-input",
-      },
-    },
-    {
-      id: "userName",
-      lable: "User Name",
-      Field_Name: "User Name",
-      fieldType: FormFieldTypes.INPUT,
-      dataField: "userName",
-      fieldSetting: {
-        placeholder: "Enter User Name",
-        allowSpace: true,
-        maxLength : 65,
-        isDisable:true
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl- col-xl-6 col-md-6 mb-input",
-      },
-    },
-    {
-      id: "Password",
-      lable: "Password",
-      Field_Name: "Password",
-      fieldType: FormFieldTypes.PASSWORD,
-      dataField: "password",
-      fieldSetting: {
-        placeholder: "Enter Your Password",
-        maxLength:20,
-      },
-      validation: [{ type: "require" }, { type: "password" }],
-      style: {
-        containerCss: "col-xxl- col-xl-6 col-md-6 mb-input",
-      },
-    },
-    {
-      id: "isActive",
-      lable: "IsActive",
-      Field_Name: "IsActive",
-      fieldType: FormFieldTypes.CHECKBOX,
-      dataField: "isActive",
-      fieldSetting: {
-        placeholder: "",
-        allowSpace: true,
-      },
-      // validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-4 col-xl-4 col-md-4 mb-input mt-3 margin-top-checkbox",
-      },
-    },
+      fields: [
+        {
+          id: "firstName",
+          label: "First Name",
+          Field_Name: "First Name",
+          fieldType: FormFieldTypes.INPUT,
+          dataField: "firstName",
+          fieldSetting: {
+            placeholder: "Enter First Name",
+            allowSpace: true,
+            maxLength: 65,
+          },
+          validation: [{ type: validationTypes.REQUIRE }],
+          style: {
+            containerCss: "col-xxl- col-xl-6 col-md-6 mb-input",
+          },
+        },
+        {
+          id: "lastName",
+          label: "Last Name",
+          Field_Name: "Last Name",
+          fieldType: FormFieldTypes.INPUT,
+          dataField: "lastName",
+          fieldSetting: {
+            placeholder: "Enter Last Name",
+            allowSpace: true,
+            maxLength: 65,
+          },
+          validation: [{ type: validationTypes.REQUIRE }],
+          style: {
+            containerCss: "col-xxl-6 col-xl-6 col-md-6 mb-input",
+          },
+        },
+        {
+          id: "userName",
+          label: "User Name",
+          Field_Name: "User Name",
+          fieldType: FormFieldTypes.INPUT,
+          dataField: "userName",
+          fieldSetting: {
+            placeholder: "Enter User Name",
+            allowSpace: true,
+            maxLength: 65,
+            isDisable: false
+          },
+          validation: [{ type: validationTypes.REQUIRE }],
+          style: {
+            containerCss: "col-xxl- col-xl-6 col-md-6 mb-input",
+          },
+        },
+        {
+          id: "Password",
+          label: "Password",
+          Field_Name: "Password",
+          fieldType: FormFieldTypes.PASSWORD,
+          dataField: "password",
+          fieldSetting: {
+            placeholder: "Enter Your Password",
+            maxLength: 20,
+          },
+          validation: [{ type: validationTypes.REQUIRE }, { type: validationTypes.PASSWORD }],
+          style: {
+            containerCss: "col-xxl- col-xl-6 col-md-6 mb-input",
+          },
+        },
+        {
+          id: "isActive",
+          label: "IsActive",
+          Field_Name: "IsActive",
+          fieldType: FormFieldTypes.CHECKBOX,
+          dataField: "isActive",
+          style: {
+            containerCss: "col-xxl-4 col-xl-4 col-md-4 mb-input mt-3 margin-top-checkbox",
+          },
+        },
+      ]
+    }
   ],
   formSetting: {
     isViewOnly: false
@@ -100,7 +106,7 @@ export const userFormData = {
 
 export const UserGridConfig = {
   columns: [
-   
+
     {
       name: "First Name",
       fieldName: "firstName",
@@ -184,6 +190,6 @@ export const UserHistoryGridConfig = {
       },
       allowShort: true,
     },
-    
+
   ]
 };

@@ -6,18 +6,18 @@ import OrganizationAccountingDetail from '../organizationAccountingDetail/Organi
 
 function OrganizationChargesDetails() {
   return (
-    <div> 
-            <CardSection cardTitle="Accounting">
-                <OrganizationAccountingDetail isEditablePage={true}/>
-            </CardSection>
+    <div>
+      <CardSection cardTitle="Accounting">
+        <OrganizationAccountingDetail isEditablePage={true} />
+      </CardSection>
 
-            <CardSection cardTitle="Shipping">
-                <OrganizationShippingChargesDetail isEditablePage={true}/>
-            </CardSection>
-            
-            <CardSection cardTitle="Other">
-                <OrganizationOtherChargesDetail isEditablePage={true}/>
-            </CardSection>
+      <CardSection cardTitle="Shipping">
+        <OrganizationShippingChargesDetail isEditablePage={true} />
+      </CardSection>
+
+      <CardSection cardTitle="Other">
+        <OrganizationOtherChargesDetail isEditablePage={true} />
+      </CardSection>
     </div>
   )
 }

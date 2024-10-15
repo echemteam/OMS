@@ -9,11 +9,39 @@ export const removeFormFields = (formData, fieldsToRemove) => {
     // Create a copy of the formData object
     const modifiedData = { ...formData };
 
-    // Filter out form fields based on fieldsToRemove array
-    modifiedData.formFields = modifiedData.formFields.filter((field) => !fieldsToRemove.includes(field.dataField));
+    // If formFields are directly in formData, filter them
+    if (modifiedData.formFields) {
+        modifiedData.formFields = modifiedData.formFields.filter((field) => !fieldsToRemove.includes(field.dataField));
+    }
 
-    // Update the state with the modified form data
+    // Normalize fieldsToRemove to lowercase for case-insensitive comparison
+    const lowerCaseFieldsToRemove = fieldsToRemove.map((field) => field?.toLowerCase());
+
+    // If there are sections, iterate over each to filter fields and nested fields
+    if (modifiedData.section) {
+        modifiedData.section = modifiedData.section.map((section) => {
+            // Remove fields at the section level
+            const updatedSection = { ...section };
+            updatedSection.fields = updatedSection.fields.filter((field) => !lowerCaseFieldsToRemove.includes(field.dataField?.toLowerCase()));
+
+            // If there are rowGroups, filter fields within each row
+            if (updatedSection.rowGroup) {
+                updatedSection.rowGroup = updatedSection.rowGroup.map((row) => {
+                    const updatedRow = { ...row };
+                    updatedRow.fields = updatedRow.fields.filter(
+                        (field) => !fieldsToRemove.includes(field.id)
+                    );
+                    return updatedRow;
+                });
+            }
+
+            return updatedSection;
+        });
+    }
+
+    // Return the modified form data
     return modifiedData;
+
 };
 // Define propTypes for the function parameters
 removeFormFields.propTypes = {

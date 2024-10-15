@@ -22,3 +22,7 @@ export const removeIdSuffix = (fieldName) => {
     }
     return fieldName;
 };
+
+export const getValue = (data) => {
+    return data && typeof data === "object" ? data.value : data;
+};

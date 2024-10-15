@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Image from "../../../image/Image";
 import { AppIcons } from "../../../../data/appIcons";
 import "./EditableDropdown.scss";
 import PropTypes from "prop-types";
+import Image from "../../../image/Image";
 
 const Input = React.lazy(() => import("../../inputs/input/Input"));
 const Dropdown = React.lazy(() => import("../../dropdown/DropDrown"));

@@ -1,40 +1,34 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { PhysicalAddressForm } from "./config/PhysicalAddressForm.data";
-import PhysicalAddressDetail from "./features/PhysicalAddressDetail";
-import { BillToAddressForm } from "./config/BillToAddressForm.data";
-import BillToAddressDetail from "./features/BillToAddressDetail";
-import { LabAddressForm } from "./config/LabAddressForm.data";
-import LabAddressDetail from "./features/LabAddressDetail";
-import { WarehouseAddressForm } from "./config/WarehouseAddressForm.data";
-import WarehouseAddressDetail from "./features/WarehouseAddressDetail";
-import { RegisteredAddressForm } from "./config/RegisteredAddressForm.data";
-import RegisteredAddressDetail from "./features/RegisteredAddressDetail";
-import Buttons from "../../../../components/ui/button/Buttons";
-import { useAddEditBusinessAddressesMutation, useLazyGetOrganizationBusinessAddressesQuery, } from "../../../../app/services/organizationAPI";
-import ToastService from "../../../../services/toastService/ToastService";
-import { RemitToAddressForm } from "./config/RemitToAddressForm.data";
-import RemitToAddressDetail from "./features/RemitToAddressDetail";
-import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 import { useSelector } from "react-redux";
+//** Config's */
+import { LabAddressForm } from "./config/LabAddressForm.data";
+import Buttons from "../../../../components/ui/button/Buttons";
+import { BillToAddressForm } from "./config/BillToAddressForm.data";
+import { RemitToAddressForm } from "./config/RemitToAddressForm.data";
+import { PhysicalAddressForm } from "./config/PhysicalAddressForm.data";
+import { WarehouseAddressForm } from "./config/WarehouseAddressForm.data";
+import { RegisteredAddressForm } from "./config/RegisteredAddressForm.data";
+//** Lib's */
+import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
+//** Component's */
+import DynamicAddressForm from "../../../../common/features/component/ConfigurableAddressForm/DynamicAddressForm";
+//** Service's */
+import ToastService from "../../../../services/toastService/ToastService";
+import { useAddEditBusinessAddressesMutation, useLazyGetOrganizationBusinessAddressesQuery, } from "../../../../app/services/organizationAPI";
 
 const OrganizationBusinessAddressDetail = (isEditablePage) => {
-  const physicalAddressRef = useRef();
-  const billToAddressRef = useRef();
+
   const labAddressRef = useRef();
-  const warehouseAddressRef = useRef();
+  const billToAddressRef = useRef();
   const remitToAddressRef = useRef();
+  const physicalAddressRef = useRef();
+  const warehouseAddressRef = useRef();
   const registeredAddressRef = useRef();
 
-  const [physicalAddressData] = useState(PhysicalAddressForm);
-  const [billToAddressData] = useState(BillToAddressForm);
-  const [labAddressData] = useState(LabAddressForm);
-  const [warehouseAddressData] = useState(WarehouseAddressForm);
-  const [remitToAddressData] = useState(RemitToAddressForm);
-  const [registeredAddressData] = useState(RegisteredAddressForm);
-  const roles = useSelector((state) => state.auth.roles.roleName);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
+  const roles = useSelector((state) => state.auth.roles.roleName);
 
   useEffect(() => {
     const setFormSettingsForAll = (isViewOnly) => {
@@ -127,26 +121,16 @@ const OrganizationBusinessAddressDetail = (isEditablePage) => {
   }, [isAddEditBusinessAddressSuccess, isAddEditBusinessAddressData]);
 
   const handleAddEditBusinessAddress = () => {
+    let registeredAddressFormData = registeredAddressRef.current.getFormData();
     let physicalAddressFormData = physicalAddressRef.current.getFormData();
     let billToAddressFormData = billToAddressRef.current.getFormData();
     let labAddressFormData = labAddressRef.current.getFormData();
     let warehouseAddressFormData = warehouseAddressRef.current.getFormData();
     let remitToAddressFormData = remitToAddressRef.current.getFormData();
-    let registeredAddressFormData = registeredAddressRef.current.getFormData();
 
-    if (
-      physicalAddressFormData &&
-      billToAddressFormData &&
-      remitToAddressFormData &&
-      labAddressFormData &&
-      warehouseAddressFormData &&
-      registeredAddressFormData
-    ) {
-      const extractId = (item, key) =>
-        item[key] && typeof item[key] === "object"
-          ? item[key].value
-          : item[key];
-
+    if (physicalAddressFormData && billToAddressFormData && remitToAddressFormData && labAddressFormData
+      && warehouseAddressFormData && registeredAddressFormData) {
+      const extractId = (item, key) => item[key] && typeof item[key] === "object" ? item[key].value : item[key];
       let requestData = {
         physicalAddress: {
           addressId: physicalAddressFormData.addressId ?? 0,
@@ -175,7 +159,6 @@ const OrganizationBusinessAddressDetail = (isEditablePage) => {
           countryId: extractId(labAddressFormData, "countryId"),
           zipCode: labAddressFormData.zipCode,
         },
-
         warehouseAddress: {
           addressId: warehouseAddressFormData.addressId ?? 0,
           addressLine1: warehouseAddressFormData.addressLine1Id,
@@ -185,7 +168,6 @@ const OrganizationBusinessAddressDetail = (isEditablePage) => {
           countryId: extractId(warehouseAddressFormData, "countryId"),
           zipCode: warehouseAddressFormData.zipCode,
         },
-
         registeredAddress: {
           addressId: registeredAddressFormData.addressId ?? 0,
           addressLine1: registeredAddressFormData.addressLine1Id,
@@ -195,7 +177,6 @@ const OrganizationBusinessAddressDetail = (isEditablePage) => {
           countryId: extractId(registeredAddressFormData, "countryId"),
           zipCode: registeredAddressFormData.zipCode,
         },
-
         remitToAddress: {
           addressId: remitToAddressFormData.addressId ?? 0,
           addressLine1: remitToAddressFormData.addressLine1Id,
@@ -228,52 +209,47 @@ const OrganizationBusinessAddressDetail = (isEditablePage) => {
   return (
     <div>
       {/* <h4 className="organization-tab-title">Business Address</h4> */}
-      <RegisteredAddressDetail
-        isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData}
-        isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess}
-        registeredAddressData={registeredAddressData}
-        RegisteredAddressForm={RegisteredAddressForm}
-        registeredAddressRef={registeredAddressRef}
+      <DynamicAddressForm
+        cardTitle="Registered Address"
+        ref={registeredAddressRef}
+        isGetAddressDetailsSuccess={isGetOrganizationBusinessAddressesSuccess}
+        isGetAddressDetails={isGetOrganizationBusinessAddressesData?.registeredAddress}
+        formConfig={RegisteredAddressForm}
       />
-
-      <PhysicalAddressDetail
-        isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData}
-        isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess}
-        physicalAddressData={physicalAddressData}
-        PhysicalAddressForm={PhysicalAddressForm}
-        physicalAddressRef={physicalAddressRef}
+      <DynamicAddressForm
+        cardTitle="Physical Address"
+        ref={physicalAddressRef}
+        isGetAddressDetailsSuccess={isGetOrganizationBusinessAddressesSuccess}
+        isGetAddressDetails={isGetOrganizationBusinessAddressesData?.physicalAddress}
+        formConfig={PhysicalAddressForm}
       />
-
-      <BillToAddressDetail
-        isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData}
-        isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess}
-        billToAddressData={billToAddressData}
-        BillToAddressForm={BillToAddressForm}
-        billToAddressRef={billToAddressRef}
+      <DynamicAddressForm
+        cardTitle="BillTo Address"
+        ref={billToAddressRef}
+        isGetAddressDetailsSuccess={isGetOrganizationBusinessAddressesSuccess}
+        isGetAddressDetails={isGetOrganizationBusinessAddressesData?.billToAddress}
+        formConfig={BillToAddressForm}
       />
-
-      <LabAddressDetail
-        isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData}
-        isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess}
-        labAddressRef={labAddressRef}
-        LabAddressForm={LabAddressForm}
-        labAddressData={labAddressData}
+      <DynamicAddressForm
+        cardTitle="Lab Address"
+        ref={labAddressRef}
+        isGetAddressDetailsSuccess={isGetOrganizationBusinessAddressesSuccess}
+        isGetAddressDetails={isGetOrganizationBusinessAddressesData?.labAddress}
+        formConfig={LabAddressForm}
       />
-
-      <WarehouseAddressDetail
-        isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData}
-        isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess}
-        warehouseAddressRef={warehouseAddressRef}
-        WarehouseAddressForm={WarehouseAddressForm}
-        warehouseAddressData={warehouseAddressData}
+      <DynamicAddressForm
+        cardTitle="Warehouse Address"
+        ref={warehouseAddressRef}
+        isGetAddressDetailsSuccess={isGetOrganizationBusinessAddressesSuccess}
+        isGetAddressDetails={isGetOrganizationBusinessAddressesData?.warehouseAddress}
+        formConfig={WarehouseAddressForm}
       />
-
-      <RemitToAddressDetail
-        isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData}
-        isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess}
-        remitToAddressData={remitToAddressData}
-        remitToAddressRef={remitToAddressRef}
-        RemitToAddressForm={RemitToAddressForm}
+      <DynamicAddressForm
+        cardTitle="RemitTo Address"
+        ref={remitToAddressRef}
+        isGetAddressDetailsSuccess={isGetOrganizationBusinessAddressesSuccess}
+        isGetAddressDetails={isGetOrganizationBusinessAddressesData?.remitToAddress}
+        formConfig={RemitToAddressForm}
       />
 
       {isEditablePage ?

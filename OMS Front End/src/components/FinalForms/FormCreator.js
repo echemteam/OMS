@@ -10,7 +10,7 @@ const FormCreator = forwardRef(({
   config,
   onFormDataChange,
   onColumnChange,
-  onFieldBlure,
+  onFieldBlur,
   onActionChange,
   onSubmit,
   ...otherProps
@@ -24,38 +24,23 @@ const FormCreator = forwardRef(({
   });
   const validationRules = useMemo(() => getValidationRules(section), [section]);
 
-  // useEffect(() => {
-  //   // const valRule = getValidationRules(config.formFields);
-  //   setValidState(validationRules);
-  // }, [config, validationRules]);
-
   useEffect(() => {
     setFormData(configInitialState);
     setValidState({
       isValid: true,
       error: {},
     });
-  }, [configInitialState]);
+  }, [configInitialState, initialState]);
 
-  const updateFormData = (data) => {
-    const newFromdata = { ...formData, ...data }
-    setFormData(newFromdata);
-  }
-
-  useImperativeHandle(ref, () => {
-    return {
-      getFormData: () => {
-        const validation = handleValidation();
-        return validation.isValid ? formData : null;
-      },
-      updateFormFieldValue: (data) => {
-        updateFormData(data);
-      },
-      getFormDataWithoutValidation: () => {
-        return formData;
-      },
+  useImperativeHandle(ref, () => ({
+    getFormData: () => {
+      const validation = handleValidation();
+      return validation.isValid ? formData : null;
+    },
+    getFormDataWithoutValidation: () => {
+      return formData;
     }
-  }, [formData, validState, validationRules]);
+  }), [formData, validState, validationRules]);
 
 
   const handleValidation = () => {
@@ -103,11 +88,6 @@ const FormCreator = forwardRef(({
     setValidState(validationObj);
   };
 
-  const onActionHandle = (action, dataField, data) => {
-    if (onActionChange && onActionChange[action]) {
-      onActionChange[action](data, dataField);
-    }
-  }
 
   return section ? (
 
@@ -119,13 +99,10 @@ const FormCreator = forwardRef(({
         validState={validState}
         onFormStateChange={handleStateChange}
         onUpdateValidation={handleOnValidateField}
-        onFieldBlure={onFieldBlure}
+        onFieldBlur={onFieldBlur}
         onFormFieldChange={onColumnChange}
         formSetting={formSetting}
         fieldValiadtionRules={validationRules}
-        onActionChange={onActionHandle}
-        handleInputGroupButton={otherProps.handleInputGroupButton}
-        handleInputShowInfo={otherProps.handleInputShowInfo}
         {...otherProps}  // Pass down other props to FormFields
       />
     </React.Suspense>
@@ -153,7 +130,7 @@ FormCreator.propTypes = {
   }).isRequired,
   onFormDataChange: PropTypes.func,
   onColumnChange: PropTypes.func,
-  onFieldBlure: PropTypes.func,
+  onFieldBlur: PropTypes.func,
 };
 
 

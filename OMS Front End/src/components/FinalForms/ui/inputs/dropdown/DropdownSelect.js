@@ -6,7 +6,7 @@ import "./DropdownSelect.scss";
 
 function DropdownSelect(props) {
 
-  
+
 
   return (
     <span className="d-inline-block custom-input">
@@ -19,6 +19,12 @@ function DropdownSelect(props) {
         isMulti={props.isMultiSelect}
         placeholder={props.placeholder}
         isDisabled={props.isDropdownDisabled}
+        menuPortalTarget={document.body}
+        menuPosition="absolute"
+        menuPlacement="auto"
+        styles={{
+          menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+        }}
       />
     </span>
   );

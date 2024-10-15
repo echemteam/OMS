@@ -9,16 +9,20 @@ import PropTypes from 'prop-types';
 export const getFieldData = (formFieldsData, fieldId) => {
     if (formFieldsData?.section) {
         for (const section of formFieldsData?.section) {
-            const field = section.fields.find((item) => item.dataField === fieldId);
-            if (field) {
-                return field;
+            let field = section.fields.find((item) => item.dataField === fieldId);
+            if (field) return field;
+
+            if (section.rowGroup) {
+                for (const row of section.rowGroup) {
+                    field = row.fields.find((field) => field.id === fieldId);
+                    if (field) return field;
+                }
             }
         }
-        return null;
     } else {
         return formFieldsData.formFields?.find((item) => item.dataField === fieldId) || null;
     }
-
+    return null;
 };
 // Define propTypes for the function parameters
 getFieldData.propTypes = {
@@ -43,7 +47,7 @@ getFieldData.propTypes = {
     };
  * setDropDownOptionField(apiResponseData, 'id', 'name', formFieldsData, 'countryDropdown', filterCondition);
  */
-export const setDropDownOptionField = (apiResponseData, valueField, labelField, formFieldsData, fieldId, filterCondition = null) => {
+export const setDropDownOptionField = (apiResponseData, valueField, labelField, formFieldsData, fieldId, filterCondition = null, setFormData) => {
 
     // Filter the API response data if a filter condition is provided
     const filteredData = filterCondition ? apiResponseData?.filter(filterCondition) : apiResponseData;
@@ -61,6 +65,7 @@ export const setDropDownOptionField = (apiResponseData, valueField, labelField, 
     if (dropdownField) {
         dropdownField.fieldSetting.options = mappedData;
     }
+    setFormData && setFormData({ ...formFieldsData });
 };
 
 // Define propTypes for the function parameters

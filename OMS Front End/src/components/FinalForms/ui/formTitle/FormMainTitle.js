@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
-
+import "./FormMainTitle.scss";
 
 const FormMainTitle = (props) => {
   

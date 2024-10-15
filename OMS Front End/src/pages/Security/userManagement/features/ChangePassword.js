@@ -2,11 +2,12 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useUpdateUserPasswordMutation } from '../../../../app/services/userAPI';
 import changePasswordInfo from '../features/config/ChangePassword.data';
 import ToastService from '../../../../services/toastService/ToastService';
-import FormCreator from '../../../../components/Forms/FormCreator';
 import Buttons from '../../../../components/ui/button/Buttons';
 import PropTypes from 'prop-types';
+import FormCreator from '../../../../components/FinalForms/FormCreator';
 
 const ChangePassword = (props) => {
+
     const userId = props.descrypteId;
     const passwordFormRef = useRef();
     const [passwordForm, setPasswordForm] = useState(changePasswordInfo);
@@ -40,9 +41,7 @@ const ChangePassword = (props) => {
         <div className="row">
             <div className="col-md-12">
                 <div className="row vertical-form">
-                    <FormCreator
-                        ref={passwordFormRef} {...passwordForm} config={passwordForm}
-                    />
+                    <FormCreator ref={passwordFormRef} config={passwordForm} />
                 </div>
             </div>
             <div className="col-md-12">

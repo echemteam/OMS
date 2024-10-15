@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 import { SMTPSettingsFormData } from "./config/SMTPSettings.data";
-import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
 import {
   useAddEditSmtpSettingsMutation,
@@ -11,11 +10,14 @@ import ToastService from "../../../../services/toastService/ToastService";
 import { decryptUrlData, encryptAES } from "../../../../services/CryptoService";
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 import { useSelector } from "react-redux";
-import { EmailProviders,FieldSettingType} from "../../../../utils/Enums/commonEnums";
+import { EmailProviders, FieldSettingType } from "../../../../utils/Enums/commonEnums";
 import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
-import { setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { getFieldData, setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import TestEmails from "./TestEmails";
 import CenterModel from "../../../../components/ui/centerModel/CenterModel";
+import FormCreator from "../../../../components/FinalForms/FormCreator";
+import { getValue } from "../../../../utils/CommonUtils/CommonUtilsMethods";
+
 const setInitialData = {
   label: "Gmail",
   value: "Gmail"
@@ -27,13 +29,13 @@ const SMTPSettings = (isEditablePage) => {
   const [, setIsOfficeEmail] = useState(false);
   const [, setIsOutlook] = useState(false);
   const [, setIsGmail] = useState(true);
-  const [addEditSmtpSetting,{isLoading: isAddEditSmtpSettingLoading,isSuccess: isAddEditSmtpSettingSuccess,data: isAddEditSmtpSettingData,},] = useAddEditSmtpSettingsMutation();
-  const [ getSmtpSettings, {isFetching: isGetSmtpSettingsFetching,isSuccess: isGetSmtpSettingsSuccess, data: isGetSmtpSettingsData,},] = useLazyGetSmtpSettingsQuery();
+  const [addEditSmtpSetting, { isLoading: isAddEditSmtpSettingLoading, isSuccess: isAddEditSmtpSettingSuccess, data: isAddEditSmtpSettingData, },] = useAddEditSmtpSettingsMutation();
+  const [getSmtpSettings, { isFetching: isGetSmtpSettingsFetching, isSuccess: isGetSmtpSettingsSuccess, data: isGetSmtpSettingsData, },] = useLazyGetSmtpSettingsQuery();
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const { formSetting } = SMTPSettingsFormData;
   const roles = useSelector((state) => state.auth.roles.roleName);
   const [isTestEmailModelOpen, setIsTestEmailModelOpen] = useState(false);
-  
+
   useEffect(() => {
     if (isEditablePage) {
       if (roles?.includes("Admin")) {
@@ -52,20 +54,15 @@ const SMTPSettings = (isEditablePage) => {
   }, []);
 
   const setInitialValue = () => {
-    
     let updatedFormData;
-    updatedFormData = removeFormFields(SMTPSettingsFormData, [ "clientId","clientSecret","tenantId",]);
-      handleChangeDropdownList(setInitialData, "emailProvider");
-      //setFieldSetting( smtpSettingData,"emailprovider",FieldSettingType.DISABLED,false);
-
-   // setSmtpSettingData(updatedFormData);
+    updatedFormData = removeFormFields(SMTPSettingsFormData, ["clientId", "clientSecret", "tenantId",]);
+    handleColumnChange("emailProvider", setInitialData);
   };
 
   const getFieldsToRemove = (type) => {
-
     switch (type) {
       case "Office365":
-        return ["smtpServer","smtpPort","smtpUserName","smtpPassword","useSsl",];
+        return ["smtpServer", "smtpPort", "smtpUserName", "smtpPassword", "useSsl",];
       case "Gmail":
         return ["clientId", "clientSecret", "tenantId"];
       case "Outlook":
@@ -74,56 +71,45 @@ const SMTPSettings = (isEditablePage) => {
         return [];
     }
   };
-  const handleChangeDropdownList = (data, dataField) => {
- 
-    let manageData = { ...SMTPSettingsFormData };
-    const removeFields = getFieldsToRemove(data.value);
-    manageData.formFields = manageData.formFields.filter(
-      (field) => !removeFields.includes(field.id)
-    );
-    //  manageData.initialState = { ...resetData };
-    manageData.initialState = { ...SMTPSettingsFormData.initialState };
-    manageData.initialState.emailProvider = data.value;
-    switch (data.value) {
-      case "Gmail":
-        manageData.initialState.smtpServer = "smtp.gmail.com";
-        manageData.initialState.smtpPort = 587;
-        break;
-      case "Outlook":
-        manageData.initialState.smtpServer = "smtp-mail.outlook.com";
-        manageData.initialState.smtpPort = 587;
-        break;
-      default:
-        break;
-    }
-    setSmtpSettingData(manageData);
-    switch (data.value) {
-      case "Office365":
-        setIsOfficeEmail(true);
-        setIsOutlook(false);
-        setIsGmail(false);
-        break;
-      case "Outlook":
-        setIsOutlook(true);
-        setIsOfficeEmail(false);
-        setIsGmail(false);
-        break;
-      case "Gmail":
-        setIsGmail(true);
-        setIsOfficeEmail(false);
-        setIsOutlook(false);
-        break;
-      default:
-        break;
+
+  const handleColumnChange = (dataField, updatedData) => {
+    if (dataField === 'emailProvider') {
+      let manageData = { ...SMTPSettingsFormData };
+      const emailProvider = getValue(updatedData.emailProvider);
+      const removeFields = getFieldsToRemove(emailProvider);
+      manageData = removeFormFields(SMTPSettingsFormData, removeFields);
+      manageData.initialState = { ...SMTPSettingsFormData.initialState };
+      manageData.initialState.emailProvider = emailProvider;
+      switch (emailProvider) {
+        case "Gmail":
+          setIsGmail(true);
+          setIsOutlook(false);
+          setIsOfficeEmail(false);
+          manageData.initialState.smtpServer = "smtp.gmail.com";
+          manageData.initialState.smtpPort = 587;
+          break;
+        case "Outlook":
+          setIsOutlook(true);
+          setIsGmail(false);
+          setIsOfficeEmail(false);
+          manageData.initialState.smtpServer = "smtp-mail.outlook.com";
+          manageData.initialState.smtpPort = 587;
+          break;
+        case "Office365":
+          setIsGmail(false);
+          setIsOutlook(false);
+          setIsOfficeEmail(true);
+          break;
+        default:
+          break;
+      }
+      setSmtpSettingData(manageData);
     }
   };
 
   useEffect(() => {
-    
-    const dropdownField = smtpSettingData.formFields.find(
-      (item) => item.dataField === "emailProvider"
-    );
-    dropdownField.fieldSetting.options =EmailProviders
+    const dropdownField = getFieldData(smtpSettingData, "emailProvider");
+    dropdownField.fieldSetting.options = EmailProviders
   }, []);
 
   useEffect(() => {
@@ -154,15 +140,13 @@ const SMTPSettings = (isEditablePage) => {
   };
 
   useEffect(() => {
-    if ( !isGetSmtpSettingsFetching && isGetSmtpSettingsSuccess && isGetSmtpSettingsData) {
-     const fieldsToRemove = getFieldsToRemove(isGetSmtpSettingsData.emailProvider);
-
+    if (!isGetSmtpSettingsFetching && isGetSmtpSettingsSuccess && isGetSmtpSettingsData) {
+      const fieldsToRemove = getFieldsToRemove(isGetSmtpSettingsData.emailProvider);
       let formData;
       if (fieldsToRemove) {
         formData = removeFormFields(SMTPSettingsFormData, fieldsToRemove);
       }
-      setFieldSetting(formData,"emailprovider", FieldSettingType.DISABLED, true);
-
+      setFieldSetting(formData, "emailprovider", FieldSettingType.DISABLED, true);
       formData.initialState = {
         emailProvider: isGetSmtpSettingsData?.emailProvider,
         smtpServer: decryptUrlData(isGetSmtpSettingsData.smtpServer),
@@ -178,11 +162,7 @@ const SMTPSettings = (isEditablePage) => {
       setSmtpSettingData(formData);
       setSmtpId(isGetSmtpSettingsData.smtpSettingId);
     }
-  }, [isGetSmtpSettingsFetching,isGetSmtpSettingsSuccess,isGetSmtpSettingsData,]);
-
-  const formActionHandler = {
-    DDL_CHANGED: handleChangeDropdownList,
-  };
+  }, [isGetSmtpSettingsFetching, isGetSmtpSettingsSuccess, isGetSmtpSettingsData,]);
 
   if (isGetSmtpSettingsFetching) {
     return (
@@ -192,12 +172,12 @@ const SMTPSettings = (isEditablePage) => {
     ); // Replace with a proper loading spinner or component
   }
 
-  const handleTestEmail=()=>{
+  const handleTestEmail = () => {
     setIsTestEmailModelOpen(true);
   }
-	const onCloseModal = () => {
-		setIsTestEmailModelOpen(false);
-	}
+  const onCloseModal = () => {
+    setIsTestEmailModelOpen(false);
+  }
 
   return (
     <div className="row mt-2 add-address-form">
@@ -205,13 +185,12 @@ const SMTPSettings = (isEditablePage) => {
       <FormCreator
         config={smtpSettingData}
         ref={smtpRef}
-        {...smtpSettingData}
-        onActionChange={formActionHandler}
+        onColumnChange={handleColumnChange}
       />
       {isEditablePage ? (
         <div className="col-md-12 mt-2">
           <div className="d-flex align-item-end justify-content-end">
-          <Buttons
+            <Buttons
               buttonTypeClassName="theme-button mr-4"
               buttonText="Test Outbound Email"
               onClick={handleTestEmail}
@@ -228,17 +207,17 @@ const SMTPSettings = (isEditablePage) => {
         </div>
       ) : null}
       <CenterModel
-          showModal={isTestEmailModelOpen}
-          handleToggleModal={onCloseModal}
-          modalTitle={"Test Outbound Email"}
-          modelSizeClass="w-40"
-        >
-          <TestEmails 
-              onClose={onCloseModal}
-              smtpRef={smtpRef}
-              
-          />
-        </CenterModel>
+        showModal={isTestEmailModelOpen}
+        handleToggleModal={onCloseModal}
+        modalTitle={"Test Outbound Email"}
+        modelSizeClass="w-55"
+      >
+        <TestEmails
+          onClose={onCloseModal}
+          smtpRef={smtpRef}
+
+        />
+      </CenterModel>
     </div>
   );
 };

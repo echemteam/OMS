@@ -1,74 +1,90 @@
+import { validationTypes } from "../../../../../components/FinalForms/libs/data/ValidationTypes";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 
+const initState = {
+    fedExAccount: "",
+    dHLAccount: "",
+    uPSAccount: "",
+    uSPSAccount: ""
+};
+
+
 export const OrganizationLogisticFormData = {
-    
-    initialState: { fedExAccount:"" , dHLAccount:"" , uPSAccount: "" , uSPSAccount: "" },
-    formFields: [
+    initialState: initState,
+    section: [
         {
-            id: "fedExAccount",
-            lable: "FedEx Account ",
-            Field_Name: "FedEx Account",
-            fieldType: FormFieldTypes.INPUT,
-            dataField: "fedExAccount",
-            fieldSetting: {
-              placeholder: "Enter FedEx Account",
-              allowSpace: true,
-              maxLength:9,
-            },
-            validation: [{ type: "require" }],
+            title: "Organization Logistic Section",
+            row: {},
             style: {
-              containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-input",
+                sectionStyle: "col-lg-12 row mb-3",
             },
-          },
-        {
-            id: "dHLAccount",
-            lable: "DHL Account ",
-            Field_Name: "DHL Account",
-            fieldType: FormFieldTypes.INPUT,
-            dataField: "dHLAccount",
-            fieldSetting: {
-                placeholder: "Enter DHL Account",
-                allowSpace: true,
-                maxLength:9,
-            },
-            validation: [{ type: "require" }],
-            style: {
-                containerCss: "col-md-6 mb-3 mb-input relative",
-            },
-        },
-        {
-            id: "uPSAccount",
-            lable: "UPS Account ",
-            Field_Name: "UPS Account",
-            fieldType: FormFieldTypes.INPUT,
-            dataField: "uPSAccount",
-            fieldSetting: {
-                placeholder: "Enter UPS Account",
-                allowSpace: true,
-                maxLength:6,
-            },
-            validation: [{ type: "require" }],
-            style: {
-                containerCss: "col-md-6 mb-3 mb-input relative",
-            },
-        },
-          {
-            id: "uSPSAccount",
-            lable: "USPS Account ",
-            Field_Name: "USPS Account",
-            fieldType: FormFieldTypes.INPUT,
-            dataField: "uSPSAccount",
-            fieldSetting: {
-                placeholder: "Enter USPS Account",
-                allowSpace: true,
-                maxLength:9,
-            },
-            validation: [{ type: "require" }],
-            style: {
-                containerCss: "col-md-6 mb-3 mb-input relative",
-            },
-        },
-        
+            fields: [
+                {
+                    id: "fedExAccount",
+                    label: "FedEx Account ",
+                    Field_Name: "FedEx Account",
+                    fieldType: FormFieldTypes.INPUT,
+                    dataField: "fedExAccount",
+                    fieldSetting: {
+                        placeholder: "Enter FedEx Account",
+                        allowSpace: true,
+                        maxLength: 9,
+                    },
+                    validation: [{ type: validationTypes.REQUIRE }],
+                    style: {
+                        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-input",
+                    },
+                },
+                {
+                    id: "dHLAccount",
+                    label: "DHL Account ",
+                    Field_Name: "DHL Account",
+                    fieldType: FormFieldTypes.INPUT,
+                    dataField: "dHLAccount",
+                    fieldSetting: {
+                        placeholder: "Enter DHL Account",
+                        allowSpace: true,
+                        maxLength: 9,
+                    },
+                    validation: [{ type: validationTypes.REQUIRE }],
+                    style: {
+                        containerCss: "col-md-6 mb-3 mb-input relative",
+                    },
+                },
+                {
+                    id: "uPSAccount",
+                    label: "UPS Account ",
+                    Field_Name: "UPS Account",
+                    fieldType: FormFieldTypes.INPUT,
+                    dataField: "uPSAccount",
+                    fieldSetting: {
+                        placeholder: "Enter UPS Account",
+                        allowSpace: true,
+                        maxLength: 6,
+                    },
+                    validation: [{ type: validationTypes.REQUIRE }],
+                    style: {
+                        containerCss: "col-md-6 mb-3 mb-input relative",
+                    },
+                },
+                {
+                    id: "uSPSAccount",
+                    label: "USPS Account ",
+                    Field_Name: "USPS Account",
+                    fieldType: FormFieldTypes.INPUT,
+                    dataField: "uSPSAccount",
+                    fieldSetting: {
+                        placeholder: "Enter USPS Account",
+                        allowSpace: true,
+                        maxLength: 9,
+                    },
+                    validation: [{ type: validationTypes.REQUIRE }],
+                    style: {
+                        containerCss: "col-md-6 mb-3 mb-input relative",
+                    },
+                },
+            ]
+        }
     ],
     formSetting: {
         isViewOnly: false

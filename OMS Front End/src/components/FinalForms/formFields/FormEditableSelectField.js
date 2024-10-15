@@ -18,8 +18,7 @@ const FormEditableSelectField = ({
     fieldSetting,
     onChange,
     onValidation,
-    onBlure,
-    fieldActions,
+    onBlur,
     ...otherProps
 }) => {
 
@@ -30,27 +29,24 @@ const FormEditableSelectField = ({
             } else if (fieldType === "dropdown") {
                 onChange(dataField, selectedValue.value);
             }
-            if (fieldActions && otherProps?.isEnableOnChange) {
-                fieldActions('DDL_CHANGED', dataField, selectedValue);
-            }
         }
     };
-
+   
     const handleOnBlur = () => {
-        onBlure(dataField)
-    };
+        onBlur(dataField)
+      };
     return (
         <>
             <div className="input-label-part">
 
-                {labelName && labelName !== "" && (
-                    <Label labelName={labelName} isRequired={isRequired} htmlFor={name} />
-                )}
-                {fieldSetting?.subTittle ?
-                    <div className={`"section-title" `}>
-                        <h5>{fieldSetting.subTittle}</h5>
-                    </div>
-                    : ""}
+            {labelName && labelName !== "" && (
+          <Label labelName={labelName} isRequired={isRequired} htmlFor={name}/>
+        )}
+        {fieldSetting?.subTitle ?
+          <div className={`"section-title" `}>
+            <h5>{fieldSetting.subTitle}</h5>
+          </div>
+          : ""}
                 <EditableDropdown
                     name={name}
                     options={fieldSetting?.options}

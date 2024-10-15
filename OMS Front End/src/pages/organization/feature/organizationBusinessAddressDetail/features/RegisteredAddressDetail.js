@@ -1,43 +1,46 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../app/services/addressAPI";
-import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicdetailAPI";
-import FormCreator from "../../../../../components/FinalForms/FormCreator";
 import CardSection from "../../../../../components/ui/card/CardSection";
-import { setDropDownOptionField, setFieldSetting } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
-import { FieldSettingType } from "../../../../../utils/Enums/commonEnums";
+import FormCreator from "../../../../../components/FinalForms/FormCreator";
+import { RegisteredAddressForm } from "../config/RegisteredAddressForm.data";
+import { setDropDownOptionField } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+//** Service's */
+import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicdetailAPI";
+import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../app/services/addressAPI";
 
-const RegisteredAddressDetail = ({ registeredAddressRef, RegisteredAddressForm, isGetOrganizationBusinessAddressesSuccess, isGetOrganizationBusinessAddressesData }) => {
+const RegisteredAddressDetail = ({ registeredAddressRef, isGetAddressDetailsSuccess, isGetAddressDetails }) => {
 
-  const [registeredFormData, setRegisteredFormData] = useState(RegisteredAddressForm)
-  const [getAllCountries, { isSuccess: isGetAllCountriesSuccess, isFetching: isGetAllCountriesFetching, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
-  const [getAllCities, { isSuccess: isGetAllCitiesSuccess, isFetching: isGetAllCitiesFetching, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
+  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
+  const [registeredFormData, setRegisteredFormData] = useState(RegisteredAddressForm);
+
+  //** API Call's */
   const [getAllStates, { isSuccess: isGetAllStateSuccess, isFetching: isGetAllStateFetching, data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
+  const [getAllCities, { isSuccess: isGetAllCitiesSuccess, isFetching: isGetAllCitiesFetching, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
+  const [getAllCountries, { isSuccess: isGetAllCountriesSuccess, isFetching: isGetAllCountriesFetching, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
 
 
   useEffect(() => {
-    if (!isGetAllStateFetching && isGetAllStateSuccess && isGetOrganizationBusinessAddressesSuccess && isGetOrganizationBusinessAddressesData?.registeredAddress) {
-      const { registeredAddress } = isGetOrganizationBusinessAddressesData;
+    if (!isGetAllStateFetching && isGetAllStateSuccess && isGetAddressDetailsSuccess && isGetAddressDetails) {
       let data = { ...registeredFormData };
-      if (registeredAddress.countryId) {
-        setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', data, 'stateId', item => item.countryId === registeredAddress.countryId);
+      if (isGetAddressDetails.countryId) {
+        setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', data, 'stateId', item => item.countryId === isGetAddressDetails.countryId);
       }
-      if (registeredAddress.stateId) {
-        getAllCities(registeredAddress.stateId)
+      if (isGetAddressDetails.stateId) {
+        getAllCities(isGetAddressDetails.stateId)
       }
       data.initialState = {
-        addressId: registeredAddress.addressId,
-        addressLine1Id: registeredAddress.addressLine1,
-        addressLine2Id: registeredAddress.addressLine2,
-        countryId: registeredAddress.countryId,
-        zipCode: registeredAddress.zipCode,
-        stateId: registeredAddress.stateId,
-        cityId: registeredAddress.cityId,
+        addressId: isGetAddressDetails.addressId,
+        addressLine1Id: isGetAddressDetails.addressLine1,
+        addressLine2Id: isGetAddressDetails.addressLine2,
+        countryId: isGetAddressDetails.countryId,
+        zipCode: isGetAddressDetails.zipCode,
+        stateId: isGetAddressDetails.stateId,
+        cityId: isGetAddressDetails.cityId,
       };
       setRegisteredFormData(data);
     }
-  }, [isGetAllStateFetching, isGetAllStateSuccess, isGetOrganizationBusinessAddressesSuccess, isGetOrganizationBusinessAddressesData]);
+  }, [isGetAllStateFetching, isGetAllStateSuccess, isGetAddressDetailsSuccess, isGetAddressDetails]);
 
   useEffect(() => {
     getAllCountries();
@@ -47,50 +50,49 @@ const RegisteredAddressDetail = ({ registeredAddressRef, RegisteredAddressForm, 
   useEffect(() => {
     if (!isGetAllCountriesFetching && isGetAllCountriesSuccess && allGetAllCountriesData) {
       setDropDownOptionField(allGetAllCountriesData, 'countryId', 'name', registeredFormData, 'countryId');
+      setShouldRerenderFormCreator((prevState) => !prevState);
     }
   }, [isGetAllCountriesFetching, isGetAllCountriesSuccess, allGetAllCountriesData]);
-
 
   useEffect(() => {
     if (!isGetAllCitiesFetching && isGetAllCitiesSuccess && allGetAllCitiesData) {
       setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', registeredFormData, 'cityId');
+      setShouldRerenderFormCreator((prevState) => !prevState);
     }
   }, [isGetAllCitiesFetching, isGetAllCitiesSuccess, allGetAllCitiesData]);
 
-
-  const handleChangeAddressDropdownList = (data, dataField) => {
+  const handleColumnChange = (dataField, updatedData) => {
     const manageData = { ...registeredFormData };
+    const countryId = updatedData.countryId && typeof updatedData.countryId === "object" ? updatedData.countryId.value : updatedData.countryId;
+    const stateId = updatedData.stateId && typeof updatedData.stateId === "object" ? updatedData.stateId.value : updatedData.stateId;
     if (dataField === "countryId") {
-      setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', item => item.countryId === data.value);
+      setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', item => item.countryId === countryId);
       setDropDownOptionField(null, 'cityId', 'name', manageData, 'cityId', null);
-      setFieldSetting(manageData, 'stateId', FieldSettingType.DISABLED, false);
-      registeredAddressRef.current.updateFormFieldValue({
-        countryId: data.value,
+      manageData.initialState = {
+        ...updatedData,
         stateId: null,
         cityId: null
-      });
+      }
     } else if (dataField === "stateId") {
-      getAllCities(data.value)
-      setFieldSetting(manageData, 'cityId', FieldSettingType.DISABLED, false);
-      registeredAddressRef.current.updateFormFieldValue({
-        stateId: data.value,
-        cityId: null,
-      });
+      getAllCities(stateId);
+      manageData.initialState = {
+        ...updatedData,
+        stateId: stateId,
+        countryId: countryId,
+        cityId: null
+      }
     }
     setRegisteredFormData(manageData);
-  };
+  }
 
-  const formAddressActionHandler = {
-    DDL_CHANGED: handleChangeAddressDropdownList,
-  };
   return (
     <CardSection cardTitle="Registered Address">
       <div className="row">
         <FormCreator
           config={registeredFormData}
           ref={registeredAddressRef}
-          {...registeredFormData}
-          onActionChange={formAddressActionHandler}
+          onColumnChange={handleColumnChange}
+          key={shouldRerenderFormCreator}
         />
       </div>
     </CardSection>

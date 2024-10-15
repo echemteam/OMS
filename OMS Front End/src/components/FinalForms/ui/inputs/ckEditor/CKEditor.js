@@ -1,7 +1,10 @@
 import React from 'react';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { ClassicEditor } from 'ckeditor5';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+
+import 'ckeditor5/ckeditor5.css';
 import './CkEditor.scss';
+import { editorConfig } from './CkEditorConfig';
 
 const CKEditorComponent = ({
     onCKEditorChange,
@@ -19,13 +22,7 @@ const CKEditorComponent = ({
                     const data = editor.getData();
                     onCKEditorChange(data, editor);
                 }}
-                config={{
-                    toolbar: [
-                        'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'undo', 'redo'
-                    ],
-                    placeholder: editorProps.placeholder || 'Enter text here...',
-                    ...editorProps.config
-                }}
+                config={editorConfig}
                 disabled={isDisable}
                 {...editorProps}
             />

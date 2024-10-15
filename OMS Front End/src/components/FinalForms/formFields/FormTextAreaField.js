@@ -1,10 +1,11 @@
-import React, { useState,useCallback  } from "react";
-import debounce from 'lodash.debounce';
+import React, { useCallback } from "react";
+import debounce from "lodash.debounce";
 
-const Label = React.lazy(() => import('../ui/label/Label'));
+const Label = React.lazy(() => import("../ui/label/Label"));
 const TextArea = React.lazy(() => import("../ui/inputs/textArea/TextArea"));
-const ValidationText = React.lazy(() => import('../ui/validation/ValidationText'));
-
+const ValidationText = React.lazy(() =>
+  import("../ui/validation/ValidationText")
+);
 
 const FormTextAreaFields = ({
   keyId,
@@ -21,17 +22,19 @@ const FormTextAreaFields = ({
   fieldSetting,
   onChange,
   onValidation,
-  onBlure,
+  onBlur,
   ...otherProps
 }) => {
-
- 
   const debouncedOnChange = useCallback(
-    debounce((field, value) => {
-      if (onChange) {
-        onChange(field, value);
-      }
-    }, fieldSetting?.debounceTime?fieldSetting?.debounceTime:10), [onChange]
+    debounce(
+      (field, value) => {
+        if (onChange) {
+          onChange(field, value);
+        }
+      },
+      fieldSetting?.debounceTime ? fieldSetting?.debounceTime : 10
+    ),
+    [onChange]
   );
 
   const handleInputChange = (e) => {
@@ -39,22 +42,22 @@ const FormTextAreaFields = ({
   };
 
   const handleOnBlur = () => {
-    onBlure(dataField)
+    onBlur(dataField);
   };
-
 
   return (
     <div className="input-field-sec" key={keyId}>
-     
+      {fieldSetting?.subTitle ? (
+        <div className="section-title">
+          <h5>{fieldSetting.subTitle}</h5>
+        </div>
+      ) : (
+        ""
+      )}
       <div className="input-label-part">
         {labelName && labelName !== "" && (
           <Label labelName={labelName} for={name} isRequired={isRequired} />
         )}
-         {fieldSetting?.subTittle ?
-        <div className="section-title">
-          <h5>{fieldSetting.subTittle}</h5>
-        </div>
-        : ""}
         <TextArea
           {...fieldSetting}
           name={name}
@@ -62,11 +65,15 @@ const FormTextAreaFields = ({
           value={value}
           onChange={handleInputChange}
           onBlur={handleOnBlur}
-          isDisable={formSetting?.isViewOnly || fieldSetting?.isDisable || overRideProps?.isDisable}
-          readOnly ={fieldSetting?.isReadOnly}
+          isDisable={
+            formSetting?.isViewOnly ||
+            fieldSetting?.isDisable ||
+            overRideProps?.isDisable
+          }
+          readOnly={fieldSetting?.isReadOnly}
         />
-      <ValidationText error={error || ""} />
       </div>
+        <ValidationText error={error || ""} />
     </div>
   );
 };

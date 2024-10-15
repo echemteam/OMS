@@ -64,10 +64,13 @@ const TextArea = ({
         readOnly={isReadOnly}
         {...rest}
       />
-      <div className="text-area-length-info">
-        <span>Current Length: {currentLength}</span>
-        {maxLength && <span> / Max Length: {maxLength}</span>}
-      </div>
+      {rest.showTextLength ?
+        <div className="text-area-length-info">
+          <span>Current Length: {currentLength}</span>
+          {maxLength && <span> / Max Length: {maxLength}</span>}
+        </div>
+        : null
+      }
     </div>
   );
 };

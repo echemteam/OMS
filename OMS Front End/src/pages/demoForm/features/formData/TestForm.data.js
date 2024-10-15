@@ -127,7 +127,7 @@ export const testFormData = {
       id: "tinyEditor",
       lable: "TinyEditor",
       Field_Name: "Tiny Editor",
-      fieldType: FormFieldTypes.TINYEDITOR,
+      fieldType: FormFieldTypes.TEXTEDITOR,
       dataField: "tinyEditor",
       fieldSetting: {
         placeholder: "",

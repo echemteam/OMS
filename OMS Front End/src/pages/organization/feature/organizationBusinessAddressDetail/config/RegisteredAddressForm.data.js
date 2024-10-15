@@ -16,6 +16,7 @@ export const RegisteredAddressForm = {
   section: [
     {
       title: "Physical Information Section",
+      sectionId: "physicalDetailSection",
       row: {},
       style: {
         sectionStyle: "col-lg-12 row mb-3",
@@ -77,7 +78,7 @@ export const RegisteredAddressForm = {
           fieldType: FormFieldTypes.SELECT,
           dataField: "stateId",
           fieldSetting: {
-            //isDisable: false,
+            isDisable: false,
             placeholder: "Select State",
             isEnableOnChange: true,
             maxLength: 20,
@@ -95,7 +96,8 @@ export const RegisteredAddressForm = {
           fieldSetting: {
             placeholder: "Select City",
             isEnableOnChange: true,
-            maxLength: 9
+            maxLength: 9,
+            isDisable: false,
           },
           style: {
             containerCss: "col-xxl-3 col-xl-3 col-md-6 col-12 mb-input label-name-small",

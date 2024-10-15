@@ -8,7 +8,7 @@ const MaskInput = ({
     name,
     value,
     onChange,
-    onBlur = () => {}, // Default to a no-op function if not provided
+    onBlur = () => { }, // Default to a no-op function if not provided
     masking = {}, // Default to an empty object
     isDisable,
     fieldSetting,
@@ -17,7 +17,7 @@ const MaskInput = ({
     const [selectValue, setSelectValue] = useState(value);
 
     const handleInputChange = (e) => {
-        let value = unmaskValue(e.target.value,masking?.maskPlaceholder);
+        let value = unmaskValue(e.target.value, masking?.maskPlaceholder);
         setSelectValue(e.target.value);
         onChange(value);
     };
@@ -44,7 +44,7 @@ const MaskInput = ({
     return (
         <InputMask
             name={name}
-            value={selectValue}
+            value={selectValue || value}
             onChange={handleInputChange}
             onBlur={handleBlur}
             disabled={isDisable}

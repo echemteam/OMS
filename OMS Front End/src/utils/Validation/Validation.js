@@ -54,9 +54,9 @@ export function ValidateField(value, fieldRules, state) {
     if (validator && !validationResponse) {
       result.isvalid = false;
       result.message = rule.message;
-    } else if (!validationResponse.isValid && validationResponse.customMessage) {
-      result.isvalid = false;
-      result.message = validationResponse.customMessage;
+    } else if (validationResponse && validationResponse?.customMessage) {
+      result.isvalid = validationResponse?.isValid;
+      result.message = validationResponse?.customMessage;
     }
   }
 

@@ -4,7 +4,7 @@ import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
 
 const Phone = ({
-  defaultCountry = 'in',
+  defaultCountry = 'us',
   value,
   onBlur,
   onChange,
@@ -12,10 +12,9 @@ const Phone = ({
   isReadOnly = false,
   placeholder,
 }) => {
+  
   const [inputAttributes, setInputAttributes] = useState({});
-
-  console.log(defaultCountry);
-
+  
   useEffect(() => {
     const newAttribute = {};
     if (isReadOnly) {
@@ -40,6 +39,7 @@ const Phone = ({
         disabled={isDisable}
         placeholder={placeholder}
         {...inputAttributes}
+        className="input-field-phone"
       />
     </div>
   );

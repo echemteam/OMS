@@ -20,7 +20,7 @@ const FormRadioButtonField = ({
     fieldSetting,
     onChange,
     onValidation,
-    onBlure,
+    onBlur,
     ...otherProps
 }) => {
 
@@ -31,14 +31,14 @@ const FormRadioButtonField = ({
     };
 
     const handleOnBlur = () => {
-        onBlure(dataField)
+        onBlur(dataField)
       };
     return (
         <>
             {/* <div className="input-field-sec"> */}
-            {fieldSetting?.subTittle ?
+            {fieldSetting?.subTitle ?
                 <div className={`"section-title" `}>
-                    <h5>{fieldSetting.subTittle}</h5>
+                    <h5>{fieldSetting.subTitle}</h5>
                 </div>
                 : ""}
                 <div className="input-label-part">

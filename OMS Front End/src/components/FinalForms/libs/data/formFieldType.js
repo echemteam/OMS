@@ -13,7 +13,7 @@ export const FormFieldTypes = {
   SEPARATOR: 12,
   MAINFORMTITLE: 13,
   EDITABLEDROPDOWN: 14,
-  PHONE: 15,
+  PHONE: 15
   // DECIMAL :4
   // NUMERIC: 4,
   // PASSWORD: 7,

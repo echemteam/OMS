@@ -1,3 +1,4 @@
+import { validationTypes } from "../../../../../components/FinalForms/libs/data/ValidationTypes";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 const initState = {
@@ -8,37 +9,46 @@ const initState = {
 const changePasswordInfo = {
     name: "Change Password",
     initialState: initState,
-    formFields: [
+    section: [
         {
-            id: "password",
-            lable: "Password ",
-            Field_Name: "Password",
-            fieldType: FormFieldTypes.PASSWORD,
-            dataField: "password",
-            fieldSetting: {
-                placeholder: "Enter Your Password",
-                maxLength:20,
-            },
-            validation: [{ type: "require" }, { type: "password" }],
+            title: "User Information Section",
+            row: {},
             style: {
-                containerCss: "col-md-6 mb-input",
+                sectionStyle: "col-lg-12 row mb-3",
             },
-        },
-        {
-            id: "confirmPassword",
-            lable: "Confirm Password ",
-            Field_Name: "Confirm Password",
-            fieldType: FormFieldTypes.PASSWORD,
-            dataField: "confirmPassword",
-            fieldSetting: {
-                placeholder: "Confirm Your Password",
-                maxLength:20,
-            },
-            validation: [{ type: "require" }, { type: "compare", compareEle: "password" }],
-            style: {
-                containerCss: "col-md-6 mb-input",
-            },
-        },
+            fields: [
+                {
+                    id: "password",
+                    lable: "Password ",
+                    Field_Name: "Password",
+                    fieldType: FormFieldTypes.PASSWORD,
+                    dataField: "password",
+                    fieldSetting: {
+                        placeholder: "Enter Your Password",
+                        maxLength: 20,
+                    },
+                    validation: [{ type: validationTypes.REQUIRE }, { type: validationTypes.PASSWORD }],
+                    style: {
+                        containerCss: "col-md-6 mb-input",
+                    },
+                },
+                {
+                    id: "confirmPassword",
+                    lable: "Confirm Password ",
+                    Field_Name: "Confirm Password",
+                    fieldType: FormFieldTypes.PASSWORD,
+                    dataField: "confirmPassword",
+                    fieldSetting: {
+                        placeholder: "Confirm Your Password",
+                        maxLength: 20,
+                    },
+                    validation: [{ type: validationTypes.REQUIRE }, { type: validationTypes.COMPARE, compareEle: "password" }],
+                    style: {
+                        containerCss: "col-md-6 mb-input",
+                    },
+                },
+            ]
+        }
     ],
     formSetting: {
         isViewOnly: false

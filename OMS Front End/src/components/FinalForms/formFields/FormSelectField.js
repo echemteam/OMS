@@ -20,8 +20,7 @@ const FormSelectField = ({
   fieldSetting,
   onChange,
   onValidation,
-  onBlure,
-  fieldActions,
+  onBlur,
   ...otherProps
 }) => {
 
@@ -35,7 +34,9 @@ const FormSelectField = ({
       }
       else {
         onChange(dataField, selectedOption);
-        fieldActions && fieldActions('DDL_CHANGED', dataField, selectedOption);
+        // if (fieldActions && oteherProp?.isEnableOnChange) {
+        //   fieldActions('DDL_CHANGED', dataField, selectedOption);
+        // }
       }
     }
   }
@@ -48,19 +49,17 @@ const FormSelectField = ({
 
   return (
     <div className='dropdown-label'>
-      {console.log('otherProps', otherProps)}
-      {console.log('fieldActions', fieldActions)}
       <div className='input-label-part'>
         {labelName && labelName !== "" && (
           <Label labelName={labelName} isRequired={isRequired} />
         )}
-        {fieldSetting?.subTittle ?
+        {fieldSetting?.subTitle ?
           <div className={`"section-title" `}>
-            <h5>{fieldSetting.subTittle}</h5>
+            <h5>{fieldSetting.subTitle}</h5>
           </div>
           : ""}
         <Dropdown
-          isInputField
+        isInputField
           placeholder={fieldSetting.placeholder}
           onChange={handleChange}
           onBlur={handleOnBlur}

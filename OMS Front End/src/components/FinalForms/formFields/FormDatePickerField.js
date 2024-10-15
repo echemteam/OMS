@@ -21,7 +21,7 @@ const FormDatePickerFields = ({
   isRequired,
   fieldSetting,
   onChange,
-  onBlure,
+  onBlur,
   ...otherProps
 }) => {
 
@@ -34,7 +34,7 @@ const FormDatePickerFields = ({
   }, [onChange, dataField]);
 
   const handleOnBlur = () => {
-    onBlure(dataField)
+    onBlur(dataField)
   };
 
 
@@ -45,9 +45,9 @@ const FormDatePickerFields = ({
           <Label labelName={labelName} isRequired={isRequired} />
         )}
       </div>
-      {fieldSetting?.subTittle && (
+      {fieldSetting?.subTitle && (
         <div className="section-title">
-          <h5>{fieldSetting.subTittle}</h5>
+          <h5>{fieldSetting.subTitle}</h5>
         </div>
       )}
       <div className="input-date-sec">
@@ -89,10 +89,10 @@ FormDatePickerFields.propTypes = {
   }),
   isRequired: PropTypes.bool,
   fieldSetting: PropTypes.shape({
-    subTittle: PropTypes.string,
+    subTitle: PropTypes.string,
     placeholder: PropTypes.string,
     isDisable: PropTypes.bool,
   }),
   onChange: PropTypes.func.isRequired,
-  onBlure: PropTypes.func.isRequired,
+  onBlur: PropTypes.func.isRequired,
 };

@@ -132,8 +132,7 @@ const FormFileUploadField = ({
                         overRideProps?.isDisable
                     }
                     isDownloadButton={inputProps.isDownloadable}
-                    acceptedFiles={inputProps.fieldSetting.acceptedFiles}
-                    maxSize={inputProps.fieldSetting.maxSize}
+                    acceptedFiles={inputProps.acceptedFiles}
                     imageUpload={inputProps.imageUpload}
                 />
             </div>

@@ -13,7 +13,6 @@ const FormCheckboxField = ({
   overRideProps,
   fieldSetting,
   onChange,
-  fieldActions,
   ...otherProps
 }) => {
 
@@ -21,14 +20,13 @@ const FormCheckboxField = ({
     if (onChange) {
       onChange(dataField, value);
     }
-    fieldActions && fieldActions('CB_CHANGE', dataField, value);
   }, [onChange]);
 
-  return (
+ return (
     <div className="input-field-sec">
-      {fieldSetting?.subTittle && (
+      {fieldSetting?.subTitle && (
         <div className="section-title">
-          <h5>{fieldSetting.subTittle}</h5>
+          <h5>{fieldSetting.subTitle}</h5>
         </div>
       )}
       <div className="checkbox-label-part">

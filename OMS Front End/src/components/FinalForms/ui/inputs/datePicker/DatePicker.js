@@ -145,8 +145,6 @@ const DatePickerComponent = ({
         }
     }, [onChange]);
 
-    console.log(dynamicAttributes);
-
     return (
         <div className="date-picker">
             <DatePicker

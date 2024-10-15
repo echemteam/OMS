@@ -1,38 +1,37 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useRef, useState, useEffect } from "react";
-import FormCreator from "../../../../components/Forms/FormCreator";
 import { OrganizationContactFormData } from "./config/OrganizationContact.data";
 import Buttons from "../../../../components/ui/button/Buttons";
 import { useAddEditOrganizationContactDetailsMutation, useLazyGetOrganizationContactDetailsQuery } from "../../../../app/services/organizationAPI";
 import ToastService from "../../../../services/toastService/ToastService";
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 import { useSelector } from "react-redux";
+import FormCreator from "../../../../components/FinalForms/FormCreator";
 
 
-const OrganizationContactDetail = (isEditablePage
-    ) => {
+const OrganizationContactDetail = (isEditablePage) => {
+
     const organizationContactRef = useRef();
+    const [contactDetailId, setContactDetailId] = useState(0);
+    const { formSetting } = OrganizationContactFormData;
+    const [isButtonDisable, setIsButtonDisable] = useState(false);
+    const roles = useSelector((state) => state.auth.roles.roleName);
     const [organizationContactData, setOrganizationContactData] = useState(OrganizationContactFormData);
+
     const [addEditOrganizationContactDetails, { isLoading: isAddEditOrganizationContactDetailsLoading, isSuccess: isAddEditOrganizationContactDetailsSuccess, data: isAddEditOrganizationContactDetailsData }] = useAddEditOrganizationContactDetailsMutation();
     const [getOrganizationContactDetails, { isFetching: isGetOrganizationContactDetailsFetching, isSuccess: isGetOrganizationContactDetailsSuccess, data: isGetOrganizationContactDetailsData }] = useLazyGetOrganizationContactDetailsQuery();
-    const [contactDetailId, setContactDetailId] = useState(0);
-    const [isButtonDisable, setIsButtonDisable] = useState(false);
-    const { formSetting } = OrganizationContactFormData;
-    const roles = useSelector((state) => state.auth.roles.roleName );
 
-   
-   useEffect(() => {
-    if (isEditablePage) {
-      if (roles?.includes("Admin")) {  
-        setIsButtonDisable(false);
-        formSetting.isViewOnly = false;
-      } else {
-        setIsButtonDisable(true);
-        formSetting.isViewOnly = true;
-      }
-    }
-  }, [isEditablePage, roles]);
-
+    useEffect(() => {
+        if (isEditablePage) {
+            if (roles?.includes("Admin")) {
+                setIsButtonDisable(false);
+                formSetting.isViewOnly = false;
+            } else {
+                setIsButtonDisable(true);
+                formSetting.isViewOnly = true;
+            }
+        }
+    }, [isEditablePage, roles]);
 
     useEffect(() => {
         if (isAddEditOrganizationContactDetailsSuccess && isAddEditOrganizationContactDetailsData) {
@@ -41,13 +40,11 @@ const OrganizationContactDetail = (isEditablePage
         }
     }, [isAddEditOrganizationContactDetailsSuccess, isAddEditOrganizationContactDetailsData]);
 
-
     useEffect(() => {
         getOrganizationContactDetails();
     }, [])
 
     const handleAddEditContactDetail = () => {
-
         let contactData = organizationContactRef.current.getFormData();
         if (contactData) {
             const request = {
@@ -85,24 +82,22 @@ const OrganizationContactDetail = (isEditablePage
     return (<>
 
         <div className="row mt-2 add-address-form">
-        {/* <h4 className="organization-tab-title">Contact Details</h4> */}
+            {/* <h4 className="organization-tab-title">Contact Details</h4> */}
             <FormCreator config={organizationContactData}
                 ref={organizationContactRef}
-                {...organizationContactData}
-
             />
             {isEditablePage ?
-            <div className="col-md-12 mt-2">
-                <div className="d-flex align-item-end justify-content-end">
-                    <Buttons
-                        buttonTypeClassName="theme-button"
-                        buttonText="Save"
-                        onClick={handleAddEditContactDetail}
-                        isLoading={isAddEditOrganizationContactDetailsLoading}
-                        isDisable={isButtonDisable}
-                    />
-                </div>
-            </div> :null}
+                <div className="col-md-12 mt-2">
+                    <div className="d-flex align-item-end justify-content-end">
+                        <Buttons
+                            buttonTypeClassName="theme-button"
+                            buttonText="Save"
+                            onClick={handleAddEditContactDetail}
+                            isLoading={isAddEditOrganizationContactDetailsLoading}
+                            isDisable={isButtonDisable}
+                        />
+                    </div>
+                </div> : null}
         </div>
     </>)
 }
