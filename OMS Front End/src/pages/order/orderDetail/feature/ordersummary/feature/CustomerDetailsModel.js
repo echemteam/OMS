@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Iconify from "../../../../../../components/ui/iconify/Iconify";
 import { useLazyGetCustomersInfoByIdQuery } from "../../../../../../app/services/ApprovalAPI";
+import { getLabelClass } from "../../../../../../utils/StatusColors/StatusColors";
 
 const CustomerDetailsModel = ({ customerId }) => {
   const [customerBasicDetails, setCustomerBasicDetails] = useState(null);
@@ -46,7 +47,7 @@ const CustomerDetailsModel = ({ customerId }) => {
             </div>
             <div className="name-status">
               <div className="name-sec">{customerBasicDetails?.name}</div>
-              <div className="status-sec pending">
+              <div className={`status-sec ${getLabelClass(customerBasicDetails?.status)}`}>
                 {customerBasicDetails?.status}
               </div>
             </div>
