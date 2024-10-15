@@ -261,6 +261,10 @@ namespace OMS.Application.Services.Order
         {
             return await repositoryManager.order.DeleteOrderItems(orderItemId, deletedBy);
         }
+        public Task<List<GetOrderHistoryByOrderIdResponse>> GetOrderHistoryByOrderId(int orderId)
+        {
+            return repositoryManager.order.GetOrderHistoryByOrderId(orderId);
+        }
         #endregion
     }
 }

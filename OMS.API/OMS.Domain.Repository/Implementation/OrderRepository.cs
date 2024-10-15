@@ -34,6 +34,7 @@ namespace OMS.Domain.Repository.Implementation
         const string DELETEORDERITEM = "DeleteOrderItem";
         const string GETORDERITEMADDRESSESBYORDERITEMID = "GetOrderItemAddressesByOrderItemId";
         const string GETORDERITEMNOTESBYORDERITEMID = "GetOrderItemNotesByOrderItemId";
+        const string GETORDERHISTORYBYORDERID = "GetOrderHistoryByOrderId";
         #endregion
 
         public OrderRepository(DapperContext dapperContext) : base(dapperContext)
@@ -224,6 +225,14 @@ namespace OMS.Domain.Repository.Implementation
                 orderItemId,
                 deletedBy
             }, CommandType.StoredProcedure);
+        }
+        public async Task<List<GetOrderHistoryByOrderIdResponse>> GetOrderHistoryByOrderId(int orderId)
+        {
+            List<GetOrderHistoryByOrderIdResponse> getOrderHistoryByOrderIdResponse = await _context.GetList<GetOrderHistoryByOrderIdResponse>(GETORDERHISTORYBYORDERID, new
+            {
+                orderId
+            }, CommandType.StoredProcedure);
+            return getOrderHistoryByOrderIdResponse;
         }
         #endregion
     }
