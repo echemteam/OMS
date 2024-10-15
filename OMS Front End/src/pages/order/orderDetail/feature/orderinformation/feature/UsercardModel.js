@@ -10,7 +10,7 @@ import ToastService from "../../../../../../services/toastService/ToastService";
 const UsercardModel = ({onGetContactId,handleAddContact,handleRefreshOrderDetails,orderContactId,onSidebarCloseUserModel,onSidebarCloseUpdateContact,  defaultId, onUpdate,selectedContactId,setSelectedContactId, contactTypeId, addressContactType,customerId,orderDetails,}) => {
   const [dataList, setDataList] = useState([]);
   const { confirm } = SwalAlert();
-
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
 const [ getContactByCustomerId, {   isFetching: isGetContactByCustomerIdFetching,isSuccess: isGetContactByCustomerIdSuccess, data: isGetContactByCustomerIdItem },] = useLazyGetContactByCustomerIdQuery();
   const [
     updateOrderContact,
@@ -29,6 +29,15 @@ const [ getContactByCustomerId, {   isFetching: isGetContactByCustomerIdFetching
     }
   }, [isUpdateOrderContactSuccess, isUpdateOrderContactData]);
 
+  useEffect(()=>{
+    if(defaultId===selectedContactId){
+      setIsButtonDisable(true);
+    }
+    else{
+      setIsButtonDisable(false);
+    }
+  },[selectedContactId])
+  
   const handleChangeContact = () => {
     if (selectedContactId) {
       confirm(
@@ -128,6 +137,7 @@ const [ getContactByCustomerId, {   isFetching: isGetContactByCustomerIdFetching
           buttonText="Change Contact"
           isLoading={isUpdateOrderContactLoading}
           onClick={handleChangeContact}
+          isDisable={isButtonDisable}
         />
         <Buttons
           buttonTypeClassName="theme-button ml-3"

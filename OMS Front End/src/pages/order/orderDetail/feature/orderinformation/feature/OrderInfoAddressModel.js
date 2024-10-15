@@ -24,6 +24,7 @@ const OrderInfoAddressModel = ({
   const [dataList, setDataList] = useState([]);
   const { confirm } = SwalAlert();
   const [selectedAddressId, setSelectedAddressId] = useState(null);
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
   const [
     getAddresssByCustomerId,
     {
@@ -41,6 +42,14 @@ const OrderInfoAddressModel = ({
     },
   ] = useUpdateOrderAddressMutation();
 
+useEffect(()=>{
+  if(defaultId===selectedAddressId){
+    setIsButtonDisable(true);
+  }
+  else{
+    setIsButtonDisable(false);
+  }
+},[selectedAddressId])
 
   useEffect(() => {
     if (isUpdateOrderAddressSuccess && isUpdateOrderAddressData) {
@@ -181,6 +190,7 @@ const OrderInfoAddressModel = ({
           buttonText="Change Address"
           isLoading={isUpdateOrderAddressLoading}
           onClick={handleChangeAddress}
+          isDisable={isButtonDisable}
         />
         <Buttons
           buttonTypeClassName="theme-button ml-3"

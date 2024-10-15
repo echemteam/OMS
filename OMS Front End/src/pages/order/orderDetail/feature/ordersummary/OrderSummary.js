@@ -124,8 +124,8 @@ const OrderSummary = ({ orderId, orderDetails, onRefreshOrderDetails, isOrderDet
         isCenterTile={true}
         CenterTitleTxt={ordersummaryDetails?.poNumber}
         // CenterBtnIcon= "icomoon-free:file-pdf" 
-        CenterBtnIcon={documentNames ? "" : "icomoon-free:file-pdf"}
-        centerBtnTitle="Purchase Order Details"
+       CenterBtnIcon={!isDownalodFetching ? (documentNames ? "" : "icomoon-free:file-pdf") :"mdi:loading" }
+        centerBtnTitle="View Purchase Order"
         centerBtnOnClick={handleToggleModalPDF}
       >
         {(!isOrderDetailsFetch && orderDetails) ? (
@@ -189,7 +189,21 @@ const OrderSummary = ({ orderId, orderDetails, onRefreshOrderDetails, isOrderDet
                   </div>
                 </div>
               </div>
+
               <div className="col-xxl-5 col-xl-6 col-lg-6 col-md-6 col-12 custom-col-6">
+              <div className="desc-section right-status-sec">
+                <div className="key-icon-part">
+                  <Iconify icon="f7:status" className="open-bar" />
+                  <span>Status</span>
+                </div>
+                <div className="desc-detail">
+                  &nbsp;:&nbsp;
+                  {/* <span className="status pending">Pending</span> */}
+                  <span className="status pending">
+                    {ordersummaryDetails?.status}
+                  </span>
+                </div>
+              </div>
                 <div className="desc-section right-status-sec">
                   <div className="key-icon-part">
                     <Iconify icon="f7:status" className="open-bar" />
@@ -226,6 +240,8 @@ const OrderSummary = ({ orderId, orderDetails, onRefreshOrderDetails, isOrderDet
           <DataLoader />
         )}
       </CardSection>
+
+      
       <SidebarModel
         modalTitle="PO PDF"
         contentClass="content-50"
