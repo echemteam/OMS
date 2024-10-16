@@ -4,11 +4,11 @@ import UserDetailsModel from "./UserDetailsModel";
 
 const UserCardDetail = ({ contact, handleToggleModalUsers }) => {
 
-  const getInitials = (firstName, lastName) => {
-    return (
-      (firstName?.[0] || "").toUpperCase() + (lastName?.[0] || "").toUpperCase()
-    );
-  };
+  // const getInitials = (firstName, lastName) => {
+  //   return (
+  //     (firstName?.[0] || "").toUpperCase() + (lastName?.[0] || "").toUpperCase()
+  //   );
+  // };
 
   return (
     <>
