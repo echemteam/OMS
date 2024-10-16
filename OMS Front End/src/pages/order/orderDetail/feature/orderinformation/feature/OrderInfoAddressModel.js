@@ -7,10 +7,12 @@ import { useUpdateOrderAddressMutation } from "../../../../../../app/services/or
 import SwalAlert from "../../../../../../services/swalService/SwalService";
 import { toast } from "react-toastify";
 import ToastService from "../../../../../../services/toastService/ToastService";
+import DataLoader from "../../../../../../components/ui/dataLoader/DataLoader";
 
 const OrderInfoAddressModel = ({
   handleAddClick,
   onUpdate,
+  setAddressTypeId,
   onSidebarCloseUpdateAddress,
   addressContactType,
   onSidebarCloseShippingAddress,
@@ -63,7 +65,7 @@ useEffect(()=>{
     if (customerId) {
       getAddresssByCustomerId(customerId);
     }
-  }, [customerId, addressContactType, onSidebarCloseUpdateAddress]);
+  }, [customerId, getAddresssByCustomerId]);
 
   useEffect(() => {
     if (
@@ -86,43 +88,36 @@ useEffect(()=>{
   }, [
     isGetAddresssByCustomerIdFetching,
     isGetAddresssByCustomerId,
-    GetAddresssByCustomerIdData,
+    GetAddresssByCustomerIdData,addressContactType
   ]);
 
   useEffect(() => {
     if(defaultId){
     setSelectedAddressId(defaultId);
-    onGetData(defaultId);
+    const defaultAddress = dataList.find((address) => address.addressId === defaultId);
+    if (defaultAddress) {
+      onGetData(defaultId);
+      setAddressTypeId(defaultAddress.addressTypeId); 
     }
-  }, [defaultId]);
+    }
+  }, [defaultId]);  
 
-  const handleCheckboxChange = (id) => {
-    if (selectedAddressId === id) {
-      setSelectedAddressId(null);
-      if (onGetData) {
-        onGetData(null);
-      }
-    } else {
-      setSelectedAddressId(id);
-      if (onGetData) {
-        onGetData(id);
-      }
+  const handleCheckboxChange = (id, addressTypeId) => {
+    setSelectedAddressId((prevSelectedAddressId) => 
+      prevSelectedAddressId === id ? null : id
+    );
+    if (onGetData) {
+      onGetData(id);
     }
+    setAddressTypeId(addressTypeId);
   };
+
   const handlevalidate = () => {
     if (!selectedAddressId) {
       toast.error("Please select an Address .");
       return;
     }
   };
-  // const handleEditAddress = () => {
-  //   if (selectedAddressId) {
-  //     onUpdate();
-  //   } else {
-  //     handlevalidate();
-  //   }
-  // };
-
 
   const handleChangeAddress = () => {
     if (selectedAddressId) {
@@ -149,7 +144,9 @@ useEffect(()=>{
   };
 
   return (
+    
     <div className="add-list-section">
+      {!isGetAddresssByCustomerIdFetching ? (<>
       <div className="row">
         {dataList.map((address) => (
           <div
@@ -166,8 +163,8 @@ useEffect(()=>{
                   <span className="checkbox-part">
                     <Checkbox
                       name={`addressId_${address.addressId}`}
-                      checked={selectedAddressId ? selectedAddressId === address.addressId : selectedAddressId}
-                      onChange={() => handleCheckboxChange(address.addressId)}
+                      checked={ selectedAddressId === address.addressId}
+                      onChange={() => handleCheckboxChange(address.addressId,address.addressTypeId)}
                     />
                   </span>
                 </div>
@@ -184,6 +181,8 @@ useEffect(()=>{
           </div>
         ))}
       </div>
+       </>
+      ):( <DataLoader />)}
       <div className="d-flex align-item-end justify-content-end mt-3">
         <Buttons
           buttonTypeClassName="theme-button"
@@ -199,10 +198,11 @@ useEffect(()=>{
         /> */}
         <Buttons
           buttonTypeClassName="theme-button ml-3"
-          buttonText="Add Address"
+          buttonText={`Add ${addressContactType} Address`}
           onClick={handleAddClick}
         />
       </div>
+     
     </div>
   );
 };

@@ -10,6 +10,7 @@ const UserCardList = ({contact,handleCheckboxChange,selectedContactId}) => {
       (firstName?.[0] || "").toUpperCase() + (lastName?.[0] || "").toUpperCase()
     );
   };
+
   return (
     <>
       <div className="contact-card card-list-popup">
@@ -52,7 +53,7 @@ const UserCardList = ({contact,handleCheckboxChange,selectedContactId}) => {
             <span className="checkbox-sec">
               <Checkbox name={`addressId_${contact.contactId}`}
                checked={selectedContactId ? selectedContactId === contact.contactId :selectedContactId} 
-               onChange={() => handleCheckboxChange(contact.contactId)} />
+               onChange={() => handleCheckboxChange(contact.contactId,contact.contactTypeId)} />
 
             </span>
           </div>
