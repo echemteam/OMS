@@ -53,10 +53,10 @@ const ApiProviders = () => {
       ToastService.warning(ErrorMessage.CommonErrorMessage);
     }
   }, [search]);
-  
+
   const handleKeyPress=(event)=>{
     
-    if (event.Key === KeyCodes.ENTER) {
+    if (event.key === KeyCodes.ENTER) {
       handleSearch();
     }
   }
