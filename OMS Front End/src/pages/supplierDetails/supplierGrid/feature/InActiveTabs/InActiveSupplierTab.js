@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 //** Lib's */
 import PropTypes from 'prop-types';
 import { ErrorMessage } from "../../../../../data/appMessages";
-import useDebounce from "../../../../../app/customHooks/useDebouce";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import { ListShowCustomer } from "../../../../../utils/Enums/commonEnums";
 import { StatusEnums, StatusValue } from "../../../../../utils/Enums/StatusEnums";
@@ -28,7 +27,7 @@ const InActiveSupplierTab = ({ statusId }) => {
   const [blockManageData, setBlockManageData] = useState(BlockedInActiveCustomerGridConfig);
   const [disableManageData, setDisableManageData] = useState(DisabledInActiveCustomerGridConfig);
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
-  const debouncedSearch = useDebounce(search, 300);
+ // const debouncedSearch = useDebounce(search, 300);
 
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex.toString());
@@ -80,19 +79,18 @@ const InActiveSupplierTab = ({ statusId }) => {
 
   const handleKeyPress=(event)=>{
     
-    if (event.code === KeyCodes.ENTER) {
+    if (event.key === KeyCodes.ENTER) {
       handleSearch();
     }
   }
 
-  const handleSearch = () => {
+  const handleSearch = useCallback(() => {
     if (search.length >= 3 || selectedDrpvalues.length > 0) {
       getListApi();
     } else {
-      ToastService.warning(ErrorMessage.CommonErrorMessage)
+      ToastService.warning(ErrorMessage.CommonErrorMessage);
     }
-  };
-
+  }, [search, selectedDrpvalues]);
   const handleChange = (event) => {
    
     setSearch(event.target.value.trim());
@@ -129,10 +127,10 @@ const InActiveSupplierTab = ({ statusId }) => {
   };
 
   useEffect(() => {
-    if (debouncedSearch === "" && selectedDrpvalues === "") {
+    if (search === "" && selectedDrpvalues === "") {
       getListApi();
     }
-  }, [debouncedSearch, selectedDrpvalues]);
+  }, [search, selectedDrpvalues]);
 
   const tabs = [
     {
@@ -140,7 +138,7 @@ const InActiveSupplierTab = ({ statusId }) => {
       component: (
         <div className="mt-2 ">
           <InActiveSuppliersList statusId={statusId} configFile={allManageData}
-            search={debouncedSearch}
+            search={search}
             handleChange={handleChange}
             statusOptions={statusOptions}
             selectedStatusOptions={selectedStatusOptions}
@@ -160,7 +158,7 @@ const InActiveSupplierTab = ({ statusId }) => {
       component: (
         <div className="mt-2">
           <InActiveSuppliersList statusId={StatusEnums.Freeze} configFile={freezeManageData}
-            search={debouncedSearch}
+            search={search}
             handleChange={handleChange}
             statusOptions={statusOptions}
             selectedStatusOptions={selectedStatusOptions}
@@ -180,7 +178,7 @@ const InActiveSupplierTab = ({ statusId }) => {
       component: (
         <div className="mt-2">
           <InActiveSuppliersList statusId={StatusEnums.Block} configFile={blockManageData}
-            search={debouncedSearch}
+            search={search}
             handleChange={handleChange}
             statusOptions={statusOptions}
             selectedStatusOptions={selectedStatusOptions}
@@ -200,7 +198,7 @@ const InActiveSupplierTab = ({ statusId }) => {
       component: (
         <div className="mt-2">
           <InActiveSuppliersList statusId={StatusEnums.Disable} configFile={disableManageData}
-            search={debouncedSearch}
+            search={search}
             handleChange={handleChange}
             statusOptions={statusOptions}
             selectedStatusOptions={selectedStatusOptions}
