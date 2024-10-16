@@ -49,15 +49,10 @@ const OrderList = () => {
   ];
 
   return (
-    // <div>
-    //     <Orders />
-    // </div>
     <div className="main-customer-grid">
       <div className="row">
         <div className="col-xxl-12 col-xl-12 col-md-12 col-12 other-info-tab main-tab-header">
-          <CardSection
-          // cardTitle="Other Information"
-          >
+          <CardSection>
             <>
               {tabs && tabs.length > 0 && (
                 <div className="row">
