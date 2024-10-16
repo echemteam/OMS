@@ -157,7 +157,7 @@ const AssignRole=(props) => {
                                 buttonTypeClassName="theme-button"
                                 buttonText="Assign Role"
                                 onClick={handleClick}
-                               // isDisable={props.isButtonDisable}
+                                isDisable={props.isButtonDisable}
                             />
                         </div>
                     </div>

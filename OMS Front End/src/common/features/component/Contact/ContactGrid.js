@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 //** Lib's */
 import { AppIcons } from "../../../../data/appIcons";
 import { ErrorMessage } from "../../../../data/appMessages";
@@ -102,16 +102,16 @@ const ContactGrid = ({
     setSearch(event.target.value.trim());
   };
 
-  const onhandleSearch = () => {
+  const onhandleSearch = useCallback(() => {
     if (search.length >= 3 || selectedDrpvalues.length > 0) {
       onGetContactList();
     } else {
       ToastService.warning(ErrorMessage.CommonErrorMessage);
     }
-  };
+  }, [search, selectedDrpvalues]);
 
   const handleKeyPress = (event) => {
-    if (event.code === KeyCodes.ENTER) {
+    if (event.key === KeyCodes.ENTER) {
       onhandleSearch();
     }
   }
