@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 
 //** Lib's */
