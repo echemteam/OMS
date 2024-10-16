@@ -796,8 +796,8 @@
 
                       &.stock-verification {
                         background-color: var(--whiteColor);
-                        color: #f4bc4f;
-                        border: 1px solid #f4bc4f;
+                        color: #51a4ff;
+                        border: 1px solid #51a4ff;
                       }
 
                       &.customer-approval {
@@ -836,8 +836,8 @@
                         }
 
                         &.stock-verification {
-                          background-color: #ffd88d47;
-                          color: #f4bc4f;
+                          background-color: #51a4ff3b;
+                          color: #51a4ff;
                           border: none;
                         }
                       }
@@ -922,8 +922,7 @@
 
                         .shipping-address {
                           color: var(--textColor);
-                          box-shadow:
-                            rgba(136, 165, 191, 0.48) 6px 2px 16px 0px,
+                          box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px,
                             rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
                           background-color: var(--whiteColor);
                           border-radius: 5px;
