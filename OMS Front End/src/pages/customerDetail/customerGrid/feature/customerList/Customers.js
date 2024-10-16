@@ -13,6 +13,7 @@ import CustomerListContext from "../../../../../utils/ContextAPIs/Customer/Custo
 import { AllCustomerGridConfig, ApprovedCustomerGridConfig, PendingCustomerGridConfig, RejectedCustomerGridConfig, SubmittedCustomerGridConfig } from "../../../../../common/features/component/CustomerSupplierListConfig/CustomerSupplierListConfig.data";
 import InActiveCustomerTab from "../customerInActiveTabs/InActiveCustomerTab";
 import { useLocation } from "react-router-dom";
+import KeyCodes from "../../../../../utils/Enums/KeyCodesEnums";
 
 const Customers = () => {
   const listRef = useRef();
@@ -117,7 +118,7 @@ const Customers = () => {
   };
 
   const handleKeyPress = (event) => {
-    if (event.code === "Enter") {
+    if (event.code === KeyCodes.ENTER) {
       handleSearch();
     }
   }
