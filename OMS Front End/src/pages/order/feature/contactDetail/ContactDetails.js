@@ -31,7 +31,7 @@ const ContactDetails = (props) => {
   const [getAllInvoiceSubmissionId, { isFetching: isGetAllInvoiceSubmissionFetching, isSuccess: isgetAllInvoiceSubmissionSuccess, data: isgetAllInvoiceSubmissionData }] = useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery();
   const [getAllPurchasingId, { isFetching: isGetAllPurchasingFetching, isSuccess: isgetAllPurchasingSuccess, data: isgetAllPurchasingData }] = useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery();
 
-  useEffect(() => {
+   useEffect(() => {
     if (orderCustomerId) {
       let req = {
         customerId: orderCustomerId,
@@ -141,13 +141,11 @@ const ContactDetails = (props) => {
     }
   }
 
-  useEffect(() => {
-  
-    if (movePreviewPage) {
-      handleClearContactDetails();  
-    }
-  }, [movePreviewPage]);
-  
+  useEffect(()=>{
+    handleClearContactDetails();
+  },[props.customerId])
+
+ 
   const handleClearContactDetails = () => {
     onResetForm(formData, setFormData, null);
   }
