@@ -30,7 +30,7 @@ const FormCreator = forwardRef(({
       isValid: true,
       error: {},
     });
-  }, [configInitialState, initialState]);
+  }, [configInitialState]);
 
   useImperativeHandle(ref, () => ({
     getFormData: () => {

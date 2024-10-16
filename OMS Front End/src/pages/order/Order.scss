@@ -728,9 +728,9 @@
                       color: var(--textColor);
                       border-radius: 5px;
                       font-weight: normal;
-                      padding: 0;
+                      padding: 1px 7px;
 
-                      &.pending-bg {
+                      &.pending-review {
                         background-color: var(--whiteColor);
                         color: #ff9966;
                         border: 1px solid #ff9966;
@@ -984,6 +984,34 @@
                 }
               }
             }
+          }
+        }
+      }
+      .total-order-price {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: var(--commonFont-medium);
+        width: 100%;
+        align-items: flex-end;
+
+        &::before {
+          content: "";
+          display: block;
+          width: 100%;
+          height: 1px;
+          background-color: var(--themeColor);
+          margin-bottom: 12px;
+        }
+
+        .total-order-value {
+          display: flex;
+          padding-right: 19.5%;
+          .price {
+            padding-left: 50px !important;
+            color: var(--themeColor);
           }
         }
       }

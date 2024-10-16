@@ -1,13 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import FormCreator from "../../../../../components/Forms/FormCreator";
-import { creditCardFormData } from "../config/CreditCardForm.data";
 import Buttons from "../../../../../components/ui/button/Buttons";
+import { creditCardFormData } from "../config/CreditCardForm.data";
+import FormCreator from "../../../../../components/FinalForms/FormCreator";
 import ToastService from "../../../../../services/toastService/ToastService";
 import { useAddEditCreditCardMutation } from "../../../../../app/services/supplierFinancialSettingsAPI";
 
 const CreditCardDetail = ({ onHandleGetById, getCreditData, supplierId, financialSettingFormRef, getSupplierCompletionCount }) => {
+
   const creditCardFormRef = useRef();
   const [creditCardForm, setCreditCardFormDataForm] = useState(creditCardFormData);
 
@@ -66,25 +67,9 @@ const CreditCardDetail = ({ onHandleGetById, getCreditData, supplierId, financia
         ccNote: creditCardForm.ccNote,
         isCCExistsOnFile: creditCardForm.isCCExistsOnFile,
       };
-      // let requestIntialState = {
-      //   isActive: true,
-      //   supplierId: supplierId,
-      //   ...formsupplierFinancialSettings
-      // }
-      // await handleApprovalRequest(req, requestIntialState, FunctionalitiesName.SUPPLIERADDUPDATEFINANCIALSETTING);
       addEditCreditCard(req)
     }
   }
-
-  // const handleApprovalRequest = async (newValue, oldValue, functionalityName) => {
-  //   const request = { newValue, oldValue, isFunctional: true, functionalityName };
-  //   const modifyData = await ValidateRequestByApprovalRules(request);
-  //   if (modifyData.newValue) {
-  //     onHandleGetById(supplierId);
-  //     onResetForm(creditCardForm, setCreditCardFormDataForm, creditCardFormData.initialState);
-  //   }
-  // };
-
 
   return (
     <div className="ach-wire-section">
@@ -93,7 +78,6 @@ const CreditCardDetail = ({ onHandleGetById, getCreditData, supplierId, financia
           <FormCreator
             config={creditCardForm}
             ref={creditCardFormRef}
-            {...creditCardForm}
           />
         </div>
         <div className="col-md-12">
@@ -103,15 +87,8 @@ const CreditCardDetail = ({ onHandleGetById, getCreditData, supplierId, financia
               buttonText="Save"
               onClick={handleCreditCradAdd}
               isLoading={isAddEditCreditCardLoading}
-            // isDisable={isButtonDisable}
             />
-            {/* <Buttons
-              buttonTypeClassName="dark-btn ml-5"
-              buttonText="Cancel"
-            // onClick={onSidebarClose}
-            /> */}
           </div>
-          {/* ))} */}
         </div>
       </div>
     </div>

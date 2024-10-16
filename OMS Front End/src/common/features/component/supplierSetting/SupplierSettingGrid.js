@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 import CardSection from "../../../../components/ui/card/CardSection";
-import FormCreator from "../../../../components/Forms/FormCreator";
+import FormCreator from "../../../../components/FinalForms/FormCreator";
 import { financialSettingFormData } from "./config/FinancialSettingForm.data";
 import RenderTabs from "../../../../components/ui/tabs/RenderTabs";
 import CreditCardDetail from "./feature/CreditCardDetail";
@@ -19,14 +19,15 @@ import PropTypes from 'prop-types';
 import { useSelector } from "react-redux";
 
 const FinancialSettingsgGrid = ({ supplierId, isEditablePage, getSupplierCompletionCount }) => {
+
   const financialSettingFormRef = useRef();
-  const [financialSettingForm, setFinancialSettingForm] = useState(financialSettingFormData);
-  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
-  const [getCheckData] = useState(checkFormData)
-  const [getCreditData, setGetCreditData] = useState(creditCardFormData)
-  const [getOtherData, setGetOtherData] = useState(otherFormData)
+  const [getCheckData] = useState(checkFormData);
   const [activeTabIndex, setActiveTabIndex] = useState(0);
+  const [getOtherData, setGetOtherData] = useState(otherFormData);
+  const [getCreditData, setGetCreditData] = useState(creditCardFormData);
   const organizationSetting = useSelector((state) => state.organization);
+  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
+  const [financialSettingForm, setFinancialSettingForm] = useState(financialSettingFormData);
 
   const [getAllPaymentTerms, { isFetching: isGetAllPaymentTermsFetching, isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData }] = useLazyGetAllPaymentTermsQuery();
   const [getAllPaymentMethod, { isFetching: isGetAllPaymentMethodFetching, isSuccess: isGetAllPaymentMethodSuccess, data: isGetAllPaymentMethodData }] = useLazyGetAllPaymentMethodQuery();
@@ -189,7 +190,6 @@ const FinancialSettingsgGrid = ({ supplierId, isEditablePage, getSupplierComplet
             <FormCreator
               config={financialSettingForm}
               ref={financialSettingFormRef}
-              {...financialSettingForm}
               key={shouldRerenderFormCreator}
             />
           </div>

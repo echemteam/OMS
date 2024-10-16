@@ -20,7 +20,7 @@ const SetInitialCountry = {
     countryId: { label: "United States", value: 233 }
 }
 
-const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddress, getAddresssById, isModelOpen, editMode, isButtonDisable, getCompletionCount,
+const AddEditAddress = forwardRef(({ addressContactType,isModelOpenUpdateAddress,isOrderAddress,keyId, isSupplier, updateAddress, addAddress, getAddresssById, isModelOpen, editMode, isButtonDisable, getCompletionCount,
     onSidebarClose, editRef, isOrderManage, getAddressTypeIdOrder, onHandleOrderInfoRepeatCall, orderCustomerId, isEditablePage, customerStatusId }) => {
 
     //** States */
@@ -72,6 +72,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
                 addressTypeId: getAddressTypeIdOrder,
             }
             setFormData(form);
+        
         } else {
             setFieldSetting(addressFormData, 'addressTypeId', FieldSettingType.DISABLED);
         }

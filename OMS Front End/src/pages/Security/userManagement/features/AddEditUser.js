@@ -18,6 +18,7 @@ import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import FormCreator from "../../../../components/FinalForms/FormCreator";
 import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
+import AssignRole from "./AssignRole";
 
 const AddEditUser = forwardRef(() => {
   const navigate = useNavigate();
@@ -156,6 +157,14 @@ const AddEditUser = forwardRef(() => {
           cardTitle="Change Password"
         >
           <ChangePassword descrypteId={descrypteId} isButtonDisable={isButtonDisable} />
+        </CardSection>
+        : null}
+
+      {descrypteId ?
+        <CardSection
+          cardTitle="Assign Role"
+        >
+          <AssignRole descrypteId={descrypteId} isButtonDisable={isButtonDisable} />
         </CardSection>
         : null}
     </div>

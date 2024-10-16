@@ -2,7 +2,7 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useRef, useState } from "react";
 import Buttons from "../../../../../../components/ui/button/Buttons";
-import FormCreator from "../../../../../../components/Forms/FormCreator";
+import FormCreator from "../../../../../../components/FinalForms/FormCreator";
 import { DocumentMultipleFormData } from "./multipleOrderDocumentConfig.data";
 import "../../../../../../common/features/component/Document/Document.scss";
 import Iconify from "../../../../../../components/ui/iconify/Iconify";
@@ -41,11 +41,8 @@ const getFileExtension = (filename) => {
     return parts.length > 1 ? parts.pop().toLowerCase() : "";
 };
 
-const AddMultipleOrderDocument = ({
-    orderDetails,
-    onClose,
-    onSuccess,
-}) => {
+const AddMultipleOrderDocument = ({ orderDetails, onClose, onSuccess }) => {
+
     const ref = useRef();
     const [attachment, setAttachment] = useState([]);
     const [uploadedFiles, setUploadedFiles] = useState([]);
@@ -91,7 +88,6 @@ const AddMultipleOrderDocument = ({
 
     const handleFileUpload = (value) => {
         const files = value.split(", ");
-
         const newFiles = files.map((file) => {
             const fileExtension = getFileExtension(file);
             return {
@@ -100,7 +96,6 @@ const AddMultipleOrderDocument = ({
                 extension: fileExtension,
             };
         });
-
         setUploadedFiles((prevFiles) => [...prevFiles, ...newFiles]);
     };
 
@@ -144,7 +139,6 @@ const AddMultipleOrderDocument = ({
                     </tr>
                 </thead>
                 <tbody>
-                    {/* {console.log('uploadedFiles', uploadedFiles)} */}
                     {uploadedFiles.length === 0 ? (
                         <tr>
                             <td colSpan="3">
@@ -161,14 +155,6 @@ const AddMultipleOrderDocument = ({
                                         className="file-icon"
                                     />
                                 </td>
-                                {/* <td
-                  contentEditable="true"
-                  onBlur={(e) =>
-                    handleFileNameChange(index, e.target.textContent)
-                  }
-                >
-                  {file.name}
-                </td> */}
                                 <td>
                                     {" "}
                                     <Input

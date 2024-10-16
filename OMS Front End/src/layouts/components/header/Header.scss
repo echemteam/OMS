@@ -17,7 +17,7 @@
         border: none !important;
         .search-part {
           border: none !important;
-          input{
+          input {
             font-size: var(--commonFont-Large);
           }
         }
@@ -44,7 +44,7 @@
         cursor: pointer;
         display: flex;
         align-items: center;
-        .component-iconify{
+        .component-iconify {
           color: #566a7f;
           height: 25px;
           width: 25px;
@@ -254,13 +254,20 @@
             }
 
             .clear-all {
-              color: var(--themeColor);
-              cursor: pointer;
-              font-weight: 600;
-              transition: 0.5s all;
-
-              &:hover {
-                color: var(--textColor);
+              button {
+                background: none;
+                border: none;
+                padding: 0;
+                margin: 0;
+                font: inherit;
+                outline: none;
+                color: var(--themeColor);
+                cursor: pointer;
+                font-weight: 600;
+                transition: 0.5s all;
+                &:hover {
+                  color: var(--textColor);
+                }
               }
             }
           }
@@ -330,7 +337,14 @@
                 }
 
                 .notification-time {
-                  a {
+                  button {
+                    background: none;
+                    border: none;
+                    padding: 0;
+                    margin: 0;
+                    font: inherit;
+                    cursor: pointer;
+                    outline: none;
                     font-size: var(--commonFont-small);
                     line-height: normal;
                     color: var(--blackColor) !important;
@@ -361,7 +375,13 @@
             width: 100%;
             bottom: 0;
 
-            a {
+            button {
+              background: none;
+              border: none;
+              padding: 0;
+              margin: 0;
+              font: inherit;
+              outline: none;
               cursor: pointer;
               font-weight: 600;
               color: var(--themeColor);
@@ -458,7 +478,14 @@
               border-bottom: 0;
             }
 
-            a {
+            button {
+              background: none;
+              border: none;
+              padding: 0;
+              margin: 0;
+              font: inherit;
+              cursor: pointer;
+              outline: none;
               padding: 6px 10px;
               color: var(--textColor);
               width: 100%;
@@ -502,6 +529,19 @@
 
             &.drop-down-icon-menu {
               padding-bottom: 0;
+
+              a {
+                color: var(--textColor);
+                display: inline-block;
+                padding: 0px 10px;
+                width: 100%;
+                span {
+                  font-size: var(--commonFont-large);
+                  margin-bottom: 0 !important;
+                  padding: 5px 10px;
+
+                }
+              }
 
               span {
                 margin-bottom: 10px;

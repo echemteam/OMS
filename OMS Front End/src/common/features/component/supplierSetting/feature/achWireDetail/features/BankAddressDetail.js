@@ -1,21 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import FormCreator from "../../../../../../../components/Forms/FormCreator";
+import FormCreator from "../../../../../../../components/FinalForms/FormCreator";
 import CardSection from "../../../../../../../components/ui/card/CardSection";
-import { setDropDownOptionField, setFieldSetting } from "../../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { getFieldData, setDropDownOptionField } from "../../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../../../app/services/addressAPI";
-import { FieldSettingType } from "../../../../../../../utils/Enums/commonEnums";
 import { useLazyGetAllCountriesQuery } from "../../../../../../../app/services/basicdetailAPI";
 import { useLazyGetAllAccountTypeQuery } from '../../../../../../../app/services/commonAPI';
+import { getValue } from '../../../../../../../utils/CommonUtils/CommonUtilsMethods';
 
 const BankAddressDetail = ({ bankAddressFormData, bankFormRef, isGetACHWireBySupplierIdSuccess, isGetACHWireBySupplierIdData }) => {
-  const [formData, setFormData] = useState(bankAddressFormData);
-  const [stateValue, setStateValue] = useState(false)
 
-  const [getAllCountries, { isSuccess: isGetAllCountriesSuccess, isFetching: isGetAllCountriesFetching, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
-  const [getAllCities, { isSuccess: isGetAllCitiesSuccess, isFetching: isGetAllCitiesFetching, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
+  const [stateValue, setStateValue] = useState(false);
+  const [formData, setFormData] = useState(bankAddressFormData);
+
   const [getAllStates, { data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
+  const [getAllCities, { isSuccess: isGetAllCitiesSuccess, isFetching: isGetAllCitiesFetching, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
+  const [getAllCountries, { isSuccess: isGetAllCountriesSuccess, isFetching: isGetAllCountriesFetching, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
   const [getAllAccountType, { isFetching: isGetAllAccountTypeFetching, isSuccess: isGetAllAccountTypeSuccess, data: isGetAllAccountTypeData }] = useLazyGetAllAccountTypeQuery();
 
   useEffect(() => {
@@ -23,21 +24,16 @@ const BankAddressDetail = ({ bankAddressFormData, bankFormRef, isGetACHWireBySup
     getAllStates();
     getAllAccountType();
   }, []);
-
-
   useEffect(() => {
     if (!isGetAllAccountTypeFetching && isGetAllAccountTypeSuccess && isGetAllAccountTypeData) {
       setDropDownOptionField(isGetAllAccountTypeData, "accountType", "accountType", bankAddressFormData, "accountType");
     }
   }, [isGetAllAccountTypeData, isGetAllAccountTypeSuccess, isGetAllAccountTypeFetching]);
-
   useEffect(() => {
     if (!isGetAllCountriesFetching && isGetAllCountriesSuccess && allGetAllCountriesData) {
       setDropDownOptionField(allGetAllCountriesData, 'countryId', 'name', formData, 'countryId');
     }
   }, [isGetAllCountriesFetching, isGetAllCountriesSuccess, allGetAllCountriesData]);
-
-
   useEffect(() => {
     if (!isGetAllCitiesFetching && isGetAllCitiesSuccess && allGetAllCitiesData) {
       const cities = allGetAllCitiesData.map((item) => ({
@@ -45,57 +41,29 @@ const BankAddressDetail = ({ bankAddressFormData, bankFormRef, isGetACHWireBySup
         label: item.name,
       }));
       let data = { ...formData };
-      const dropdownField = data?.formFields?.find(data => data.id === "cityId");
+      const dropdownField = getFieldData(data, 'cityId');
       dropdownField.fieldSetting.options = cities;
       setFormData(data);
     }
   }, [isGetAllCitiesFetching, isGetAllCitiesSuccess, allGetAllCitiesData]);
-
-
-  const handleChangeBankAddressDropdownList = (data, dataField) => {
-    const manageData = { ...formData };
-    if (dataField === "countryId") {
-      setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', item => item.countryId === data.value);
-      setDropDownOptionField(null, 'cityId', 'name', manageData, 'cityId', null);
-      setFieldSetting(manageData, 'stateId', FieldSettingType.DISABLED, false);
-      bankFormRef.current.updateFormFieldValue({
-        countryId: data.value,
-        stateId: null,
-        cityId: null
-      });
-    } else if (dataField === "stateId") {
-      getAllCities(data.value)
-      setFieldSetting(manageData, 'cityId', FieldSettingType.DISABLED, false);
-      bankFormRef.current.updateFormFieldValue({
-        stateId: data.value,
-        cityId: null,
-      });
-    }
-    setFormData(manageData);
-  };
-
   useEffect(() => {
     if (isGetACHWireBySupplierIdData?.recipientAddress) {
       if (allGetAllStatesData) {
-      let data = { ...formData };
+        let data = { ...formData };
         setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', data, 'stateId', item => item.countryId === isGetACHWireBySupplierIdData.recipientAddress.countryId);
       }
     }
-  }, [stateValue])
-
+  }, [stateValue]);
   useEffect(() => {
     if (isGetACHWireBySupplierIdSuccess && isGetACHWireBySupplierIdData?.recipientAddress) {
       const { recipientAddress } = isGetACHWireBySupplierIdData;
       let data = { ...formData };
       if (recipientAddress.countryId) {
-        setStateValue(true)
-        // setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', data, 'stateId', item => item.countryId === recipientAddress.countryId);
+        setStateValue(true);
       }
-
       if (recipientAddress.stateId) {
         getAllCities(recipientAddress.stateId)
       }
-
       data.initialState = {
         addressId: recipientAddress.addressId,
         addressLine1Id: recipientAddress.addressLine1,
@@ -107,7 +75,6 @@ const BankAddressDetail = ({ bankAddressFormData, bankFormRef, isGetACHWireBySup
         supplierBankDetailsId: isGetACHWireBySupplierIdData.supplierBankDetailsId,
         bankAddressId: isGetACHWireBySupplierIdData.bankAddressId,
         recipientAddressId: isGetACHWireBySupplierIdData.recipientAddressId,
-        // messageToRecipient: bankAddress.messageToRecipient,
         isAddressInUs: isGetACHWireBySupplierIdData.isAddressInUs,
         bankName: isGetACHWireBySupplierIdData.bankName,
         accountType: isGetACHWireBySupplierIdData.accountType,
@@ -123,21 +90,35 @@ const BankAddressDetail = ({ bankAddressFormData, bankFormRef, isGetACHWireBySup
     }
   }, [isGetACHWireBySupplierIdSuccess, isGetACHWireBySupplierIdData]);
 
-
-
-  const formBackAddressActionHandler = {
-    DDL_CHANGED: handleChangeBankAddressDropdownList,
-  };
+  const handleColumnChange = (dataField, updatedData) => {
+    const manageData = { ...formData };
+    const stateId = getValue(updatedData.stateId);
+    const countryId = getValue(updatedData.countryId);
+    if (dataField === "countryId") {
+      setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', item => item.countryId === countryId);
+      setDropDownOptionField(null, 'cityId', 'name', manageData, 'cityId', null);
+      manageData.initialState = {
+        ...updatedData,
+        stateId: null,
+        cityId: null
+      }
+    } else if (dataField === "stateId") {
+      getAllCities(stateId);
+      manageData.initialState = {
+        ...updatedData,
+        stateId: stateId,
+        countryId: countryId,
+        cityId: null
+      }
+    }
+    setFormData(manageData);
+  }
 
   return (
-    <CardSection cardTitle="Bank Address Details">
+    <CardSection cardTitle="Bank Information">
       <div className="row">
-        <FormCreator
-          config={formData}
-          ref={bankFormRef}
-          {...formData}
-          onActionChange={formBackAddressActionHandler}
-        />
+        <FormCreator config={formData} ref={bankFormRef}
+          onColumnChange={handleColumnChange} />
       </div>
     </CardSection>
   );

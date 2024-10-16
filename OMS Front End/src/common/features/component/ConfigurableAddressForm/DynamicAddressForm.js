@@ -1,24 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import CardSection from "../../../../components/ui/card/CardSection";
+//** Lib's */
 import FormCreator from "../../../../components/FinalForms/FormCreator";
+import { getValue } from "../../../../utils/CommonUtils/CommonUtilsMethods";
 import { setDropDownOptionField } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 
 //** Service's */
 import { useLazyGetAllCountriesQuery } from "../../../../app/services/basicdetailAPI";
 import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../app/services/addressAPI";
-import { getValue } from "../../../../utils/CommonUtils/CommonUtilsMethods";
+import DataLoader from "../../../../components/FinalMolGrid/ui/dataLoader/DataLoader";
 
-const DynamicAddressForm = forwardRef(({ formConfig, isGetAddressDetailsSuccess, isGetAddressDetails, cardTitle }, ref) => {
-
-    const formCreatorRef = useRef();
-    //** Props */
-    // const  = props;
+const DynamicAddressForm = forwardRef(({ formConfig, isGetAddressDetailsSuccess, isGetAddressDetails }, ref) => {
 
     //** State's */
+    const formCreatorRef = useRef();
     const [formData, setFormData] = useState(formConfig);
-    // const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
 
     //** API Call's */
     const [getAllStates, { isSuccess: isGetAllStateSuccess, isFetching: isGetAllStateFetching, data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
@@ -26,6 +23,11 @@ const DynamicAddressForm = forwardRef(({ formConfig, isGetAddressDetailsSuccess,
     const [getAllCountries, { isSuccess: isGetAllCountriesSuccess, isFetching: isGetAllCountriesFetching, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
 
     //** Use Effect's */
+    useEffect(() => {
+        getAllStates();
+        getAllCountries();
+    }, []);
+
     useEffect(() => {
         if (!isGetAllStateFetching && isGetAllStateSuccess && isGetAddressDetailsSuccess && isGetAddressDetails) {
             let data = { ...formData };
@@ -47,11 +49,6 @@ const DynamicAddressForm = forwardRef(({ formConfig, isGetAddressDetailsSuccess,
             setFormData(data);
         }
     }, [isGetAllStateFetching, isGetAllStateSuccess, isGetAddressDetailsSuccess, isGetAddressDetails]);
-
-    useEffect(() => {
-        getAllStates();
-        getAllCountries();
-    }, []);
 
     useEffect(() => {
         if (!isGetAllCountriesFetching && isGetAllCountriesSuccess && allGetAllCountriesData) {
@@ -96,20 +93,21 @@ const DynamicAddressForm = forwardRef(({ formConfig, isGetAddressDetailsSuccess,
         }
     }), [formData]);
 
+    if (isGetAllStateFetching) {
+        return <div><DataLoader /></div>;
+    }
+
     return (
-        <CardSection cardTitle={cardTitle} >
-            <div className="row">
-                <FormCreator config={formData}
-                    ref={formCreatorRef} onColumnChange={handleColumnChange} />
-            </div>
-        </CardSection >
+        <div className="row">
+            <FormCreator config={formData}
+                ref={formCreatorRef} onColumnChange={handleColumnChange} />
+        </div>
     )
 })
 
 // PropTypes for the component
 DynamicAddressForm.propTypes = {
     ref: PropTypes.object.isRequired,
-    cardTitle: PropTypes.string.isRequired,
     formConfig: PropTypes.object.isRequired,
     isGetAddressDetails: PropTypes.object.isRequired,
     isGetAddressDetailsSuccess: PropTypes.bool.isRequired

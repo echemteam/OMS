@@ -93,7 +93,6 @@ const AddEditContactNumber = ({
         extension: editFormData.extension,
         id: editFormData.id,
         isPrimaryPhoneNumber: editFormData.isPrimary,
-        // phoneCode: editFormData.phoneCode,
         phoneId: editFormData.phoneId,
         phoneNumber: obj,
         phoneType: editFormData.phoneType,
@@ -104,7 +103,6 @@ const AddEditContactNumber = ({
       let form = { ...addEditContactsFormData };
       form.initialState = {
         ...form.initialState,
-        //phoneCode: newPhoneCode,
       };
       setFormData(form);
     }
@@ -118,10 +116,11 @@ const AddEditContactNumber = ({
   };
 
   useEffect(() => {
-    if (isOrderManage) {
+    if (isOrderManage || showModal) {
       onResetData()
     }
-  }, [isOrderManage])
+  }, [isOrderManage, showModal]);
+
 
   return (
     <CenterModel

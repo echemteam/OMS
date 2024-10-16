@@ -4,13 +4,14 @@ import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 //** Config's */
 import { LabAddressForm } from "./config/LabAddressForm.data";
-import Buttons from "../../../../components/ui/button/Buttons";
 import { BillToAddressForm } from "./config/BillToAddressForm.data";
 import { RemitToAddressForm } from "./config/RemitToAddressForm.data";
 import { PhysicalAddressForm } from "./config/PhysicalAddressForm.data";
 import { WarehouseAddressForm } from "./config/WarehouseAddressForm.data";
 import { RegisteredAddressForm } from "./config/RegisteredAddressForm.data";
 //** Lib's */
+import Buttons from "../../../../components/ui/button/Buttons";
+import CardSection from "../../../../components/ui/card/CardSection";
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 //** Component's */
 import DynamicAddressForm from "../../../../common/features/component/ConfigurableAddressForm/DynamicAddressForm";
@@ -209,48 +210,59 @@ const OrganizationBusinessAddressDetail = (isEditablePage) => {
   return (
     <div>
       {/* <h4 className="organization-tab-title">Business Address</h4> */}
-      <DynamicAddressForm
-        cardTitle="Registered Address"
-        ref={registeredAddressRef}
-        isGetAddressDetailsSuccess={isGetOrganizationBusinessAddressesSuccess}
-        isGetAddressDetails={isGetOrganizationBusinessAddressesData?.registeredAddress}
-        formConfig={RegisteredAddressForm}
-      />
-      <DynamicAddressForm
-        cardTitle="Physical Address"
-        ref={physicalAddressRef}
-        isGetAddressDetailsSuccess={isGetOrganizationBusinessAddressesSuccess}
-        isGetAddressDetails={isGetOrganizationBusinessAddressesData?.physicalAddress}
-        formConfig={PhysicalAddressForm}
-      />
-      <DynamicAddressForm
-        cardTitle="BillTo Address"
-        ref={billToAddressRef}
-        isGetAddressDetailsSuccess={isGetOrganizationBusinessAddressesSuccess}
-        isGetAddressDetails={isGetOrganizationBusinessAddressesData?.billToAddress}
-        formConfig={BillToAddressForm}
-      />
-      <DynamicAddressForm
-        cardTitle="Lab Address"
-        ref={labAddressRef}
-        isGetAddressDetailsSuccess={isGetOrganizationBusinessAddressesSuccess}
-        isGetAddressDetails={isGetOrganizationBusinessAddressesData?.labAddress}
-        formConfig={LabAddressForm}
-      />
-      <DynamicAddressForm
-        cardTitle="Warehouse Address"
-        ref={warehouseAddressRef}
-        isGetAddressDetailsSuccess={isGetOrganizationBusinessAddressesSuccess}
-        isGetAddressDetails={isGetOrganizationBusinessAddressesData?.warehouseAddress}
-        formConfig={WarehouseAddressForm}
-      />
-      <DynamicAddressForm
-        cardTitle="RemitTo Address"
-        ref={remitToAddressRef}
-        isGetAddressDetailsSuccess={isGetOrganizationBusinessAddressesSuccess}
-        isGetAddressDetails={isGetOrganizationBusinessAddressesData?.remitToAddress}
-        formConfig={RemitToAddressForm}
-      />
+      <CardSection cardTitle="Registered Address">
+        <DynamicAddressForm
+          ref={registeredAddressRef}
+          isGetAddressDetailsSuccess={isGetOrganizationBusinessAddressesSuccess}
+          isGetAddressDetails={isGetOrganizationBusinessAddressesData?.registeredAddress}
+          formConfig={RegisteredAddressForm}
+        />
+      </CardSection>
+
+      <CardSection cardTitle="Physical Address">
+        <DynamicAddressForm
+          ref={physicalAddressRef}
+          isGetAddressDetailsSuccess={isGetOrganizationBusinessAddressesSuccess}
+          isGetAddressDetails={isGetOrganizationBusinessAddressesData?.physicalAddress}
+          formConfig={PhysicalAddressForm}
+        />
+      </CardSection>
+
+      <CardSection cardTitle="BillTo Address">
+        <DynamicAddressForm
+          ref={billToAddressRef}
+          isGetAddressDetailsSuccess={isGetOrganizationBusinessAddressesSuccess}
+          isGetAddressDetails={isGetOrganizationBusinessAddressesData?.billToAddress}
+          formConfig={BillToAddressForm}
+        />
+      </CardSection>
+
+      <CardSection cardTitle="Lab Address">
+        <DynamicAddressForm
+          ref={labAddressRef}
+          isGetAddressDetailsSuccess={isGetOrganizationBusinessAddressesSuccess}
+          isGetAddressDetails={isGetOrganizationBusinessAddressesData?.labAddress}
+          formConfig={LabAddressForm}
+        />
+      </CardSection>
+
+      <CardSection cardTitle="Warehouse Address">
+        <DynamicAddressForm
+          ref={warehouseAddressRef}
+          isGetAddressDetailsSuccess={isGetOrganizationBusinessAddressesSuccess}
+          isGetAddressDetails={isGetOrganizationBusinessAddressesData?.warehouseAddress}
+          formConfig={WarehouseAddressForm}
+        />
+      </CardSection>
+
+      <CardSection cardTitle="RemitTo Address">
+        <DynamicAddressForm
+          ref={remitToAddressRef}
+          isGetAddressDetailsSuccess={isGetOrganizationBusinessAddressesSuccess}
+          isGetAddressDetails={isGetOrganizationBusinessAddressesData?.remitToAddress}
+          formConfig={RemitToAddressForm}
+        />
+      </CardSection>
 
       {isEditablePage ?
         <div className="col-md-12">

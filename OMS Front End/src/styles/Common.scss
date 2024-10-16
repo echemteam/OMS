@@ -4587,3 +4587,11 @@ input[type="checkbox"]:disabled {
     }
   }
 }
+
+.form-wrapper {
+  color: var(--textColorLight);
+  font-size: var(--commonFont);
+  font-weight: 700;
+  border-left: 2px solid;
+  border-color: var(--textColorLight);
+}

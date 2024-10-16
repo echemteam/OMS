@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import CardSection from '../../../../../../../components/ui/card/CardSection';
-import FormCreator from '../../../../../../../components/Forms/FormCreator';
+import FormCreator from '../../../../../../../components/FinalForms/FormCreator';
 
 const ACHWIreOtherDetails = ({ aCHWireOtherRef, otherData, isGetACHWireBySupplierIdSuccess, isGetACHWireBySupplierIdData }) => {
     const [formData, setFormData] = useState(otherData);

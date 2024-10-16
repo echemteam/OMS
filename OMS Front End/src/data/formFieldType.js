@@ -21,7 +21,6 @@ export const FormFieldTypes = {
     // CURRENCY: 8
 }
 
-
 // export const NewFormFieldTypes = {
 //     INPUT: 1,
 //     PASSWORD: 2,

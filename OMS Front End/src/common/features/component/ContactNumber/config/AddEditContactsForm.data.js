@@ -33,8 +33,7 @@ export const addEditContactsFormData = {
           fieldType: FormFieldTypes.SELECT,
           dataField: "phoneTypeId",
           fieldSetting: {
-            placeholder: "Enter Phone Type",
-            isEnableOnChange: true
+            placeholder: "Enter Phone Type"
           },
           validation: [{ type: validationTypes.REQUIRE }],
           style: {
@@ -49,8 +48,8 @@ export const addEditContactsFormData = {
           dataField: "phoneNumber",
           fieldSetting: {
             placeholder: "Enter Phone Number",
+            // defaultCountry: "us",
             allowSpace: true,
-            maxLength: 15,
           },
           validation: [{ type: validationTypes.REQUIRE }],
           style: {

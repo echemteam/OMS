@@ -399,6 +399,12 @@ const OrderItemList = ({
               <DataLoader />
             )}
           </div>
+          <div className="total-order-price">
+            <div className="total-order-value">
+              <span>Total Order Price</span>
+              <span className="price">$ 9225.68</span>
+            </div>
+          </div>
         </CardSection>
       </div>
       <UpdateOrderItem

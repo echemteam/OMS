@@ -10,6 +10,7 @@ import AddEditRules from "./features/AddEditRules";
 import ToastService from "../../../services/toastService/ToastService";
 import { ErrorMessage } from "../../../data/appMessages";
 import { useLazyGetAllFunctionalitiesQuery } from "../../../app/services/configurationAPI";
+import KeyCodes from "../../../utils/Enums/KeyCodesEnums";
 
 const ApprovalRules = () => {
   const childRef = useRef();
@@ -66,7 +67,7 @@ const ApprovalRules = () => {
   };
   const handleKeyPress=(event)=>{
     
-    if (event.code === "Enter") {
+    if (event.code === KeyCodes.ENTER) {
       handleSearch();
     }
   }

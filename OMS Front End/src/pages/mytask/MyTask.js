@@ -11,9 +11,6 @@ import { getAuthProps } from "../../lib/authenticationLibrary";
 import { useLazyGetApprovalRequestsByApprovalRequestIdQuery } from "../../app/services/ApprovalAPI";
 import { useLazyGetAllFunctionalityEventByModuleIdQuery } from "../../app/services/configurationAPI";
 import { useLazyGetAllModulesWithPendingRequestCountQuery } from "../../app/services/commonAPI";
-import Checkbox from "../../components/ui/inputs/checkBox/CheckBox";
-import Image from "../../components/image/Image";
-import { AppIcons } from "../../data/appIcons";
 // import {
 //   useLazyGetAllFunctionalityEventByModuleIdQuery,
 //   useLazyGetAllModulesQuery,

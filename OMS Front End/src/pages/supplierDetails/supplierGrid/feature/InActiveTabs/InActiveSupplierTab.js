@@ -11,6 +11,7 @@ import SupplierListContext from "../../../../../utils/ContextAPIs/Supplier/Suppl
 //** Service's */
 import ToastService from "../../../../../services/toastService/ToastService";
 import { AllInActiveCustomerGridConfig, BlockedInActiveCustomerGridConfig, DisabledInActiveCustomerGridConfig, FreezedInActiveCustomerGridConfig } from "../../../../../common/features/component/CustomerSupplierListConfig/CustomerSupplierListConfig.data";
+import KeyCodes from "../../../../../utils/Enums/KeyCodesEnums";
 //** Component's */
 const InActiveSuppliersList = React.lazy(() => import("./feature/InActiveSuppliersList"));
 
@@ -79,7 +80,7 @@ const InActiveSupplierTab = ({ statusId }) => {
 
   const handleKeyPress=(event)=>{
     
-    if (event.code === "Enter") {
+    if (event.code === KeyCodes.ENTER) {
       handleSearch();
     }
   }

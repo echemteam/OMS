@@ -17,5 +17,6 @@ export const validationTypes = {
     VALIDFAX: "validFax",
     VALIDZIPCODE: "validZipCode",
     WEBSITE: "website",
-    ONLYTEXT:"onlyText"
+    ONLYTEXT:"onlyText",
+    UNIQUENAME:"uniqueName"
 }

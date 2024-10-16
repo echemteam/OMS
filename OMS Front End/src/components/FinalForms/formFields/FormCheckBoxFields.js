@@ -22,7 +22,7 @@ const FormCheckboxField = ({
     }
   }, [onChange]);
 
- return (
+  return (
     <div className="input-field-sec">
       {fieldSetting?.subTitle && (
         <div className="section-title">
@@ -33,7 +33,7 @@ const FormCheckboxField = ({
         <Checkbox
           name={name}
           label={labelName}
-          checked={value === 'true' || value === true}
+          checked={!!value && (value === 'true' || value === true)}
           isdisable={formSetting?.isViewOnly || fieldSetting?.isDisable || overRideProps?.isDisable}
           dataField={dataField}
           onChange={handleCheckboxChange}

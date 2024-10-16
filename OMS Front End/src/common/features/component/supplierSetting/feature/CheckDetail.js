@@ -1,106 +1,37 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import CardSection from "../../../../../components/ui/card/CardSection";
+//** Lib's */
 import { checkFormData } from "../config/CheckForm.data";
-import FormCreator from "../../../../../components/Forms/FormCreator";
-import { useAddEditCheckMutation } from "../../../../../app/services/supplierFinancialSettingsAPI";
-import { setDropDownOptionField, setFieldSetting } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
-import ToastService from "../../../../../services/toastService/ToastService";
 import Buttons from "../../../../../components/ui/button/Buttons";
-import { FieldSettingType } from "../../../../../utils/Enums/commonEnums";
-import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../app/services/addressAPI";
-import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicdetailAPI";
-import DataLoader from "../../../../../components/FinalMolGrid/ui/dataLoader/DataLoader";
+import CardSection from "../../../../../components/ui/card/CardSection";
+import ToastService from "../../../../../services/toastService/ToastService";
+import DynamicAddressForm from "../../ConfigurableAddressForm/DynamicAddressForm";
+//** Service's */
+import { useAddEditCheckMutation } from "../../../../../app/services/supplierFinancialSettingsAPI";
 
 const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSettingFormRef, isGetPaymentSettingsBySupplierIdSuccess,
   isGetPaymentSettingsBySupplierIdData, getSupplierCompletionCount }) => {
+
   const checkFormRef = useRef();
-  const [checkformData, setCheckFormData] = useState(checkFormData);
 
   const [addEditCheck, { isLoading: isAddEditCheckLoading, isSuccess: isAddEditCheckSuccess, data: isAddEditCheckData }] = useAddEditCheckMutation();
-  const [getAllCountries, { isSuccess: isGetAllCountriesSuccess, isFetching: isGetAllCountriesFetching, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
-  const [getAllCities, { isSuccess: isGetAllCitiesSuccess, isFetching: isGetAllCitiesFetching, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
-  const [getAllStates, { isSuccess: isGetAllStateSuccess, isFetching: isGetAllStateFetching, data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
 
   useEffect(() => {
-    getAllCountries();
-    getAllStates();
-  }, []);
-
-  useEffect(() => {
-    if (!isGetAllCountriesFetching && isGetAllCountriesSuccess && allGetAllCountriesData) {
-      setDropDownOptionField(allGetAllCountriesData, 'countryId', 'name', checkformData, 'countryId');
-    }
-  }, [isGetAllCountriesFetching, isGetAllCountriesSuccess, allGetAllCountriesData]);
-
-
-  useEffect(() => {
-    if (!isGetAllCitiesFetching && isGetAllCitiesSuccess && allGetAllCitiesData) {
-      const cities = allGetAllCitiesData.map((item) => ({
-        value: item.cityId,
-        label: item.name,
-      }));
-      let data = { ...checkformData };
-      const dropdownField = data?.formFields?.find(data => data.id === "cityId");
-      dropdownField.fieldSetting.options = cities;
-      setCheckFormData(data);
-    }
-  }, [isGetAllCitiesFetching, isGetAllCitiesSuccess, allGetAllCitiesData]);
-
-
-
-  useEffect(() => {
-    handleResponse(isAddEditCheckSuccess, isAddEditCheckData);
-  }, [isAddEditCheckSuccess, isAddEditCheckData]);
-
-  const handleResponse = (success, data) => {
-    if (success && data) {
-      handleAddResponse(success, data);
-    }
-  };
-
-  const handleAddResponse = (isSuccess, responseData) => {
-    if (isSuccess && responseData) {
-      if (responseData.errorMessage.includes("exists")) {
-        ToastService.warning(responseData.errorMessage);
+    if (isAddEditCheckSuccess && isAddEditCheckData) {
+      if (isAddEditCheckData.errorMessage.includes("exists")) {
+        ToastService.warning(isAddEditCheckData.errorMessage);
         return;
       }
-      ToastService.success(responseData.errorMessage);
+      ToastService.success(isAddEditCheckData.errorMessage);
       if (supplierId) {
         onHandleGetById(supplierId)
       }
       getSupplierCompletionCount(supplierId);
     }
-  }
-  useEffect(() => {
-
-    if (!isGetAllStateFetching && isGetAllStateSuccess && isGetPaymentSettingsBySupplierIdSuccess && isGetPaymentSettingsBySupplierIdData?.mailingAddress) {
-      const { mailingAddress } = isGetPaymentSettingsBySupplierIdData;
-      let data = { ...checkformData };
-      if (mailingAddress.countryId) {
-        setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', data, 'stateId', item => item.countryId === mailingAddress.countryId);
-      }
-
-      if (mailingAddress.stateId) {
-        getAllCities(mailingAddress.stateId)
-      }
-
-      data.initialState = {
-        addressId: mailingAddress.addressId,
-        addressLine1Id: mailingAddress.addressLine1,
-        addressLine2Id: mailingAddress.addressLine2,
-        countryId: mailingAddress.countryId,
-        zipCode: mailingAddress.zipCode,
-        stateId: mailingAddress.stateId,
-        cityId: mailingAddress.cityId,
-      };
-      setCheckFormData(data);
-    }
-  }, [isGetAllStateFetching, isGetAllStateSuccess, isGetPaymentSettingsBySupplierIdSuccess, isGetPaymentSettingsBySupplierIdData]);
+  }, [isAddEditCheckSuccess, isAddEditCheckData]);
 
   const handleAddCheckDetail = () => {
-
     let formsupplierFinancialSettings = financialSettingFormRef.current.getFormData()
     let formcheckForm = checkFormRef.current.getFormData();
     if (formcheckForm && formsupplierFinancialSettings) {
@@ -130,62 +61,27 @@ const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSetti
     }
   }
 
-  const handleChangeDropdownList = (data, dataField) => {
-    const manageData = { ...checkformData };
-    if (dataField === "countryId") {
-      setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', item => item.countryId === data.value);
-      setDropDownOptionField(null, 'cityId', 'name', manageData, 'cityId', null);
-      setFieldSetting(manageData, 'stateId', FieldSettingType.DISABLED, false);
-      checkFormRef.current.updateFormFieldValue({
-        countryId: data.value,
-        stateId: null,
-        cityId: null
-      });
-    } else if (dataField === "stateId") {
-      getAllCities(data.value)
-      setFieldSetting(manageData, 'cityId', FieldSettingType.DISABLED, false);
-      checkFormRef.current.updateFormFieldValue({
-        stateId: data.value,
-        cityId: null,
-      });
-    }
-    setCheckFormData(manageData);
-  };
-
-  const formActionHandler = {
-    DDL_CHANGED: handleChangeDropdownList,
-  };
-
-  if (isGetAllStateFetching) {
-    return <div><DataLoader /></div>; // Replace with a proper loading spinner or component
-  }
-
   return (
-
     <div className="ach-wire-section">
       <div className="sub-card-sec-add">
         <CardSection cardTitle="Mailing Address">
-          <div className="row">
-            <FormCreator
-              config={checkformData}
-              ref={checkFormRef}
-              {...checkformData}
-              // key={shouldRerenderFormCreator}
-              onActionChange={formActionHandler}
+          <DynamicAddressForm
+            ref={checkFormRef}
+            isGetAddressDetailsSuccess={isGetPaymentSettingsBySupplierIdSuccess}
+            isGetAddressDetails={isGetPaymentSettingsBySupplierIdData?.mailingAddress}
+            formConfig={checkFormData}
+          />
+        </CardSection>
+        <div className="col-md-12">
+          <div className="d-flex align-item-end justify-content-end centered" >
+            <Buttons
+              buttonTypeClassName="theme-button"
+              buttonText="Save"
+              onClick={handleAddCheckDetail}
+              isLoading={isAddEditCheckLoading}
             />
           </div>
-          <div className="col-md-12">
-            <div className="d-flex align-item-end justify-content-end centered" >
-              <Buttons
-                buttonTypeClassName="theme-button"
-                buttonText="Save"
-                onClick={handleAddCheckDetail}
-                isLoading={isAddEditCheckLoading}
-              // isDisable={isButtonDisable}
-              />
-            </div>
-          </div>
-        </CardSection>
+        </div>
       </div>
     </div>
 
