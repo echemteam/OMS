@@ -11,6 +11,7 @@ import AddEditContact from "../../../../common/features/component/Contact/featur
 import { useAddEditContactMutation, useLazyGetAllContactTypesQuery, useLazyGetCustomerContactByContactIdQuery } from "../../../../app/services/contactAPI";
 import { contactDetailFormData } from "../../../../common/features/component/Contact/config/ContactDetailForm.data";
 import AddOrderContext from "../../../../utils/Order/AddOrderContext";
+import { onResetForm } from "../../../../utils/FormFields/ResetForm/handleResetForm";
 
 const ContactDetails = (props) => {
   const basicInformation = useRef();
@@ -23,7 +24,7 @@ const ContactDetails = (props) => {
   const [purchasingEnableDisableButton, setPurchasingEnableDisableButton] = useState(true)
   const [orderResetValue, setOrderResetValue] = useState(false)
 
-  const { conatctRef, orderCustomerId, moveNextPage, orderId } = useContext(AddOrderContext);
+  const { conatctRef, orderCustomerId, moveNextPage, orderId ,movePreviewPage} = useContext(AddOrderContext);
   const [getAllContactTypes, { isSuccess: isGetAllContactTypesSucess, data: allGetAllContactTypesData }] = useLazyGetAllContactTypesQuery();
 
   const [getAllEndUserId, { isFetching: isGetAllEndUserFetching, isSuccess: isgetAllEndUserSuccess, data: isgetAllEndUserData }] = useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery();
@@ -140,6 +141,17 @@ const ContactDetails = (props) => {
     }
   }
 
+  useEffect(() => {
+  
+    if (movePreviewPage) {
+      handleClearContactDetails();  
+    }
+  }, [movePreviewPage]);
+  
+  const handleClearContactDetails = () => {
+    onResetForm(formData, setFormData, null);
+  }
+  
   useEffect(() => {
     getAllContactTypes();
     setEndUserEnableDisableButton(true);
