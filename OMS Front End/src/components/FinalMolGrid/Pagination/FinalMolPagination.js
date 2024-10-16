@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { AppIcons } from "../../../data/appIcons";
-import Image from "../../image/Image";
+// import { AppIcons } from "../../../data/appIcons";
+// import Image from "../../image/Image";
 import "./finalpagination.scss";
 import Iconify from "../../ui/iconify/Iconify";
 

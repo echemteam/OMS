@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkadmin=self.webpackChunkadmin||[]).push([[8631],{18631:(e,a,n)=>{n.r(a),n.d(a,{default:()=>s});var t=n(27565),l=n(27929);const r=t.lazy((()=>n.e(7981).then(n.bind(n,7981)))),s=e=>{let{treeData:a,level:n,onTreeNodeDataChange:t,...s}=e;const d=(e,n)=>{const l=a.map((a=>a.id===n?{...a,...e}:a));t&&t(l)};return(0,l.jsx)("ul",{children:a.map(((e,a)=>(0,l.jsx)(r,{item:e,level:n,parentItem:null,onParenetUpdate:d,...s},a)))})}}}]);
+//# sourceMappingURL=8631.c3481879.chunk.js.map

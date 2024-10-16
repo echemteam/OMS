@@ -63,11 +63,13 @@ function CardSection({
   centerBtnOnClick,
   isTooltip,
   tootipText,
+  headerContent,
 }) {
   return (
     <div
-      className={`card ${cardTitle ? "card-section-left" : ""}${searchInput && rightButton ? "card-section-between" : ""
-        }${rightButton ? "card-button-only" : ""}`}
+      className={`card ${cardTitle ? "card-section-left" : ""}${
+        searchInput && rightButton ? "card-section-between" : ""
+      }${rightButton ? "card-button-only" : ""}`}
     >
       {(cardTitle || rightButton || searchFilter || searchInput) && (
         <div className="card-top-title-btn responsive-grid-title">
@@ -76,6 +78,9 @@ function CardSection({
               <h4>{cardTitle}</h4>
               <p>{cardSubTitle}</p>
             </div>
+          )}
+          {headerContent && (
+            <div className="card-header-content">{headerContent}</div>
           )}
           <div className="manage-customer-dropdown">
             {searchInput && (
@@ -139,14 +144,14 @@ function CardSection({
                 <div className="center-title-text">
                   <h4>{CenterTitleTxt}</h4>
                   {CenterBtnIcon && (
-                  <Buttons
-                    isIcon={isIcon}
-                    iconClass={CenterBtnIcon}
-                    titleText={centerBtnTitle}
-                    onClick={centerBtnOnClick}
-                    isTooltip={isTooltip}
-                    tootipText={tootipText}
-                  />
+                    <Buttons
+                      isIcon={isIcon}
+                      iconClass={CenterBtnIcon}
+                      titleText={centerBtnTitle}
+                      onClick={centerBtnOnClick}
+                      isTooltip={isTooltip}
+                      tootipText={tootipText}
+                    />
                   )}
                 </div>
               </>
@@ -276,6 +281,7 @@ CardSection.propTypes = {
       imagePath: PropTypes.string,
     })
   ),
+  headerContent: PropTypes.node,
 };
 
 export default CardSection;

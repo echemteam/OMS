@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react';
 import { useLazyGetUserLoginLogoutHistoryByUserIdQuery } from '../../../../app/services/userAPI';
 import { UserHistoryGridConfig } from './config/UserForm.data';
@@ -6,7 +7,7 @@ import FinalMolGrid from '../../../../components/FinalMolGrid/FinalMolGrid';
 import { useParams } from 'react-router-dom';
 import { decryptUrlData } from '../../../../services/CryptoService';
 
-function UserHistory() {  
+const UserHistory = () => {  
   const molGridRef = useRef();
 
   const { id } = useParams();  

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 
 //** Lib's */
@@ -26,7 +27,7 @@ const UpdateOrderDetails = ({ orderId, orderDetailRef, onRefreshOrderDetails }) 
     //** API Call's */
     const [update, { isLoading, isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateOrderDetailMutation();
     const [getAllOrderMethod, { isSuccess: isGetAllOrderMethodSucess, data: allGetAllOrderMethodData }] = useLazyGetAllOrderMethodQuery();
-    const [getOrderInfoByOrderId, { isFetching, isSuccess: isSuccess, data: isOrderData }] = useLazyGetOrderInformationByOrderIdQuery();
+    const [getOrderInfoByOrderId, { isFetching, isSuccess: isOrderInfoSuccess, data: isOrderData }] = useLazyGetOrderInformationByOrderIdQuery();
 
     //** Use Effect's */
     useEffect(() => {
@@ -34,7 +35,7 @@ const UpdateOrderDetails = ({ orderId, orderDetailRef, onRefreshOrderDetails }) 
     }, [orderId]);
 
     useEffect(() => {
-        if (!isFetching && isSuccess && isOrderData) {
+        if (!isFetching && isOrderInfoSuccess && isOrderData) {
             const form = { ...formData }
             let request = {
                 customerId: isOrderData.customerId,
@@ -46,9 +47,8 @@ const UpdateOrderDetails = ({ orderId, orderDetailRef, onRefreshOrderDetails }) 
             }
             form.initialState = request
             setFormData(form);
-
         }
-    }, [isFetching, isSuccess, isOrderData]);
+    }, [isFetching, isOrderInfoSuccess, isOrderData]);
 
     useEffect(() => {
         if (isGetAllOrderMethodSucess && allGetAllOrderMethodData) {
@@ -94,7 +94,7 @@ const UpdateOrderDetails = ({ orderId, orderDetailRef, onRefreshOrderDetails }) 
     return (
         <SidebarModel modalTitle="Update Order Details" contentClass="content-50" onClose={onSidebarClose}
             modalTitleIcon={AppIcons.AddIcon} isOpen={isModelOpen}>
-            <div className="row">
+            <div className="row mt-2">
                 <div className="col-md-12 add-edit-user-form">
                     <div className="row vertical-form">
                         {!isFetching ?
