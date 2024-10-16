@@ -379,6 +379,58 @@
           overflow: hidden;
           text-overflow: ellipsis;
           max-width: 240px;
+          //Status Color Only text
+
+          &.status-btn-text {
+            display: inline-block;
+            border-radius: 4px;
+
+            font-weight: 600;
+            // padding: 2px 10px;
+            text-align: center;
+            // align-self: flex-start;
+            font-size: var(--commonFont);
+            &.text-gradient-warning {
+              color: var(--whiteColor);
+            }
+            &.text-gradient-success {
+              color: var(--whiteColor);
+            }
+            &.text-gradient-Submitted {
+              color: var(--submitted-theme-btn);
+            }
+            &.text-gradient-info {
+              color: var(--whiteColor);
+            }
+            &.text-gradient-danger {
+              color: var(--whiteColor);
+            }
+            &.text-gradient-theme {
+              color: var(--whiteColor);
+            }
+            &.text-gradient-Blocked {
+              color: var(--blocked-theme-btn);
+            }
+            &.text-gradient-Approved {
+              color: var(--approved-theme-btn);
+            }
+
+            &.text-gradient-Pending {
+              color: var(--pending-theme-btn);
+            }
+            &.text-gradient-disabled {
+              color: var(--disabled-theme-btn);
+            }
+            &.text-gradient-Blocked {
+              color: var(--blocked-theme-btn);
+            }
+            &.text-gradient-Frozen {
+              color: var(--frozen-theme-btn);
+            }
+            &.text-gradient-reject {
+              color: var(--reject-theme-btn);
+            }
+          }
         }
 
         span {
@@ -828,7 +880,8 @@
 
                         .shipping-address {
                           color: var(--textColor);
-                          box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px,
+                          box-shadow:
+                            rgba(136, 165, 191, 0.48) 6px 2px 16px 0px,
                             rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
                           background-color: var(--whiteColor);
                           border-radius: 5px;
