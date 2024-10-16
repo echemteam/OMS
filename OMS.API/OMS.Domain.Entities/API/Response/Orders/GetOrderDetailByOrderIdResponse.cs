@@ -22,5 +22,6 @@
         public GetOrderAddressByOrderIdResponse OrderAddressInformation { get; set; }
         public List<GetOrderContactByOrderIdResponse> OrderContactList { get; set; }
         public List<GetOrderDocumentByOrderIdResponse>? OrderDocumentList { get; set; }
+        public string? CustomerStatus {  get; set; }
     }
 }
