@@ -27,7 +27,7 @@ const UpdateOrderDetails = ({ orderId, orderDetailRef, onRefreshOrderDetails }) 
     //** API Call's */
     const [update, { isLoading, isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateOrderDetailMutation();
     const [getAllOrderMethod, { isSuccess: isGetAllOrderMethodSucess, data: allGetAllOrderMethodData }] = useLazyGetAllOrderMethodQuery();
-    const [getOrderInfoByOrderId, { isFetching, isSuccess: isSuccess, data: isOrderData }] = useLazyGetOrderInformationByOrderIdQuery();
+    const [getOrderInfoByOrderId, { isFetching, isSuccess: isOrderInfoSuccess, data: isOrderData }] = useLazyGetOrderInformationByOrderIdQuery();
 
     //** Use Effect's */
     useEffect(() => {
@@ -35,7 +35,7 @@ const UpdateOrderDetails = ({ orderId, orderDetailRef, onRefreshOrderDetails }) 
     }, [orderId]);
 
     useEffect(() => {
-        if (!isFetching && isSuccess && isOrderData) {
+        if (!isFetching && isOrderInfoSuccess && isOrderData) {
             const form = { ...formData }
             let request = {
                 customerId: isOrderData.customerId,
@@ -47,9 +47,8 @@ const UpdateOrderDetails = ({ orderId, orderDetailRef, onRefreshOrderDetails }) 
             }
             form.initialState = request
             setFormData(form);
-
         }
-    }, [isFetching, isSuccess, isOrderData]);
+    }, [isFetching, isOrderInfoSuccess, isOrderData]);
 
     useEffect(() => {
         if (isGetAllOrderMethodSucess && allGetAllOrderMethodData) {
