@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
 import ContactCloneModel from "./ContactCloneModel";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import Tooltip from "../../../../../components/ui/tooltip/Tooltip";
 
 const ContactDetailCard = forwardRef(({ contactItem, handleEdit, showEditIcon, openModalId, setOpenModalId, isSupplier, onGetContactList,
   getCompletionCount, isEditablePage, SecurityKey }, ref) => {
@@ -274,11 +275,13 @@ const ContactDetailCard = forwardRef(({ contactItem, handleEdit, showEditIcon, o
                       {!isButtonDisable &&
                         <button onClick={() => handleClone(contactItem)} className="edit-btn">
                           <Iconify icon="clarity:clone-line" />
+                          <Tooltip text="Clone Contact"/>
                         </button>
                       }
                       <button onClick={() => handleEdit(contactItem?.contactId)} className="edit-btn ml-1" >
                         {/* <Image imagePath={AppIcons.editThemeIcon} /> */}
                         <Iconify icon="tabler:pencil" />
+                        <Tooltip text="Edit Contact"/>
                       </button>
                     </>
                   ) : null}
@@ -294,7 +297,9 @@ const ContactDetailCard = forwardRef(({ contactItem, handleEdit, showEditIcon, o
                       imagePath={AppIcons.EllipsisIcon}
                       altText="EllipsisIcon"
                     /> */}
-                  <Iconify icon="mdi:ellipsis-vertical" />
+                  {/* <Iconify icon="mdi:ellipsis-vertical" /> */}
+                  <Iconify icon="mdi:eye" />
+                  <Tooltip text="View Contact"/>
                 </span>
               </div>
               <div
