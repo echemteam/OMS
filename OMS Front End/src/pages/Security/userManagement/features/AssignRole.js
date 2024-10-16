@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react'
 import { useAssignRoleToUserMutation, useDeleteRolesMappingMutation, useGetAssignedRoleDetailsMutation, useLazyGetUnAssignedRoleByUserIdQuery } from '../../../../app/services/userAPI';
 import Label from '../../../../components/ui/label/Label';
