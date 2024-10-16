@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import useDebounce from "../../../../../app/customHooks/useDebouce";
 import { ListSupplier } from "../../../../../utils/Enums/commonEnums";
@@ -30,10 +30,10 @@ const Customers = () => {
   const [rejectedCManageData, setRejectedCManageData] = useState(RejectedCustomerGridConfig);
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
 
-  const debouncedSearch = useDebounce(search, 300);
+  // const debouncedSearch = useDebounce(search, 300);
 
   const handleTabClick = (tabIndex) => {
-    setActiveTab(tabIndex.toString());
+    setActiveTab(tabIndex);
   };
 
   const getListApi = () => {
@@ -44,53 +44,24 @@ const Customers = () => {
     setSearch("");
     setSelectedDrpvalues("");
     setShouldRerenderFormCreator((prevState) => !prevState);
-    // const selectedTab = getData("selectedTab");
-    const updateManageData = () => {
-      switch (activeTab) {
-        case "0":
-          setAllManageData({
-            ...AllCustomerGridConfig,
-            columns: AllCustomerGridConfig.columns.filter(column => column.id !== ListSupplier.value)
-          });
-          break;
-        case "1":
-          setPendingManageData({
-            ...PendingCustomerGridConfig,
-            columns: PendingCustomerGridConfig.columns.filter(column => column.id !== ListSupplier.value)
-          });
-          break;
-        case "2":
-          setSubmittedManageData({
-            ...SubmittedCustomerGridConfig,
-            columns: SubmittedCustomerGridConfig.columns.filter(column => column.id !== ListSupplier.value)
-          });
-          break;
-        case "3":
-          setApprovedManageData({
-            ...ApprovedCustomerGridConfig,
-            columns: ApprovedCustomerGridConfig.columns.filter(column => column.id !== ListSupplier.value)
-          });
-          break;
-        case "4":
-          setAllManageData({
-            columns: []
-          });
-          break;
-        case "5":
-          setRejectedCManageData({
-            ...RejectedCustomerGridConfig,
-            columns: RejectedCustomerGridConfig.columns.filter(column => column.id !== ListSupplier.value)
-          });
-          break;
-        default:
-          setAllManageData(AllCustomerGridConfig);
-      }
-    };
 
-    updateManageData(); // Initial update based on activeTab
-    getListApi(); // Fetch data based on activeTab (if needed)
-    // handleTabClick(tabIndex);
+    const tabConfigMap = {
+      0: { config: AllCustomerGridConfig, setState: setAllManageData },
+      1: { config: PendingCustomerGridConfig, setState: setPendingManageData },
+      2: { config: SubmittedCustomerGridConfig, setState: setSubmittedManageData },
+      3: { config: ApprovedCustomerGridConfig, setState: setApprovedManageData },
+      4: { config: { columns: [] }, setState: setAllManageData },
+      5: { config: RejectedCustomerGridConfig, setState: setRejectedCManageData }
+    };
+    const { config, setState } = tabConfigMap[activeTab] || { config: AllCustomerGridConfig, setState: setAllManageData };
+    setState({
+      ...config,
+      columns: config.columns ? config.columns.filter(column => column.id !== ListSupplier.value) : []
+    });
+
+    getListApi();
   }, [activeTab]);
+
 
   const handleStorePaginationObj = () => {
     const pagination = location.state?.paginationObj;
@@ -99,26 +70,27 @@ const Customers = () => {
         const tabIndex = location.state?.tabIndex;
         listRef.current.getListApi(pagination.pagination, pagination.sortString, true);
         handleTabClick(tabIndex);
-      } else {
+      }
+      else {
         listRef.current.getListApi();
       }
     }
   }
 
-  const handleSearch = () => {
+  const handleSearch = useCallback(() => {
     if (search.length >= 3 || selectedDrpvalues.length > 0) {
       handleStorePaginationObj();
     } else {
-      ToastService.warning(ErrorMessage.CommonErrorMessage)
+      ToastService.warning(ErrorMessage.CommonErrorMessage);
     }
-  };
+  }, [search, selectedDrpvalues]);
 
   const handleChange = (event) => {
     setSearch(event.target.value.trim());
   };
 
   const handleKeyPress = (event) => {
-    if (event.code === KeyCodes.ENTER) {
+    if (event.key === KeyCodes.ENTER) {
       handleSearch();
     }
   }
@@ -151,114 +123,55 @@ const Customers = () => {
   };
 
   useEffect(() => {
-    if (debouncedSearch === "" && selectedDrpvalues === "") {
+    if (search === "" && selectedDrpvalues === "") {
       handleStorePaginationObj();
     }
-  }, [debouncedSearch, selectedDrpvalues]);
+  }, [search, selectedDrpvalues]);
+
+  const createCustomersList = (statusId, configFile, searchStatusFilter, tabIndex) => (
+    <div className="mt-2 customer-list-all">
+      <CustomersList
+        statusId={statusId}
+        configFile={configFile}
+        search={search}
+        handleChange={handleChange}
+        statusOptions={statusOptions}
+        selectedStatusOptions={selectedStatusOptions}
+        handleChangeDropdown={handleChangeDropdown}
+        selectedDrpvalues={selectedDrpvalues}
+        searchStatusFilter={searchStatusFilter}
+        handleSearch={handleSearch}
+        handleClear={handleClear}
+        shouldRerenderFormCreator={shouldRerenderFormCreator}
+        handleKeyPress={handleKeyPress}
+        tabIndex={tabIndex}
+      />
+    </div>
+  );
 
   const tabs = [
     {
       sMenuItemCaption: "ALL",
-      component: (
-        <div className="mt-2 customer-list-all">
-          <CustomersList
-            statusId={selectedDrpvalues}
-            configFile={allManageData}
-            search={debouncedSearch}
-            handleChange={handleChange}
-            statusOptions={statusOptions}
-            selectedStatusOptions={selectedStatusOptions}
-            handleChangeDropdown={handleChangeDropdown}
-            selectedDrpvalues={selectedDrpvalues}
-            searchStatusFilter={true}
-            handleSearch={handleSearch}
-            handleClear={handleClear}
-            shouldRerenderFormCreator={shouldRerenderFormCreator}
-            handleKeyPress={handleKeyPress}
-            tabIndex={0}
-          />
-        </div>
-      ),
+      component: createCustomersList(selectedDrpvalues, allManageData, true, 0),
     },
     {
       sMenuItemCaption: "PENDING",
-      component: (
-        <div className="mt-2 customer-list-all">
-          <CustomersList
-            statusId={StatusEnums.Pending}
-            configFile={pendingManageData}
-            search={debouncedSearch}
-            handleChange={handleChange}
-            statusOptions={statusOptions}
-            selectedStatusOptions={selectedStatusOptions}
-            handleChangeDropdown={handleChangeDropdown}
-            selectedDrpvalues={selectedDrpvalues}
-            searchStatusFilter={false}
-            handleSearch={handleSearch}
-            handleClear={handleClear}
-            shouldRerenderFormCreator={shouldRerenderFormCreator}
-            handleKeyPress={handleKeyPress}
-            tabIndex={1}
-          />
-        </div>
-      ),
+      component: createCustomersList(StatusEnums.Pending, pendingManageData, false, 1),
     },
     {
       sMenuItemCaption: "SUBMITTED",
-      component: (
-        <div className="mt-2 customer-list-submitted customer-list-all">
-          <CustomersList
-            statusId={StatusEnums.Submitted}
-            configFile={submittedManageData}
-            search={debouncedSearch}
-            handleChange={handleChange}
-            statusOptions={statusOptions}
-            selectedStatusOptions={selectedStatusOptions}
-            handleChangeDropdown={handleChangeDropdown}
-            selectedDrpvalues={selectedDrpvalues}
-            searchStatusFilter={false}
-            handleSearch={handleSearch}
-            handleClear={handleClear}
-            shouldRerenderFormCreator={shouldRerenderFormCreator}
-            handleKeyPress={handleKeyPress}
-            tabIndex={2}
-          />
-        </div>
-      ),
+      component: createCustomersList(StatusEnums.Submitted, submittedManageData, false, 2),
     },
     {
       sMenuItemCaption: "APPROVED",
-      component: (
-        <div className="mt-2 customer-list-all">
-          <CustomersList
-            statusId={StatusEnums.Approved}
-            configFile={approvedManageData}
-            search={debouncedSearch}
-            handleChange={handleChange}
-            statusOptions={statusOptions}
-            selectedStatusOptions={selectedStatusOptions}
-            handleChangeDropdown={handleChangeDropdown}
-            selectedDrpvalues={selectedDrpvalues}
-            searchStatusFilter={false}
-            handleSearch={handleSearch}
-            handleClear={handleClear}
-            shouldRerenderFormCreator={shouldRerenderFormCreator}
-            handleKeyPress={handleKeyPress}
-            tabIndex={3}
-          />
-        </div>
-      ),
+      component: createCustomersList(StatusEnums.Approved, approvedManageData, false, 3),
     },
     {
       sMenuItemCaption: "INACTIVE",
       component: (
         <div className="mt-2 inactive-list-sec">
           <InActiveCustomerTab
-            statusId={[
-              StatusEnums.Freeze,
-              StatusEnums.Block,
-              StatusEnums.Disable,
-            ]}
+            statusId={[StatusEnums.Freeze, StatusEnums.Block, StatusEnums.Disable]}
             tabIndex={4}
           />
         </div>
@@ -266,26 +179,7 @@ const Customers = () => {
     },
     {
       sMenuItemCaption: "REJECTED",
-      component: (
-        <div className="mt-2 customer-list-all">
-          <CustomersList
-            statusId={StatusEnums.Reject}
-            configFile={rejectedCManageData}
-            search={debouncedSearch}
-            handleChange={handleChange}
-            statusOptions={statusOptions}
-            selectedStatusOptions={selectedStatusOptions}
-            handleChangeDropdown={handleChangeDropdown}
-            selectedDrpvalues={selectedDrpvalues}
-            searchStatusFilter={false}
-            handleSearch={handleSearch}
-            handleClear={handleClear}
-            shouldRerenderFormCreator={shouldRerenderFormCreator}
-            handleKeyPress={handleKeyPress}
-            tabIndex={5}
-          />
-        </div>
-      ),
+      component: createCustomersList(StatusEnums.Reject, rejectedCManageData, false, 5),
     },
   ];
 
@@ -296,9 +190,7 @@ const Customers = () => {
         <div className="main-customer-grid">
           <div className="row">
             <div className="col-xxl-12 col-xl-12 col-md-12 col-12 other-info-tab main-tab-header">
-              <CardSection
-              // cardTitle="Other Information"
-              >
+              <CardSection>
                 <>
                   {tabs && tabs.length > 0 && (
                     <div className="row">

@@ -10,6 +10,7 @@ import ToastService from "../../../services/toastService/ToastService";
 import { ErrorMessage } from "../../../data/appMessages";
 import { useNavigate } from "react-router-dom";
 import { encryptUrlData } from "../../../services/CryptoService";
+import KeyCodes from "../../../utils/Enums/KeyCodesEnums";
 
 const ApiProviders = () => {
   const [isEdit, setIsEdit] = useState(false);
@@ -54,7 +55,7 @@ const ApiProviders = () => {
   };
   const handleKeyPress=(event)=>{
     
-    if (event.code === "Enter") {
+    if (event.code === KeyCodes.ENTER) {
       handleSearch();
     }
   }

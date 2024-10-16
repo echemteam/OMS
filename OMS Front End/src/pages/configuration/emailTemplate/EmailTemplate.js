@@ -8,6 +8,7 @@ import AddEditEmailTemplate from "./features/AddEditEmailTemplate";
 import EmailTemplateList from "./features/EmailTemplateList";
 import ToastService from "../../../services/toastService/ToastService";
 import { ErrorMessage } from "../../../data/appMessages";
+import KeyCodes from "../../../utils/Enums/KeyCodesEnums";
 
 const EmailTemplate=()=>{
     const getDataRef=useRef();
@@ -57,7 +58,7 @@ const EmailTemplate=()=>{
 
       const handleKeyPress=(event)=>{
        
-        if (event.code === "Enter") {
+        if (event.code === KeyCodes.ENTER) {
           handleSearch();
         }
       }
