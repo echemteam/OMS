@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { AppIcons } from "../../../data/appIcons";
-import Image from "../../image/Image";
+// import { AppIcons } from "../../../data/appIcons";
+// import Image from "../../image/Image";
 import "./pagination.scss";
 import Iconify from "../../ui/iconify/Iconify";
 
