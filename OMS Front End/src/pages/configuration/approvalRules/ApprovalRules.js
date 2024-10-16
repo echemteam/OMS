@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Rules from "./features/Rules";
 import "./Configuration.scss";
 import { rulesFormData } from "./features/config/RulesForm.data";
@@ -58,16 +58,18 @@ const ApprovalRules = () => {
     setSearch(event.target.value.trim());
   };
 
-  const handleSearch = () => {
+  const handleSearch = useCallback(() => {
     if (search.length >= 3 || selectedDrpvalues) {
       onGetData();
     } else {
       ToastService.warning(ErrorMessage.CommonErrorMessage);
     }
-  };
+  }, [search, selectedDrpvalues]);
+
+
   const handleKeyPress=(event)=>{
     
-    if (event.code === KeyCodes.ENTER) {
+    if (event.key === KeyCodes.ENTER) {
       handleSearch();
     }
   }

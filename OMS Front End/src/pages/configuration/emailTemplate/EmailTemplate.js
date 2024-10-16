@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { onResetForm } from "../../../utils/FormFields/ResetForm/handleResetForm";
 import CardSection from "../../../components/ui/card/CardSection";
 import { EmailTemplateFormData } from "./config/EmailTemplate.data";
@@ -48,17 +48,17 @@ const EmailTemplate=()=>{
         setSearch(event.target.value.trim());
       };
   
-      const handleSearch = () => {
-        if (search.length >= 3) {
-            onSuccess();
+      const handleSearch = useCallback(() => {
+        if (search.length >= 3 ) {
+          onSuccess();
         } else {
           ToastService.warning(ErrorMessage.CommonErrorMessage);
         }
-      };
+      }, [search]);
 
       const handleKeyPress=(event)=>{
        
-        if (event.code === KeyCodes.ENTER) {
+        if (event.key === KeyCodes.ENTER) {
           handleSearch();
         }
       }
