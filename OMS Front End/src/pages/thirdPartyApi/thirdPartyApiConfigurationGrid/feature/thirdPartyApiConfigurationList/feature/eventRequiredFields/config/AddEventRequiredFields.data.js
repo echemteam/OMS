@@ -1,57 +1,66 @@
+import { validationTypes } from "../../../../../../../../components/FinalForms/libs/data/ValidationTypes";
 import { FormFieldTypes } from "../../../../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../../../../data/gridColumnType";
 
 export const AddEditRequireParameterData = {
     // name: "Email From"
     initialState: { apiEventRequiredFieldId: 0, fieldName: "", fieldType: "", fieldDescription: "" },
-    formFields: [
+    section: [
         {
-            id: "fieldName",
-            lable: "Field Name ",
-            Field_Name: "Field Name",
-            fieldType: FormFieldTypes.INPUT,
-            dataField: "fieldName",
-            fieldSetting: {
-                placeholder: "Select Field Name",
-                isEnableOnChange: true,
-            },
-            validation: [{ type: "require" }],
+            title: "User Information Section",
+            row: {},
             style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-input",
+                sectionStyle: "col-lg-12 row mb-3",
             },
-        },
-        {
-            id: "fieldType",
-            lable: "Field Type ",
-            Field_Name: "Field Type",
-            fieldType: FormFieldTypes.SELECT,
-            dataField: "fieldType",
-            fieldSetting: {
-                placeholder: "Select Field Type",
-                isEnableOnChange: true
-            },
+            fields: [
+                {
+                    id: "fieldName",
+                    label: "Field Name ",
+                    Field_Name: "Field Name",
+                    fieldType: FormFieldTypes.INPUT,
+                    dataField: "fieldName",
+                    fieldSetting: {
+                        placeholder: "Select Field Name",
+                        isEnableOnChange: true,
+                    },
+                    validation: [{ type: validationTypes.REQUIRE }],
+                    style: {
+                        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-input",
+                    },
+                },
+                {
+                    id: "fieldType",
+                    label: "Field Type ",
+                    Field_Name: "Field Type",
+                    fieldType: FormFieldTypes.SELECT,
+                    dataField: "fieldType",
+                    fieldSetting: {
+                        placeholder: "Select Field Type",
+                        isEnableOnChange: true
+                    },
 
-            validation: [{ type: "require" }],
-            style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
-            },
-        },
+                    validation: [{ type: validationTypes.REQUIRE }],
+                    style: {
+                        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+                    },
+                },
 
-        {
-            id: "fieldDescription",
-            lable: "Field Description",
-            Field_Name: "Field Description",
-            fieldType: FormFieldTypes.TEXTAREA,
-            dataField: "fieldDescription",
-            fieldSetting: {
-                placeholder: "Please Enter Field Description",
-            },
-            validation: [{ type: "require" }],
-            style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
-            },
-        },
-
+                {
+                    id: "fieldDescription",
+                    label: "Field Description",
+                    Field_Name: "Field Description",
+                    fieldType: FormFieldTypes.TEXTAREA,
+                    dataField: "fieldDescription",
+                    fieldSetting: {
+                        placeholder: "Please Enter Field Description",
+                    },
+                    validation: [{ type: validationTypes.REQUIRE }],
+                    style: {
+                        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+                    },
+                },
+            ]
+        }
     ],
     formSetting: {
         isViewOnly: false

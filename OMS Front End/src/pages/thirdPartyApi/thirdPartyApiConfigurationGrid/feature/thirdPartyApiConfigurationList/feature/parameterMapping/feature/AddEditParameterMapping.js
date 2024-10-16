@@ -4,9 +4,9 @@ import { AddEditParameterMappingData } from '../config/AddEditParameterMapping.d
 import { onResetForm } from '../../../../../../../../utils/FormFields/ResetForm/handleResetForm';
 import { setDropDownOptionField } from '../../../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting';
 import Buttons from '../../../../../../../../components/ui/button/Buttons';
-import FormCreator from '../../../../../../../../components/Forms/FormCreator';
+import FormCreator from '../../../../../../../../components/FinalForms/FormCreator';
 import ToastService from '../../../../../../../../services/toastService/ToastService';
-import { useAddApiParameterMappingMutation, useLazyGetAllAPIParametersByEndpointIdQuery,  useLazyGetAllEventParameterByEventIdQuery } from '../../../../../../../../app/services/thirdPartyAPI';
+import { useAddApiParameterMappingMutation, useLazyGetAllAPIParametersByEndpointIdQuery, useLazyGetAllEventParameterByEventIdQuery } from '../../../../../../../../app/services/thirdPartyAPI';
 
 const AddEditParameterMapping = (props) => {
 
@@ -15,17 +15,17 @@ const AddEditParameterMapping = (props) => {
   const [getParametersByEndPointId, { isSuccess: isGetParametersSucess, data: isGetParametersData }] = useLazyGetAllAPIParametersByEndpointIdQuery();
   const [getEventParameterByEventId, { isSuccess: isGetEventParametersSucess, data: isGetEventParametersData }] = useLazyGetAllEventParameterByEventIdQuery();
   const [addApiParameterMapping, { isLoading: isAddApiParameterMappingLoading, isSuccess: isAddApiParameterMappingSuccess, data: allAddApiParameterMappingData, },] = useAddApiParameterMappingMutation();
- 
+
   useEffect(() => {
-    props.endpointId && getParametersByEndPointId(props.endpointId)
     props.keyId && getEventParameterByEventId(props.keyId);
+    props.endpointId && getParametersByEndPointId(props.endpointId)
   }, [])
 
   useEffect(() => {
     if (isAddApiParameterMappingSuccess && allAddApiParameterMappingData) {
       if (allAddApiParameterMappingData.errorMessage.includes("exists")) {
         ToastService.warning(allAddApiParameterMappingData.errorMessage);
-       
+
         return;
       }
       ToastService.success(allAddApiParameterMappingData.errorMessage);
@@ -35,14 +35,18 @@ const AddEditParameterMapping = (props) => {
   }, [isAddApiParameterMappingSuccess, allAddApiParameterMappingData]);
 
   useEffect(() => {
-    if (isGetParametersSucess && isGetParametersData) {
-      setDropDownOptionField(isGetParametersData, 'parameterId', 'name', AddEditParameterMappingData, 'providerParameterId');
-    }
     if (isGetEventParametersSucess && isGetEventParametersData) {
       setDropDownOptionField(isGetEventParametersData, 'parameterId', 'name', AddEditParameterMappingData, 'eventParameterId');
     }
 
-  }, [isGetParametersSucess, isGetParametersData, isGetEventParametersSucess, isGetEventParametersData]);
+  }, [isGetEventParametersSucess, isGetEventParametersData]);
+
+  useEffect(() => {
+    if (isGetParametersSucess && isGetParametersData) {
+      setDropDownOptionField(isGetParametersData, 'parameterId', 'name', AddEditParameterMappingData, 'providerParameterId');
+    }
+  }, [isGetParametersSucess, isGetParametersData,]);
+
 
   const handleAddEditAPIPRovider = () => {
     const formData = addEditParameterMappingRef.current.getFormData();
@@ -68,11 +72,7 @@ const AddEditParameterMapping = (props) => {
 
   return (
     <div className="row mt-2 add-address-form">
-      <FormCreator
-        config={addEditParameterMappingData}
-        ref={addEditParameterMappingRef}
-
-      />
+      <FormCreator config={addEditParameterMappingData} ref={addEditParameterMappingRef} />
       <div className="col-md-12 mt-2">
         <div className="d-flex align-item-end justify-content-end">
           <Buttons

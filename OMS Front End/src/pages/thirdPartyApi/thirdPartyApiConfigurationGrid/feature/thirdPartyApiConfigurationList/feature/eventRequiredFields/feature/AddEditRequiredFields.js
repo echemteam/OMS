@@ -2,11 +2,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 import ToastService from '../../../../../../../../services/toastService/ToastService';
 import Buttons from '../../../../../../../../components/ui/button/Buttons';
-import FormCreator from '../../../../../../../../components/Forms/FormCreator';
+import FormCreator from '../../../../../../../../components/FinalForms/FormCreator';
 import { onResetForm } from '../../../../../../../../utils/FormFields/ResetForm/handleResetForm';
 import { AddEditRequireParameterData } from '../config/AddEventRequiredFields.data';
 import { useAddEditApiEventRequiredFieldMutation, useLazyGetApiEventRequiredFieldByApiEventRequiredFieldIdQuery } from '../../../../../../../../app/services/thirdPartyAPI';
 import { ApiParametersDataTypes } from '../../../../../../../../utils/Enums/commonEnums';
+import { getFieldData } from '../../../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting';
 
 const AddEditRequiredFields = (props) => {
   const addEditRequireRef = useRef();
@@ -18,7 +19,7 @@ const AddEditRequiredFields = (props) => {
     if (isAddEditApiEventRequiredFieldSuccess && allAddEditApiEventRequiredFieldData) {
       if (allAddEditApiEventRequiredFieldData.errorMessage.includes("exists")) {
         ToastService.warning(allAddEditApiEventRequiredFieldData.errorMessage);
-      
+
         return;
       }
       ToastService.success(allAddEditApiEventRequiredFieldData.errorMessage);
@@ -59,12 +60,11 @@ const AddEditRequiredFields = (props) => {
   }, [props.getData])
 
   useEffect(() => {
-    const dropdownField = AddEditRequireParameterData.formFields.find((item) => item.dataField === "fieldType");
+    const dropdownField = getFieldData(AddEditRequireParameterData, 'fieldType');
     dropdownField.fieldSetting.options = Object.entries(ApiParametersDataTypes).map(([key, value]) => ({
       label: key,
       value: value,
-    })
-    );
+    }));
   }, []);
 
   useEffect(() => {

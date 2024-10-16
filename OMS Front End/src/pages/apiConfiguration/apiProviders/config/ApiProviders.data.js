@@ -1,5 +1,6 @@
 import { GridColumnType } from "../../../../data/gridColumnType";
 import { FormFieldTypes } from "../../../../data/formFieldType";
+import { validationTypes } from "../../../../components/FinalForms/libs/data/ValidationTypes";
 
 export const addEditApiProviderFormData = {
     initialState: {
@@ -7,55 +8,62 @@ export const addEditApiProviderFormData = {
         baseURL: "",
         authenticationType: "",
     },
-    formFields: [
+    section: [
         {
-            id: "name",
-            lable: "Name ",
-            Field_Name: "Name",
-            fieldType: FormFieldTypes.INPUT,
-            dataField: "name",
-            fieldSetting: {
-                placeholder: "Enter Name",
-                allowSpace: true,
-            },
-            validation: [{ type: "require" }],
+            title: "ApiProvider Information Section",
+            row: {},
             style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2 mt-2",
+                sectionStyle: "col-lg-12 row mb-3",
             },
-        },
-        {
-            id: "baseURL",
-            lable: "Base URL ",
-            Field_Name: "Base URL",
-            fieldType: FormFieldTypes.INPUT,
-            dataField: "baseURL",
-            fieldSetting: {
-                placeholder: "Enter URL",
-                allowSpace: true,
-            },
-            validation: [{ type: "require" }],
-            style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
-            },
-        },
-        {
-            id: "authenticationType",
-            lable: "Authentication ",
-            Field_Name: "AuthenticationType",
-            fieldType: FormFieldTypes.SELECT,
-            dataField: "authenticationType",
-            fieldSetting: {
-                placeholder: "Select Authentication Type",
-                isEnableOnChange: true
-            },
+            fields: [
+                {
+                    id: "name",
+                    label: "Name ",
+                    Field_Name: "Name",
+                    fieldType: FormFieldTypes.INPUT,
+                    dataField: "name",
+                    fieldSetting: {
+                        placeholder: "Enter Name",
+                        allowSpace: true,
+                    },
+                    validation: [{ type: validationTypes.REQUIRE }],
+                    style: {
+                        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2 mt-2",
+                    },
+                },
+                {
+                    id: "baseURL",
+                    label: "Base URL ",
+                    Field_Name: "Base URL",
+                    fieldType: FormFieldTypes.INPUT,
+                    dataField: "baseURL",
+                    fieldSetting: {
+                        placeholder: "Enter URL",
+                        allowSpace: true,
+                    },
+                    validation: [{ type: validationTypes.REQUIRE }],
+                    style: {
+                        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+                    },
+                },
+                {
+                    id: "authenticationType",
+                    label: "Authentication ",
+                    Field_Name: "AuthenticationType",
+                    fieldType: FormFieldTypes.SELECT,
+                    dataField: "authenticationType",
+                    fieldSetting: {
+                        placeholder: "Select Authentication Type",
+                        isEnableOnChange: true
+                    },
 
-            validation: [{ type: "require" }],
-            style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
-            },
-        },
-
-
+                    validation: [{ type: validationTypes.REQUIRE }],
+                    style: {
+                        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+                    },
+                },
+            ]
+        }
     ],
     formSetting: {
         isViewOnly: false

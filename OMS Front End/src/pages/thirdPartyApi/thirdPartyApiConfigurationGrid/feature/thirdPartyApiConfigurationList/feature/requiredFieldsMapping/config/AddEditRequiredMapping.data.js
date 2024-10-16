@@ -1,40 +1,50 @@
+import { validationTypes } from "../../../../../../../../components/FinalForms/libs/data/ValidationTypes";
 import { FormFieldTypes } from "../../../../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../../../../data/gridColumnType";
 
 export const AddEditRequiredMappingData = {
     // name: "Email From"
     initialState: { apiEventRequiredFieldId: 0, apiResponseFieldName: "" },
-    formFields: [
+    section: [
         {
-            id: "apiEventRequiredFieldId",
-            lable: "Api Event Required Field ",
-            Field_Name: "Api Event Required Field",
-            fieldType: FormFieldTypes.SELECT,
-            dataField: "apiEventRequiredFieldId",
-            fieldSetting: {
-                placeholder: "Select Api Event Required Field",
-                isEnableOnChange: true,
-            },
-            validation: [{ type: "require" }],
+            title: "User Information Section",
+            row: {},
             style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-input",
+                sectionStyle: "col-lg-12 row mb-3",
             },
-        },
-        {
-            id: "apiResponseFieldName",
-            lable: "Api Response FieldName ",
-            Field_Name: "Api Response FieldName",
-            fieldType: FormFieldTypes.INPUT,
-            dataField: "apiResponseFieldName",
-            fieldSetting: {
-                placeholder: "Select Api Response Field Name",
-                isEnableOnChange: true,
-            },
-            validation: [{ type: "require" }],
-            style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-input",
-            },
-        },
+            fields: [
+                {
+                    id: "apiEventRequiredFieldId",
+                    label: "Api Event Required Field ",
+                    Field_Name: "Api Event Required Field",
+                    fieldType: FormFieldTypes.SELECT,
+                    dataField: "apiEventRequiredFieldId",
+                    fieldSetting: {
+                        placeholder: "Select Api Event Required Field",
+                        isEnableOnChange: true,
+                    },
+                    validation: [{ type: validationTypes.REQUIRE }],
+                    style: {
+                        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-input",
+                    },
+                },
+                {
+                    id: "apiResponseFieldName",
+                    label: "Api Response FieldName ",
+                    Field_Name: "Api Response FieldName",
+                    fieldType: FormFieldTypes.INPUT,
+                    dataField: "apiResponseFieldName",
+                    fieldSetting: {
+                        placeholder: "Select Api Response Field Name",
+                        isEnableOnChange: true,
+                    },
+                    validation: [{ type: validationTypes.REQUIRE }],
+                    style: {
+                        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-input",
+                    },
+                },
+            ]
+        }
     ],
     formSetting: {
         isViewOnly: false

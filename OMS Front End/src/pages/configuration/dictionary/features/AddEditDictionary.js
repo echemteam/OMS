@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, useRef } from "react";
-import FormCreator from "../../../../components/Forms/FormCreator";
+import FormCreator from "../../../../components/FinalForms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
 import { onResetForm } from "../../../../utils/FormFields/ResetForm/handleResetForm";
 import ToastService from "../../../../services/toastService/ToastService";
@@ -16,28 +16,28 @@ const AddEditDictionary = (props) => {
   const [getDictionaryByDictonaryId, { isFetching: isGetDictionaryByDictonaryIdFetching, isSuccess: isGetDictionaryByDictonaryIdSuccess, data: isGetDictionaryByDictonaryIdData }] = useLazyGetDictionaryByDictonaryIdQuery();
 
   useEffect(() => {
-    if (!isGetDictionaryByDictonaryIdFetching && isGetDictionaryByDictonaryIdSuccess && isGetDictionaryByDictonaryIdData  ) {
-        if (isGetDictionaryByDictonaryIdData) {
-            let formData = { ...dictionaryData };
-            formData.initialState = { 
-              dictionaryId:isGetDictionaryByDictonaryIdData.dictionaryId,
-              key: isGetDictionaryByDictonaryIdData.key,
-              value: isGetDictionaryByDictonaryIdData.value,
-            };
-            setDictionaryData(formData);
-          }
+    if (!isGetDictionaryByDictonaryIdFetching && isGetDictionaryByDictonaryIdSuccess && isGetDictionaryByDictonaryIdData) {
+      if (isGetDictionaryByDictonaryIdData) {
+        let formData = { ...dictionaryData };
+        formData.initialState = {
+          dictionaryId: isGetDictionaryByDictonaryIdData.dictionaryId,
+          key: isGetDictionaryByDictonaryIdData.key,
+          value: isGetDictionaryByDictonaryIdData.value,
+        };
+        setDictionaryData(formData);
+      }
     }
-  }, [isGetDictionaryByDictonaryIdFetching,isGetDictionaryByDictonaryIdSuccess, isGetDictionaryByDictonaryIdData]);
+  }, [isGetDictionaryByDictonaryIdFetching, isGetDictionaryByDictonaryIdSuccess, isGetDictionaryByDictonaryIdData]);
 
   useEffect(() => {
     if (dictionaryId && props.isEdit) {
       getDictionaryByDictonaryId(dictionaryId);
     }
-  }, [dictionaryId ,props.isEdit]);
+  }, [dictionaryId, props.isEdit]);
 
   useEffect(() => {
     if (isAddEditDictionarySuccess && addEditDictionaryData) {
-      if(addEditDictionaryData.errorMessage.includes('exists')) {
+      if (addEditDictionaryData.errorMessage.includes('exists')) {
         ToastService.warning(addEditDictionaryData.errorMessage);
         return;
       }
@@ -46,31 +46,31 @@ const AddEditDictionary = (props) => {
       onResetData();
       props.onClose();
     }
-      }, [isAddEditDictionarySuccess, addEditDictionaryData]);
+  }, [isAddEditDictionarySuccess, addEditDictionaryData]);
 
-   useEffect(() => {
-      if (props.isModelOpen && !props.isEdit) {
-          let formData = { ...dictionaryFormData };
-          onResetForm(formData, setDictionaryData, null);
-        }
-      }, [props.isModelOpen])
+  useEffect(() => {
+    if (props.isModelOpen && !props.isEdit) {
+      let formData = { ...dictionaryFormData };
+      onResetForm(formData, setDictionaryData, null);
+    }
+  }, [props.isModelOpen])
 
   const handleDictionary = () => {
     const formData = dictionaryRef.current.getFormData();
     if (formData && !dictionaryId) {
       const requestData = {
         ...formData,
-        key: formData.key ,
-        value:formData.value
+        key: formData.key,
+        value: formData.value
       };
       addEditDictionary(requestData);
     }
-    else if(formData && dictionaryId){
+    else if (formData && dictionaryId) {
       const requestData = {
         ...formData,
         dictionaryId,
-        key: formData.key ,
-        value:formData.value
+        key: formData.key,
+        value: formData.value
       };
       addEditDictionary(requestData);
     }
@@ -84,35 +84,34 @@ const AddEditDictionary = (props) => {
   };
 
   return (
-      <div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="row vertical-form">
-              <FormCreator
-                ref={dictionaryRef}
-                config={dictionaryData}
-                 {...dictionaryData}
-              />
-            </div>
+    <div>
+      <div className="row">
+        <div className="col-md-12">
+          <div className="row vertical-form">
+            <FormCreator
+              ref={dictionaryRef}
+              config={dictionaryData}
+            />
           </div>
-          <div className="col-md-12 mt-2">
-            <div className="d-flex align-item-center justify-content-end">
-              <Buttons
-                buttonTypeClassName="theme-button"
-                buttonText={props.isEdit ? "Update" : "Save"}
-                onClick={handleDictionary}
-                isLoading={isAddEditDictionaryLoading}
-              />
-              <Buttons
-                buttonTypeClassName="dark-btn ml-5"
-                buttonText="Cancel"
-                onClick={onResetData}
-              />
-            </div>
+        </div>
+        <div className="col-md-12 mt-2">
+          <div className="d-flex align-item-center justify-content-end">
+            <Buttons
+              buttonTypeClassName="theme-button"
+              buttonText={props.isEdit ? "Update" : "Save"}
+              onClick={handleDictionary}
+              isLoading={isAddEditDictionaryLoading}
+            />
+            <Buttons
+              buttonTypeClassName="dark-btn ml-5"
+              buttonText="Cancel"
+              onClick={onResetData}
+            />
           </div>
         </div>
       </div>
-     
+    </div>
+
   );
 };
 

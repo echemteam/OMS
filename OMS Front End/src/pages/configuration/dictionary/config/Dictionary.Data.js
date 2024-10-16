@@ -1,3 +1,4 @@
+import { validationTypes } from "../../../../components/FinalForms/libs/data/ValidationTypes";
 import { FormFieldTypes } from "../../../../data/formFieldType";
 import { GridColumnType } from "../../../../data/gridColumnType";
 
@@ -6,38 +7,47 @@ export const dictionaryFormData = {
     key: "",
     value: "",
   },
-  formFields: [
+  section: [
     {
-      id: "key",
-      lable: "Key ",
-      Field_Name: "key",
-      fieldType: FormFieldTypes.INPUT,
-      dataField: "key",
-      fieldSetting: {
-        placeholder: "Enter Key",
-        allowSpace: true,
-      },
-      validation: [{ type: "require" }],
+      title: "User Information Section",
+      row: {},
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2 ",
+        sectionStyle: "col-lg-12 row mb-3",
       },
-    },
-    {
-      id: "value",
-      lable: "Value",
-      Field_Name: "Value",
-      fieldType: FormFieldTypes.INPUT,
-      dataField: "value",
-      fieldSetting: {
-        placeholder: "Enter Value",
-        allowSpace: true,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
-      },
-    }, 
-  ],
+      fields: [
+        {
+          id: "key",
+          label: "Key ",
+          Field_Name: "key",
+          fieldType: FormFieldTypes.INPUT,
+          dataField: "key",
+          fieldSetting: {
+            placeholder: "Enter Key",
+            allowSpace: true,
+          },
+          validation: [{ type: validationTypes.REQUIRE }],
+          style: {
+            containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2 ",
+          },
+        },
+        {
+          id: "value",
+          label: "Value",
+          Field_Name: "Value",
+          fieldType: FormFieldTypes.INPUT,
+          dataField: "value",
+          fieldSetting: {
+            placeholder: "Enter Value",
+            allowSpace: true,
+          },
+          validation: [{ type: validationTypes.REQUIRE }],
+          style: {
+            containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
+          },
+        },
+      ]
+    }
+  ]
 }
 export const DictionaryGridConfig = {
   columns: [

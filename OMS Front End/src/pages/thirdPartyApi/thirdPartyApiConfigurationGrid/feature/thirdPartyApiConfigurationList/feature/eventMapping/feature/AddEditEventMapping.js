@@ -8,8 +8,9 @@ import ToastService from '../../../../../../../../services/toastService/ToastSer
 import { setDropDownOptionField } from '../../../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting';
 import Buttons from '../../../../../../../../components/ui/button/Buttons';
 import { onResetForm } from '../../../../../../../../utils/FormFields/ResetForm/handleResetForm';
-import FormCreator from '../../../../../../../../components/Forms/FormCreator';
+import FormCreator from '../../../../../../../../components/FinalForms/FormCreator';
 import { useLazyGetAllAPIEndpointsQuery } from '../../../../../../../../app/services/apiParametersAPI';
+import { getValue } from '../../../../../../../../utils/CommonUtils/CommonUtilsMethods';
 
 const AddEditEventMapping = (props) => {
 
@@ -76,24 +77,23 @@ const AddEditEventMapping = (props) => {
         props.onClose();
     };
 
-    const handleDropdownChanges = (data, dataField) => {
-        if (dataField === 'providerId' && data.value) {
-            setMainProviderId(data.value);
+    const handleColumnChange = (dataField, updatedData) => {
+        const manageData = { ...addEditMappingData };
+        if (dataField === 'providerId') {
+            const providerId = getValue(updatedData.providerId);
+            setMainProviderId(providerId);
+            manageData.initialState = {
+                ...updatedData,
+                endpointId: 0,
+            }
         }
+        setAddEditMappingData(manageData);
     }
-
-    //** Action Handler */
-    const formActionHandler = {
-        DDL_CHANGED: handleDropdownChanges
-    };
 
     return (
         <div className="row mt-2 add-address-form">
-            <FormCreator
-                config={addEditMappingData}
-                ref={addEditMappingRef}
-                onActionChange={formActionHandler}
-            />
+            <FormCreator config={addEditMappingData} ref={addEditMappingRef}
+                onColumnChange={handleColumnChange} />
             <div className="col-md-12 mt-2">
                 <div className="d-flex align-item-end justify-content-end">
                     <Buttons

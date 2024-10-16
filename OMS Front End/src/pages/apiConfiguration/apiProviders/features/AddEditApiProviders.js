@@ -1,14 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
- 
+
 import PropTypes from "prop-types";
 import { addEditApiProviderFormData } from "../config/ApiProviders.data";
 import Buttons from "../../../../components/ui/button/Buttons";
-import FormCreator from "../../../../components/Forms/FormCreator";
-import { useState,useEffect,useRef  } from "react";
+import FormCreator from "../../../../components/FinalForms/FormCreator";
+import { useState, useEffect, useRef } from "react";
 import { AuthenticationTypes } from "../../../../utils/Enums/commonEnums";
 import { useAddEditApiProviderMutation, useLazyGetApiProviderByProviderIdQuery } from "../../../../app/services/apiProviderAPI";
 import ToastService from "../../../../services/toastService/ToastService";
 import { onResetForm } from "../../../../utils/FormFields/ResetForm/handleResetForm";
+import { getFieldData } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 
 const AddEditApiProviders = (props) => {
   const providerId = props.initData?.providerId;
@@ -38,7 +39,6 @@ const AddEditApiProviders = (props) => {
 
   useEffect(() => {
     if (isAddEditApiProviderSuccess && allAddEditApiProviderData) {
-
       if (allAddEditApiProviderData.errorMessage.includes("exists")) {
         ToastService.warning(allAddEditApiProviderData.errorMessage);
         props.onSuccess();
@@ -83,9 +83,7 @@ const AddEditApiProviders = (props) => {
   };
 
   useEffect(() => {
-    const dropdownField = addEditApiProviderFormData.formFields.find(
-      (item) => item.dataField === "authenticationType"
-    );
+    const dropdownField = getFieldData(addEditApiProviderFormData, 'authenticationType');
     dropdownField.fieldSetting.options = Object.entries(AuthenticationTypes).map(([key, value]) => ({
       label: key,
       value: value,
@@ -93,36 +91,32 @@ const AddEditApiProviders = (props) => {
   }, []);
 
   return (
-     
-      <div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="row vertical-form">
-              <FormCreator
-                ref={apiProviderRef}
-                config={providerFormData}
-                {...providerFormData}
-              />
-            </div>
+
+    <div>
+      <div className="row">
+        <div className="col-md-12">
+          <div className="row vertical-form">
+            <FormCreator ref={apiProviderRef} config={providerFormData} />
           </div>
-          <div className="col-md-12 mt-2">
-            <div className="d-flex align-item-center justify-content-end">
-              <Buttons
-                buttonTypeClassName="theme-button"
-                buttonText={props.isEdit ? "Update" : "Save"}
-                onClick={handleAddEditAPIPRovider}
-                isLoading={isAddEditApiProviderLoading}
-              />
-              <Buttons
-                buttonTypeClassName="dark-btn ml-5"
-                buttonText="Cancel"
-                onClick={handleResetAndClose}
-              />
-            </div>
+        </div>
+        <div className="col-md-12 mt-2">
+          <div className="d-flex align-item-center justify-content-end">
+            <Buttons
+              buttonTypeClassName="theme-button"
+              buttonText={props.isEdit ? "Update" : "Save"}
+              onClick={handleAddEditAPIPRovider}
+              isLoading={isAddEditApiProviderLoading}
+            />
+            <Buttons
+              buttonTypeClassName="dark-btn ml-5"
+              buttonText="Cancel"
+              onClick={handleResetAndClose}
+            />
           </div>
         </div>
       </div>
-     
+    </div>
+
   );
 };
 

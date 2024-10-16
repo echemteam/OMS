@@ -1,23 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import { useState ,useRef,useEffect} from "react";
+import { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import { addEditApiEndPointsFormData } from "../config/ApiEndPoints.data";
 import ToastService from "../../../../../../services/toastService/ToastService";
-import FormCreator from "../../../../../../components/Forms/FormCreator";
+import FormCreator from "../../../../../../components/FinalForms/FormCreator";
 import Buttons from "../../../../../../components/ui/button/Buttons";
 import { onResetForm } from "../../../../../../utils/FormFields/ResetForm/handleResetForm";
 import { ApiEndPointMethods } from "../../../../../../utils/Enums/commonEnums";
-import {useAddEditApiEndpointMutation, useLazyGetApiEndpointByEndpointIdQuery ,} from "../../../../../../app/services/apiEndPointsAPI";
+import { useAddEditApiEndpointMutation, useLazyGetApiEndpointByEndpointIdQuery, } from "../../../../../../app/services/apiEndPointsAPI";
+import { getFieldData } from "../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 
 const AddEditApiEndPoints = (props) => {
   const apiEndPointRef = useRef();
   const endpointId = props.initData.endpointId;
-  const [getApiEndpointByEndpointId,{ isFetching: isGetApiEndpointByEndpointIdFetching, isSuccess: isGetApiEndpointByEndpointIdSuccess, data: GetApiEndpointByEndpointIdData,},] = useLazyGetApiEndpointByEndpointIdQuery();
-  const [endPointFormData, setEndPointFormData] = useState( addEditApiEndPointsFormData);
-  const [addEditApiEndpoint,{  isLoading: isAddEditApiEndPointLoading,isSuccess: isAddEditApiEndPointSuccess,data: allAddEditApiEndPointData,}, ] = useAddEditApiEndpointMutation();
-    useEffect(() => {
-    if ( isGetApiEndpointByEndpointIdSuccess &&GetApiEndpointByEndpointIdData &&!isGetApiEndpointByEndpointIdFetching ) {
+  const [endPointFormData, setEndPointFormData] = useState(addEditApiEndPointsFormData);
+
+  const [getApiEndpointByEndpointId, { isFetching: isGetApiEndpointByEndpointIdFetching, isSuccess: isGetApiEndpointByEndpointIdSuccess, data: GetApiEndpointByEndpointIdData, },] = useLazyGetApiEndpointByEndpointIdQuery();
+  const [addEditApiEndpoint, { isLoading: isAddEditApiEndPointLoading, isSuccess: isAddEditApiEndPointSuccess, data: allAddEditApiEndPointData, },] = useAddEditApiEndpointMutation();
+
+  useEffect(() => {
+    if (isGetApiEndpointByEndpointIdSuccess && GetApiEndpointByEndpointIdData && !isGetApiEndpointByEndpointIdFetching) {
       const newFrom = { ...endPointFormData };
       newFrom.initialState = {
         endpointId: GetApiEndpointByEndpointIdData.endpointId,
@@ -29,34 +32,33 @@ const AddEditApiEndPoints = (props) => {
       };
       setEndPointFormData(newFrom);
     }
-  }, [isGetApiEndpointByEndpointIdSuccess,GetApiEndpointByEndpointIdData,isGetApiEndpointByEndpointIdFetching]);
+  }, [isGetApiEndpointByEndpointIdSuccess, GetApiEndpointByEndpointIdData, isGetApiEndpointByEndpointIdFetching]);
 
   useEffect(() => {
     if (endpointId && props.isEdit) {
       getApiEndpointByEndpointId(endpointId);
     }
-  }, [endpointId ,props.isEdit]);
+  }, [endpointId, props.isEdit]);
 
   useEffect(() => {
     if (isAddEditApiEndPointSuccess && allAddEditApiEndPointData) {
-
       if (allAddEditApiEndPointData.errorMessage.includes("exists")) {
-        ToastService.warning(allAddEditApiEndPointData.errorMessage); 
+        ToastService.warning(allAddEditApiEndPointData.errorMessage);
         return;
-    }
-    props.onSuccess();
-    ToastService.success(allAddEditApiEndPointData.errorMessage);
-    handleResetAndClose();
-    props.onClose();
+      }
+      props.onSuccess();
+      ToastService.success(allAddEditApiEndPointData.errorMessage);
+      handleResetAndClose();
+      props.onClose();
     }
   }, [isAddEditApiEndPointSuccess, allAddEditApiEndPointData]);
 
   useEffect(() => {
     if (props.isModelOpen && !props.isEdit) {
-        let formData = { ...addEditApiEndPointsFormData };
-        onResetForm(formData, setEndPointFormData, null);
-      }
-    }, [props.isModelOpen])
+      let formData = { ...addEditApiEndPointsFormData };
+      onResetForm(formData, setEndPointFormData, null);
+    }
+  }, [props.isModelOpen])
 
   const handleResetAndClose = () => {
     let formData = { ...addEditApiEndPointsFormData };
@@ -64,12 +66,11 @@ const AddEditApiEndPoints = (props) => {
     props.onClose();
   };
   useEffect(() => {
-    const dropdownField = addEditApiEndPointsFormData.formFields.find((item) => item.dataField === "method" );
+    const dropdownField = getFieldData(addEditApiEndPointsFormData, 'method');
     dropdownField.fieldSetting.options = Object.entries(ApiEndPointMethods).map(([key, value]) => ({
-        label: value,
-        value: key,
-      })
-    );
+      label: value,
+      value: key,
+    }));
   }, []);
 
 
@@ -90,45 +91,40 @@ const AddEditApiEndPoints = (props) => {
           formData.method && typeof formData.method === "object"
             ? formData.method.value
             : formData.method,
-            providerId: props.providerId,
-         
+        providerId: props.providerId,
+
       };
       addEditApiEndpoint(requestData);
     }
   };
 
   return (
-   
-      <div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="row vertical-form">
-              <FormCreator
-                ref={apiEndPointRef}
-                config={endPointFormData}
-                {...endPointFormData}
-                
-              />
-            </div>
+
+    <div>
+      <div className="row">
+        <div className="col-md-12">
+          <div className="row vertical-form">
+            <FormCreator ref={apiEndPointRef} config={endPointFormData} />
           </div>
-          <div className="col-md-12 mt-2">
-            <div className="d-flex align-item-center justify-content-end">
-              <Buttons
-                buttonTypeClassName="theme-button"
-                buttonText={props.isEdit ? "Update" : "Save"}
-                onClick={handleAddEditAPIEndPoints}
-                isLoading={isAddEditApiEndPointLoading}
-              />
-              <Buttons
-                buttonTypeClassName="dark-btn ml-5"
-                buttonText="Cancel"
-                onClick={handleResetAndClose}
-              />
-            </div>
+        </div>
+        <div className="col-md-12 mt-2">
+          <div className="d-flex align-item-center justify-content-end">
+            <Buttons
+              buttonTypeClassName="theme-button"
+              buttonText={props.isEdit ? "Update" : "Save"}
+              onClick={handleAddEditAPIEndPoints}
+              isLoading={isAddEditApiEndPointLoading}
+            />
+            <Buttons
+              buttonTypeClassName="dark-btn ml-5"
+              buttonText="Cancel"
+              onClick={handleResetAndClose}
+            />
           </div>
         </div>
       </div>
-    
+    </div>
+
   );
 };
 

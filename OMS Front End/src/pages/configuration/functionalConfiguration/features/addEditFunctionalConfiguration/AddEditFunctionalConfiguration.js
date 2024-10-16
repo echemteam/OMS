@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types';
 import { AddEditFunctionalData } from './config/AddEditFunctional.data';
 import Buttons from '../../../../../components/ui/button/Buttons';
-import FormCreator from '../../../../../components/Forms/FormCreator';
+import FormCreator from '../../../../../components/FinalForms/FormCreator';
 import { useAddEditFunctionalitiesMutation } from '../../../../../app/services/configurationAPI';
 import ToastService from '../../../../../services/toastService/ToastService';
 import { onResetForm } from '../../../../../utils/FormFields/ResetForm/handleResetForm';
@@ -60,10 +60,7 @@ const AddEditFunctionalConfiguration = (props) => {
 
   return (
     <div className="row mt-2 add-address-form">
-      <FormCreator
-        config={functionalData}
-        ref={functionalRef}
-      />
+      <FormCreator config={functionalData} ref={functionalRef} />
       <div className="col-md-12 mt-2">
         <div className="d-flex align-item-end justify-content-end">
           <Buttons
@@ -79,12 +76,12 @@ const AddEditFunctionalConfiguration = (props) => {
           />
         </div>
       </div>
-      {props.initData.functionalityId ? 
-          <div className="mt-2">
+      {props.initData.functionalityId ?
+        <div className="mt-2">
           <ViewFunctionalEvents
-            functionalityId={ props.initData.functionalityId}
-            />
-            </div>
+            functionalityId={props.initData.functionalityId}
+          />
+        </div>
         : null
       }
     </div>

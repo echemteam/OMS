@@ -1,137 +1,145 @@
+import { validationTypes } from "../../../../../components/FinalForms/libs/data/ValidationTypes";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../data/gridColumnType";
 
 export const rulesFormData = {
-    initialState: { approvalConfigurationId: 0, ruleName: "", moduleId: "", functionalityId: "",functionalityEventId: "", functionalitiesFieldId: "", roleId: "",isFunctional:false },
-    formFields: [
+    initialState: {
+        approvalConfigurationId: 0, ruleName: "", moduleId: "", functionalityId: "", functionalityEventId: "",
+        functionalitiesFieldId: "", roleId: "", isFunctional: false
+    },
+    section: [
         {
-            id: "ruleName",
-            lable: "Rule Name ",
-            Field_Name: "Rule Name",
-            fieldType: FormFieldTypes.INPUT,
-            dataField: "ruleName",
-            fieldSetting: {
-                placeholder: "Enter Rule Name",
-                allowSpace: true,
-                maxLength: 65,
-            },
-            validation: [{ type: "require" }],
+            title: "Rules Information Section",
+            row: {},
             style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+                sectionStyle: "col-lg-12 row mb-3",
             },
-        },
-        {
-            id: "moduleId",
-            lable: "Module ",
-            Field_Name: "Module",
-            fieldType: FormFieldTypes.SELECT,
-            dataField: "moduleId",
-            fieldSetting: {
-                placeholder: "Select Module",
-                isEnableOnChange: true
-            },
-            validation: [{ type: "require" }],
-            style: {
-                containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-2",
-            },
-        },
-        {
-            id: "functionalityId",
-            lable: "Functionality ",
-            Field_Name: "name",
-            fieldType: FormFieldTypes.SELECT,
-            dataField: "functionalityId",
-            fieldSetting: {
-                isDisabled: true,
-                placeholder: "Select Functionality",
-                isEnableOnChange: true
-            },
-            validation: [{ type: "require" }],
-            style: {
-                containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-2",
-            },
-        },
-        {
-            id: "functionalityEventId",
-            lable: "Functionality Event",
-            Field_Name: "Functionality Event",
-            fieldType: FormFieldTypes.SELECT,
-            dataField: "functionalityEventId",
-            fieldSetting: {
-                isDisabled: true,
-                placeholder: "Select Functionality Event",
-                isEnableOnChange: true
-            },
-            validation: [{ type: "require" }],
-            style: {
-                containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-2",
-            },
-        },
-        {
-            id: "functionalitiesFieldId",
-            lable: "Field ",
-            Field_Name: "fieldName",
-            fieldType: FormFieldTypes.SELECT,
-            dataField: "functionalitiesFieldId",
-            fieldSetting: {
-                isDisabled: true,
-                placeholder: "Select Field",
-                isEnableOnChange: true
-            },
-            // validation: [{ type: "require" }],
-            style: {
-                containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-2",
-            },
-        },
-        {
-            id: "roleId",
-            lable: "Approver Role ",
-            Field_Name: "roleName",
-            fieldType: FormFieldTypes.SELECT,
-            dataField: "roleId",
-            fieldSetting: {
-                placeholder: "Select Approver Role",
-                isEnableOnChange: true
-            },
-            validation: [{ type: "require" }],
-            style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
-            },
-        },
-
-        {
-            id: "template",
-            lable: "Template",
-            Field_Name: "Template",
-            fieldType: FormFieldTypes.CKEDITOR,
-            dataField: "template",
-            fieldSetting: {
-                placeholder: "",
-                allowSpace: true,
-                isDisable: false
-            },
-            // validation: [{ type: "require" }],
-            style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2 ",
-            },
-        },
-        {
-            id: "isFunctional",
-            lable: "Is Functional",
-            Field_Name: "Is Functional",
-            fieldType: FormFieldTypes.CHECKBOX,
-            dataField: "isFunctional",
-            fieldSetting: {
-                placeholder: "",
-                allowSpace: true,
-                isDisable: true,
-
-            },
-            // validation: [{ type: "require" }],
-            style: {
-                containerCss: "col-xxl-5 col-xl-5 col-md-12 col-12 col-12 ",
-            },
-        },
+            fields: [
+                {
+                    id: "ruleName",
+                    label: "Rule Name ",
+                    Field_Name: "Rule Name",
+                    fieldType: FormFieldTypes.INPUT,
+                    dataField: "ruleName",
+                    fieldSetting: {
+                        placeholder: "Enter Rule Name",
+                        allowSpace: true,
+                        maxLength: 65,
+                    },
+                    validation: [{ type: validationTypes.REQUIRE }],
+                    style: {
+                        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+                    },
+                },
+                {
+                    id: "moduleId",
+                    label: "Module ",
+                    Field_Name: "Module",
+                    fieldType: FormFieldTypes.SELECT,
+                    dataField: "moduleId",
+                    fieldSetting: {
+                        placeholder: "Select Module",
+                        isEnableOnChange: true
+                    },
+                    validation: [{ type: validationTypes.REQUIRE }],
+                    style: {
+                        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-2",
+                    },
+                },
+                {
+                    id: "functionalityId",
+                    label: "Functionality ",
+                    Field_Name: "name",
+                    fieldType: FormFieldTypes.SELECT,
+                    dataField: "functionalityId",
+                    fieldSetting: {
+                        isDisabled: true,
+                        placeholder: "Select Functionality",
+                        isEnableOnChange: true
+                    },
+                    validation: [{ type: validationTypes.REQUIRE }],
+                    style: {
+                        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-2",
+                    },
+                },
+                {
+                    id: "functionalityEventId",
+                    label: "Functionality Event",
+                    Field_Name: "Functionality Event",
+                    fieldType: FormFieldTypes.SELECT,
+                    dataField: "functionalityEventId",
+                    fieldSetting: {
+                        isDisabled: true,
+                        placeholder: "Select Functionality Event",
+                        isEnableOnChange: true
+                    },
+                    validation: [{ type: validationTypes.REQUIRE }],
+                    style: {
+                        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-2",
+                    },
+                },
+                {
+                    id: "functionalitiesFieldId",
+                    label: "Field ",
+                    Field_Name: "fieldName",
+                    fieldType: FormFieldTypes.SELECT,
+                    dataField: "functionalitiesFieldId",
+                    fieldSetting: {
+                        isDisabled: true,
+                        placeholder: "Select Field",
+                        isEnableOnChange: true
+                    },
+                    style: {
+                        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-2",
+                    },
+                },
+                {
+                    id: "roleId",
+                    label: "Approver Role ",
+                    Field_Name: "roleName",
+                    fieldType: FormFieldTypes.SELECT,
+                    dataField: "roleId",
+                    fieldSetting: {
+                        placeholder: "Select Approver Role",
+                        isEnableOnChange: true
+                    },
+                    validation: [{ type: validationTypes.REQUIRE }],
+                    style: {
+                        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+                    },
+                },
+                {
+                    id: "template",
+                    label: "Template",
+                    Field_Name: "Template",
+                    fieldType: FormFieldTypes.CKEDITOR,
+                    dataField: "template",
+                    fieldSetting: {
+                        placeholder: "",
+                        allowSpace: true,
+                        isDisable: false
+                    },
+                    style: {
+                        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2 ",
+                    },
+                },
+                {
+                    id: "isFunctional",
+                    label: "Is Functional",
+                    Field_Name: "Is Functional",
+                    fieldType: FormFieldTypes.CHECKBOX,
+                    dataField: "isFunctional",
+                    fieldSetting: {
+                        placeholder: "",
+                        allowSpace: true,
+                        isDisable: true
+                    },
+                    style: {
+                        containerCss: "col-xxl-5 col-xl-5 col-md-12 col-12 col-12 ",
+                    },
+                },
+            ]
+        }
     ],
     formSetting: {
         isViewOnly: false

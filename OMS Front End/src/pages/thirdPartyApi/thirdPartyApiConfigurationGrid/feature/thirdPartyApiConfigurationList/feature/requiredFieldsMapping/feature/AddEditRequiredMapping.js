@@ -5,7 +5,7 @@ import { AddEditRequiredMappingData } from '../config/AddEditRequiredMapping.dat
 import ToastService from '../../../../../../../../services/toastService/ToastService';
 import { setDropDownOptionField } from '../../../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting';
 import { onResetForm } from '../../../../../../../../utils/FormFields/ResetForm/handleResetForm';
-import FormCreator from '../../../../../../../../components/Forms/FormCreator';
+import FormCreator from '../../../../../../../../components/FinalForms/FormCreator';
 import Buttons from '../../../../../../../../components/ui/button/Buttons';
 import { useLazyGetAllAPIEndpointsQuery } from '../../../../../../../../app/services/apiParametersAPI';
 

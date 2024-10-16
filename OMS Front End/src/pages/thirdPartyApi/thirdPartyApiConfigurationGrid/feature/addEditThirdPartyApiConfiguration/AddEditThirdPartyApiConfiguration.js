@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types'; 
 import { AddEditThirdPartyApiData } from './config/AddEditThirdPartyApiConfiguration.data';
 import Buttons from '../../../../../components/ui/button/Buttons';
-import FormCreator from '../../../../../components/Forms/FormCreator';
+import FormCreator from '../../../../../components/FinalForms/FormCreator';
 import { useAddEditApiEventMutation } from '../../../../../app/services/thirdPartyAPI';
 import ToastService from '../../../../../services/toastService/ToastService';
 import { onResetForm } from '../../../../../utils/FormFields/ResetForm/handleResetForm';

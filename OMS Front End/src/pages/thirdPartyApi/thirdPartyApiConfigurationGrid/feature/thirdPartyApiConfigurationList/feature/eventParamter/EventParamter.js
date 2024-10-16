@@ -35,7 +35,6 @@ const EventParamter = ({ keyId }) => {
       <CardSection
         cardTitle="Event Parameter"
         buttonClassName="btn theme-button"
-        // rightButton={buttonVisible ? true : false}
         rightButton={true}
         buttonText="Add"
         textWithIcon={true}

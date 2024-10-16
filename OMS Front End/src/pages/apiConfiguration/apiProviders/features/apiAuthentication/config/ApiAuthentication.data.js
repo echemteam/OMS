@@ -1,94 +1,101 @@
+import { validationTypes } from "../../../../../../components/FinalForms/libs/data/ValidationTypes";
 import { FormFieldTypes } from "../../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../../data/gridColumnType";
 
 
 export const addEditApiAuthenticationFormData = {
   initialState: {
-
     authKey: "",
     clientId: "",
     clientSecret: "",
     tokenEndpoint: "",
     tokenExpires: "",
   },
-  formFields: [
-
-
+  section: [
     {
-      id: "authKey",
-      lable: "AuthKey ",
-      Field_Name: "authKey",
-      fieldType: FormFieldTypes.INPUT,
-      dataField: "authKey",
-      fieldSetting: {
-        placeholder: "Enter AuthKey",
-        allowSpace: true,
-      },
-      validation: [{ type: "require" }],
+      title: "ApiAuthentication Information Section",
+      row: {},
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2 ",
+        sectionStyle: "col-lg-12 row mb-3",
       },
-    },
-    {
-      id: "clientId",
-      lable: "Client Id",
-      Field_Name: "Client Id",
-      fieldType: FormFieldTypes.INPUT,
-      dataField: "clientId",
-      fieldSetting: {
-        placeholder: "Enter ClientId",
-        allowSpace: true,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
-      },
-    },
-    {
-      id: "clientSecret",
-      lable: "Client Secret",
-      Field_Name: "Client Secret",
-      fieldType: FormFieldTypes.INPUT,
-      dataField: "clientSecret",
-      fieldSetting: {
-        placeholder: "Enter Client Secret",
-        allowSpace: true,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
-      },
-    },
-    {
-      id: "tokenEndpoint",
-      lable: "Token Endpoint",
-      Field_Name: "Token Endpoint",
-      fieldType: FormFieldTypes.INPUT,
-      dataField: "tokenEndpoint",
-      fieldSetting: {
-        placeholder: "Enter Token Endpoint",
-        allowSpace: true,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
-      },
-    },
-    {
-      id: "tokenExpires",
-      lable: "Token Expires Date",
-      Field_Name: "TokenExpires",
-      fieldType: FormFieldTypes.DATEPICKER,
-      dataField: "tokenExpires",
-      fieldSetting: {
-        placeholder: "Select Expire Date",
-        allowSpace: true,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-2",
-      },
-    },
+      fields: [
+        {
+          id: "authKey",
+          label: "AuthKey ",
+          Field_Name: "authKey",
+          fieldType: FormFieldTypes.INPUT,
+          dataField: "authKey",
+          fieldSetting: {
+            placeholder: "Enter AuthKey",
+            allowSpace: true,
+          },
+          validation: [{ type: validationTypes.REQUIRE }],
+          style: {
+            containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2 ",
+          },
+        },
+        {
+          id: "clientId",
+          label: "Client Id",
+          Field_Name: "Client Id",
+          fieldType: FormFieldTypes.INPUT,
+          dataField: "clientId",
+          fieldSetting: {
+            placeholder: "Enter ClientId",
+            allowSpace: true,
+          },
+          validation: [{ type: validationTypes.REQUIRE }],
+          style: {
+            containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+          },
+        },
+        {
+          id: "clientSecret",
+          label: "Client Secret",
+          Field_Name: "Client Secret",
+          fieldType: FormFieldTypes.INPUT,
+          dataField: "clientSecret",
+          fieldSetting: {
+            placeholder: "Enter Client Secret",
+            allowSpace: true,
+          },
+          validation: [{ type: validationTypes.REQUIRE }],
+          style: {
+            containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+          },
+        },
+        {
+          id: "tokenEndpoint",
+          label: "Token Endpoint",
+          Field_Name: "Token Endpoint",
+          fieldType: FormFieldTypes.INPUT,
+          dataField: "tokenEndpoint",
+          fieldSetting: {
+            placeholder: "Enter Token Endpoint",
+            allowSpace: true,
+          },
+          validation: [{ type: validationTypes.REQUIRE }],
+          style: {
+            containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+          },
+        },
+        {
+          id: "tokenExpires",
+          label: "Token Expires Date",
+          Field_Name: "TokenExpires",
+          fieldType: FormFieldTypes.DATEPICKER,
+          dataField: "tokenExpires",
+          fieldSetting: {
+            placeholder: "Select Expire Date",
+            allowSpace: true,
+          },
+          validation: [{ type: validationTypes.REQUIRE }],
+          style: {
+            containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-2",
+          },
+        },
+      ]
+    }
   ],
   formSetting: {
     isViewOnly: false

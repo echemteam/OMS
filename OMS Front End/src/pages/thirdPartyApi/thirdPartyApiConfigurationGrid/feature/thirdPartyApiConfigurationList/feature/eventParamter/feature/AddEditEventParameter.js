@@ -5,8 +5,9 @@ import { useAddEditApiEventParameterMutation, useLazyGetApiEventParameterByApiEv
 import { ApiParametersDataTypes, ParameterType } from '../../../../../../../../utils/Enums/commonEnums';
 import ToastService from '../../../../../../../../services/toastService/ToastService';
 import { onResetForm } from '../../../../../../../../utils/FormFields/ResetForm/handleResetForm';
-import FormCreator from '../../../../../../../../components/Forms/FormCreator';
+import FormCreator from '../../../../../../../../components/FinalForms/FormCreator';
 import Buttons from '../../../../../../../../components/ui/button/Buttons';
+import { getFieldData } from '../../../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting';
 
 const AddEditEventParameter = (props) => {
   const addEditParameterRef = useRef();
@@ -15,19 +16,18 @@ const AddEditEventParameter = (props) => {
   const [getApiEventParameterByApiEventParametersId, { isFetching: isGetApiEventParameterByApiEventParametersIdFetching, isSuccess: isGetApiEventParameterByApiEventParametersIdSucess, data: allGetApiEventParameterByApiEventParametersIdData }] = useLazyGetApiEventParameterByApiEventParametersIdQuery();
 
   useEffect(() => {
-    const dropdownField = AddEditParameterData.formFields.find((item) => item.dataField === "dataType");
+    const dropdownField = getFieldData(AddEditParameterData, 'dataType');
     dropdownField.fieldSetting.options = Object.entries(ApiParametersDataTypes).map(([key, value]) => ({
       label: key,
       value: value,
-    })
-    );
+    }));
   }, []);
 
   useEffect(() => {
     if (isAddEditApiEventParameterSuccess && allAddEditApiEventParameterData) {
       if (allAddEditApiEventParameterData.errorMessage.includes("EXISTS")) {
         ToastService.warning(allAddEditApiEventParameterData.errorMessage);
-       
+
         return;
       }
       ToastService.success(allAddEditApiEventParameterData.errorMessage);
@@ -43,7 +43,6 @@ const AddEditEventParameter = (props) => {
       let request = {
         ...formData,
         apiEventId: props.keyId ? props.keyId : 0,
-        // apiEventParametersId: formData.apiEventParametersId && typeof formData.apiEventParametersId === "object" ? formData.apiEventParametersId.value : formData.apiEventParametersId,
         parameterName: formData.parameterName,
         dataType: formData.dataType && typeof formData.dataType === "object" ? formData.dataType.value : formData.dataType,
         parameterType: ParameterType.EVENT,
@@ -90,11 +89,7 @@ const AddEditEventParameter = (props) => {
 
   return (
     <div className="row mt-2 add-address-form">
-      <FormCreator
-        config={addEditParameterData}
-        ref={addEditParameterRef}
-     
-      />
+      <FormCreator config={addEditParameterData} ref={addEditParameterRef} />
       <div className="col-md-12 mt-2">
         <div className="d-flex align-item-end justify-content-end">
           <Buttons

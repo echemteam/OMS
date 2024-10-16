@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { addEditApiAuthenticationFormData } from "../config/ApiAuthentication.data";
 import { removeFormFields } from "../../../../../../utils/FormFields/RemoveFields/handleRemoveFields";
 import { setFieldSetting } from "../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
-import FormCreator from "../../../../../../components/Forms/FormCreator";
+import FormCreator from "../../../../../../components/FinalForms/FormCreator";
 import Buttons from "../../../../../../components/ui/button/Buttons";
 import { AuthenticationTypes, FieldSettingType } from "../../../../../../utils/Enums/commonEnums";
 import ToastService from "../../../../../../services/toastService/ToastService";

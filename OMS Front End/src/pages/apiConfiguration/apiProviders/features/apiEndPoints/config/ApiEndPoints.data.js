@@ -1,3 +1,4 @@
+import { validationTypes } from "../../../../../../components/FinalForms/libs/data/ValidationTypes";
 import { FormFieldTypes } from "../../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../../data/gridColumnType";
 
@@ -8,68 +9,77 @@ export const addEditApiEndPointsFormData = {
     method: "",
     description: "",
   },
-  formFields: [
+  section: [
     {
-      id: "name",
-      lable: "Name ",
-      Field_Name: "Name",
-      fieldType: FormFieldTypes.INPUT,
-      dataField: "name",
-      fieldSetting: {
-        placeholder: "Enter Name",
-        allowSpace: true,
-      },
-      validation: [{ type: "require" }],
+      title: "User Information Section",
+      row: {},
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2 ",
+        sectionStyle: "col-lg-12 row mb-3",
       },
-    },
-    {
-      id: "path",
-      lable: "Path",
-      Field_Name: "Path",
-      fieldType: FormFieldTypes.INPUT,
-      dataField: "path",
-      fieldSetting: {
-        placeholder: "Enter Path",
-        allowSpace: true,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
-      },
-    },
-    {
-      id: "method",
-      lable: "Method ",
-      Field_Name: "Method",
-      fieldType: FormFieldTypes.SELECT,
-      dataField: "method",
-      fieldSetting: {
-        placeholder: "Select Method",
-        isEnableOnChange: true,
-      },
+      fields: [
+        {
+          id: "name",
+          label: "Name ",
+          Field_Name: "Name",
+          fieldType: FormFieldTypes.INPUT,
+          dataField: "name",
+          fieldSetting: {
+            placeholder: "Enter Name",
+            allowSpace: true,
+          },
+          validation: [{ type: validationTypes.REQUIRE }],
+          style: {
+            containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2 ",
+          },
+        },
+        {
+          id: "path",
+          label: "Path",
+          Field_Name: "Path",
+          fieldType: FormFieldTypes.INPUT,
+          dataField: "path",
+          fieldSetting: {
+            placeholder: "Enter Path",
+            allowSpace: true,
+          },
+          validation: [{ type: validationTypes.REQUIRE }],
+          style: {
+            containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+          },
+        },
+        {
+          id: "method",
+          label: "Method ",
+          Field_Name: "Method",
+          fieldType: FormFieldTypes.SELECT,
+          dataField: "method",
+          fieldSetting: {
+            placeholder: "Select Method",
+            isEnableOnChange: true,
+          },
 
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
-      },
-    },
-    {
-      id: "description",
-      lable: "Description",
-      Field_Name: "Description",
-      fieldType: FormFieldTypes.TEXTAREA,
-      dataField: "description",
-      fieldSetting: {
-        placeholder: "Enter Description",
-        allowSpace: true,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
-      },
-    },
+          validation: [{ type: validationTypes.REQUIRE }],
+          style: {
+            containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+          },
+        },
+        {
+          id: "description",
+          label: "Description",
+          Field_Name: "Description",
+          fieldType: FormFieldTypes.TEXTAREA,
+          dataField: "description",
+          fieldSetting: {
+            placeholder: "Enter Description",
+            allowSpace: true,
+          },
+          validation: [{ type: validationTypes.REQUIRE }],
+          style: {
+            containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+          },
+        },
+      ]
+    }
   ],
   formSetting: {
     isViewOnly: false,
