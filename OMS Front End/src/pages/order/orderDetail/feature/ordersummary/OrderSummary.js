@@ -9,6 +9,7 @@ import { useLazyDownloadDocumentQuery } from "../../../../../app/services/orderA
 import ToastService from "../../../../../services/toastService/ToastService";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import FileViewer from "react-file-viewer";
+import {getStatusTextColor } from "../../../../../utils/StatusColors/StatusColors";
 
 const UpdateOrderDetails = lazy(() => import("./feature/UpdateOrderDetails"))
 
@@ -111,6 +112,7 @@ const OrderSummary = ({ orderId, orderDetails, onRefreshOrderDetails, isOrderDet
     }
   }
 
+
   return (
     <div className="icon-btn-header">
       <CardSection
@@ -140,7 +142,7 @@ const OrderSummary = ({ orderId, orderDetails, onRefreshOrderDetails, isOrderDet
                   <div className="desc-detail">
                     {/* &nbsp;:&nbsp;<span>Arcus Bioscience Inc.</span> */}
                     &nbsp;:&nbsp;
-                    <span className="name-ellipsis">
+                    <span className={`name-ellipsis ${getStatusTextColor(ordersummaryDetails?.customerStatus)}`}>
                       {ordersummaryDetails?.customerName || "---"}
                     </span>
                     <div className="info-icon info-user">

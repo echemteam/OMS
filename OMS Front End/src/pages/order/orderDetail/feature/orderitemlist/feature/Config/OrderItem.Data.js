@@ -59,7 +59,7 @@ export const orderItemFormData = {
                 allowSpace: false
             },
             style: {
-                containerCss: "col-xxl-4 col-xl-4 col-md-4 mb-input",
+                containerCss: "col-xxl-5 col-xl-5 col-md-5 mb-input",
             },
         },
         {
@@ -74,7 +74,7 @@ export const orderItemFormData = {
                 allowSpace: false
             },
             style: {
-                containerCss: "col-xxl-4 col-xl-4 col-md-4 mb-input",
+                containerCss: "col-xxl-5 col-xl-5 col-md-5 mb-input",
             },
         },
         {
@@ -93,7 +93,7 @@ export const orderItemFormData = {
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
+                containerCss: "col-xxl-2 col-xl-2 col-md-2 col-12 mb-input",
             },
         },
         {
