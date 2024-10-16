@@ -9,6 +9,7 @@ import CardSection from "../../../../../components/ui/card/CardSection";
 import CustomerListContext from "../../../../../utils/ContextAPIs/Customer/CustomerListContext";
 import { AllInActiveCustomerGridConfig, BlockedInActiveCustomerGridConfig, DisabledInActiveCustomerGridConfig, FreezedInActiveCustomerGridConfig } from "../../../../../common/features/component/CustomerSupplierListConfig/CustomerSupplierListConfig.data";
 import PropTypes from 'prop-types';
+import KeyCodes from "../../../../../utils/Enums/KeyCodesEnums";
 
 
 const InActiveCustomerTab = ({ statusId }) => {
@@ -88,7 +89,7 @@ const InActiveCustomerTab = ({ statusId }) => {
   };
 
   const handleKeyPress=(event)=>{
-    if (event.code === "Enter") {
+    if (event.code === KeyCodes.ENTER) {
       handleSearch();
     }
   }
