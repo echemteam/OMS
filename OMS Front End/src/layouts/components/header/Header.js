@@ -7,8 +7,9 @@ import SearchBar from "../../../common/features/component/SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../app/slice/authSlice";
 import Iconify from "../../../components/ui/iconify/Iconify";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { logUserLoginLogoutHistory } from "../../../utils/Thunk/UserHistory";
+import { encryptUrlData } from "../../../services/CryptoService";
 
 function Header() {
 
@@ -253,12 +254,9 @@ function Header() {
                 <span className="user-name">{authState?.user?.fullName}</span>
               </div>
               <div className="title-list drop-down-icon-menu">
-                <a href="#">
-                  <span className="bi bi-gear">Setting</span>
-                </a>
-                <a href="#">
+                <Link to={`/EditUser/${encryptUrlData(authState?.user?.userID)}`}>
                   <span className="bi bi-pencil">Edit Profile</span>
-                </a>
+                </Link>
               </div>
               <div className="title-list drop-down-icon-menu logout">
                 <a href="#" onClick={LogoutButton}>

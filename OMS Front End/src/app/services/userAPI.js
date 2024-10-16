@@ -83,6 +83,32 @@ const userAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse,
         }),
+        getUnAssignedRoleByUserId: builder.query({
+            query: (userId) => ({
+                url: encryptQueryString(`/User/getUnAssignedRoleByUserId/?userId=${Number(userId)}`),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        assignRoleToUser: builder.mutation({
+            query: ({userId,roleId}) => ({
+                url: `/User/AddAssignRoleToUser`,
+                method: 'POST',
+                body: transformRequest({userId,roleId})
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getAssignedRoleDetails: builder.mutation({
+            query: (details) => ({
+                url: `/User/GetAssignedRoleByUserId`,
+                method: 'POST',
+                body: transformRequest(details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
@@ -92,7 +118,10 @@ export const { useGetUsersMutation,
     useUpdateUserMutation,
     useDeleteUserMutation,
     useLazyGetUserByUserIdQuery,
-    useLazyGetUserLoginLogoutHistoryByUserIdQuery
+    useLazyGetUserLoginLogoutHistoryByUserIdQuery,
+    useLazyGetUnAssignedRoleByUserIdQuery,
+    useAssignRoleToUserMutation,
+    useGetAssignedRoleDetailsMutation,
 } = userAPI;
 
 export default userAPI;
