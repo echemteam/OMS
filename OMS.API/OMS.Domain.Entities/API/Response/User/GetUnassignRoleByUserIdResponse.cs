@@ -10,5 +10,6 @@ namespace OMS.Domain.Entities.API.Response.User
     {
         public short? RoleId { get; set; }
         public string? RoleName { get; set; }
+        public int? UserRoleId {  get; set; }
     }
 }
