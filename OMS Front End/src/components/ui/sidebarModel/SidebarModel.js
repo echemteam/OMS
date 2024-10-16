@@ -2,7 +2,7 @@ import { AppIcons } from "../../../data/appIcons";
 import PropTypes from "prop-types";
 import Image from "../../image/Image";
 import "./SidebarModel.scss";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 // import Iconify from "../iconify/Iconify";
 
 const SidebarModel = ({ children, modalTitleIcon, showToggle, ...props }) => {
