@@ -147,9 +147,10 @@ export const orderListMolGridConfig = {
     },
     {
       name: "Action",
-      fieldName: "Action",
+      colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,
+        allowDelete: false,
       },
       allowShort: false,
       colStyle: {
