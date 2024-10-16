@@ -44,7 +44,6 @@ const Customers = () => {
     setSelectedDrpvalues("");
     setShouldRerenderFormCreator((prevState) => !prevState);
     // const selectedTab = getData("selectedTab");
-    const tabIndex = activeTab;
     const updateManageData = () => {
       switch (activeTab) {
         case "0":
