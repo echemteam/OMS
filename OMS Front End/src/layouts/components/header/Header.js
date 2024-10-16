@@ -270,8 +270,12 @@ function Header() {
                 <span className="user-name">{authState?.user?.fullName}</span>
               </div>
               <div className="title-list drop-down-icon-menu">
-                <Link to={`/EditUser/${encryptUrlData(authState?.user?.userID)}`}>
-                  <span className="bi bi-pencil">Edit Profile</span>
+                <Link
+                  to={`/EditUser/${encryptUrlData(authState?.user?.userID)}`}
+                >
+                  <span className="bi bi-pencil">
+                    <span>Edit Profile</span>
+                  </span>
                 </Link>
               </div>
               <div className="title-list drop-down-icon-menu logout">

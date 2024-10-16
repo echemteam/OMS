@@ -728,9 +728,9 @@
                       color: var(--textColor);
                       border-radius: 5px;
                       font-weight: normal;
-                      padding: 0;
+                      padding: 1px 7px;
 
-                      &.pending-bg {
+                      &.pending-review {
                         background-color: var(--whiteColor);
                         color: #ff9966;
                         border: 1px solid #ff9966;
