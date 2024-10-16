@@ -124,7 +124,7 @@ const OrderSummary = ({ orderId, orderDetails, onRefreshOrderDetails, isOrderDet
         isCenterTile={true}
         CenterTitleTxt={ordersummaryDetails?.poNumber}
         // CenterBtnIcon= "icomoon-free:file-pdf" 
-       CenterBtnIcon={!isDownalodFetching ? (documentNames ? "" : "icomoon-free:file-pdf") :"mdi:loading" }
+       CenterBtnIcon={!isDownalodFetching ? (documentNames ? "" : "icomoon-free:file-pdf") :"svg-spinners:ring-resize" }
         centerBtnTitle="View Purchase Order"
         centerBtnOnClick={handleToggleModalPDF}
       >

@@ -65,15 +65,15 @@ const CustomerDetailsModel = ({ customerId }) => {
             </div>
             {/* Email End */}
             {/* Phone Start */}
-            <div className="icon-detail">
+            {/* <div className="icon-detail">
               <span className="icon-part contact-icon">
                 <Iconify icon="ic:round-phone" />
               </span>
               <span className="info-part contact-info ">
                 <div class="values">+91 9173010672</div>
-                {/* <span class="primary-email"></span> */}
+                <span class="primary-email"></span>
               </span>
-            </div>
+            </div> */}
             {/* Phone End */}
             {/* Web Start */}
             <div className="icon-detail">

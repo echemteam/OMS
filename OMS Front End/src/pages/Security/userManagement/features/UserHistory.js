@@ -6,7 +6,7 @@ import FinalMolGrid from '../../../../components/FinalMolGrid/FinalMolGrid';
 import { useParams } from 'react-router-dom';
 import { decryptUrlData } from '../../../../services/CryptoService';
 
-function UserHistory() {  
+const UserHistory = () => {  
   const molGridRef = useRef();
 
   const { id } = useParams();  

@@ -94,7 +94,7 @@ const UpdateOrderDetails = ({ orderId, orderDetailRef, onRefreshOrderDetails }) 
     return (
         <SidebarModel modalTitle="Update Order Details" contentClass="content-50" onClose={onSidebarClose}
             modalTitleIcon={AppIcons.AddIcon} isOpen={isModelOpen}>
-            <div className="row">
+            <div className="row mt-2">
                 <div className="col-md-12 add-edit-user-form">
                     <div className="row vertical-form">
                         {!isFetching ?
