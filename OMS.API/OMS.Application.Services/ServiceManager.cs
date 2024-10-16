@@ -19,6 +19,7 @@ using OMS.Application.Services.PhoneNumber;
 using OMS.Application.Services.Roles;
 using OMS.Application.Services.RolesMapping;
 using OMS.Application.Services.Security;
+using OMS.Application.Services.Snippet;
 using OMS.Application.Services.Supplier;
 using OMS.Application.Services.SupplierAccoutingSetting;
 using OMS.Application.Services.SupplierDocuements;
@@ -70,6 +71,7 @@ namespace OMS.Application.Services
         IOrderServices _orderServices;
         IDictionaryServices _dictionaryServices;
         IEmailTemplatesService _emailTemplatesService;
+        ISnippetServices _snippetServices;
 
         public ITestService testService
         {
@@ -402,6 +404,18 @@ namespace OMS.Application.Services
                     _emailTemplatesService = new EmailTemplatesService(_repositoryManager, _commonSettingService);
                 }
                 return _emailTemplatesService;
+
+            }
+        }
+        public ISnippetServices snippetServices
+        {
+            get
+            {
+                if (_snippetServices == null)
+                {
+                    _snippetServices = new SnippetServices(_repositoryManager, _commonSettingService);
+                }
+                return _snippetServices;
 
             }
         }
