@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkadmin=self.webpackChunkadmin||[]).push([[749],{40749:(e,l,a)=>{a.r(l),a.d(l,{default:()=>t});a(27565);var s=a(89573),n=a.n(s),d=a(27929);const t=e=>{let{selected:l,onChange:a,placeholder:s,onBlur:t,isDisable:c}=e;return(0,d.jsx)("div",{className:"date-picker",children:(0,d.jsx)(n(),{placeholderText:s,selected:l,onChange:e=>(e=>{a&&a(e)})(e),onBlur:t,autoComplete:"off",disabled:c})})}}}]);
+//# sourceMappingURL=749.62cd540b.chunk.js.map
