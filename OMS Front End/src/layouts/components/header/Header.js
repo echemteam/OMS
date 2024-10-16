@@ -12,7 +12,6 @@ import { logUserLoginLogoutHistory } from "../../../utils/Thunk/UserHistory";
 import { encryptUrlData } from "../../../services/CryptoService";
 
 function Header() {
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isActive, setIsActive] = useState(false);
@@ -80,10 +79,12 @@ function Header() {
   ];
   const LogoutButton = () => {
     dispatch(logout());
-    dispatch(logUserLoginLogoutHistory({
-      userId: authState.user.userID,
-      isLogin: authState.isAuthenticated
-    }));
+    dispatch(
+      logUserLoginLogoutHistory({
+        userId: authState.user.userID,
+        isLogin: authState.isAuthenticated,
+      })
+    );
   };
   const handleClickOutside = (event) => {
     if (
@@ -101,8 +102,8 @@ function Header() {
     };
   }, []);
 
-  const handleChange = () => { };
-  
+  const handleChange = () => {};
+
   const openAdmin = () => {
     navigate("/configuration/ApprovalRules");
   };
@@ -121,22 +122,29 @@ function Header() {
       <div className="right-section">
         <div className="profile-section">
           <div className={`shortcut-sec`}>
-          {isConfigPage ? (
-            <div className="header-icon-part" onClick={() => navigate("/")}>
-              <Iconify icon="mdi:home" />
-            </div>
-          ) : (
-            <div className="header-icon-part" onClick={openAdmin}>
-              <Iconify icon="line-md:cog-loop" />
-            </div>
-          )}
+            {isConfigPage ? (
+              <div className="header-icon-part" onClick={() => navigate("/")}>
+                <Iconify icon="mdi:home" />
+              </div>
+            ) : (
+              <div className="header-icon-part" onClick={openAdmin}>
+                <Iconify icon="line-md:cog-loop" />
+              </div>
+            )}
           </div>
-          <div className={`shortcut-sec ${isActive ? "active" : ""}`} ref={shortcutSecRef}>
-            <div className="shortcut-icon" onClick={() => setIsActive(!isActive)} >
+          <div
+            className={`shortcut-sec ${isActive ? "active" : ""}`}
+            ref={shortcutSecRef}
+          >
+            <div
+              className="shortcut-icon"
+              onClick={() => setIsActive(!isActive)}
+            >
               <Image
                 imagePath={AppIcons.ShortcutIcon}
                 imgCustomClassName="shortcut-icon"
-                altText="Icon" />
+                altText="Icon"
+              />
             </div>
             <div className="shortcuts-list">
               <div className="top-header-card-title">
@@ -179,7 +187,7 @@ function Header() {
               <div className="title-clearall">
                 <span className="title">Notifications</span>
                 <span className="clear-all">
-                  <a href="#">Clear All</a>
+                  <button onClick={() => {}}>Clear All</button>
                 </span>
               </div>
               <div className="notification-items">
@@ -189,7 +197,9 @@ function Header() {
                       <i className="bi bi-bell"></i>
                     </div>
                     <div className="notification-time">
-                      <a href="#">Lorem Ipsum is simply dummy text</a>
+                      <button onClick={() => {}}>
+                        Lorem Ipsum is simply dummy text
+                      </button>
                       <div className="time-sec">15 mins ago</div>
                     </div>
                   </li>
@@ -198,7 +208,9 @@ function Header() {
                       <i className="bi bi-bell"></i>
                     </div>
                     <div className="notification-time">
-                      <a href="#">Lorem Ipsum is simply dummy text</a>
+                      <button onClick={() => {}}>
+                        Lorem Ipsum is simply dummy text
+                      </button>
                       <div className="time-sec">15 mins ago</div>
                     </div>
                   </li>
@@ -207,7 +219,9 @@ function Header() {
                       <i className="bi bi-bell"></i>
                     </div>
                     <div className="notification-time">
-                      <a href="#">Lorem Ipsum is simply dummy text</a>
+                      <button onClick={() => {}}>
+                        Lorem Ipsum is simply dummy text
+                      </button>
                       <div className="time-sec">15 mins ago</div>
                     </div>
                   </li>
@@ -216,14 +230,16 @@ function Header() {
                       <i className="bi bi-bell"></i>
                     </div>
                     <div className="notification-time">
-                      <a href="#">Lorem Ipsum is simply dummy text</a>
+                      <button onClick={() => {}}>
+                        Lorem Ipsum is simply dummy text
+                      </button>
                       <div className="time-sec">15 mins ago</div>
                     </div>
                   </li>
                 </ul>
               </div>
               <div className="notification-footer">
-                <a href="#">View All</a>
+                <button onClick={() => {}}>View All</button>
               </div>
             </div>
           </div>
@@ -259,9 +275,9 @@ function Header() {
                 </Link>
               </div>
               <div className="title-list drop-down-icon-menu logout">
-                <a href="#" onClick={LogoutButton}>
+                <button onClick={LogoutButton}>
                   <span className="bi bi-box-arrow-left">Log out</span>
-                </a>
+                </button>
               </div>
             </div>
           </div>

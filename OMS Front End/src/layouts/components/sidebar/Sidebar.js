@@ -3,8 +3,6 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 //** Lib's */
 import "./Sidebar.scss";
-import { AppIcons } from "../../../data/appIcons";
-import Image from "../../../components/image/Image";
 import { ConfigurationMenu, Menu } from "../menu/Menu";
 import Iconify from "../../../components/ui/iconify/Iconify";
 import { hasPermission } from "../../../utils/AuthorizeNavigation/authorizeNavigation";
