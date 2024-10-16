@@ -21,6 +21,7 @@ import useDebounce from "../../../../app/customHooks/useDebouce";
 import ToastService from "../../../../services/toastService/ToastService";
 import { ErrorMessage } from "../../../../data/appMessages";
 import SwalAlert from "../../../../services/swalService/SwalService";
+import KeyCodes from "../../../../utils/Enums/KeyCodesEnums";
 
 const Orders = ({ orderStatusId, orderItemStatusId, orderSubStatusId }) => {
 
@@ -59,7 +60,7 @@ const Orders = ({ orderStatusId, orderItemStatusId, orderSubStatusId }) => {
   };
 
   const handleKeyPress = (event) => {
-    if (event.code === "Enter") {
+    if (event.code === KeyCodes.ENTER) {
       handleSearch();
     }
   }

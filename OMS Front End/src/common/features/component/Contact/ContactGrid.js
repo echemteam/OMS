@@ -17,6 +17,7 @@ import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/a
 import RenderTabs from "../../../../components/ui/tabs/RenderTabs";
 import { modifyContactType } from "../../../../utils/TransformData/TransformAPIData";
 import PropTypes from "prop-types";
+import KeyCodes from "../../../../utils/Enums/KeyCodesEnums";
 //** Component's */
 const ContactList = React.lazy(() => import("./feature/ContactList"));
 const AddEditContact = React.lazy(() => import("./feature/AddEditContact"));
@@ -110,7 +111,7 @@ const ContactGrid = ({
   };
 
   const handleKeyPress = (event) => {
-    if (event.code === "Enter") {
+    if (event.code === KeyCodes.ENTER) {
       onhandleSearch();
     }
   }
