@@ -41,11 +41,11 @@ const OrderInformation = ({
   const [isUpdateContactModel, setIsUpdateContactModel] = useState(false);
   const [selectedContactId, setSelectedContactId] = useState(null);
   const [defaultId, setDefaultId] = useState(null);
-  const [addressTypeId,setAddressTypeId]=useState(null);
-  const [orderContactId, setOrderContactId] = useState(null)
+  const [addressTypeId, setAddressTypeId] = useState(null);
+  const [orderContactId, setOrderContactId] = useState(null);
   const [orderItemId, setOrderItemId] = useState(0);
-  const [isOrderAddress,setIsOrderAddress]=useState(false);
-  const [isOrderContact,setIsOrderConatct]=useState(false);
+  const [isOrderAddress, setIsOrderAddress] = useState(false);
+  const [isOrderContact, setIsOrderConatct] = useState(false);
 
   const [
     getAllContactTypes,
@@ -64,7 +64,6 @@ const OrderInformation = ({
     setIsModelOpenShippingAddress(true);
     setAddressContactType(type);
     setDefaultId(addressId);
-   
   };
 
   useImperativeHandle(orderItemShippingAddRef, () => ({
@@ -76,7 +75,7 @@ const OrderInformation = ({
     setEditMode(false);
     setIsModelOpenShippingAddress(true);
     setOrderItemId(0);
-    setIsOrderAddress(false);  
+    setIsOrderAddress(false);
   };
 
   const handleAddClick = () => {
@@ -92,8 +91,7 @@ const OrderInformation = ({
     setIsUpdateContactModel(true);
     setIsOrderConatct(true);
     getAllContactTypes();
-     
-  }
+  };
   const onSidebarCloseUserModel = () => {
     setIsModelOpenUserModel(false);
     setAddressContactType("");
@@ -146,9 +144,9 @@ const OrderInformation = ({
     onSidebarCloseUpdateContact();
   };
 
-const onHandleOrderInfoRepeatCall=()=>{
-  onSidebarCloseUpdateAddress();
-}
+  const onHandleOrderInfoRepeatCall = () => {
+    onSidebarCloseUpdateAddress();
+  };
   const getOrderMethodIcon = (orderMethod) => {
     switch (orderMethod) {
       case "Online":
@@ -174,6 +172,7 @@ const onHandleOrderInfoRepeatCall=()=>{
         cardTitle="Order Information"
         headerContent={
           <div className="d-flex order-method">
+            <div className="order-method-label"> O/M :</div>
             <Iconify icon={getOrderMethodIcon(orderInfo?.orderMethod)} />
             <div className="order-method-value">{orderInfo?.orderMethod}</div>
           </div>
@@ -310,8 +309,8 @@ const onHandleOrderInfoRepeatCall=()=>{
           isOpen={isModelOpenUpdateAddress}
         >
           <AddEditAddress
-           getAddressTypeIdOrder={addressTypeId}
-           isOrderManage={isOrderAddress}
+            getAddressTypeIdOrder={addressTypeId}
+            isOrderManage={isOrderAddress}
             selectedAddressId={selectedAddressId}
             isModelOpen={isModelOpenUpdateAddress}
             keyId={customerId}
@@ -352,7 +351,6 @@ const onHandleOrderInfoRepeatCall=()=>{
       {isUpdateContactModel ? (
         <SidebarModel
           modalTitle="Add/Edit Contact"
-          
           contentClass="content-40"
           onClose={onSidebarCloseUpdateContact}
           modalTitleIcon={AppIcons.AddIcon}
