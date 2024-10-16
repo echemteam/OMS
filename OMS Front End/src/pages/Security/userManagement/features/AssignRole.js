@@ -96,6 +96,11 @@ const AssignRole=(props) => {
     }
 
     const handleClick = () => {
+
+        if (!selectedRole) {
+            ToastService.error("Please select a role to assign.");
+            return;
+        }
         if (props.descrypteId && selectedRole) {
             const data = {
                 userId: props.descrypteId,
@@ -152,7 +157,7 @@ const AssignRole=(props) => {
                                 buttonTypeClassName="theme-button"
                                 buttonText="Assign Role"
                                 onClick={handleClick}
-                                isDisable={props.isButtonDisable}
+                               // isDisable={props.isButtonDisable}
                             />
                         </div>
                     </div>

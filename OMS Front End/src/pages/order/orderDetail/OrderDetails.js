@@ -25,7 +25,6 @@ const OrderInformation = lazy(() =>
 );
 
 const OrderDetails = () => {
-
   const { id } = useParams();
   const orderItemShippingAddRef = useRef();
   const orderId = id ? decryptUrlData(id) : 0;
@@ -33,17 +32,20 @@ const OrderDetails = () => {
   const [orderDetails, setOrderDetails] = useState();
   const [isOrderItemAddUpdate, setIsOrderItemAddUpdate] = useState(false);
 
-  const [getOrderDetailByOrderId, {
-    isFetching: isOrderDetailsFetching,
-    isSuccess: isOrderDetailsFetched,
-    data: orderByOrderIdDetails,
-  },] = useLazyGetOrderDetailByOrderIdQuery();
+  const [
+    getOrderDetailByOrderId,
+    {
+      isFetching: isOrderDetailsFetching,
+      isSuccess: isOrderDetailsFetched,
+      data: orderByOrderIdDetails,
+    },
+  ] = useLazyGetOrderDetailByOrderIdQuery();
 
   const handleRefreshOrderDetails = () => {
     if (orderId) {
       getOrderDetailByOrderId(orderId);
     }
-  }
+  };
 
   useEffect(() => {
     if (orderId) {
@@ -52,7 +54,11 @@ const OrderDetails = () => {
   }, [orderId]);
 
   useEffect(() => {
-    if (!isOrderDetailsFetching && isOrderDetailsFetched && orderByOrderIdDetails) {
+    if (
+      !isOrderDetailsFetching &&
+      isOrderDetailsFetched &&
+      orderByOrderIdDetails
+    ) {
       setOrderDetails(orderByOrderIdDetails);
       // This is used for the Order Item Address Update Then Re-fetch the order items list API.
       if (isOrderItemAddUpdate) {
@@ -64,10 +70,14 @@ const OrderDetails = () => {
 
   const handleOrderItemShippingAddress = (type, addressId, orderItemId) => {
     if (orderItemShippingAddRef) {
-      orderItemShippingAddRef.current.handleToggleModalShippingAddress(type, addressId, orderItemId);
+      orderItemShippingAddRef.current.handleToggleModalShippingAddress(
+        type,
+        addressId,
+        orderItemId
+      );
       setIsOrderItemAddUpdate(true);
     }
-  }
+  };
 
   return (
     <div className="order-review-section">
@@ -76,12 +86,19 @@ const OrderDetails = () => {
         <div className="col-xxl-5 col-lg-5 col-md-5 col-12">
           {/* Order Summery Start */}
           <OrderSummary
-            orderId={orderId} isOrderDetailsFetch={isOrderDetailsFetching}
-            orderDetails={orderDetails} onRefreshOrderDetails={handleRefreshOrderDetails} />
+            orderId={orderId}
+            isOrderDetailsFetch={isOrderDetailsFetching}
+            orderDetails={orderDetails}
+            onRefreshOrderDetails={handleRefreshOrderDetails}
+          />
           {/* Order Summery End */}
 
           {/* Order Information Start */}
-          <OrderInformation orderItemShippingAddRef={orderItemShippingAddRef} orderDetails={orderDetails} handleRefreshOrderDetails={handleRefreshOrderDetails} />
+          <OrderInformation
+            orderItemShippingAddRef={orderItemShippingAddRef}
+            orderDetails={orderDetails}
+            handleRefreshOrderDetails={handleRefreshOrderDetails}
+          />
           {/* Order Information End */}
 
           {/* Order Document Start */}
@@ -96,9 +113,12 @@ const OrderDetails = () => {
 
         {/* Right Side Section Start */}
         <div className="col-xxl-7 col-lg-7 col-md-7 col-12">
-          <OrderAction orderId={orderId}/>
-          <OrderItemList isUpdateOrderItemShippingAddRef={isUpdateOrderItemShippingAddRef} orderDetails={orderDetails}
-            handleOrderItemShippingAddress={handleOrderItemShippingAddress} />
+          <OrderAction orderId={orderId} />
+          <OrderItemList
+            isUpdateOrderItemShippingAddRef={isUpdateOrderItemShippingAddRef}
+            orderDetails={orderDetails}
+            handleOrderItemShippingAddress={handleOrderItemShippingAddress}
+          />
         </div>
         {/* Right Side Section End */}
       </div>

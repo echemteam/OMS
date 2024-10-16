@@ -11,6 +11,7 @@ import AddEditContact from "../../../../common/features/component/Contact/featur
 import { useAddEditContactMutation, useLazyGetAllContactTypesQuery, useLazyGetCustomerContactByContactIdQuery } from "../../../../app/services/contactAPI";
 import { contactDetailFormData } from "../../../../common/features/component/Contact/config/ContactDetailForm.data";
 import AddOrderContext from "../../../../utils/Order/AddOrderContext";
+import { onResetForm } from "../../../../utils/FormFields/ResetForm/handleResetForm";
 
 const ContactDetails = (props) => {
   const basicInformation = useRef();
@@ -23,14 +24,14 @@ const ContactDetails = (props) => {
   const [purchasingEnableDisableButton, setPurchasingEnableDisableButton] = useState(true)
   const [orderResetValue, setOrderResetValue] = useState(false)
 
-  const { conatctRef, orderCustomerId, moveNextPage, orderId } = useContext(AddOrderContext);
+  const { conatctRef, orderCustomerId, moveNextPage, orderId ,movePreviewPage} = useContext(AddOrderContext);
   const [getAllContactTypes, { isSuccess: isGetAllContactTypesSucess, data: allGetAllContactTypesData }] = useLazyGetAllContactTypesQuery();
 
   const [getAllEndUserId, { isFetching: isGetAllEndUserFetching, isSuccess: isgetAllEndUserSuccess, data: isgetAllEndUserData }] = useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery();
   const [getAllInvoiceSubmissionId, { isFetching: isGetAllInvoiceSubmissionFetching, isSuccess: isgetAllInvoiceSubmissionSuccess, data: isgetAllInvoiceSubmissionData }] = useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery();
   const [getAllPurchasingId, { isFetching: isGetAllPurchasingFetching, isSuccess: isgetAllPurchasingSuccess, data: isgetAllPurchasingData }] = useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery();
 
-  useEffect(() => {
+   useEffect(() => {
     if (orderCustomerId) {
       let req = {
         customerId: orderCustomerId,
@@ -140,6 +141,15 @@ const ContactDetails = (props) => {
     }
   }
 
+  useEffect(()=>{
+    handleClearContactDetails();
+  },[props.customerId])
+
+ 
+  const handleClearContactDetails = () => {
+    onResetForm(formData, setFormData, null);
+  }
+  
   useEffect(() => {
     getAllContactTypes();
     setEndUserEnableDisableButton(true);

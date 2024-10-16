@@ -172,7 +172,7 @@ export const UserHistoryGridConfig = {
       colStyle: {
         width: "40%",
       },
-      allowShort: true,
+      allowShort: false,
     },
     {
       name: "Logout Time",
@@ -180,7 +180,7 @@ export const UserHistoryGridConfig = {
       colStyle: {
         width: "40%",
       },
-      allowShort: true,
+      allowShort: false,
     },
     {
       name: "IP Address",
@@ -188,7 +188,7 @@ export const UserHistoryGridConfig = {
       colStyle: {
         width: "20%",
       },
-      allowShort: true,
+      allowShort: false,
     },
 
   ]

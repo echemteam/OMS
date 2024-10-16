@@ -8,7 +8,7 @@ const assignRoleInfo = {
             fieldName: "roleName",
             allowShort: false,
             colStyle: {
-                width: "50%",
+                width: "90%",
               },
         },
         {
@@ -19,7 +19,7 @@ const assignRoleInfo = {
                 allowDelete: true
             },
             colStyle: {
-                width: "50%",
+                width: "10%",
               },
         },
     ]

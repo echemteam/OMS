@@ -43,7 +43,7 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
   const parentRef = useRef();
   const navigate = useNavigate();
   const [formData, setFormData] = useState(orderInformationData);
-  const [isSubCustomerDropdownVisible, setIsSubCustomerDropdownVisible] =
+    const [isSubCustomerDropdownVisible, setIsSubCustomerDropdownVisible] =
     useState(false);
   const { blocked } = SwalAlert();
   const [
@@ -68,7 +68,7 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
   const [getAddressTypeId, setGetAddressTypeId] = useState(null);
   const [poNumber, setPoNumber] = useState("");
 
-  const {
+    const {
     nextStepRef,
     orderCustomerId,
     setOrderCustomerId,
@@ -263,7 +263,7 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
   ]);
 
   useEffect(() => {
-    if (
+      if (
       !isGetAllSubCustomersFetching &&
       isGetAllSubCustomersSuccess &&
       isGetAllSubCustomersData
@@ -304,7 +304,7 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
   }, [isSubCustomerDropdownVisible]);
 
   const handleChangeDropdownList = async (data, dataField) => {
-
+   
     const blockedOptionValue = "Block";
     if (data.status === blockedOptionValue) {
       const result = await blocked(
@@ -323,20 +323,30 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
       if (data.isBuyingForThirdParty) {
         setIsSubCustomerDropdownVisible(true);
         getAllSubCustomerByCustomerId(data.value);
-        setFormData({ ...orderInformationData });
-        basicInformation.current.updateFormFieldValue({
+         setFormData({ ...orderInformationData });
+          basicInformation.current.updateFormFieldValue({
           customerId: data.value,
           subCustomerMainCustomerId: null,
           isBillingId: null,
           isShippingId: null,
+          orderMethodId : null
         });
         setGetShippingAddressData(null)
         setGetBillingAddressData(null)
-      } else {
+      } 
+      else {
         setIsSubCustomerDropdownVisible(false);
+        basicInformation.current.updateFormFieldValue({
+          customerId: data.value,
+          isBillingId: null,
+          isShippingId: null,
+          orderMethodId : null
+        });
+        setGetShippingAddressData(null)
+        setGetBillingAddressData(null)
       }
     }
-
+    
     if (data.value && dataField === "isShippingId") {
       const finalData = isGetAllShippingAddressData?.filter(
         (item) => item.addressId === data.value
