@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useAssignRoleToUserMutation, useGetAssignedRoleDetailsMutation, useLazyGetUnAssignedRoleByUserIdQuery } from '../../../../app/services/userAPI';
+import { useAssignRoleToUserMutation, useDeleteRolesMappingMutation, useGetAssignedRoleDetailsMutation, useLazyGetUnAssignedRoleByUserIdQuery } from '../../../../app/services/userAPI';
 import Label from '../../../../components/ui/label/Label';
 import DropdownSelect from '../../../../components/ui/dropdown/DropdownSelect';
 import Buttons from '../../../../components/ui/button/Buttons';
 import ToastService from '../../../../services/toastService/ToastService';
 import FinalMolGrid from '../../../../components/FinalMolGrid/FinalMolGrid';
 import assignRoleInfo from './config/AssignRole.data';
+import SwalAlert from '../../../../services/swalService/SwalService';
 
 
 const AssignRole=(props) => {
@@ -17,11 +18,12 @@ const AssignRole=(props) => {
     const [userRoleDataSource, setUserRoleDataSource] = useState([]);
     const [totalRowCount, setTotalRowCount] = useState(0);
 
+    const { confirm } = SwalAlert();
     
     const [getUnAssignedRoleByUserId, {isSuccess: isUnAssignedRoleByUserIdSuccess,isFetching: isUnAssignedRoleByUserIdFetching,data: isUnAssignedRoleByUserIdData } ] = useLazyGetUnAssignedRoleByUserIdQuery();
     const [assignRoleToUser,{ isSuccess: isAssignRoleToUser, data: assignRoleToUserData }] = useAssignRoleToUserMutation();
     const [getAssignedRoleDetails,{ isLoading,isSuccess: isAssignedRoleFetched,data: assignedRoleData }] = useGetAssignedRoleDetailsMutation();
-
+    const [deleteRole, { isSuccess: isDeleteSuccess, data: isDeletData }] =  useDeleteRolesMappingMutation();
 
     useEffect(() => {
         if (props.descrypteId) {
@@ -63,7 +65,7 @@ const AssignRole=(props) => {
               },
               filters:null,
               sortString: null,
-              userId: props.descrypteId
+              userId: props.descrypteId,
         };
         getAssignedRoleDetails(data);
     }
@@ -77,6 +79,16 @@ const AssignRole=(props) => {
             }
         }
     }, [isAssignedRoleFetched, assignedRoleData])
+
+    useEffect(() => {
+       
+        if (isDeleteSuccess && isDeletData) {
+          ToastService.success(isDeletData.errorMessage);
+          const currentPageObject = molGridRef.current.getCurrentPageObject();
+          getAssignedUserList(currentPageObject,molGridRef.current.generateSortingString());
+          getUnAssignedRoleByUserId(props.descrypteId);
+        }
+      }, [isDeleteSuccess, isDeletData]);
 
     const handleDropdownChange = (selectedOption) => {
         setSelectedRole(selectedOption)
@@ -98,6 +110,26 @@ const AssignRole=(props) => {
         getAssignedUserList(page, molGridRef.current.generateSortingString());
     };
 
+    const handleDeleteClick = (data) => {
+        console.log("Data for deletion:", data);
+        confirm(
+          "Delete?",
+          "Are you sure you want to Delete?",
+          "Delete",
+          "Cancel"
+        ).then((confirmed) => {
+          if (confirmed) {
+            deleteRole(data.userRoleId);
+          }
+        });
+      };
+
+      
+    
+      const actionHandler = {
+        DELETE: handleDeleteClick,
+      };
+    
   return (
     <div>
             <div className="top-filter">
@@ -137,7 +169,7 @@ const AssignRole=(props) => {
                             currentPage: 1,
                         }}
                         onPageChange={handlePageChange}
-                         
+                        onActionChange={actionHandler}
                     />
                 </div>
             </div>

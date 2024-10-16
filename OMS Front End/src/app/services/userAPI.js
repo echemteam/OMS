@@ -109,6 +109,15 @@ const userAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        deleteRolesMapping: builder.mutation({
+            query: (userRoleId) => ({
+                url: encryptQueryString(`/RolesMapping/DeleteRolesMapping/?userRoleId=${userRoleId}`),
+                method: 'DELETE',
+                body: transformRequest(userRoleId)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
@@ -122,6 +131,7 @@ export const { useGetUsersMutation,
     useLazyGetUnAssignedRoleByUserIdQuery,
     useAssignRoleToUserMutation,
     useGetAssignedRoleDetailsMutation,
+    useDeleteRolesMappingMutation
 } = userAPI;
 
 export default userAPI;
