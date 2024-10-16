@@ -2217,6 +2217,29 @@ a {
     }
   }
 }
+.option-icon{
+  position: relative;
+  
+  &:hover {
+    .custom-tooltip {
+      left: -12px;
+      display: block;
+      visibility: visible;
+    }
+  }
+}
+
+.edit-btn{
+  position: relative;
+  
+  &:hover {
+    .custom-tooltip {
+      left: -12px;
+      display: block;
+      visibility: visible;
+    }
+  }
+}
 
 .supplier-note {
   .card {
