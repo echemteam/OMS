@@ -7,13 +7,24 @@ import OrderInfoAddressModel from "./feature/OrderInfoAddressModel";
 import UserCardDetail from "./feature/UserCardDetail";
 import UsercardModel from "./feature/UsercardModel";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
-import { useAddAddressMutation, useLazyGetCustomerAddresssByAddressIdQuery, useUpdateAddAddressMutation } from "../../../../../app/services/addressAPI";
+import {
+  useAddAddressMutation,
+  useLazyGetCustomerAddresssByAddressIdQuery,
+  useUpdateAddAddressMutation,
+} from "../../../../../app/services/addressAPI";
 import AddEditAddress from "../../../../../common/features/component/Address/feature/AddEditAddress";
-import { useAddEditContactMutation, useLazyGetAllContactTypesQuery, useLazyGetCustomerContactByContactIdQuery } from "../../../../../app/services/contactAPI";
+import {
+  useAddEditContactMutation,
+  useLazyGetAllContactTypesQuery,
+  useLazyGetCustomerContactByContactIdQuery,
+} from "../../../../../app/services/contactAPI";
 import AddEditContact from "../../../../../common/features/component/Contact/feature/AddEditContact";
 
-
-const OrderInformation = ({ orderDetails, orderItemShippingAddRef,handleRefreshOrderDetails }) => {
+const OrderInformation = ({
+  orderDetails,
+  orderItemShippingAddRef,
+  handleRefreshOrderDetails,
+}) => {
   const [orderInfo, setOrderInfo] = useState(null);
   const [orderAddressDetails, setOrderAddressDetails] = useState(null);
   const [orderContactDetails, setOrderContactDetails] = useState(null);
@@ -22,17 +33,22 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef,handleRefreshO
   const [editMode, setEditMode] = useState(false);
   const [customerId, setCustomerId] = useState(null);
   const [addressContactType, setAddressContactType] = useState("");
-  const [isModelOpenShippingAddress, setIsModelOpenShippingAddress] = useState(false);
-  const [isModelOpenUpdateAddress, setIsModelOpenUpdateAddress] = useState(false);
+  const [isModelOpenShippingAddress, setIsModelOpenShippingAddress] =
+    useState(false);
+  const [isModelOpenUpdateAddress, setIsModelOpenUpdateAddress] =
+    useState(false);
   const [isModelOpenModelUserModel, setIsModelOpenUserModel] = useState(false);
   const [isUpdateContactModel, setIsUpdateContactModel] = useState(false);
-  const [selectedContactId, setSelectedContactId] = useState(null)
+  const [selectedContactId, setSelectedContactId] = useState(null);
   const [defaultId, setDefaultId] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
-  const [orderContactId, setOrderContactId] = useState(null)
+  const [orderContactId, setOrderContactId] = useState(null);
   const [orderItemId, setOrderItemId] = useState(0);
 
-  const [getAllContactTypes, { isSuccess: isGetAllContactTypesSucess, data: allGetAllContactTypesData }] = useLazyGetAllContactTypesQuery();
+  const [
+    getAllContactTypes,
+    { isSuccess: isGetAllContactTypesSucess, data: allGetAllContactTypesData },
+  ] = useLazyGetAllContactTypesQuery();
 
   const onSidebarCloseShippingAddress = () => {
     setIsModelOpenShippingAddress(false);
@@ -46,12 +62,11 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef,handleRefreshO
     setIsModelOpenShippingAddress(true);
     setAddressContactType(type);
     setDefaultId(addressId);
-
   };
 
   useImperativeHandle(orderItemShippingAddRef, () => ({
-    handleToggleModalShippingAddress
-  }))
+    handleToggleModalShippingAddress,
+  }));
 
   const onSidebarCloseUpdateAddress = () => {
     setIsModelOpenUpdateAddress(false);
@@ -87,7 +102,12 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef,handleRefreshO
     setAddressContactType("");
     setDefaultId("");
   };
-  const handleToggleModalUserModel = (typrId, type, contactId, orderContactId) => {
+  const handleToggleModalUserModel = (
+    typrId,
+    type,
+    contactId,
+    orderContactId
+  ) => {
     setContactTypeId(typrId);
     setIsModelOpenUserModel(true);
     setAddressContactType(type);
@@ -128,40 +148,64 @@ const OrderInformation = ({ orderDetails, orderItemShippingAddRef,handleRefreshO
 
   const onGetContactId = (id) => {
     setSelectedContactId(id);
-  }
+  };
 
   const onGetData = (id) => {
     setSelectedAddressId(id);
-
   };
-const onSuccess =()=>{
-  onSidebarCloseUpdateContact();
-}
+  const onSuccess = () => {
+    onSidebarCloseUpdateContact();
+  };
 
+  const getOrderMethodIcon = (orderMethod) => {
+    switch (orderMethod) {
+      case "Online":
+        return "mdi:web";
+      case "Email":
+        return "lucide:mail";
+      case "Fax":
+        return "fluent:fax-20-regular";
+      case "Phone Call":
+        return "mi:call";
+      default:
+        return "svg-spinners:ring-resize";
+    }
+  };
 
+  const formatClassName = (value) => {
+    return value ? value.toLowerCase().replace(/\s+/g, "-") : "";
+  };
 
   return (
-    <div>
-      <CardSection cardTitle="Order Information">
+    <div className="order-information-card">
+      <CardSection
+        cardTitle="Order Information"
+        headerContent={
+          <div className="d-flex order-method">
+            <Iconify icon={getOrderMethodIcon(orderInfo?.orderMethod)} />
+            <div className="order-method-value">{orderInfo?.orderMethod}</div>
+          </div>
+        }
+      >
         {orderDetails ? (
           <div className="order-info-list">
             <div className="row">
-              <div className="col-xxl-12 col-lg-12 col-md-12 col-12">
+              {/* <div className="col-xxl-12 col-lg-12 col-md-12 col-12">
                 <div className="order-title">
                   <span>Order Method &nbsp;:&nbsp;</span>
                   <span className="desc">{orderInfo?.orderMethod}</span>
                 </div>
-              </div>
+              </div> */}
             </div>
             {/* Address Details */}
-            <div className="row mt-2">
+            <div className="row">
               {orderAddressDetails?.map((address) => (
                 <div
-                  className="col-xxl-6 col-lg-6 col-md-6 col-12"
+                  className="col-xxl-6 col-lg-6 col-md-6 col-12 relative mt-1"
                   key={address.type}
                 >
-                  <div className="order-title">
-                    <span>{address.type} Address &nbsp;:&nbsp;</span>
+                  <div className={`order-title ${address.type}`}>
+                    <span>{address.type} Address</span>
                   </div>
                   <div className="address-card">
                     <div className="title-swap-btn">
@@ -169,7 +213,10 @@ const onSuccess =()=>{
                       <span
                         className="swap-btn tooltip-div"
                         onClick={() =>
-                          handleToggleModalShippingAddress(address.type, address.addressId)
+                          handleToggleModalShippingAddress(
+                            address.type,
+                            address.addressId
+                          )
                         }
                       >
                         <Iconify
@@ -201,23 +248,38 @@ const onSuccess =()=>{
             {/* Contact Details */}
             <div className="row mt-2">
               {orderContactDetails?.map((contact, index) => (
-                <div className="col-xxl-6 col-lg-6 col-md-6 col-12" key={index}>
-                  <div className="order-title">
-                    <span>{contact?.contactType} &nbsp;:&nbsp;</span>
-                  </div>
-                  {/* 
+                <>
+                  <div
+                    className="col-xxl-4 col-lg-6 col-md-6 col-12 relative mt-2"
+                    key={index}
+                  >
+                    <div
+                      className={`order-title ${formatClassName(
+                        contact?.contactType
+                      )}`}
+                    >
+                      <span>{contact?.contactType}</span>
+                    </div>
+                    {/* 
                 <UserCardDetail
                   contact={contact}
                   index={index}
                   handleToggleModalUsers={handleToggleModalShippingAddress}
                 /> */}
-                  <UserCardDetail
-                    contact={contact}
-                    index={index}
-                    handleToggleModalUsers={() =>
-                      handleToggleModalUserModel(contact?.contactTypeId, contact.contactType, contact.contactId, contact.orderContactId)}
-                  />
-                </div>
+                    <UserCardDetail
+                      contact={contact}
+                      index={index}
+                      handleToggleModalUsers={() =>
+                        handleToggleModalUserModel(
+                          contact?.contactTypeId,
+                          contact.contactType,
+                          contact.contactId,
+                          contact.orderContactId
+                        )
+                      }
+                    />
+                  </div>
+                </>
               ))}
             </div>
           </div>
@@ -233,7 +295,7 @@ const onSuccess =()=>{
         isOpen={isModelOpenShippingAddress}
       >
         <OrderInfoAddressModel
-        handleRefreshOrderDetails={handleRefreshOrderDetails}
+          handleRefreshOrderDetails={handleRefreshOrderDetails}
           onSidebarCloseUpdateAddress={onSidebarCloseUpdateAddress}
          // onUpdate={handleUpdateAddress}
           handleAddClick={handleAddClick}
@@ -266,7 +328,7 @@ const onSuccess =()=>{
           />
         </SidebarModel>
       ) : null}
-      {isModelOpenModelUserModel ?
+      {isModelOpenModelUserModel ? (
         <SidebarModel
           modalTitle="Update Users"
           contentClass="content-50"
@@ -275,7 +337,7 @@ const onSuccess =()=>{
           isOpen={isModelOpenModelUserModel}
         >
           <UsercardModel
-          handleRefreshOrderDetails={handleRefreshOrderDetails}
+            handleRefreshOrderDetails={handleRefreshOrderDetails}
             orderContactId={orderContactId}
             // isUpdateContactModel={isUpdateContactModel}
             onGetContactId={onGetContactId}
@@ -289,11 +351,11 @@ const onSuccess =()=>{
             setSelectedContactId={setSelectedContactId}
             onSidebarCloseUserModel={onSidebarCloseUserModel}
             customerId={customerId}
-            defaultId={defaultId} />
+            defaultId={defaultId}
+          />
         </SidebarModel>
-        : null
-      }
-      {isUpdateContactModel ?
+      ) : null}
+      {isUpdateContactModel ? (
         <SidebarModel
           modalTitle="Add/Edit Contact"
           contentClass="content-40"
@@ -302,7 +364,6 @@ const onSuccess =()=>{
           isOpen={isUpdateContactModel}
         >
           <AddEditContact
-            
             onSuccess={onSuccess}
             addEditContactMutation={useAddEditContactMutation}
             customerId={customerId}
@@ -316,7 +377,7 @@ const onSuccess =()=>{
             isSupplier={false}
           />
         </SidebarModel>
-        : null}
+      ) : null}
     </div>
   );
 };

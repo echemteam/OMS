@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react';
 import { useLazyGetUserLoginLogoutHistoryByUserIdQuery } from '../../../../app/services/userAPI';
 import { UserHistoryGridConfig } from './config/UserForm.data';

@@ -66,8 +66,11 @@ const determineFileType = (fileName) => {
   }
 };
 
-const OrderDocument = ({ orderDetails, onRefreshOrderDetails, isOrderDetailsFetching }) => {
-
+const OrderDocument = ({
+  orderDetails,
+  onRefreshOrderDetails,
+  isOrderDetailsFetching,
+}) => {
   const [documentDetails, setDocumentDetails] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [getFileType, setGetFileType] = useState([]);
