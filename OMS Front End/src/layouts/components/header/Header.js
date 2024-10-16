@@ -7,8 +7,9 @@ import SearchBar from "../../../common/features/component/SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../app/slice/authSlice";
 import Iconify from "../../../components/ui/iconify/Iconify";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { logUserLoginLogoutHistory } from "../../../utils/Thunk/UserHistory";
+import { encryptUrlData } from "../../../services/CryptoService";
 
 function Header() {
   const navigate = useNavigate();
@@ -269,12 +270,9 @@ function Header() {
                 <span className="user-name">{authState?.user?.fullName}</span>
               </div>
               <div className="title-list drop-down-icon-menu">
-                <button onClick={() => {}}>
-                  <span className="bi bi-gear">Setting</span>
-                </button>
-                <button onClick={() => {}}>
+                <Link to={`/EditUser/${encryptUrlData(authState?.user?.userID)}`}>
                   <span className="bi bi-pencil">Edit Profile</span>
-                </button>
+                </Link>
               </div>
               <div className="title-list drop-down-icon-menu logout">
                 <button onClick={LogoutButton}>
