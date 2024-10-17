@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
+using OMS.Domain.Entities.API.Request.RoleMapping;
 using OMS.Domain.Entities.API.Request.Roles;
 using OMS.Domain.Entities.API.Request.Snippet;
+using OMS.Domain.Entities.API.Response.Snippet;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
@@ -75,6 +77,30 @@ namespace OMS.API.Controllers
                 return APISucessResponce<object>(snippet);
             }
             return APISucessResponce(snippetId);
+        }
+        [HttpDelete("DeleteAssignedSnippetBySnippetEmailTemplateId")]
+        public async Task<IActionResult> DeleteAssignedSnippetBySnippetEmailTemplateId(int snippetEmailTemplateId)
+        {
+            if (snippetEmailTemplateId > 0)
+            {
+                short deletedBy = CurrentUserId;
+                var deleteItem = await _serviceManager.snippetServices.DeleteAssignedSnippetBySnippetEmailTemplateId(snippetEmailTemplateId, deletedBy).ConfigureAwait(true);
+                return APISucessResponce<object>(deleteItem);
+            }
+            return APISucessResponce(snippetEmailTemplateId);
+        }
+        [HttpPost("AddAssignedSnippet")]
+        public async Task<IActionResult> AddAssignedSnippet(AddAssignedSnippetRequest requestData)
+        {
+
+            var addItem = await _serviceManager.snippetServices.AddAssignedSnippet(requestData, CurrentUserId);
+            return APISucessResponce(addItem);
+        }
+        [HttpPost("GetAssignedSnippetByEmailTemplateId")]
+        public async Task<IActionResult> GetAssignedSnippetByEmailTemplateId(GetAssignedSnippetByEmailTemplateIdRequest requestData)
+        {
+            var getAssignedSnippetByEmailTemplate = await _serviceManager.snippetServices.GetAssignedSnippetByEmailTemplateId(requestData);
+            return APISucessResponce<object>(getAssignedSnippetByEmailTemplate);
         }
         #endregion
     }

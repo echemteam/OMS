@@ -13,6 +13,9 @@ namespace OMS.Application.Services.Snippet
         Task<AddEntityDto<int>> DeleteSnippet(byte snippetId, short deletedBy);
         Task<EntityList<GetSnippetsResponse>> GetSnippets(ListEntityRequest<BaseFilter> requestData);
         Task<GetSnippetsBySnippetIdResponse> GetSnippetsBySnippetId(byte snippetId);
+        Task<AddEntityDto<int>> DeleteAssignedSnippetBySnippetEmailTemplateId(int snippetEmailTemplateId, short deletedBy);
+        Task<AddEntityDto<int>> AddAssignedSnippet(AddAssignedSnippetRequest requestData, short CurrentUserId);
+        Task<EntityList<GetAssignedSnippetByEmailTemplateIdResponse>> GetAssignedSnippetByEmailTemplateId(GetAssignedSnippetByEmailTemplateIdRequest requestData);
 
     }
 }

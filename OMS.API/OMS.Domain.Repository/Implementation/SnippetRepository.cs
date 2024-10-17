@@ -1,4 +1,5 @@
-﻿using OMS.Domain.Entities.API.Response.Snippet;
+﻿using OMS.Domain.Entities.API.Request.Snippet;
+using OMS.Domain.Entities.API.Response.Snippet;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Snippet;
 using OMS.Domain.Repository.Contract;
@@ -17,6 +18,9 @@ namespace OMS.Domain.Repository.Implementation
         const string DELETESNIPPET = "DeleteSnippet";
         const string GETSNIPPETS = "GetSnippets";
         const string GETSNIPPETSBYSNIPPETID = "GetSnippetsBySnippetId";
+        const string DELETEASSIGNEDSNIPPETBYSNIPPETEMAILTEMPLATEID = "DeleteAssignedSnippetBySnippetEmailTemplateId";
+        const string ADDASSIGNEDSNIPPET = "AddAssignedSnippet";
+        const string GETASSIGNEDSNIPPETBYEMAILTEMPLATEID = "GetAssignedSnippetByEmailTemplateId";
         #endregion
 
         public SnippetRepository(DapperContext dapperContext) : base(dapperContext)
@@ -75,6 +79,35 @@ namespace OMS.Domain.Repository.Implementation
                 snippetId
             }, CommandType.StoredProcedure);
             return rolesdetils;
+        }
+        public async Task<AddEntityDto<int>> DeleteAssignedSnippetBySnippetEmailTemplateId(int snippetEmailTemplateId, short deletedBy)
+        {
+            return await _context.GetSingleAsync<AddEntityDto<int>>(DELETEASSIGNEDSNIPPETBYSNIPPETEMAILTEMPLATEID, new
+            {
+                snippetEmailTemplateId,
+                deletedBy
+            }, CommandType.StoredProcedure);
+        }
+        public async Task<AddEntityDto<int>> AddAssignedSnippet(SnippetEmailTemplateDto requestData)
+        {
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDASSIGNEDSNIPPET, new
+            {
+                requestData.EmailTemplateId,
+                requestData.SnippetId,
+                requestData.CreatedBy,
+            }, CommandType.StoredProcedure);
+        }
+
+        public async Task<EntityList<GetAssignedSnippetByEmailTemplateIdResponse>> GetAssignedSnippetByEmailTemplateId(GetAssignedSnippetByEmailTemplateIdRequest requestData)
+        {
+            return await _context.GetListSP<GetAssignedSnippetByEmailTemplateIdResponse>(GETASSIGNEDSNIPPETBYEMAILTEMPLATEID, new
+            {
+                requestData.EmailTemplateId,
+                requestData.Pagination!.PageNumber,
+                requestData.Pagination.PageSize,
+                requestData.Filters?.SearchText,
+                requestData.SortString
+            }, true);
         }
         #endregion
     }

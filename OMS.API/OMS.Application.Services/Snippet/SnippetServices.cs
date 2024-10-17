@@ -53,6 +53,22 @@ namespace OMS.Application.Services.Snippet
         {
             return await repositoryManager.snippet.GetSnippetsBySnippetId(snippetId);
         }
+        public async Task<AddEntityDto<int>> DeleteAssignedSnippetBySnippetEmailTemplateId(int snippetEmailTemplateId, short deletedBy)
+        {
+            return await repositoryManager.snippet.DeleteAssignedSnippetBySnippetEmailTemplateId(snippetEmailTemplateId, deletedBy);
+        }
+        public async Task<AddEntityDto<int>> AddAssignedSnippet(AddAssignedSnippetRequest requestData, short CurrentUserId)
+        {
+            SnippetEmailTemplateDto snippetEmailTemplateDto = requestData.ToMapp<AddAssignedSnippetRequest, SnippetEmailTemplateDto>();
+            snippetEmailTemplateDto.CreatedBy = CurrentUserId;
+
+            return await repositoryManager.snippet.AddAssignedSnippet(snippetEmailTemplateDto);
+        }
+        public async Task<EntityList<GetAssignedSnippetByEmailTemplateIdResponse>> GetAssignedSnippetByEmailTemplateId(GetAssignedSnippetByEmailTemplateIdRequest requestData)
+        {
+            var getAssignedSnippetByEmailTemplateIdResponse = await repositoryManager.snippet.GetAssignedSnippetByEmailTemplateId(requestData);
+            return getAssignedSnippetByEmailTemplateIdResponse!;
+        }
         #endregion
     }
 }
