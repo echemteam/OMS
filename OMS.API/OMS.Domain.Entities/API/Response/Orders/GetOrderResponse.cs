@@ -3,7 +3,7 @@
     public class GetOrderResponse
     {
         public List<OrderListResponse>? OrderList { get; set; }
-        public List<GetOrderItemsByOrderIdResponse>? OrderItemList { get; set; }
+        public List<OrderItemResponse>? OrderItemList { get; set; }
         public int TotalRecord { get; set; }
     }
 }

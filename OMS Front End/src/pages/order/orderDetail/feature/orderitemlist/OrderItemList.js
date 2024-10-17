@@ -71,7 +71,8 @@ const OrderItemList = ({
       isGetOrderItemsByOrderIdSuccess &&
       isGetOrderItemsByOrderIdData
     ) {
-      setItemList(isGetOrderItemsByOrderIdData);
+      setItemList(isGetOrderItemsByOrderIdData.orderItems);
+      console.log(isGetOrderItemsByOrderIdData)
     }
   }, [
     isGetOrderItemsByOrderIdFetching,
@@ -402,7 +403,7 @@ const OrderItemList = ({
           <div className="total-order-price">
             <div className="total-order-value">
               <span>Total Order Price</span>
-              <span className="price">$ 9225.68</span>
+              <span className="price"> $ {isGetOrderItemsByOrderIdData ? isGetOrderItemsByOrderIdData.totalOrderItemPrice : 'N/A'}</span>
             </div>
           </div>
         </CardSection>
