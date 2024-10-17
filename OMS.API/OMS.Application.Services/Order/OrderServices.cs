@@ -118,7 +118,7 @@ namespace OMS.Application.Services.Order
         public async Task<GetOrderResponse> GetOrders(GetOrderRequest request)
         {
             EntityList<OrderListResponse> Order = await repositoryManager.order.GetOrders(request);
-            List<GetOrderItemsByOrderIdResponse> OrderItems = await repositoryManager.order.GetOrderItemsByOrderId(0);
+            List<OrderItemResponse> OrderItems = await repositoryManager.order.GetOrderItemsByOrderId(0);
             GetOrderResponse response = new()
             {
                 OrderList = Order?.DataSource,
@@ -127,23 +127,28 @@ namespace OMS.Application.Services.Order
             };
             return response!;
         }
-        public async Task<List<GetOrderItemsByOrderIdResponse>> GetOrderItemsByOrderId(int orderId)
+        public async Task<GetOrderItemsByOrderIdResponse> GetOrderItemsByOrderId(int orderId)
         {
-            List<GetOrderItemsByOrderIdResponse> orderItem =  await repositoryManager.order.GetOrderItemsByOrderId(orderId);
+            List<OrderItemResponse> orderItems = await repositoryManager.order.GetOrderItemsByOrderId(orderId);
+            decimal totalOrderItemPrice = 0;
 
-            foreach (var item in orderItem)
-            { 
-                if (item.OrderItemId > 0)  
+            foreach (var item in orderItems)
+            {
+                if (item.OrderItemId > 0)
                 {
-                    // Get Order Items Address If Exists
                     item.OrderShippingAddress = await repositoryManager.order.GetOrderItemAddressesByOrderItemId(item.OrderItemId);
-
-                    // Get Order Items Notes If Exists
                     item.OrderNote = await repositoryManager.order.GetOrderItemNotesByOrderItemId(item.OrderItemId);
+                    if (item.SubTotalPrice.HasValue)
+                    {
+                        totalOrderItemPrice += item.SubTotalPrice.Value;
+                    }
                 }
             }
-            return orderItem!;
-
+            return new GetOrderItemsByOrderIdResponse
+            {
+                TotalOrderItemPrice = totalOrderItemPrice,
+                OrderItems = orderItems
+            };
         }
         public async Task<GetOrderDetailByOrderIdResponse> GetOrderDetailByOrderId(int orderId)
         {

@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
-using OMS.Domain.Entities.API.Request.Address;
-using OMS.Domain.Entities.API.Request.CustomerDocuments;
 using OMS.Domain.Entities.API.Request.OrderAddress;
 using OMS.Domain.Entities.API.Request.OrderContact;
 using OMS.Domain.Entities.API.Request.OrderItem;
@@ -57,21 +55,23 @@ namespace OMS.API.Controllers
 
         [HttpPost("GetOrders")]
         public async Task<IActionResult> GetOrders(GetOrderRequest request)
-        {   
+        {
             var list = await _serviceManager.orderServices.GetOrders(request);
             return APISucessResponce<object>(list);
         }
 
         [HttpGet("GetOrderItemsByOrderId")]
         public async Task<IActionResult> GetOrderItemsByOrderId(int orderId)
+
         {
             if (orderId > 0)
             {
-                List<GetOrderItemsByOrderIdResponse> responseData = await _serviceManager.orderServices.GetOrderItemsByOrderId(orderId).ConfigureAwait(true);
+                GetOrderItemsByOrderIdResponse responseData = await _serviceManager.orderServices.GetOrderItemsByOrderId(orderId).ConfigureAwait(true);
                 return APISucessResponce<object>(responseData);
             }
             return APISucessResponce(orderId);
         }
+
         [HttpGet("GetOrderDetailByOrderId")]
         public async Task<IActionResult> GetOrderDetailByOrderId(int orderId)
         {
@@ -121,7 +121,7 @@ namespace OMS.API.Controllers
         }
         [HttpPost("UpdateOrderAddress")]
         public async Task<IActionResult> UpdateOrderAddress(UpdateOrderAddressRequest requestData)
-         {
+        {
             AddEntityDto<int> responseData = new();
             if (requestData != null)
             {
@@ -179,7 +179,7 @@ namespace OMS.API.Controllers
         public async Task<IActionResult> GetOrderHistoryByOrderId(int orderId)
         {
             List<GetOrderHistoryByOrderIdResponse> responseData = await _serviceManager.orderServices.GetOrderHistoryByOrderId(orderId).ConfigureAwait(true);
-            return APISucessResponce(responseData); 
+            return APISucessResponce(responseData);
         }
         #endregion
     }
