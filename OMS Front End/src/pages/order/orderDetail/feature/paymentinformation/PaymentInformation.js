@@ -1,7 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CardSection from "../../../../../components/ui/card/CardSection";
+import { useLazyGetAllPaymentMethodQuery, useLazyGetAllPaymentTermsQuery, useLazyGetDetailsbyCustomerIDQuery } from "../../../../../app/services/customerSettingsAPI";
 
-const PaymentInformation = () => {
+const PaymentInformation = ({ orderDetails }) => {
+  const [financialinancialInfo, setFinancialInfo] = useState({});
+
+  const [getDetailsbyCustomerID, { data, isSuccess: isGetDetailsbyCustomerID }] = useLazyGetDetailsbyCustomerIDQuery();
+  const [getAllPaymentTerms, { isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData }] = useLazyGetAllPaymentTermsQuery();
+  const [getAllPaymentMethod, { isSuccess: isGetAllPaymentMethodSuccess, data: isGetAllPaymentMethodData }] = useLazyGetAllPaymentMethodQuery();
+
+
+  useEffect(() => {
+    if (orderDetails && orderDetails.customerId) {
+      getDetailsbyCustomerID(orderDetails.customerId);
+      getAllPaymentTerms();
+      getAllPaymentMethod();
+    }
+  }, [orderDetails]);
+
+  useEffect(() => {
+    if (isGetDetailsbyCustomerID && data) {
+      setFinancialInfo(data);
+    }
+  }, [isGetDetailsbyCustomerID, data]);
+
+  const getPaymentMethod = (id) => {
+    const method = isGetAllPaymentMethodSuccess && isGetAllPaymentMethodData && isGetAllPaymentMethodData.find((method) => method.paymentMethodId === id);
+    return method ? method.method : "N/A";
+  };
+
+  const getPaymentTerm = (id) => {
+    const term = isGetAllPaymentTermsSuccess && isGetAllPaymentTermsData && isGetAllPaymentTermsData.find((term) => term.paymentTermId === id);
+    return term ? term.paymentTerm : "N/A";
+  };
+
   return (
     <div>
       <CardSection cardTitle="Payment Information">
@@ -11,28 +43,40 @@ const PaymentInformation = () => {
               <div className="financial-label">Financial</div>
               <div className="financial-keyvalue-pair">
                 <div className="financial-key">Default Payment Terms :</div>
-                <div className="financial-value">Advance Payment</div>
+                <div className="financial-value">{getPaymentTerm(financialinancialInfo.paymentTermId) || "N/A"}</div>
               </div>
               <div className="financial-keyvalue-pair">
                 <div className="financial-key">Credit Limit :</div>
-                <div className="financial-value">$ 25800</div>
+                <div className="financial-value">{financialinancialInfo.creditLimit !== undefined ? financialinancialInfo.creditLimit : "N/A"}</div>
               </div>
               <div className="financial-keyvalue-pair">
                 <div className="financial-key">Payment Method :</div>
-                <div className="financial-value">Credit Card</div>
+                <div className="financial-value">{getPaymentMethod(financialinancialInfo.paymentMethodId) || "N/A"}</div>
               </div>
-              <div className="financial-keyvalue-pair">
-                <div className="financial-key">Card Processing Charge :</div>
-                <div className="financial-value">12.5%</div>
-              </div>
+              {financialinancialInfo.paymentMethodId === 4 && (
+                <div className="financial-keyvalue-pair">
+                  <div className="financial-key">Card Processing Charge :</div>
+                  <div className="financial-value">
+                    {financialinancialInfo.cardProcessingCharges !== undefined ? financialinancialInfo.cardProcessingCharges : "N/A"}
+                  </div>
+                </div>
+              )}
               <div className="financial-keyvalue-pair">
                 <div className="financial-key">Exempt Sales Tax :</div>
-                <div className="financial-value">Checkbox</div>
+                <div className="financial-value"> <input
+                  type="checkbox"
+                  checked={financialinancialInfo.exemptSalesTax}
+                  readOnly
+                /></div>
               </div>
-              <div className="financial-keyvalue-pair">
-                <div className="financial-key">Sales Tax :</div>
-                <div className="financial-value">12.5%</div>
-              </div>
+              {financialinancialInfo.exemptSalesTax === false && (
+                <div className="financial-keyvalue-pair">
+                  <div className="financial-key">Sales Tax :</div>
+                  <div className="financial-value">
+                    {financialinancialInfo.salesTax !== undefined ? financialinancialInfo.salesTax : "N/A"}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
           <div className="col-xxl-6 col-lg-6 col-md-6 col-12">

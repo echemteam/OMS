@@ -120,7 +120,7 @@ const OrderDetails = () => {
             orderDetails={orderDetails}
             handleOrderItemShippingAddress={handleOrderItemShippingAddress}
           />
-          <PaymentInformation />
+          <PaymentInformation orderDetails={orderDetails}/>
         </div>
         {/* Right Side Section End */}
       </div>
