@@ -104,7 +104,7 @@ namespace OMS.Application.Services.Order
                         AESIV
                     );
                 }
-                if (requestData.DocumentName != null || requestData.DocumentName != "" && responseData.KeyValue > 0)
+                if (!string.IsNullOrEmpty(requestData.DocumentName) && responseData.KeyValue > 0)
                 {
                     OrderDocumentDto orderDocumentDto = requestData.ToMapp<AddOrderRequest, OrderDocumentDto>();
                     orderDocumentDto.OrderId = responseData.KeyValue;
