@@ -3,11 +3,9 @@ import CardSection from "../../components/ui/card/CardSection";
 import RenderTabs from "../../components/ui/tabs/RenderTabs";
 import { AppIcons } from "../../data/appIcons";
 import Image from "../../components/image/Image";
- 
+
 const OrganizationBusinessAddressDetail = React.lazy(() =>
-  import(
-    "./feature/organizationBusinessAddressDetail/OrganizationBusinessAddressDetail"
-  )
+  import("./feature/organizationBusinessAddressDetail/OrganizationBusinessAddressDetail")
 );
 const OrganizationChargesDetails = React.lazy(() =>
   import(
@@ -41,123 +39,123 @@ const Organization = () => {
   const handleActiveTab = (id) => {
     setActiveTabId(id);
   };
- 
 
-    const tabs = [
-        {
-            sMenuItemCaption: "Organization Profile",
-            component: (
-                <div className="mt-2">
-                    <OrganizationProfileManagement setCompanyName={setCompanyName}  isEditablePage={true}
-                    />
-                </div>
-            ),
-        },
-        {
-            sMenuItemCaption: "Business Address",
-            component: (
-                <div className="mt-2">
 
-                    <OrganizationBusinessAddressDetail  isEditablePage={true}/>
-                </div>
-            ),
-        },
-        {
-            sMenuItemCaption: "Contact Details",
-            component: (
-                <div className="mt-2">
-                    <OrganizationContactDetail  isEditablePage={true}/>
-                </div>
-            ),
-        },
+  const tabs = [
+    {
+      sMenuItemCaption: "Organization Profile",
+      component: (
+        <div className="mt-2">
+          <OrganizationProfileManagement setCompanyName={setCompanyName} isEditablePage={true}
+          />
+        </div>
+      ),
+    },
+    {
+      sMenuItemCaption: "Business Address",
+      component: (
+        <div className="mt-2">
 
-        {
-            sMenuItemCaption: "Logistic Details",
-            component: (
-                <div className="mt-2">
-                    <OrganizationLogisticDetail  isEditablePage={true}/>
-                </div>
-            ),
-        },
-        {
-            sMenuItemCaption: "Bank Details",
-            component: (
-                <div className="mt-2">
-                    <OrganizationBankDetail  isEditablePage={true}/>
-                </div>
-            ),
-        },
-        {
-            sMenuItemCaption: "Charges",
-            component: (
-                <div className="mt-2">
-                    <OrganizationChargesDetails/>
-                </div>
-            ),
-        },
-        // {
-        //     sMenuItemCaption: "Shipping Charges",
-        //     component: (
-        //         <div className="mt-2">
-        //             <OrganizationShippingChargesDetail  isEditablePage={true}/>
-        //         </div>
-        //     ),
-        // },
-        // {
-        //     sMenuItemCaption: "Other Charges",
-        //     component: (
-        //         <div className="mt-2">
-        //             <OrganizationOtherChargesDetail  isEditablePage={true}/>
-        //         </div>
-        //     ),
-        // },
-        // organizationId > 0 &&
-        // {
-        //     sMenuItemCaption: "SMTP Settings",
-        //     component: (
-        //         <div className="mt-2">
-        //             <SMTPSettings  isEditablePage={true}
-        //             />
-        //         </div>
-        //     ),
-        // },
-        {
-            sMenuItemCaption: "History",
-            component: (
-                <div className="mt-2 organiazation-history">
-                    <OrganizationHistory  />
-                </div>
-            ),
+          <OrganizationBusinessAddressDetail isEditablePage={true} />
+        </div>
+      ),
+    },
+    {
+      sMenuItemCaption: "Contact Details",
+      component: (
+        <div className="mt-2">
+          <OrganizationContactDetail isEditablePage={true} />
+        </div>
+      ),
+    },
 
-        },
+    {
+      sMenuItemCaption: "Logistic Details",
+      component: (
+        <div className="mt-2">
+          <OrganizationLogisticDetail isEditablePage={true} />
+        </div>
+      ),
+    },
+    {
+      sMenuItemCaption: "Bank Details",
+      component: (
+        <div className="mt-2">
+          <OrganizationBankDetail isEditablePage={true} />
+        </div>
+      ),
+    },
+    {
+      sMenuItemCaption: "Charges",
+      component: (
+        <div className="mt-2">
+          <OrganizationChargesDetails />
+        </div>
+      ),
+    },
+    // {
+    //     sMenuItemCaption: "Shipping Charges",
+    //     component: (
+    //         <div className="mt-2">
+    //             <OrganizationShippingChargesDetail  isEditablePage={true}/>
+    //         </div>
+    //     ),
+    // },
+    // {
+    //     sMenuItemCaption: "Other Charges",
+    //     component: (
+    //         <div className="mt-2">
+    //             <OrganizationOtherChargesDetail  isEditablePage={true}/>
+    //         </div>
+    //     ),
+    // },
+    // organizationId > 0 &&
+    // {
+    //     sMenuItemCaption: "SMTP Settings",
+    //     component: (
+    //         <div className="mt-2">
+    //             <SMTPSettings  isEditablePage={true}
+    //             />
+    //         </div>
+    //     ),
+    // },
+    {
+      sMenuItemCaption: "History",
+      component: (
+        <div className="mt-2 organiazation-history">
+          <OrganizationHistory />
+        </div>
+      ),
 
-    ];
+    },
 
- 
+  ];
+
+
 
   return (
     <div className="vertical-tab-card organization">
       <div className="row">
         <div className="col-xxl-12 col-xl-12 col-md-12 col-12">
           <CardSection>
-       
-        
-              <h1 className="organization-main-title ">
-                Organization Name
-                {
-                 companyName ?
-                <div className="company-title">
-                  <div className="company-image">
-                    <Image
-                      imagePath={AppIcons.CompanyIcon}
-                      altText="Company-icon"
-                    />
+
+
+            <h1 className="organization-main-title ">
+              Organization Name
+              {
+                companyName ?
+                  <div className="company-title">
+                    <div className="company-image">
+                      <Image
+                        imagePath={AppIcons.CompanyIcon}
+                        altText="Company-icon"
+                      />
+                    </div>
+                    <span>{companyName}</span>
                   </div>
-                  <span>{companyName}</span>
-                </div>
-                : null
+                  : null
               }
-              </h1>
+            </h1>
             <div className="main-organiazation-history">
               <div className="vertical-tab-inner">
                 <RenderTabs
