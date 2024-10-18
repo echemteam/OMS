@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import ToastService from "../../../../services/toastService/ToastService";
 import { onResetForm } from "../../../../utils/FormFields/ResetForm/handleResetForm";
 import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
+import AssignSnippets from "./AssignSnippets";
 
 const AddEditEmailTemplate = forwardRef((props) => {
   const emailTemplateRef = useRef();
@@ -122,6 +123,9 @@ const AddEditEmailTemplate = forwardRef((props) => {
           </div>
         </div>
       </div>
+       <div>
+        <AssignSnippets emailTemplateId={emailTemplateId}/>
+       </div>
     </div>)
 })
 

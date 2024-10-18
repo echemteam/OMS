@@ -198,7 +198,17 @@ export const ConfigurationMenu = [
         iconClass: "eos-icons:templates-outlined",
         subMenu: false,
         children: []
-      }
+      },
+      {
+        id: "Snippet",
+        to: "/configuration/Snippet",
+        securityKey: securityKey.DICTIONARY,
+        name: "Snippets",
+        iconClass: "eos-icons:templates-outlined",
+        subMenu: false,
+        children: []
+    }
+    
     ]
   }
 ];

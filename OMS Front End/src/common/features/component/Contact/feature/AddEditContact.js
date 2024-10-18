@@ -17,7 +17,7 @@ import { ErrorMessage } from "../../../../../data/appMessages";
 const EmailAddressGrid = React.lazy(() => import("../../EmailAddress/EmailAddressGrid"));
 const ContactNumbersGrid = React.lazy(() => import("../../ContactNumber/ContactNumbersGrid"));
 
-const AddEditContact = forwardRef(({contactTypeId, keyId,isOrderContact,isUpdateContactModel,addressContactType, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, SecurityKey, customerStatusId, allGetAllContactTypesData, isGetAllContactTypesSucess,
+const AddEditContact = forwardRef(({ contactTypeId, keyId, isOrderContact, isUpdateContactModel, addressContactType, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, SecurityKey, customerStatusId, allGetAllContactTypesData, isGetAllContactTypesSucess,
     isEditablePage, isSupplier, isEdit, isOpen, getContactById, getContectTypeId, customerId, isOrderManage, onhandleApiCall, contryIdCode, orderResetValue,
     getCompletionCount }) => {
 
@@ -30,7 +30,6 @@ const AddEditContact = forwardRef(({contactTypeId, keyId,isOrderContact,isUpdate
     const [supplierContactId, setSupplierContactId] = useState(0);
     const [isButtonDisable, setIsButtonDisable] = useState(false);
     const [phoneNumberList, setPhoneNumberList] = useState([]);
-    const [, setShouldRerenderFormCreator] = useState(false);
     const [emailAddressList, setEmailAddressList] = useState([]);
     const [formData, setFormData] = useState(contactDetailFormData);
 
@@ -46,35 +45,35 @@ const AddEditContact = forwardRef(({contactTypeId, keyId,isOrderContact,isUpdate
         handlWithoutApprovalAddEdit();
     }
 
-     useEffect(()=>{
-        if(isOrderContact && allGetAllContactTypesData){
-            
-            setFieldSetting(contactDetailFormData, 'contactTypeId', FieldSettingType.DISABLED, true);
-            setFieldSetting(contactDetailFormData, 'contactTypeId', FieldSettingType.MULTISELECT, false);
-           // const degaultContactType = allGetAllContactTypesData?.find(type => type.type === addressContactType);
-          
-            let updatedFormData = { ...formData };
+    // useEffect(() => {
+    //     if (isOrderContact && allGetAllContactTypesData) {
 
-            updatedFormData.initialState = {
-                ...updatedFormData.initialState,
-                contactTypeId: contactTypeId ,
-            };
-            setFormData(updatedFormData);
-        }
-    },[isOrderContact,allGetAllContactTypesData, addressContactType])
+    //         setFieldSetting(contactDetailFormData, 'contactTypeId', FieldSettingType.DISABLED, true);
+    //         setFieldSetting(contactDetailFormData, 'contactTypeId', FieldSettingType.MULTISELECT, false);
+    //         // const degaultContactType = allGetAllContactTypesData?.find(type => type.type === addressContactType);
+
+    //         let updatedFormData = { ...formData };
+
+    //         updatedFormData.initialState = {
+    //             ...updatedFormData.initialState,
+    //             contactTypeId: contactTypeId,
+    //         };
+    //         setFormData(updatedFormData);
+    //     }
+    // }, [isOrderContact, allGetAllContactTypesData, addressContactType])
 
     useEffect(() => {
         if (isUpdateContactModel && isGetAllContactTypesSucess) {
-            
+
             const filterCondition = (item) => {
                 let condition = isSupplier ? item.isForSuppliers : item.isForCustomers;
                 return condition;
             };
             setDropDownOptionField(allGetAllContactTypesData, "contactTypeId", "type", formData, "contactTypeId", filterCondition);
-          //  setShouldRerenderFormCreator((prevState) => !prevState);
-     
+            //  setShouldRerenderFormCreator((prevState) => !prevState);
+
         }
-    }, [ isGetAllContactTypesSucess,isUpdateContactModel,contactTypeId,allGetAllContactTypesData])
+    }, [isGetAllContactTypesSucess, isUpdateContactModel, contactTypeId, allGetAllContactTypesData])
 
     const handlWithoutApprovalAddEdit = () => {
         const data = ref.current.getFormData();
@@ -193,35 +192,37 @@ const AddEditContact = forwardRef(({contactTypeId, keyId,isOrderContact,isUpdate
     }
 
     useEffect(() => {
-        if (!isEdit && !isOrderManage) {
+        if (isEdit || isOrderManage || isOrderContact) {
+            if ((isOrderManage || isOrderContact) && allGetAllContactTypesData) {
+                setFieldSetting(contactDetailFormData, 'contactTypeId', FieldSettingType.DISABLED, true);
+                setFieldSetting(contactDetailFormData, 'contactTypeId', FieldSettingType.MULTISELECT, false);
+
+                let form = { ...contactDetailFormData };
+                form.initialState = {
+                    ...form.initialState,
+                    contactTypeId: contactTypeId,
+                };
+                setFormData(form);
+            }
+        } else {
             if (isSupplier) {
                 setFieldSetting(contactDetailFormData, 'contactTypeId', FieldSettingType.MULTISELECT, false);
             } else {
                 setFieldSetting(contactDetailFormData, 'contactTypeId', FieldSettingType.MULTISELECT, true);
             }
-            let form = { ...contactDetailFormData };
 
+            let form = { ...formData };
             setFormData(form);
+
             if (isOpen) {
                 setContactId(0);
                 setEditMode(false);
                 setPhoneNumberList([]);
-                setEmailAddressList([])
+                setEmailAddressList([]);
             }
         }
-        if (isOrderManage) {
-            
-            setFieldSetting(contactDetailFormData, 'contactTypeId', FieldSettingType.DISABLED, true);
-            setFieldSetting(contactDetailFormData, 'contactTypeId', FieldSettingType.MULTISELECT, false);
-            let form = { ...contactDetailFormData };
-            form.initialState = {
-                ...form.initialState,
-                contactTypeId: getContectTypeId,
-            }
-            setFormData(form);
-             setShouldRerenderFormCreator((prevState) => !prevState);
-        }
-    }, [isOpen])
+    }, [isOpen]);
+
 
     //** Reset Data */
     const onResetData = () => {
