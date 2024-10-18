@@ -91,9 +91,9 @@ namespace OMS.Domain.Repository.Implementation
                 request.SortString
             }, true);
         }
-        public async Task<List<GetOrderItemsByOrderIdResponse>> GetOrderItemsByOrderId(int orderId)
+        public async Task<List<OrderItemResponse>> GetOrderItemsByOrderId(int orderId)
         {
-            List<GetOrderItemsByOrderIdResponse> orderItemDetails = await _context.GetList<GetOrderItemsByOrderIdResponse>(GETORDERITEMSBYORDERID, new
+            List<OrderItemResponse> orderItemDetails = await _context.GetList<OrderItemResponse>(GETORDERITEMSBYORDERID, new
             {
                 orderId
             }, CommandType.StoredProcedure);
