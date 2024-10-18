@@ -33,7 +33,7 @@ const OrganizationBusinessAddressDetail = (isEditablePage) => {
   const [warehouseAddressData] = useState(WarehouseAddressForm);
   const [remitToAddressData] = useState(RemitToAddressForm);
   const [registeredAddressData] = useState(RegisteredAddressForm);
-  const roles = useSelector((state) => state.auth.roles.roleName );
+  const roles = useSelector((state) => state.auth.roles.roleName);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
 
   useEffect(() => {
@@ -45,14 +45,14 @@ const OrganizationBusinessAddressDetail = (isEditablePage) => {
       RemitToAddressForm.formSetting.isViewOnly = isViewOnly;
       RegisteredAddressForm.formSetting.isViewOnly = isViewOnly;
     };
-  
+
     if (isEditablePage) {
       if (roles?.includes("Admin")) {
         setIsButtonDisable(false);
-        setFormSettingsForAll(false);  
+        setFormSettingsForAll(false);
       } else {
         setIsButtonDisable(true);
-        setFormSettingsForAll(true);  
+        setFormSettingsForAll(true);
       }
     }
   }, [isEditablePage, roles]);
@@ -134,87 +134,42 @@ const OrganizationBusinessAddressDetail = (isEditablePage) => {
     let remitToAddressFormData = remitToAddressRef.current.getFormData();
     let registeredAddressFormData = registeredAddressRef.current.getFormData();
 
-    if (
-      physicalAddressFormData &&
-      billToAddressFormData &&
-      remitToAddressFormData &&
-      labAddressFormData &&
-      warehouseAddressFormData &&
-      registeredAddressFormData
-    ) {
-      const extractId = (item, key) =>
-        item[key] && typeof item[key] === "object"
-          ? item[key].value
-          : item[key];
-
+    if (physicalAddressFormData && billToAddressFormData && remitToAddressFormData
+      && labAddressFormData && warehouseAddressFormData && registeredAddressFormData) {
       let requestData = {
-        physicalAddress: {
-          addressId: physicalAddressFormData.addressId ?? 0,
-          addressLine1: physicalAddressFormData.addressLine1Id,
-          addressLine2: physicalAddressFormData.addressLine2Id,
-          cityId: extractId(physicalAddressFormData, "cityId"),
-          stateId: extractId(physicalAddressFormData, "stateId"),
-          countryId: extractId(physicalAddressFormData, "countryId"),
-          zipCode: physicalAddressFormData.zipCode,
-        },
-        billToAddress: {
-          addressId: billToAddressFormData.addressId ?? 0,
-          addressLine1: billToAddressFormData.addressLine1Id,
-          addressLine2: billToAddressFormData.addressLine2Id,
-          cityId: extractId(billToAddressFormData, "cityId"),
-          stateId: extractId(billToAddressFormData, "stateId"),
-          countryId: extractId(billToAddressFormData, "countryId"),
-          zipCode: billToAddressFormData.zipCode,
-        },
-        labAddress: {
-          addressId: labAddressFormData.addressId ?? 0,
-          addressLine1: labAddressFormData.addressLine1Id,
-          addressLine2: labAddressFormData.addressLine2Id,
-          cityId: extractId(labAddressFormData, "cityId"),
-          stateId: extractId(labAddressFormData, "stateId"),
-          countryId: extractId(labAddressFormData, "countryId"),
-          zipCode: labAddressFormData.zipCode,
-        },
+        physicalAddress: getAddressData(physicalAddressFormData),
+        billToAddress: getAddressData(billToAddressFormData),
+        labAddress: getAddressData(labAddressFormData),
+        warehouseAddress: getAddressData(warehouseAddressFormData),
+        registeredAddress: getAddressData(registeredAddressFormData),
+        remitToAddress: getAddressData(remitToAddressFormData),
 
-        warehouseAddress: {
-          addressId: warehouseAddressFormData.addressId ?? 0,
-          addressLine1: warehouseAddressFormData.addressLine1Id,
-          addressLine2: warehouseAddressFormData.addressLine2Id,
-          cityId: extractId(warehouseAddressFormData, "cityId"),
-          stateId: extractId(warehouseAddressFormData, "stateId"),
-          countryId: extractId(warehouseAddressFormData, "countryId"),
-          zipCode: warehouseAddressFormData.zipCode,
-        },
-
-        registeredAddress: {
-          addressId: registeredAddressFormData.addressId ?? 0,
-          addressLine1: registeredAddressFormData.addressLine1Id,
-          addressLine2: registeredAddressFormData.addressLine2Id,
-          cityId: extractId(registeredAddressFormData, "cityId"),
-          stateId: extractId(registeredAddressFormData, "stateId"),
-          countryId: extractId(registeredAddressFormData, "countryId"),
-          zipCode: registeredAddressFormData.zipCode,
-        },
-
-        remitToAddress: {
-          addressId: remitToAddressFormData.addressId ?? 0,
-          addressLine1: remitToAddressFormData.addressLine1Id,
-          addressLine2: remitToAddressFormData.addressLine2Id,
-          cityId: extractId(remitToAddressFormData, "cityId"),
-          stateId: extractId(remitToAddressFormData, "stateId"),
-          countryId: extractId(remitToAddressFormData, "countryId"),
-          zipCode: remitToAddressFormData.zipCode,
-        },
         registeredAddressId: addressIds.registeredAddressId,
-        organizationBusinessAddressId: addressIds.organizationBusinessAddressId,
         physicalAddressId: addressIds.physicalAddressId,
         billToAddressId: addressIds.billToAddressId,
         labAddressId: addressIds.labAddressId,
         remitToAddressId: addressIds.remitToAddressId,
+        organizationBusinessAddressId: addressIds.organizationBusinessAddressId,
         warehouseAddressId: addressIds.warehouseAddressId,
       };
       addEditBusinessAddresses(requestData);
     }
+  };
+
+  const getAddressData = (addressFormData) => {
+    const extractId = (item, key) => item[key] && typeof item[key] === "object" ? item[key].value : item[key];
+    return (addressFormData?.addressId || addressFormData?.addressLine1Id || addressFormData?.addressLine2Id || addressFormData?.cityId ||
+      addressFormData?.stateId || addressFormData?.countryId || addressFormData?.zipCode) ?
+      {
+        addressId: addressFormData?.addressId ?? 0,
+        addressLine1: addressFormData?.addressLine1Id || null,
+        addressLine2: addressFormData?.addressLine2Id || null,
+        cityId: extractId(addressFormData, "cityId") || null,
+        stateId: extractId(addressFormData, "stateId") || null,
+        countryId: extractId(addressFormData, "countryId") || null,
+        zipCode: addressFormData?.zipCode || null,
+      }
+      : null;
   };
 
   if (isGetOrganizationBusinessAddressesFetching) {
@@ -276,18 +231,18 @@ const OrganizationBusinessAddressDetail = (isEditablePage) => {
         RemitToAddressForm={RemitToAddressForm}
       />
       {isEditablePage ?
-      <div className="col-md-12">
-        <div className="d-flex align-item-end justify-content-end">
-          <Buttons
-            buttonTypeClassName="theme-button mr-2"
-            buttonText="Save"
-            isLoading={isAddEditBusinessAddressLoading}
-            onClick={handleAddEditBusinessAddress}
-            isDisable={isButtonDisable}
-          />
+        <div className="col-md-12">
+          <div className="d-flex align-item-end justify-content-end">
+            <Buttons
+              buttonTypeClassName="theme-button mr-2"
+              buttonText="Save"
+              isLoading={isAddEditBusinessAddressLoading}
+              onClick={handleAddEditBusinessAddress}
+              isDisable={isButtonDisable}
+            />
+          </div>
         </div>
-      </div>
-       : null}
+        : null}
     </div>
   );
 };
