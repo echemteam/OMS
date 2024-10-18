@@ -40,7 +40,7 @@ const Orders = ({ orderStatusId, orderItemStatusId, orderSubStatusId }) => {
   }, [orderStatusId, orderSubStatusId, orderItemStatusId]);
 
   const handleSearch = useCallback(() => {
-    if (search.length >= 3 ) {
+    if (search.length >= 3) {
       onGetData();
     } else {
       ToastService.warning(ErrorMessage.CommonErrorMessage);
@@ -76,7 +76,6 @@ const Orders = ({ orderStatusId, orderItemStatusId, orderSubStatusId }) => {
 
   useEffect(() => {
     if (isGetOrderListSuccess && isGetOrderListData) {
-
       if (isGetOrderListData) {
         setDataSource(isGetOrderListData.orderList);
 
