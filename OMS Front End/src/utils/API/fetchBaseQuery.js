@@ -7,14 +7,16 @@ const { Mutex } = require('async-mutex');
 
 const mutex = new Mutex();
 
-export const IsProdMode = false
-export const IsTestMode = true
+export const IsProdMode = true
+export const IsTestMode = false
 
-const liveURL = ''
 const testURL = process.env.REACT_APP_TESTURLSUSA
 const localHost = process.env.REACT_APP_LOCALURLS
 
-const APIUrl = (IsProdMode) ? liveURL : (IsTestMode) ? testURL : localHost;
+//** This is for Aurum */
+const aurumLiveURL = process.env.REACT_APP_AURUM
+
+const APIUrl = (IsProdMode) ? aurumLiveURL : (IsTestMode) ? testURL : localHost;
 
 const baseQuery = fetchBaseQuery({
   baseUrl: APIUrl,

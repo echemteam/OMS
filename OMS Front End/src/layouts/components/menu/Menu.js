@@ -98,35 +98,34 @@ export const Menu = [
   {
     groupLabel: "Orders",
     items: [
-
-      {
-        name: "Order Details",
-        id: "Order",
-        to: "#",
-        iconClass: "lets-icons:order",
-        subMenu: true,
-        securityKey: securityKey.ORDER,
-        children: [
-          {
-            id: "addOrder",
-            submenuName: "Add Order",
-            to: "/addOrder",
-            securityKey: securityKey.ORDER,
-          },
-          {
-            id: "definedOrders",
-            submenuName: "Defined Order",
-            to: "/definedOrders",
-            securityKey: securityKey.ORDER,
-          },
-          // {
-          //   id: "confirmedOrders",
-          //   submenuName: "Confirmed Order",
-          //   to: "/confirmedOrders",
-          //   securityKey: securityKey.ORDER,
-          // },
-        ],
-      },
+      // {
+      //   name: "Order Details",
+      //   id: "Order",
+      //   to: "#",
+      //   iconClass: "lets-icons:order",
+      //   subMenu: true,
+      //   securityKey: securityKey.ORDER,
+      //   children: [
+      //     {
+      //       id: "addOrder",
+      //       submenuName: "Add Order",
+      //       to: "/addOrder",
+      //       securityKey: securityKey.ORDER,
+      //     },
+      //     {
+      //       id: "definedOrders",
+      //       submenuName: "Defined Order",
+      //       to: "/definedOrders",
+      //       securityKey: securityKey.ORDER,
+      //     },
+      //     // {
+      //     //   id: "confirmedOrders",
+      //     //   submenuName: "Confirmed Order",
+      //     //   to: "/confirmedOrders",
+      //     //   securityKey: securityKey.ORDER,
+      //     // },
+      //   ],
+      // },
       {
         name: "My Task",
         id: "MyTask",
