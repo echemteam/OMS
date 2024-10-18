@@ -33,6 +33,7 @@ const PaymentInformation = ({ orderDetails }) => {
   }, [orderDetails]);
   useEffect(() => {
     if (isGetDetailsbyCustomerID && data) {
+      console.log(data)
       setFinancialInfo(data);
     }
   }, [isGetDetailsbyCustomerID, data]);
@@ -116,6 +117,14 @@ const PaymentInformation = ({ orderDetails }) => {
                       <div className="financial-key">Sales Tax :</div>
                       <div className="financial-value">
                         {financialinancialInfo.salesTax !== undefined ? financialinancialInfo.salesTax : "N/A"}
+                      </div>
+                    </div>
+                  )}
+                  {financialinancialInfo.bankWireFee !== null && financialinancialInfo.bankWireFee !== undefined  && (
+                    <div className="financial-keyvalue-pair">
+                      <div className="financial-key">Bank Wire Fee:</div>
+                      <div className="financial-value">
+                        {financialinancialInfo.bankWireFee}
                       </div>
                     </div>
                   )}
