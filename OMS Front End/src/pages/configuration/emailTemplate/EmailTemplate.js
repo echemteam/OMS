@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { onResetForm } from "../../../utils/FormFields/ResetForm/handleResetForm";
 import CardSection from "../../../components/ui/card/CardSection";
 import { EmailTemplateFormData } from "./config/EmailTemplate.data";
@@ -8,6 +8,7 @@ import AddEditEmailTemplate from "./features/AddEditEmailTemplate";
 import EmailTemplateList from "./features/EmailTemplateList";
 import ToastService from "../../../services/toastService/ToastService";
 import { ErrorMessage } from "../../../data/appMessages";
+import KeyCodes from "../../../utils/Enums/KeyCodesEnums";
 
 const EmailTemplate=()=>{
     const getDataRef=useRef();
@@ -47,17 +48,17 @@ const EmailTemplate=()=>{
         setSearch(event.target.value.trim());
       };
   
-      const handleSearch = () => {
-        if (search.length >= 3) {
-            onSuccess();
+      const handleSearch = useCallback(() => {
+        if (search.length >= 3 ) {
+          onSuccess();
         } else {
           ToastService.warning(ErrorMessage.CommonErrorMessage);
         }
-      };
+      }, [search]);
 
       const handleKeyPress=(event)=>{
        
-        if (event.code === "Enter") {
+        if (event.key === KeyCodes.ENTER) {
           handleSearch();
         }
       }

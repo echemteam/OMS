@@ -9,6 +9,7 @@ import { useLazyDownloadDocumentQuery } from "../../../../../app/services/orderA
 import ToastService from "../../../../../services/toastService/ToastService";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import FileViewer from "react-file-viewer";
+import {getStatusTextColor } from "../../../../../utils/StatusColors/StatusColors";
 
 const UpdateOrderDetails = lazy(() => import("./feature/UpdateOrderDetails"))
 
@@ -29,14 +30,18 @@ const OrderSummary = ({ orderId, orderDetails, onRefreshOrderDetails, isOrderDet
     },
   ] = useLazyDownloadDocumentQuery();
 
+  const details = orderDetails?.orderDocumentList;
+  const documentNames = details?.find((doc) => doc.documentName === "")  
+
+
   const handleToggleModalPDF = () => {
-    if (orderDetails?.poNumber) {
+        if (orderDetails?.poNumber) {
       // const documentNames = orderDetails.orderDocumentList?.filter(doc => doc.documentName).map(doc => doc.documentName)[0];
-      const details = orderDetails.orderDocumentList?.find(
+      const detail = details.find(
         (doc) => doc.documentTypeId === 0 || doc.documentTypeId === ""
       );
-      if (details) {
-        handleDocumentAction(details?.documentName);
+      if (detail) {
+        handleDocumentAction(detail?.documentName);
       } else {
         ToastService.error("File not found");
       }
@@ -107,19 +112,22 @@ const OrderSummary = ({ orderId, orderDetails, onRefreshOrderDetails, isOrderDet
     }
   }
 
+
   return (
     <div className="icon-btn-header">
       <CardSection
         cardTitle="Order Summary"
         rightButton={true}
         buttonClassName="theme-button"
+        // isIcon={ordersummaryDetails?.documentName ? true : false }
         isIcon={true}
         iconClass="wpf:edit"
         titleButtonClick={handleEdit}
         isCenterTile={true}
         CenterTitleTxt={ordersummaryDetails?.poNumber}
-        CenterBtnIcon="icomoon-free:file-pdf"
-        centerBtnTitle="Purchase Order Details"
+        // CenterBtnIcon= "icomoon-free:file-pdf" 
+       CenterBtnIcon={!isDownalodFetching ? (documentNames ? "" : "icomoon-free:file-pdf") :"svg-spinners:ring-resize" }
+        centerBtnTitle="View Purchase Order"
         centerBtnOnClick={handleToggleModalPDF}
       >
         {(!isOrderDetailsFetch && orderDetails) ? (
@@ -134,7 +142,7 @@ const OrderSummary = ({ orderId, orderDetails, onRefreshOrderDetails, isOrderDet
                   <div className="desc-detail">
                     {/* &nbsp;:&nbsp;<span>Arcus Bioscience Inc.</span> */}
                     &nbsp;:&nbsp;
-                    <span className="name-ellipsis">
+                    <span className={`name-ellipsis ${getStatusTextColor(ordersummaryDetails?.customerStatus)}`}>
                       {ordersummaryDetails?.customerName || "---"}
                     </span>
                     <div className="info-icon info-user">
@@ -183,7 +191,21 @@ const OrderSummary = ({ orderId, orderDetails, onRefreshOrderDetails, isOrderDet
                   </div>
                 </div>
               </div>
+
               <div className="col-xxl-5 col-xl-6 col-lg-6 col-md-6 col-12 custom-col-6">
+              <div className="desc-section right-status-sec">
+                <div className="key-icon-part">
+                  <Iconify icon="f7:status" className="open-bar" />
+                  <span>Status</span>
+                </div>
+                <div className="desc-detail">
+                  &nbsp;:&nbsp;
+                  {/* <span className="status pending">Pending</span> */}
+                  <span className="status pending">
+                    {ordersummaryDetails?.status}
+                  </span>
+                </div>
+              </div>
                 <div className="desc-section right-status-sec">
                   <div className="key-icon-part">
                     <Iconify icon="f7:status" className="open-bar" />
@@ -220,6 +242,8 @@ const OrderSummary = ({ orderId, orderDetails, onRefreshOrderDetails, isOrderDet
           <DataLoader />
         )}
       </CardSection>
+
+      
       <SidebarModel
         modalTitle="PO PDF"
         contentClass="content-50"

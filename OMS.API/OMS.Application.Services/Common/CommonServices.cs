@@ -217,5 +217,10 @@ namespace OMS.Application.Services.Common
         {
             return repositoryManager.commonRepository.GetAllModulesWithPendingRequestCount(isPending);
         }
+        public Task<List<GetUnAssignedSnippetByEmailTemplateIdResponse>> GetUnAssignedSnippetByEmailTemplateId(int emailTemplateId)
+        {
+            return repositoryManager.commonRepository.GetUnAssignedSnippetByEmailTemplateId(emailTemplateId);
+        }
+
     }
 }

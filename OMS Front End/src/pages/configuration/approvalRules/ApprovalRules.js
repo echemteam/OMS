@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Rules from "./features/Rules";
 import "./Configuration.scss";
 import { rulesFormData } from "./features/config/RulesForm.data";
@@ -10,6 +10,7 @@ import AddEditRules from "./features/AddEditRules";
 import ToastService from "../../../services/toastService/ToastService";
 import { ErrorMessage } from "../../../data/appMessages";
 import { useLazyGetAllFunctionalitiesQuery } from "../../../app/services/configurationAPI";
+import KeyCodes from "../../../utils/Enums/KeyCodesEnums";
 
 const ApprovalRules = () => {
   const childRef = useRef();
@@ -57,16 +58,18 @@ const ApprovalRules = () => {
     setSearch(event.target.value.trim());
   };
 
-  const handleSearch = () => {
+  const handleSearch = useCallback(() => {
     if (search.length >= 3 || selectedDrpvalues) {
       onGetData();
     } else {
       ToastService.warning(ErrorMessage.CommonErrorMessage);
     }
-  };
+  }, [search, selectedDrpvalues]);
+
+
   const handleKeyPress=(event)=>{
     
-    if (event.code === "Enter") {
+    if (event.key === KeyCodes.ENTER) {
       handleSearch();
     }
   }

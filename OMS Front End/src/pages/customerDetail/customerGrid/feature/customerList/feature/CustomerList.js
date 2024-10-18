@@ -1,21 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {
-  useContext,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
+import React, { useContext, useEffect, useImperativeHandle, useRef, useState, } from "react";
 
 import { useNavigate } from "react-router-dom";
 
 import CardSection from "../../../../../../components/ui/card/CardSection";
-import {
-  useAddEditResponsibleUserForCustomerMutation,
-  useGetCustomersMutation,
-  useUpdateCustomerApproveStatusMutation,
-  useUpdateCustomerInActiveStatusMutation,
-} from "../../../../../../app/services/basicdetailAPI";
+import { useAddEditResponsibleUserForCustomerMutation, useGetCustomersMutation, useUpdateCustomerApproveStatusMutation, useUpdateCustomerInActiveStatusMutation, } from "../../../../../../app/services/basicdetailAPI";
 import BasicDetailContext from "../../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import CustomerListContext from "../../../../../../utils/ContextAPIs/Customer/CustomerListContext";
 import { useAddCustomerNotesMutation } from "../../../../../../app/services/notesAPI";
@@ -27,10 +16,7 @@ import { hasFunctionalPermission } from "../../../../../../utils/AuthorizeNaviga
 import { securityKey } from "../../../../../../data/SecurityKey";
 import ToastService from "../../../../../../services/toastService/ToastService";
 import { encryptUrlData } from "../../../../../../services/CryptoService";
-import {
-  StatusEnums,
-  StatusFeild,
-} from "../../../../../../utils/Enums/StatusEnums";
+import { StatusEnums, StatusFeild, } from "../../../../../../utils/Enums/StatusEnums";
 import { AppIcons } from "../../../../../../data/appIcons";
 import CenterModel from "../../../../../../components/ui/centerModel/CenterModel";
 import FormCreator from "../../../../../../components/Forms/FormCreator";
@@ -44,15 +30,7 @@ import { securityValidator } from "../../../../../../utils/CustomActionSecurity/
 // import { securityValidator } from "../../../../../../utils/CustomActionSecurity/actionsSecurityValidator";
 //import MolGrid from "../../../../../../components/Grid/MolGrid";
 
-export const CustomersList = ({
-  statusId,
-  configFile,
-  handleChange,
-  search,
-  handleChangeDropdown,
-  statusOptions,
-  selectedDrpvalues,
-  searchStatusFilter,
+export const CustomersList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, searchStatusFilter,
   handleSearch,
   handleClear,
   handleKeyPress,
@@ -76,56 +54,22 @@ export const CustomersList = ({
   const { isResponsibleUser, setIsResponsibleUser } =
     useContext(BasicDetailContext);
 
-  const [
-    getCustomers,
-    { isLoading: isListLoading, isSuccess: isListSuccess, data: isListeData },
-  ] = useGetCustomersMutation();
-  const [
-    updateCustomerApproveStatus,
-    { isSuccess: isSuccessUpdateCustomer, data: updateCustomerData },
-  ] = useUpdateCustomerApproveStatusMutation();
-  const [
-    updateCustomerInActiveStatus,
-    {
-      isLoading: updateCustomerInActiveStatusCustomerLoading,
-      isSuccess: isSuccessUpdateCustomerInActiveStatus,
-      data: updateCustomerInActiveStatusData,
-    },
-  ] = useUpdateCustomerInActiveStatusMutation();
-
-  const [
-    addEditResponsibleUserForCustomer,
-    {
-      isSuccess: isSuccessAddEditResponsibleUserForCustomer,
-      data: isAddEditResponsibleUserForCustomerData,
-    },
-  ] = useAddEditResponsibleUserForCustomerMutation();
-
-  const [
-    getAllUser,
-    { isSuccess: isGetAllUserSucess, data: allGetAlluserData },
-  ] = useLazyGetAllUserQuery();
+  const [getCustomers, { isLoading: isListLoading, isSuccess: isListSuccess, data: isListeData }] = useGetCustomersMutation();
+  const [updateCustomerApproveStatus, { isSuccess: isSuccessUpdateCustomer, data: updateCustomerData }] = useUpdateCustomerApproveStatusMutation();
+  const [updateCustomerInActiveStatus, { isLoading: updateCustomerInActiveStatusCustomerLoading, isSuccess: isSuccessUpdateCustomerInActiveStatus,
+    data: updateCustomerInActiveStatusData }] = useUpdateCustomerInActiveStatusMutation();
+  const [addEditResponsibleUserForCustomer, { isSuccess: isSuccessAddEditResponsibleUserForCustomer, data: isAddEditResponsibleUserForCustomerData }] = useAddEditResponsibleUserForCustomerMutation();
+  const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAlluserData }] = useLazyGetAllUserQuery();
   // const [updateResponsibleUser] = useUpdateResponsibleUserMutation();
-
   const [addCustomerNotes] = useAddCustomerNotesMutation();
 
-  useEffect(() => {
-    getAllUser();
-  }, [statusId]);
+  useEffect(() => { getAllUser(); }, [statusId]);
 
   useEffect(() => {
-    if (
-      isSuccessAddEditResponsibleUserForCustomer &&
-      isAddEditResponsibleUserForCustomerData
-    ) {
-      ToastService.success(
-        isAddEditResponsibleUserForCustomerData.errorMessage
-      );
+    if (isSuccessAddEditResponsibleUserForCustomer && isAddEditResponsibleUserForCustomerData) {
+      ToastService.success(isAddEditResponsibleUserForCustomerData.errorMessage);
     }
-  }, [
-    isSuccessAddEditResponsibleUserForCustomer,
-    isAddEditResponsibleUserForCustomerData,
-  ]);
+  }, [isSuccessAddEditResponsibleUserForCustomer, isAddEditResponsibleUserForCustomerData,]);
 
   useEffect(() => {
     if (isGetAllUserSucess && allGetAlluserData) {
@@ -141,13 +85,7 @@ export const CustomersList = ({
       const uniqueData = Array.from(
         new Map(filterData.map((item) => [item.fullName, item])).values()
       );
-      setDropDownOptionField(
-        uniqueData,
-        "userId",
-        "fullName",
-        reasonData,
-        "responsibleUserId"
-      );
+      setDropDownOptionField(uniqueData, "userId", "fullName", reasonData, "responsibleUserId");
     }
   }, [isGetAllUserSucess, allGetAlluserData]);
 
@@ -160,12 +98,8 @@ export const CustomersList = ({
   };
 
   const onCustomeActionHandler = () => {
-    const actionColumn = configFile?.columns.find(
-      (column) => column.name === "Action"
-    );
-    const approvalAction = configFile?.columns.find(
-      (column) => column.name === "Approve"
-    );
+    const actionColumn = configFile?.columns.find((column) => column.name === "Action");
+    const approvalAction = configFile?.columns.find((column) => column.name === "Approve");
     if (actionColumn) {
       const hasEdit = hasFunctionalPermission(securityKey.EDITCUSTOMER);
       const hasBlock = hasFunctionalPermission(securityKey.BLOCKCUSTOMER);
@@ -177,26 +111,10 @@ export const CustomersList = ({
       if (actionColumn.defaultAction) {
         actionColumn.defaultAction.allowEdit = hasEdit?.hasAccess;
       }
-      actionColumn.customAction = securityValidator(
-        hasBlock?.hasAccess,
-        actionColumn.customAction,
-        "ALLOWBLOCKED"
-      );
-      actionColumn.customAction = securityValidator(
-        hasFreeze?.hasAccess,
-        actionColumn.customAction,
-        "ALLOWFREEZE"
-      );
-      actionColumn.customAction = securityValidator(
-        hasDisable?.hasAccess,
-        actionColumn.customAction,
-        "ALLOWDISABLE"
-      );
-      actionColumn.customAction = securityValidator(
-        hasUnBlock?.hasAccess,
-        actionColumn.customAction,
-        "ALLOWUNBLOCKED"
-      );
+      actionColumn.customAction = securityValidator(hasBlock?.hasAccess, actionColumn.customAction, "ALLOWBLOCKED");
+      actionColumn.customAction = securityValidator(hasFreeze?.hasAccess, actionColumn.customAction, "ALLOWFREEZE");
+      actionColumn.customAction = securityValidator(hasDisable?.hasAccess, actionColumn.customAction, "ALLOWDISABLE");
+      actionColumn.customAction = securityValidator(hasUnBlock?.hasAccess, actionColumn.customAction, "ALLOWUNBLOCKED");
     }
     if (approvalAction && approvalAction.colSettings) {
       approvalAction.colSettings.isDisabled = true;

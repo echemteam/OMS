@@ -42,7 +42,7 @@ const AddOrderTab = () => {
     setFinalOrderInformationData(data)
   }
 
-  const handleOrderContact = (data) => {
+    const handleOrderContact = (data) => {
     setFinalOrderContactData(data)
   }
 
@@ -69,7 +69,7 @@ const AddOrderTab = () => {
     }
   }, [isAddOrderApiSuccess, isAddOrderApiData]);
 
-  const AddOrderData = (finalOrderItemData) => {
+    const AddOrderData = (finalOrderItemData) => {
     const orderData = {
       orderId: finalOrderInformationData.orderId || 0,
       orderMethodId: finalOrderInformationData.orderMethodId || 0,
@@ -110,7 +110,7 @@ const AddOrderTab = () => {
     {
       label: "Add Contact",
       subLabel: "Enter Contact Details",
-      content: <ContactDetails onHandleOrderContact={handleOrderContact} />,
+      content: <ContactDetails onHandleOrderContact={handleOrderContact} customerId={finalOrderInformationData.customerId} />,
       tab: OrderTabEnum.Contact,
     },
     {

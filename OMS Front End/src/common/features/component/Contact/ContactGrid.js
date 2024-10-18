@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 //** Lib's */
 import { AppIcons } from "../../../../data/appIcons";
 import { ErrorMessage } from "../../../../data/appMessages";
@@ -17,6 +17,7 @@ import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/a
 import RenderTabs from "../../../../components/ui/tabs/RenderTabs";
 import { modifyContactType } from "../../../../utils/TransformData/TransformAPIData";
 import PropTypes from "prop-types";
+import KeyCodes from "../../../../utils/Enums/KeyCodesEnums";
 //** Component's */
 const ContactList = React.lazy(() => import("./feature/ContactList"));
 const AddEditContact = React.lazy(() => import("./feature/AddEditContact"));
@@ -101,16 +102,16 @@ const ContactGrid = ({
     setSearch(event.target.value.trim());
   };
 
-  const onhandleSearch = () => {
+  const onhandleSearch = useCallback(() => {
     if (search.length >= 3 || selectedDrpvalues.length > 0) {
       onGetContactList();
     } else {
       ToastService.warning(ErrorMessage.CommonErrorMessage);
     }
-  };
+  }, [search, selectedDrpvalues]);
 
   const handleKeyPress = (event) => {
-    if (event.code === "Enter") {
+    if (event.key === KeyCodes.ENTER) {
       onhandleSearch();
     }
   }

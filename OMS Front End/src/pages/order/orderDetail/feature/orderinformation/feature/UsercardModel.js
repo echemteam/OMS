@@ -6,11 +6,12 @@ import { useLazyGetContactByCustomerIdQuery, useUpdateOrderContactMutation } fro
 import { toast } from "react-toastify";
 import Buttons from "../../../../../../components/ui/button/Buttons";
 import ToastService from "../../../../../../services/toastService/ToastService";
+import DataLoader from "../../../../../../components/ui/dataLoader/DataLoader";
 
-const UsercardModel = ({onGetContactId,handleAddContact,handleRefreshOrderDetails,orderContactId,onSidebarCloseUserModel,onSidebarCloseUpdateContact,  defaultId, onUpdate,selectedContactId,setSelectedContactId, contactTypeId, addressContactType,customerId,orderDetails,}) => {
+const UsercardModel = ({onGetContactId,setContactTypeId,handleAddContact,handleRefreshOrderDetails,orderContactId,onSidebarCloseUserModel,onSidebarCloseUpdateContact,  defaultId, onUpdate,selectedContactId,setSelectedContactId, contactTypeId, addressContactType,customerId,orderDetails,}) => {
   const [dataList, setDataList] = useState([]);
   const { confirm } = SwalAlert();
-
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
 const [ getContactByCustomerId, {   isFetching: isGetContactByCustomerIdFetching,isSuccess: isGetContactByCustomerIdSuccess, data: isGetContactByCustomerIdItem },] = useLazyGetContactByCustomerIdQuery();
   const [
     updateOrderContact,
@@ -27,8 +28,17 @@ const [ getContactByCustomerId, {   isFetching: isGetContactByCustomerIdFetching
       onSidebarCloseUserModel();
       handleRefreshOrderDetails();
     }
-  }, [isUpdateOrderContactSuccess, isUpdateOrderContactData]);
+  }, [isUpdateOrderContactSuccess, isUpdateOrderContactData,]);
 
+  useEffect(()=>{
+    if(defaultId===selectedContactId){
+      setIsButtonDisable(true);
+    }
+    else{
+      setIsButtonDisable(false);
+    }
+  },[selectedContactId])
+  
   const handleChangeContact = () => {
     if (selectedContactId) {
       confirm(
@@ -62,7 +72,7 @@ const [ getContactByCustomerId, {   isFetching: isGetContactByCustomerIdFetching
       }
       getContactByCustomerId(req);
      }
-  }, [addressContactType,onSidebarCloseUpdateContact]);
+  }, [addressContactType,getContactByCustomerId]);
 
   useEffect(()=>{
     setSelectedContactId(defaultId)
@@ -80,7 +90,7 @@ const [ getContactByCustomerId, {   isFetching: isGetContactByCustomerIdFetching
       }
      
     }
-  }, [isGetContactByCustomerIdFetching, isGetContactByCustomerIdSuccess, isGetContactByCustomerIdItem]);
+  }, [isGetContactByCustomerIdFetching, isGetContactByCustomerIdSuccess, isGetContactByCustomerIdItem,addressContactType]);
 
   const handlevalidate = () => {
     if (!selectedContactId) {
@@ -88,14 +98,8 @@ const [ getContactByCustomerId, {   isFetching: isGetContactByCustomerIdFetching
       return;
     }
   };
-  const handleEditContact = () => {
-    if (selectedContactId) {
-      onUpdate();
-    } else {
-      handlevalidate();
-    }
-  };
-  const handleCheckboxChange = (id) => {
+
+  const handleCheckboxChange = (id,contactTypeId) => {
     if (selectedContactId === id) {
       setSelectedContactId(null);
       if (onGetContactId) {
@@ -106,12 +110,14 @@ const [ getContactByCustomerId, {   isFetching: isGetContactByCustomerIdFetching
       if (onGetContactId) {
         onGetContactId(id);
       }
+      setContactTypeId(contactTypeId);
     }
   };
 
   return (
     <>
       <div className="row mt-3">
+        {!isGetContactByCustomerIdFetching? (<>
         {dataList.map((contact)=>(
         <div className="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-12 mb-3" key={contact.contactId}>
           <UserCardList contact={contact} 
@@ -122,25 +128,27 @@ const [ getContactByCustomerId, {   isFetching: isGetContactByCustomerIdFetching
            />
         </div>
         ))}
+          </>):( <DataLoader />)}
       <div className="d-flex align-item-end justify-content-end mt-3">
         <Buttons
           buttonTypeClassName="theme-button"
           buttonText="Change Contact"
           isLoading={isUpdateOrderContactLoading}
           onClick={handleChangeContact}
+          isDisable={isButtonDisable}
         />
-        <Buttons
+        {/* <Buttons
           buttonTypeClassName="theme-button ml-3"
           buttonText="Edit Contact"
           onClick={handleEditContact}
-        />
+        /> */}
         <Buttons
           buttonTypeClassName="theme-button ml-3"
-          buttonText="Add Contact"
+          buttonText={`Add ${addressContactType} Contact`}
           onClick={handleAddContact}
         />
       </div>
-        
+    
       </div>
     </>
   );

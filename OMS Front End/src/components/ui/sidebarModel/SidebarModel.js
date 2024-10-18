@@ -20,7 +20,11 @@ const SidebarModel = ({ children, modalTitleIcon, showToggle, ...props }) => {
 
   return (
     <div className={`sidebar-model ${props.isOpen ? "active-model" : ""}`}>
-      <div className="side-model-section">
+      <div
+        className={`side-model-section ${
+          showToggle ? "scrollable-background" : ""
+        }`}
+      >
         <div
           className={`model-content ${props.contentClass} ${
             isRightPosition ? "right-position" : "left-position"

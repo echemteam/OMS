@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import useDebounce from "../../../../../app/customHooks/useDebouce";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ListSupplier } from "../../../../../utils/Enums/commonEnums";
 import ToastService from "../../../../../services/toastService/ToastService";
 import { ErrorMessage } from "../../../../../data/appMessages";
@@ -9,6 +8,7 @@ import CardSection from "../../../../../components/ui/card/CardSection";
 import CustomerListContext from "../../../../../utils/ContextAPIs/Customer/CustomerListContext";
 import { AllInActiveCustomerGridConfig, BlockedInActiveCustomerGridConfig, DisabledInActiveCustomerGridConfig, FreezedInActiveCustomerGridConfig } from "../../../../../common/features/component/CustomerSupplierListConfig/CustomerSupplierListConfig.data";
 import PropTypes from 'prop-types';
+import KeyCodes from "../../../../../utils/Enums/KeyCodesEnums";
 
 
 const InActiveCustomerTab = ({ statusId }) => {
@@ -24,7 +24,7 @@ const InActiveCustomerTab = ({ statusId }) => {
   const [freezeManageData, setFreezeManageData] = useState(FreezedInActiveCustomerGridConfig);
   const [blockManageData, setBlockManageData] = useState(BlockedInActiveCustomerGridConfig);
   const [disableManageData, setDisableManageData] = useState(DisabledInActiveCustomerGridConfig);
-  const debouncedSearch = useDebounce(search, 300);
+  // const debouncedSearch = useDebounce(search, 300);
 
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex.toString());
@@ -74,13 +74,13 @@ const InActiveCustomerTab = ({ statusId }) => {
     getListApi(); // Fetch data based on activeTab (if needed)
   }, [activeTab]);
 
-  const handleSearch = () => {
+  const handleSearch = useCallback(() => {
     if (search.length >= 3 || selectedDrpvalues.length > 0) {
       getListApi();
     } else {
-      ToastService.warning(ErrorMessage.CommonErrorMessage)
+      ToastService.warning(ErrorMessage.CommonErrorMessage);
     }
-  };
+  }, [search, selectedDrpvalues]);
 
   const handleChange = (event) => {
    
@@ -88,7 +88,7 @@ const InActiveCustomerTab = ({ statusId }) => {
   };
 
   const handleKeyPress=(event)=>{
-    if (event.code === "Enter") {
+    if (event.key === KeyCodes.ENTER) {
       handleSearch();
     }
   }
@@ -121,20 +121,20 @@ const InActiveCustomerTab = ({ statusId }) => {
   };
 
   useEffect(() => {
-    if (debouncedSearch === "" && selectedDrpvalues === "") {
+    if (search === "" && selectedDrpvalues === "") {
       getListApi();
     }
-  }, [debouncedSearch , selectedDrpvalues]);
+  }, [search , selectedDrpvalues]);
 
   const tabs = [
     {
-      sMenuItemCaption: "All",
+      sMenuItemCaption: "ALL",
       component: (
         <div className="mt-2">
           <InActiveCustomersList
             statusId={statusId}
             configFile={allManageData}
-            search={debouncedSearch}
+            search={search}
             handleChange={handleChange}
             statusOptions={statusOptions}
             selectedStatusOptions={selectedStatusOptions}
@@ -150,13 +150,13 @@ const InActiveCustomerTab = ({ statusId }) => {
       ),
     },
     {
-      sMenuItemCaption: "Freezed",
+      sMenuItemCaption: "FREEZED",
       component: (
         <div className="mt-2">
           <InActiveCustomersList
             statusId={StatusEnums.Freeze}
             configFile={freezeManageData}
-            search={debouncedSearch}
+            search={search}
             handleChange={handleChange}
             statusOptions={statusOptions}
             selectedStatusOptions={selectedStatusOptions}
@@ -172,13 +172,13 @@ const InActiveCustomerTab = ({ statusId }) => {
       ),
     },
     {
-      sMenuItemCaption: "Block",
+      sMenuItemCaption: "BLOCK",
       component: (
         <div className="mt-2">
           <InActiveCustomersList
             statusId={StatusEnums.Block}
             configFile={blockManageData}
-            search={debouncedSearch}
+            search={search}
             handleChange={handleChange}
             statusOptions={statusOptions}
             selectedStatusOptions={selectedStatusOptions}
@@ -194,13 +194,13 @@ const InActiveCustomerTab = ({ statusId }) => {
       ),
     },
     {
-      sMenuItemCaption: "Disable",
+      sMenuItemCaption: "DISABLE",
       component: (
         <div className="mt-2">
           <InActiveCustomersList
             statusId={StatusEnums.Disable}
             configFile={disableManageData}
-            search={debouncedSearch}
+            search={search}
             handleChange={handleChange}
             statusOptions={statusOptions}
             selectedStatusOptions={selectedStatusOptions}

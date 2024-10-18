@@ -179,7 +179,14 @@ const orderAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
-
+        getOrderHistoryByOrderId: builder.query({
+            query: (orderId) => ({
+                url: encryptQueryString(`/Order/GetOrderHistoryByOrderId/?orderId=${Number(orderId)}`),
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
@@ -201,7 +208,8 @@ export const { useCheckPoNumberExistOrNotMutation,
     useLazyGetOrderItemByOrderItemIdQuery,
     useUpdateOrderItemByOrderItemIdMutation,
     useDeleteOrderDocuementByIdMutation,
-    useUpdateOrderDetailMutation
+    useUpdateOrderDetailMutation,
+    useLazyGetOrderHistoryByOrderIdQuery
 } = orderAPI;
 
 export default orderAPI;

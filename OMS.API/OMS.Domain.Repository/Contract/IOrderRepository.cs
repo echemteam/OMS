@@ -15,9 +15,11 @@ namespace OMS.Domain.Repository.Contract
         Task<List<GetPoNumberDetailsByPoNumberResponse>> GetPoNumberDetailsByPoNumber(string poNumber);
         Task<AddEntityDto<int>> AddOrder(OrderDto requestData);
         Task<EntityList<OrderListResponse>> GetOrders(GetOrderRequest request);
-        Task<List<GetOrderItemsByOrderIdResponse>> GetOrderItemsByOrderId(int orderId);
+        Task<List<OrderItemResponse>> GetOrderItemsByOrderId(int orderId);
         Task<GetOrderDetailByOrderIdResponse> GetOrderDetailByOrderId(int orderId);
         Task<AddressResponse> GetOrderAddressesByOrderId(int addressId);
+        Task<AddressResponse> GetOrderItemAddressesByOrderItemId(long orderItemId);
+        Task<OrderNotesResponse> GetOrderItemNotesByOrderItemId(long orderItemId);
         Task<List<GetOrderContactByOrderIdResponse>> GetOrderContactByOrderId(int orderId);
         Task<List<GetOrderDocumentByOrderIdResponse>> GetOrderDocumentByOrderId(int orderId);
         Task<AddEntityDto<int>> DeleteOrder(int orderId, int deletedBy);
@@ -27,6 +29,7 @@ namespace OMS.Domain.Repository.Contract
         Task<AddEntityDto<int>> DeleteOrderDocuementById(int OrderDocumentId, int deletedBy);
         Task<AddEntityDto<int>> UpdateOrderDetail(OrderDto requestData);
         Task<AddEntityDto<long>> DeleteOrderItems(long orderItemId, int deletedBy);
+        Task<List<GetOrderHistoryByOrderIdResponse>> GetOrderHistoryByOrderId(int orderId);
 
     }
 }

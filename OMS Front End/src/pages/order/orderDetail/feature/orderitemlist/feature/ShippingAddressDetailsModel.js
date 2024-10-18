@@ -1,8 +1,6 @@
 import React from 'react'
 
-const ShippingAddressDetailsModel = ({ orderItemShippingInfo, orderDetails }) => {
-
-  const address = orderItemShippingInfo ? orderItemShippingInfo : orderDetails?.orderAddressInformation?.shippingAddress;
+const ShippingAddressDetailsModel = ({ address }) => {
 
   return (
     <div className='shipping-address'>

@@ -32,6 +32,9 @@ namespace OMS.Domain.Repository.Implementation
         const string DELETEORDERDOCUMENTSBYID = "DeleteOrderDocuementById";
         const string UPDATEORDERDETAIL = "UpdateOrderDetail";
         const string DELETEORDERITEM = "DeleteOrderItem";
+        const string GETORDERITEMADDRESSESBYORDERITEMID = "GetOrderItemAddressesByOrderItemId";
+        const string GETORDERITEMNOTESBYORDERITEMID = "GetOrderItemNotesByOrderItemId";
+        const string GETORDERHISTORYBYORDERID = "GetOrderHistoryByOrderId";
         #endregion
 
         public OrderRepository(DapperContext dapperContext) : base(dapperContext)
@@ -88,9 +91,9 @@ namespace OMS.Domain.Repository.Implementation
                 request.SortString
             }, true);
         }
-        public async Task<List<GetOrderItemsByOrderIdResponse>> GetOrderItemsByOrderId(int orderId)
+        public async Task<List<OrderItemResponse>> GetOrderItemsByOrderId(int orderId)
         {
-            List<GetOrderItemsByOrderIdResponse> orderItemDetails = await _context.GetList<GetOrderItemsByOrderIdResponse>(GETORDERITEMSBYORDERID, new
+            List<OrderItemResponse> orderItemDetails = await _context.GetList<OrderItemResponse>(GETORDERITEMSBYORDERID, new
             {
                 orderId
             }, CommandType.StoredProcedure);
@@ -113,6 +116,24 @@ namespace OMS.Domain.Repository.Implementation
                 addressId
             }, commandType: CommandType.StoredProcedure);
             return addressDetails;
+        }
+
+        public async Task<AddressResponse> GetOrderItemAddressesByOrderItemId(long orderItemId)
+        {
+            AddressResponse addressDetails = await _context.GetFrist<AddressResponse>(GETORDERITEMADDRESSESBYORDERITEMID, new
+            {
+                orderItemId
+            }, commandType: CommandType.StoredProcedure);
+            return addressDetails;
+        }
+
+        public async Task<OrderNotesResponse> GetOrderItemNotesByOrderItemId(long orderItemId)
+        {
+            OrderNotesResponse notesDetails = await _context.GetFrist<OrderNotesResponse>(GETORDERITEMNOTESBYORDERITEMID, new
+            {
+                orderItemId
+            }, commandType: CommandType.StoredProcedure);
+            return notesDetails;
         }
 
         public async Task<List<GetOrderContactByOrderIdResponse>> GetOrderContactByOrderId(int orderId)
@@ -204,6 +225,14 @@ namespace OMS.Domain.Repository.Implementation
                 orderItemId,
                 deletedBy
             }, CommandType.StoredProcedure);
+        }
+        public async Task<List<GetOrderHistoryByOrderIdResponse>> GetOrderHistoryByOrderId(int orderId)
+        {
+            List<GetOrderHistoryByOrderIdResponse> getOrderHistoryByOrderIdResponse = await _context.GetList<GetOrderHistoryByOrderIdResponse>(GETORDERHISTORYBYORDERID, new
+            {
+                orderId
+            }, CommandType.StoredProcedure);
+            return getOrderHistoryByOrderIdResponse;
         }
         #endregion
     }

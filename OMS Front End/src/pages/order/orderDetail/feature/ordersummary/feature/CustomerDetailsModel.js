@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Iconify from "../../../../../../components/ui/iconify/Iconify";
 import { useLazyGetCustomersInfoByIdQuery } from "../../../../../../app/services/ApprovalAPI";
+import { getLabelClass } from "../../../../../../utils/StatusColors/StatusColors";
 
 const CustomerDetailsModel = ({ customerId }) => {
   const [customerBasicDetails, setCustomerBasicDetails] = useState(null);
@@ -46,7 +47,7 @@ const CustomerDetailsModel = ({ customerId }) => {
             </div>
             <div className="name-status">
               <div className="name-sec">{customerBasicDetails?.name}</div>
-              <div className="status-sec pending">
+              <div className={`status-sec ${getLabelClass(customerBasicDetails?.status)}`}>
                 {customerBasicDetails?.status}
               </div>
             </div>
@@ -64,15 +65,15 @@ const CustomerDetailsModel = ({ customerId }) => {
             </div>
             {/* Email End */}
             {/* Phone Start */}
-            <div className="icon-detail">
+            {/* <div className="icon-detail">
               <span className="icon-part contact-icon">
                 <Iconify icon="ic:round-phone" />
               </span>
               <span className="info-part contact-info ">
                 <div class="values">+91 9173010672</div>
-                {/* <span class="primary-email"></span> */}
+                <span class="primary-email"></span>
               </span>
-            </div>
+            </div> */}
             {/* Phone End */}
             {/* Web Start */}
             <div className="icon-detail">
@@ -89,25 +90,25 @@ const CustomerDetailsModel = ({ customerId }) => {
             <div className="key-value">
               <div className="key-part">R-User</div>
               <div className="value-part">
-                &nbsp;:&nbsp; {customerBasicDetails?.responsibleUserName}
+                {customerBasicDetails?.responsibleUserName}
               </div>
             </div>
             <div className="key-value">
               <div className="key-part">Country</div>
               <div className="value-part">
-                &nbsp;:&nbsp; {customerBasicDetails?.countryName}
+                {customerBasicDetails?.countryName}
               </div>
             </div>
             <div className="key-value">
-              <div className="key-part">tax Id</div>
+              <div className="key-part">Tax Id</div>
               <div className="value-part">
-                &nbsp;:&nbsp; {customerBasicDetails?.taxId}
+                {customerBasicDetails?.taxId}
               </div>
             </div>
             <div className="key-value">
               <div className="key-part">Group Type</div>
               <div className="value-part">
-                &nbsp;:&nbsp; {customerBasicDetails?.type}
+                {customerBasicDetails?.type}
               </div>
             </div>
           </div>

@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 //** Lib's */
 import { ErrorMessage } from "../../../../../data/appMessages";
 import { ListShowCustomer } from "../../../../../utils/Enums/commonEnums";
-import useDebounce from "../../../../../app/customHooks/useDebouce";
+
 import CardSection from "../../../../../components/ui/card/CardSection";
 import { StatusEnums, StatusValue } from "../../../../../utils/Enums/StatusEnums";
 import SupplierListContext from '../../../../../utils/ContextAPIs/Supplier/SupplierListContext'
@@ -12,6 +12,7 @@ import { AddSupplierContextProvider } from "../../../../../utils/ContextAPIs/Sup
 //** Service's */
 import ToastService from "../../../../../services/toastService/ToastService";
 import { AllCustomerGridConfig, ApprovedCustomerGridConfig, PendingCustomerGridConfig, RejectedCustomerGridConfig, SubmittedCustomerGridConfig } from "../../../../../common/features/component/CustomerSupplierListConfig/CustomerSupplierListConfig.data";
+import KeyCodes from "../../../../../utils/Enums/KeyCodesEnums";
 //** Component's */
 const SupplierList = React.lazy(() => import("./feature/SupplierList"));
 const InActiveSupplierTab = React.lazy(() => import("../InActiveTabs/InActiveSupplierTab"));
@@ -30,7 +31,7 @@ const Suppliers = () => {
   const [statusOptions, setStatusOptions] = useState([]);
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
 
-  const debouncedSearch = useDebounce(search, 300);
+  //const debouncedSearch = useDebounce(search, 300);
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex.toString());
   };
@@ -90,22 +91,21 @@ const Suppliers = () => {
     getListApi(); // Fetch data based on activeTab (if needed)
   }, [activeTab]);
 
-  const handleSearch = () => {
+  const handleSearch = useCallback(() => {
     if (search.length >= 3 || selectedDrpvalues.length > 0) {
       getListApi();
     } else {
-      ToastService.warning(ErrorMessage.CommonErrorMessage)
+      ToastService.warning(ErrorMessage.CommonErrorMessage);
     }
-  };
+  }, [search, selectedDrpvalues]);
 
   const handleChange = (event) => {
    
     setSearch(event.target.value.trim());
   
   };
-  const handleKeyPress=(event)=>{
-    
-    if (event.code === "Enter") {
+  const handleKeyPress=(event)=>{   
+    if (event.key === KeyCodes.ENTER) {
       handleSearch();
     }
   }
@@ -139,10 +139,10 @@ const Suppliers = () => {
   };
 
   useEffect(() => {
-    if (debouncedSearch === "" && selectedDrpvalues === "") {
+    if (search === "" && selectedDrpvalues === "") {
       getListApi();
     }
-  }, [debouncedSearch, selectedDrpvalues]);
+  }, [search, selectedDrpvalues]);
 
   const tabs = [
     {
@@ -150,7 +150,7 @@ const Suppliers = () => {
       component: (
         <div className="mt-2 customer-list-all">
           <SupplierList statusId={selectedDrpvalues} configFile={allManageData}
-            search={debouncedSearch}
+            search={search}
             handleChange={handleChange}
             statusOptions={statusOptions}
             selectedStatusOptions={selectedStatusOptions}
@@ -170,7 +170,7 @@ const Suppliers = () => {
       component: (
         <div className="mt-2 customer-list-all">
           <SupplierList statusId={StatusEnums.Pending} configFile={pendingManageData}
-            search={debouncedSearch}
+            search={search}
             handleChange={handleChange}
             statusOptions={statusOptions}
             selectedStatusOptions={selectedStatusOptions}
@@ -190,7 +190,7 @@ const Suppliers = () => {
       component: (
         <div className="mt-2 customer-list-submitted customer-list-all">
           <SupplierList statusId={StatusEnums.Submitted} configFile={submittedManageData}
-            search={debouncedSearch}
+            search={search}
             handleChange={handleChange}
             statusOptions={statusOptions}
             selectedStatusOptions={selectedStatusOptions}
@@ -211,7 +211,7 @@ const Suppliers = () => {
       component: (
         <div className="mt-2 customer-list-all">
           <SupplierList statusId={StatusEnums.Approved} configFile={approvedManageData}
-            search={debouncedSearch}
+            search={search}
             handleChange={handleChange}
             statusOptions={statusOptions}
             selectedStatusOptions={selectedStatusOptions}
@@ -240,7 +240,7 @@ const Suppliers = () => {
       component: (
         <div className="mt-2 customer-list-all">
           <SupplierList statusId={StatusEnums.Reject} configFile={rejectedCManageData}
-            search={debouncedSearch}
+            search={search}
             handleChange={handleChange}
             statusOptions={statusOptions}
             selectedStatusOptions={selectedStatusOptions}

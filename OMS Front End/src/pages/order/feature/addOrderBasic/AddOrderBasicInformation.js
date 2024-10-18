@@ -43,7 +43,7 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
   const parentRef = useRef();
   const navigate = useNavigate();
   const [formData, setFormData] = useState(orderInformationData);
-  const [isSubCustomerDropdownVisible, setIsSubCustomerDropdownVisible] =
+    const [isSubCustomerDropdownVisible, setIsSubCustomerDropdownVisible] =
     useState(false);
   const { blocked } = SwalAlert();
   const [
@@ -68,7 +68,7 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
   const [getAddressTypeId, setGetAddressTypeId] = useState(null);
   const [poNumber, setPoNumber] = useState("");
 
-  const {
+    const {
     nextStepRef,
     orderCustomerId,
     setOrderCustomerId,
@@ -263,7 +263,7 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
   ]);
 
   useEffect(() => {
-    if (
+      if (
       !isGetAllSubCustomersFetching &&
       isGetAllSubCustomersSuccess &&
       isGetAllSubCustomersData
@@ -304,7 +304,7 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
   }, [isSubCustomerDropdownVisible]);
 
   const handleChangeDropdownList = async (data, dataField) => {
-
+   
     const blockedOptionValue = "Block";
     if (data.status === blockedOptionValue) {
       const result = await blocked(
@@ -323,20 +323,30 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
       if (data.isBuyingForThirdParty) {
         setIsSubCustomerDropdownVisible(true);
         getAllSubCustomerByCustomerId(data.value);
-        setFormData({ ...orderInformationData });
-        basicInformation.current.updateFormFieldValue({
+         setFormData({ ...orderInformationData });
+          basicInformation.current.updateFormFieldValue({
           customerId: data.value,
           subCustomerMainCustomerId: null,
           isBillingId: null,
           isShippingId: null,
+          orderMethodId : null
         });
         setGetShippingAddressData(null)
         setGetBillingAddressData(null)
-      } else {
+      } 
+      else {
         setIsSubCustomerDropdownVisible(false);
+        basicInformation.current.updateFormFieldValue({
+          customerId: data.value,
+          isBillingId: null,
+          isShippingId: null,
+          orderMethodId : null
+        });
+        setGetShippingAddressData(null)
+        setGetBillingAddressData(null)
       }
     }
-
+    
     if (data.value && dataField === "isShippingId") {
       const finalData = isGetAllShippingAddressData?.filter(
         (item) => item.addressId === data.value
@@ -361,7 +371,6 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
         ToastService.warning(isCheckPoNumberExistOrNotData.errorMessage);
         return;
       }
-      ToastService.info(isCheckPoNumberExistOrNotData.errorMessage);
     }
   }, [isCheckPoNumberExistOrNotSucess, isCheckPoNumberExistOrNotData]);
 
@@ -424,41 +433,55 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
     handleAddOrderInformation,
   }));
 
-  const handleAddOrderInformation = () => {
+ const handleAddOrderInformation = async () => {
     let data = basicInformation.current.getFormData();
-    if (data) {
-      let req = {
-        orderId: orderId ? orderId : 0,
-        orderMethodId:
-          data.orderMethodId && typeof data.orderMethodId === "object"
-            ? data.orderMethodId.value
-            : data.orderMethodId,
-        orderReceivedDate: data.orderReceivedDate,
-        orderAddressId: 0,
-        customerId:
-          data.customerId && typeof data.customerId === "object"
-            ? data.customerId.value
-            : data.customerId,
-        subCustomerId:
-          data.subCustomerMainCustomerId &&
-            typeof data.subCustomerMainCustomerId === "object"
-            ? data.subCustomerMainCustomerId.value
-            : data.subCustomerMainCustomerId,
-        poNumber: data.poNumber,
-        billingAddressId:
-          data.isBillingId && typeof data.isBillingId === "object"
-            ? data.isBillingId.value
-            : data.isBillingId,
-        shippingAddressId:
-          data.isShippingId && typeof data.isShippingId === "object"
-            ? data.isShippingId.value
-            : data.isShippingId,
-      };
-      // addEditOrderInformation(req);
-      onHandleOrderInformation(req)
-      moveNextPage();
+    if (data && data.customerId && data.poNumber) {
+        let checkPoRequest = {
+            customerId: data.customerId && typeof data.customerId === "object"
+                ? data.customerId.value
+                : data.customerId,
+            poNumber: data.poNumber
+        };
+
+        let responseData = await checkPoNumberExistOrNot(checkPoRequest);
+        if (responseData.data) {
+            if (responseData.data.errorMessage.includes("PO Number already exists")) {
+              return ;
+            } else {
+                let req = {
+                    orderId: orderId ? orderId : 0,
+                    orderMethodId: data.orderMethodId && typeof data.orderMethodId === "object"
+                        ? data.orderMethodId.value
+                        : data.orderMethodId,
+                    orderReceivedDate: data.orderReceivedDate,
+                    orderAddressId: 0,
+                    customerId: data.customerId && typeof data.customerId === "object"
+                        ? data.customerId.value
+                        : data.customerId,
+                    subCustomerId: data.subCustomerMainCustomerId &&
+                        typeof data.subCustomerMainCustomerId === "object"
+                        ? data.subCustomerMainCustomerId.value
+                        : data.subCustomerMainCustomerId,
+                    poNumber: data.poNumber,
+                    billingAddressId: data.isBillingId && typeof data.isBillingId === "object"
+                        ? data.isBillingId.value
+                        : data.isBillingId,
+                    shippingAddressId: data.isShippingId && typeof data.isShippingId === "object"
+                        ? data.isShippingId.value
+                        : data.isShippingId
+                };
+                onHandleOrderInformation(req);
+                moveNextPage();
+            }
+        } 
     }
-  };
+};
+
+  
+  
+  
+  
+  
 
   return (
     <>

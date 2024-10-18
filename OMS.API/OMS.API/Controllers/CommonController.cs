@@ -334,5 +334,11 @@ namespace OMS.API.Controllers
             List<GetAllModulesWithPendingRequestCountResponse> responseData = await _serviceManager.commonServices.GetAllModulesWithPendingRequestCount(isPending).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
+        [HttpGet("GetUnAssignedSnippetByEmailTemplateId")]
+        public async Task<IActionResult> GetUnAssignedSnippetByEmailTemplateId(int emailTemplateId)
+        {
+            List<GetUnAssignedSnippetByEmailTemplateIdResponse> responseData = await _serviceManager.commonServices.GetUnAssignedSnippetByEmailTemplateId(emailTemplateId).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
     }
 }

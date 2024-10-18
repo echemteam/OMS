@@ -4,30 +4,29 @@ import UserDetailsModel from "./UserDetailsModel";
 
 const UserCardDetail = ({ contact, handleToggleModalUsers }) => {
 
-  const getInitials = (firstName, lastName) => {
-    return (
-      (firstName?.[0] || "").toUpperCase() + (lastName?.[0] || "").toUpperCase()
-    );
-  };
+  // const getInitials = (firstName, lastName) => {
+  //   return (
+  //     (firstName?.[0] || "").toUpperCase() + (lastName?.[0] || "").toUpperCase()
+  //   );
+  // };
 
   return (
     <>
       <div className="contact-card">
         <div className="profile-name-btn">
-          <div className="profile-icon-sec">
-            {getInitials(contact?.firstName, contact?.lastName)}
-          </div>
           <div className="right-info">
             <div className="right-name-btn">
               <div className="user-name text-ellipsis">
                 {contact?.firstName} {contact?.lastName}
               </div>
               <div className="btn-sec">
-                <div className="select-icon tooltip-div" onClick={handleToggleModalUsers}>
+                <div
+                  className="select-icon tooltip-div"
+                  onClick={handleToggleModalUsers}
+                >
                   <Iconify
                     icon="icon-park-outline:change"
                     className="swap-icon"
-
                   />
                   <div className="tooltip-show">
                     <p>Change Customer</p>
@@ -55,13 +54,15 @@ const UserCardDetail = ({ contact, handleToggleModalUsers }) => {
                 <span>
                   {/* {contact?.phoneNumberList?.find((number) => number.isPrimary)?.phoneNumber} */}
                   {contact?.phoneNumberList?.find((number) => number.isPrimary)
-                    ? `${contact?.phoneNumberList.find(
-                      (number) => number.isPrimary
-                    )?.phoneCode
-                    } ${contact?.phoneNumberList.find(
-                      (number) => number.isPrimary
-                    )?.phoneNumber
-                    }`
+                    ? `${
+                        contact?.phoneNumberList.find(
+                          (number) => number.isPrimary
+                        )?.phoneCode
+                      } ${
+                        contact?.phoneNumberList.find(
+                          (number) => number.isPrimary
+                        )?.phoneNumber
+                      }`
                     : ""}
                 </span>
               </div>
@@ -69,7 +70,6 @@ const UserCardDetail = ({ contact, handleToggleModalUsers }) => {
           </div>
         </div>
       </div>
-
     </>
   );
 };

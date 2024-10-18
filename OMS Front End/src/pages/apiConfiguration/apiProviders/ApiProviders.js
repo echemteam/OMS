@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import CardSection from "../../../components/ui/card/CardSection";
 import SidebarModel from "../../../components/ui/sidebarModel/SidebarModel";
@@ -10,6 +10,7 @@ import ToastService from "../../../services/toastService/ToastService";
 import { ErrorMessage } from "../../../data/appMessages";
 import { useNavigate } from "react-router-dom";
 import { encryptUrlData } from "../../../services/CryptoService";
+import KeyCodes from "../../../utils/Enums/KeyCodesEnums";
 
 const ApiProviders = () => {
   const [isEdit, setIsEdit] = useState(false);
@@ -45,16 +46,17 @@ const ApiProviders = () => {
       childRef.current.callChildFunction();
     }
   };
-  const handleSearch = () => {
-    if (search.length >= 3) {
+  const handleSearch = useCallback(() => {
+    if (search.length >= 3 ) {
       onGetData();
     } else {
       ToastService.warning(ErrorMessage.CommonErrorMessage);
     }
-  };
+  }, [search]);
+
   const handleKeyPress=(event)=>{
     
-    if (event.code === "Enter") {
+    if (event.key === KeyCodes.ENTER) {
       handleSearch();
     }
   }

@@ -104,7 +104,7 @@ namespace OMS.Application.Services.Order
                         AESIV
                     );
                 }
-                if (requestData.DocumentName != null || requestData.DocumentName != "" && responseData.KeyValue > 0)
+                if (!string.IsNullOrEmpty(requestData.DocumentName) && responseData.KeyValue > 0)
                 {
                     OrderDocumentDto orderDocumentDto = requestData.ToMapp<AddOrderRequest, OrderDocumentDto>();
                     orderDocumentDto.OrderId = responseData.KeyValue;
@@ -118,7 +118,7 @@ namespace OMS.Application.Services.Order
         public async Task<GetOrderResponse> GetOrders(GetOrderRequest request)
         {
             EntityList<OrderListResponse> Order = await repositoryManager.order.GetOrders(request);
-            List<GetOrderItemsByOrderIdResponse> OrderItems = await repositoryManager.order.GetOrderItemsByOrderId(0);
+            List<OrderItemResponse> OrderItems = await repositoryManager.order.GetOrderItemsByOrderId(0);
             GetOrderResponse response = new()
             {
                 OrderList = Order?.DataSource,
@@ -127,30 +127,32 @@ namespace OMS.Application.Services.Order
             };
             return response!;
         }
-        public async Task<List<GetOrderItemsByOrderIdResponse>> GetOrderItemsByOrderId(int orderId)
+        public async Task<GetOrderItemsByOrderIdResponse> GetOrderItemsByOrderId(int orderId)
         {
-            var orderItem =  await repositoryManager.order.GetOrderItemsByOrderId(orderId);
+            List<OrderItemResponse> orderItems = await repositoryManager.order.GetOrderItemsByOrderId(orderId);
+            decimal totalOrderItemPrice = 0;
 
-            //if (orderItem == null)
-           // {
-           //     return orderItem!;
-            //}
-            
-            foreach (var item in orderItem)
+            foreach (var item in orderItems)
             {
-                 
-                if (item.ShippingAddressId > 0)  
+                if (item.OrderItemId > 0)
                 {
-                    AddressResponse orderShippingAddress = await repositoryManager.order.GetOrderAddressesByOrderId(item.ShippingAddressId);
-                    item.OrderShippingAddress = orderShippingAddress; 
+                    item.OrderShippingAddress = await repositoryManager.order.GetOrderItemAddressesByOrderItemId(item.OrderItemId);
+                    item.OrderNote = await repositoryManager.order.GetOrderItemNotesByOrderItemId(item.OrderItemId);
+                    if (item.SubTotalPrice.HasValue)
+                    {
+                        totalOrderItemPrice += item.SubTotalPrice.Value;
+                    }
                 }
             }
-            return orderItem!;
-
+            return new GetOrderItemsByOrderIdResponse
+            {
+                TotalOrderItemPrice = totalOrderItemPrice,
+                OrderItems = orderItems
+            };
         }
         public async Task<GetOrderDetailByOrderIdResponse> GetOrderDetailByOrderId(int orderId)
         {
-            var orderDetails = await repositoryManager.order.GetOrderDetailByOrderId(orderId);
+            GetOrderDetailByOrderIdResponse orderDetails = await repositoryManager.order.GetOrderDetailByOrderId(orderId);
             if (orderDetails == null)
             {
                 return orderDetails!;
@@ -263,6 +265,10 @@ namespace OMS.Application.Services.Order
         public async Task<AddEntityDto<long>> DeleteOrderItems(long orderItemId, int deletedBy)
         {
             return await repositoryManager.order.DeleteOrderItems(orderItemId, deletedBy);
+        }
+        public Task<List<GetOrderHistoryByOrderIdResponse>> GetOrderHistoryByOrderId(int orderId)
+        {
+            return repositoryManager.order.GetOrderHistoryByOrderId(orderId);
         }
         #endregion
     }

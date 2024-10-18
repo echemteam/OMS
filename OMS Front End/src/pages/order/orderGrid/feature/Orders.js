@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 /** Common Components */
@@ -17,10 +17,10 @@ import { useDeleteOrderMutation, useGetOrdersMutation } from "../../../../app/se
 
 /** CSS Files */
 import "../../Order.scss";
-import useDebounce from "../../../../app/customHooks/useDebouce";
 import ToastService from "../../../../services/toastService/ToastService";
 import { ErrorMessage } from "../../../../data/appMessages";
 import SwalAlert from "../../../../services/swalService/SwalService";
+import KeyCodes from "../../../../utils/Enums/KeyCodesEnums";
 
 const Orders = ({ orderStatusId, orderItemStatusId, orderSubStatusId }) => {
 
@@ -28,7 +28,7 @@ const Orders = ({ orderStatusId, orderItemStatusId, orderSubStatusId }) => {
   const navigate = useNavigate();
   const { confirm } = SwalAlert();
   const [search, setSearch] = useState("");
-  const debouncedSearch = useDebounce(search, 300);
+  //const debouncedSearch = useDebounce(search, 300);
   const [dataSource, setDataSource] = useState([]);
   const [totalRowCount, setTotalRowCount] = useState(0);
   const [itemListDataSource, setItemListDataSource] = useState([]);
@@ -39,13 +39,13 @@ const Orders = ({ orderStatusId, orderItemStatusId, orderSubStatusId }) => {
 
   }, [orderStatusId, orderSubStatusId, orderItemStatusId]);
 
-  const handleSearch = () => {
-    if (search.length >= 3) {
+  const handleSearch = useCallback(() => {
+    if (search.length >= 3 ) {
       onGetData();
     } else {
-      ToastService.warning(ErrorMessage.CommonErrorMessage)
+      ToastService.warning(ErrorMessage.CommonErrorMessage);
     }
-  };
+  }, [search]);
 
   useEffect(() => {
     if (isDeleteOrderSuccess && isDeleteOrderData) {
@@ -59,7 +59,7 @@ const Orders = ({ orderStatusId, orderItemStatusId, orderSubStatusId }) => {
   };
 
   const handleKeyPress = (event) => {
-    if (event.code === "Enter") {
+    if (event.key === KeyCodes.ENTER) {
       handleSearch();
     }
   }
@@ -68,10 +68,10 @@ const Orders = ({ orderStatusId, orderItemStatusId, orderSubStatusId }) => {
   };
 
   useEffect(() => {
-    if (debouncedSearch === "") {
+    if (search === "") {
       onGetData();
     }
-  }, [debouncedSearch]);
+  }, [search]);
 
 
   useEffect(() => {
@@ -104,7 +104,7 @@ const Orders = ({ orderStatusId, orderItemStatusId, orderSubStatusId }) => {
         pageNumber: pageObject.pageNumber,
         pageSize: pageObject.pageSize,
       },
-      filters: { searchText: debouncedSearch },
+      filters: { searchText: search },
       sortString: sortingString,
       orderStatusId: orderStatusId,
       orderSubStatusId: orderSubStatusId ? orderSubStatusId : 0,

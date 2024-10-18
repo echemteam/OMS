@@ -113,27 +113,38 @@ namespace OMS.Application.Services.Contact
                                 updatedExistingJsonData = await UpdateContactData(existingContactData);
                             }
 
-                            bool changesValues = ApprovalRuleHelper.CheckValuesChanged(updatedExistingJsonData, updatedJsonData);
-
-                            if (changesValues)
+                            var processApprovalRequest = async () =>
                             {
                                 if (matchingRule != null)
                                 {
                                     var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
                                     var approvalRequest = await ApprovalRuleHelper.ProcessApprovalRequest(
-                                       updatedExistingJsonData,
+                                        updatedExistingJsonData,
                                         updatedJsonData,
                                         CurrentUserId,
                                         formatTemplate,
                                         matchingRule
                                     );
                                     approvalRequests.Add(approvalRequest);
+                                }
+                            };
 
+                            if ((customerId > 0 || supplierId > 0) && requestData.ContactId > 0)
+                            {
+                                bool changesValues = ApprovalRuleHelper.CheckValuesChanged(updatedExistingJsonData, updatedJsonData);
+
+                                if (changesValues)
+                                {
+                                    await processApprovalRequest();
+                                }
+                                else
+                                {
+                                    responseData.ErrorMessage = "No changes detected";
                                 }
                             }
                             else
                             {
-                                responseData.ErrorMessage = "No changes detected";
+                                await processApprovalRequest();
                             }
                         }
                     }
