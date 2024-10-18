@@ -1,6 +1,6 @@
-export const countryName = 'United States'
+export const COUNTRYUSA = 'United States'
 
-export const zone = {
-    International: 'International',
-    Domestic: "Domestic"
+export const ZoneEnum = {
+    INTERNATIONAL: 'International',
+    DOMESTIC: "Domestic"
 }
