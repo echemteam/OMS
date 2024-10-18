@@ -34,7 +34,7 @@ const AddEditSnippet = forwardRef((props) => {
       ToastService.success(isAddData.errorMessage);
       onResetData();
       props.onClose();
-     
+      setShouldRerenderFormCreator((prevState) => !prevState);
     }
   }, [isAddSuccess, isAddData]);
 
@@ -44,7 +44,7 @@ const AddEditSnippet = forwardRef((props) => {
       ToastService.success(isUpdateData.errorMessage);
       onResetData(); 
       props.onClose();
-
+      setShouldRerenderFormCreator((prevState) => !prevState);
     }
   }, [isUpdateSuccess, isUpdateData]);
 
