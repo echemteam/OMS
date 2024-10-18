@@ -82,7 +82,7 @@ const PaymentInformation = ({ orderDetails }) => {
     <div>
       <CardSection cardTitle="Payment Information">
         <div className="row">
-          <div className="col-xxl-6 col-lg-6 col-md-6 col-12">
+          <div className="col-xxl-5 col-lg-5 col-md-6 col-12">
             {!isGetDetailsbyCustomerIdFetching && financialinancialInfo ?
               <div className="financial-section">
                 <div className="financial-label">Financial</div>
@@ -102,7 +102,7 @@ const PaymentInformation = ({ orderDetails }) => {
                   <div className="financial-keyvalue-pair">
                     <div className="financial-key">Card Processing Charge :</div>
                     <div className="financial-value">
-                      {financialinancialInfo.cardProcessingCharges !== undefined ? financialinancialInfo.cardProcessingCharges : "N/A"}%
+                      {financialinancialInfo.cardProcessingCharges !== undefined ? financialinancialInfo.cardProcessingCharges?.toFixed(2) : "N/A"}%
                     </div>
                   </div>
                 )}
@@ -118,7 +118,7 @@ const PaymentInformation = ({ orderDetails }) => {
                   <div className="financial-keyvalue-pair">
                     <div className="financial-key">Sales Tax :</div>
                     <div className="financial-value">
-                      {financialinancialInfo.salesTax !== undefined ? financialinancialInfo.salesTax : "N/A"}%
+                      {financialinancialInfo.salesTax !== undefined ? financialinancialInfo.salesTax?.toFixed(2) : "N/A"}%
                     </div>
                   </div>
                 )}
@@ -126,7 +126,7 @@ const PaymentInformation = ({ orderDetails }) => {
                   <div className="financial-keyvalue-pair">
                     <div className="financial-key">Bank Wire Fee:</div>
                     <div className="financial-value">
-                      ${financialinancialInfo.bankWireFee}
+                      ${financialinancialInfo.bankWireFee?.toFixed(2)}
                     </div>
                   </div>
                 )}
@@ -134,7 +134,7 @@ const PaymentInformation = ({ orderDetails }) => {
               : <DataLoader />
             }
           </div>
-          <div className="col-xxl-6 col-lg-6 col-md-6 col-12">
+          <div className="col-xxl-7 col-lg-7 col-md-6 col-12">
             {!isGetDefaultValueFetching && accountType ?
               <div className="shipping-section">
                 <div className="shipping-label">Shipping</div>
