@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { zone } from "./Config/Payment.Data";
 import CardSection from "../../../../../components/ui/card/CardSection";
@@ -31,12 +32,14 @@ const PaymentInformation = ({ orderDetails }) => {
       getDetailsbyCustomerID(orderDetails.customerId);
     }
   }, [orderDetails]);
+
   useEffect(() => {
     if (isGetDetailsbyCustomerID && data) {
       console.log(data)
       setFinancialInfo(data);
     }
   }, [isGetDetailsbyCustomerID, data]);
+  
   useEffect(() => {
     if (!isGetDefaultValueFetching && isGetDefaultValueSuccess && isGetDefaultValueData && isgetRegisteredAddressesSuccess && isgetRegisteredAddressesData) {
       setAccountType(isGetDefaultValueData.name);
