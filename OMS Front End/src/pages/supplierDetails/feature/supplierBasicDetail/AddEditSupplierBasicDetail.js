@@ -295,7 +295,8 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             const updatedForm = { ...formData };
             updatedForm.formFields = formFields;
             if (isOpen) {
-                updatedForm.formFields = supplierBasicData.formFields.filter(field => field.dataField !== "note" && field.dataField !== "responsibleUserId");
+                updatedForm.formFields = supplierBasicData.formFields.filter(field => field.dataField !== "note" && field.dataField !== "responsibleUserId"
+                    && field.dataField !== "attachment");
             } else {
                 updatedForm.formFields = supplierBasicData.formFields.filter(field => field.dataField !== "responsibleUserId");
             }

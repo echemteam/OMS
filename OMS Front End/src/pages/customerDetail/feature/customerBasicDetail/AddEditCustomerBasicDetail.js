@@ -281,7 +281,8 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             const updatedForm = { ...formData };
             updatedForm.formFields = formFields;
             if (isOpen) {
-                updatedForm.formFields = customerbasicData.formFields.filter(field => field.dataField !== "note" && field.dataField !== "isSubCustomer" && field.dataField !== "responsibleUserId");
+                updatedForm.formFields = customerbasicData.formFields.filter(field => field.dataField !== "note" && field.dataField !== "isSubCustomer"
+                    && field.dataField !== "responsibleUserId" && field.dataField !== "attachment");
             } else {
                 updatedForm.formFields = customerbasicData.formFields.filter(field => field.dataField !== "responsibleUserId");
             }
