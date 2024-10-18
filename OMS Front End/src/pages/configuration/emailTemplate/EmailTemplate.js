@@ -110,20 +110,20 @@ const EmailTemplate=()=>{
           modalTitle={
             isEdit ? "Upadte Email Template" : "Add Email Template"
           }
-          contentClass="content-40"
+          contentClass="content-50"
           onClose={onSidebarClose}
           modalTitleIcon={AppIcons.AddIcon}
           isOpen={isModelOpen}
         >
-          <AddEditEmailTemplate
+                     <AddEditEmailTemplate
             isEdit={isEdit}
             initData={formData}
             onClose={onSidebarClose}
             onSuccess={onSuccess}
             isModelOpen={isModelOpen}
             childRef = {childRef}
-          /> 
-        </SidebarModel>
+          />  
+                   </SidebarModel>
       </div>
     );
   };
