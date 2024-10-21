@@ -4,15 +4,18 @@ import RenderTabs from "../../components/ui/tabs/RenderTabs";
 import { AppIcons } from "../../data/appIcons";
 import Image from "../../components/image/Image";
 
+const OrganizationProfileManagement = React.lazy(() =>
+  import(
+    "./feature/organizationProfileManagement/OrganizationProfileManagement"
+  )
+);
 const OrganizationBusinessAddressDetail = React.lazy(() =>
   import(
     "./feature/organizationBusinessAddressDetail/OrganizationBusinessAddressDetail"
   )
 );
-const OrganizationChargesDetails = React.lazy(() =>
-  import(
-    "./feature/organizationChargesDetails/OrganizationChargesDetails"
-  )
+const OrganizationContactDetail = React.lazy(() =>
+  import("./feature/organizationContactDetail/OrganizationContactDetail")
 );
 const OrganizationLogisticDetail = React.lazy(() =>
   import("./feature/organizationLogisticDetail/OrganizationLogisticDetail")
@@ -20,19 +23,14 @@ const OrganizationLogisticDetail = React.lazy(() =>
 const OrganizationBankDetail = React.lazy(() =>
   import("./feature/organizationBankDetail/OrganizationBankDetail")
 );
-const OrganizationHistory = React.lazy(() =>
-  import("./feature/organizationHistory/OrganizationHistory")
-);
-const OrganizationContactDetail = React.lazy(() =>
-  import("./feature/organizationContactDetail/OrganizationContactDetail")
+const OrganizationChargesDetails = React.lazy(() =>
+  import("./feature/organizationChargesDetails/OrganizationChargesDetails")
 );
 const SMTPSettings = React.lazy(() =>
   import("./feature/smtpSettings/SMTPSettings")
 );
-const OrganizationProfileManagement = React.lazy(() =>
-  import(
-    "./feature/organizationProfileManagement/OrganizationProfileManagement"
-  )
+const OrganizationHistory = React.lazy(() =>
+  import("./feature/organizationHistory/OrganizationHistory")
 );
 
 const Organization = () => {
@@ -42,13 +40,14 @@ const Organization = () => {
     setActiveTabId(id);
   };
 
-
   const tabs = [
     {
       sMenuItemCaption: "Organization Profile",
       component: (
         <div className="mt-2">
-          <OrganizationProfileManagement setCompanyName={setCompanyName} isEditablePage={true}
+          <OrganizationProfileManagement
+            setCompanyName={setCompanyName}
+            isEditablePage={true}
           />
         </div>
       ),
@@ -57,7 +56,6 @@ const Organization = () => {
       sMenuItemCaption: "Business Address",
       component: (
         <div className="mt-2">
-
           <OrganizationBusinessAddressDetail isEditablePage={true} />
         </div>
       ),
@@ -99,8 +97,7 @@ const Organization = () => {
       sMenuItemCaption: "SMTP Settings",
       component: (
         <div className="mt-2">
-          <SMTPSettings isEditablePage={true}
-          />
+          <SMTPSettings isEditablePage={true} />
         </div>
       ),
     },
@@ -114,30 +111,24 @@ const Organization = () => {
     },
   ];
 
-
-
   return (
     <div className="vertical-tab-card organization">
       <div className="row">
         <div className="col-xxl-12 col-xl-12 col-md-12 col-12">
           <CardSection>
-
-
             <h1 className="organization-main-title ">
               Organization Name
-              {
-                companyName ?
-                  <div className="company-title">
-                    <div className="company-image">
-                      <Image
-                        imagePath={AppIcons.CompanyIcon}
-                        altText="Company-icon"
-                      />
-                    </div>
-                    <span>{companyName}</span>
+              {companyName ? (
+                <div className="company-title">
+                  <div className="company-image">
+                    <Image
+                      imagePath={AppIcons.CompanyIcon}
+                      altText="Company-icon"
+                    />
                   </div>
-                  : null
-              }
+                  <span>{companyName}</span>
+                </div>
+              ) : null}
             </h1>
             <div className="main-organiazation-history">
               <div className="vertical-tab-inner">

@@ -132,7 +132,9 @@ const AddEditContactNumber = ({
       <div className="row  phone-numer-card">
         <div className="col-md-12 add-edit-phoneForm">
           <div className="row vertical-form">
+          <div className='col-12'>
             <FormCreator config={formData} ref={ref} />
+            </div>
           </div>
         </div>
         <div className="col-md-12 mt-2">

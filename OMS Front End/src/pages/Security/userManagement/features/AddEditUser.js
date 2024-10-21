@@ -10,7 +10,11 @@ import PropTypes from "prop-types";
 //** Services's */
 import ChangePassword from "./ChangePassword";
 import ToastService from "../../../../services/toastService/ToastService";
-import { useAddUserMutation, useLazyGetUserByUserIdQuery, useUpdateUserMutation } from "../../../../app/services/userAPI";
+import {
+  useAddUserMutation,
+  useLazyGetUserByUserIdQuery,
+  useUpdateUserMutation,
+} from "../../../../app/services/userAPI";
 //** Context */
 //** Custom Hook */
 import { securityKey } from "../../../../data/SecurityKey";
@@ -29,9 +33,26 @@ const AddEditUser = forwardRef(() => {
   const [userForm, setUserForm] = useState(userFormData);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
 
-  const [addUser, { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData }] = useAddUserMutation();
-  const [updateUser, { isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, data: isUpdateData, }] = useUpdateUserMutation();
-  const [getUserByUserId, { isFetching: isGetByIdFetching, isSuccess: isGetByIdSuccess, data: isGetByIdData }] = useLazyGetUserByUserIdQuery();
+  const [
+    addUser,
+    { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData },
+  ] = useAddUserMutation();
+  const [
+    updateUser,
+    {
+      isLoading: isUpdateLoading,
+      isSuccess: isUpdateSuccess,
+      data: isUpdateData,
+    },
+  ] = useUpdateUserMutation();
+  const [
+    getUserByUserId,
+    {
+      isFetching: isGetByIdFetching,
+      isSuccess: isGetByIdSuccess,
+      data: isGetByIdData,
+    },
+  ] = useLazyGetUserByUserIdQuery();
 
   const { formSetting } = userFormData;
   const hasAddPermission = hasFunctionalPermission(securityKey.ADDUSER);
@@ -42,19 +63,22 @@ const AddEditUser = forwardRef(() => {
       if (hasEditPermission.isViewOnly === true) {
         formSetting.isViewOnly = true;
         setIsButtonDisable(true);
-      }
-      else {
+      } else {
         formSetting.isViewOnly = false;
         setIsButtonDisable(false);
       }
-    }
-    else if (!descrypteId) {
+    } else if (!descrypteId) {
       if (hasAddPermission.hasAccess === true) {
         formSetting.isViewOnly = false;
         setIsButtonDisable(false);
       }
     }
-  }, [descrypteId, hasEditPermission, hasAddPermission, formSetting.isViewOnly])
+  }, [
+    descrypteId,
+    hasEditPermission,
+    hasAddPermission,
+    formSetting.isViewOnly,
+  ]);
 
   const handleUser = () => {
     let userData = userFormRef.current.getFormData(); // Get form data from the FormCreator component.
@@ -64,8 +88,8 @@ const AddEditUser = forwardRef(() => {
       } else if (descrypteId && userData) {
         let req = {
           ...userData,
-          userId: descrypteId
-        }
+          userId: descrypteId,
+        };
         updateUser(req);
       }
     }
@@ -79,7 +103,7 @@ const AddEditUser = forwardRef(() => {
 
   useEffect(() => {
     if (isAddSuccess && isAddData) {
-      if (isAddData.errorMessage.includes('EXISTS')) {
+      if (isAddData.errorMessage.includes("EXISTS")) {
         ToastService.warning(isAddData.errorMessage);
         return;
       }
@@ -98,7 +122,7 @@ const AddEditUser = forwardRef(() => {
   useEffect(() => {
     if (isGetByIdSuccess && isGetByIdData && !isGetByIdFetching) {
       let newFrom = { ...userForm };
-      const removeFields = ['Password']
+      const removeFields = ["Password"];
       newFrom.initialState = isGetByIdData;
       newFrom = removeFormFields(newFrom, removeFields);
       setUserForm(newFrom);
@@ -123,14 +147,18 @@ const AddEditUser = forwardRef(() => {
         <div className="row">
           <div className="col-md-12 add-edit-user-form">
             <div className="row vertical-form">
-              {!isGetByIdFetching ?
-                <FormCreator
-                  config={userForm}
-                  ref={userFormRef}
-                  {...userForm}
-                  isLoading={isGetByIdFetching}
-                />
-                : <DataLoader />}
+              <div className="col-12">
+                {!isGetByIdFetching ? (
+                  <FormCreator
+                    config={userForm}
+                    ref={userFormRef}
+                    {...userForm}
+                    isLoading={isGetByIdFetching}
+                  />
+                ) : (
+                  <DataLoader />
+                )}
+              </div>
             </div>
           </div>
           <div className="col-md-12">
@@ -152,21 +180,23 @@ const AddEditUser = forwardRef(() => {
         </div>
       </CardSection>
 
-      {descrypteId ?
-        <CardSection
-          cardTitle="Change Password"
-        >
-          <ChangePassword descrypteId={descrypteId} isButtonDisable={isButtonDisable} />
+      {descrypteId ? (
+        <CardSection cardTitle="Change Password">
+          <ChangePassword
+            descrypteId={descrypteId}
+            isButtonDisable={isButtonDisable}
+          />
         </CardSection>
-        : null}
+      ) : null}
 
-      {descrypteId ?
-        <CardSection
-          cardTitle="Assign Role"
-        >
-          <AssignRole descrypteId={descrypteId} isButtonDisable={isButtonDisable} />
+      {descrypteId ? (
+        <CardSection cardTitle="Assign Role">
+          <AssignRole
+            descrypteId={descrypteId}
+            isButtonDisable={isButtonDisable}
+          />
         </CardSection>
-        : null}
+      ) : null}
     </div>
   );
 });

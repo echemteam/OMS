@@ -62,11 +62,13 @@ const AddEditThirdPartyApiConfiguration = (props) => {
 
   return (
     <div className="row mt-2 add-address-form">
+      <div className='col-12'>
       <FormCreator
         config={addEditeThirdData}
         ref={addEditThirdRef}
     
       />
+      </div>
       <div className="col-md-12 mt-2">
         <div className="d-flex align-item-end justify-content-end">
           <Buttons

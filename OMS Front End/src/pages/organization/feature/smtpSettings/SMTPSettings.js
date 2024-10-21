@@ -10,9 +10,15 @@ import ToastService from "../../../../services/toastService/ToastService";
 import { decryptUrlData, encryptAES } from "../../../../services/CryptoService";
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 import { useSelector } from "react-redux";
-import { EmailProviders, FieldSettingType } from "../../../../utils/Enums/commonEnums";
+import {
+  EmailProviders,
+  FieldSettingType,
+} from "../../../../utils/Enums/commonEnums";
 import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
-import { getFieldData, setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import {
+  getFieldData,
+  setFieldSetting,
+} from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import TestEmails from "./TestEmails";
 import CenterModel from "../../../../components/ui/centerModel/CenterModel";
 import FormCreator from "../../../../components/FinalForms/FormCreator";
@@ -20,7 +26,7 @@ import { getValue } from "../../../../utils/CommonUtils/CommonUtilsMethods";
 
 const setInitialData = {
   label: "Gmail",
-  value: "Gmail"
+  value: "Gmail",
 };
 const SMTPSettings = (isEditablePage) => {
   const smtpRef = useRef();
@@ -29,8 +35,22 @@ const SMTPSettings = (isEditablePage) => {
   const [, setIsOfficeEmail] = useState(false);
   const [, setIsOutlook] = useState(false);
   const [, setIsGmail] = useState(true);
-  const [addEditSmtpSetting, { isLoading: isAddEditSmtpSettingLoading, isSuccess: isAddEditSmtpSettingSuccess, data: isAddEditSmtpSettingData, },] = useAddEditSmtpSettingsMutation();
-  const [getSmtpSettings, { isFetching: isGetSmtpSettingsFetching, isSuccess: isGetSmtpSettingsSuccess, data: isGetSmtpSettingsData, },] = useLazyGetSmtpSettingsQuery();
+  const [
+    addEditSmtpSetting,
+    {
+      isLoading: isAddEditSmtpSettingLoading,
+      isSuccess: isAddEditSmtpSettingSuccess,
+      data: isAddEditSmtpSettingData,
+    },
+  ] = useAddEditSmtpSettingsMutation();
+  const [
+    getSmtpSettings,
+    {
+      isFetching: isGetSmtpSettingsFetching,
+      isSuccess: isGetSmtpSettingsSuccess,
+      data: isGetSmtpSettingsData,
+    },
+  ] = useLazyGetSmtpSettingsQuery();
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const { formSetting } = SMTPSettingsFormData;
   const roles = useSelector((state) => state.auth.roles.roleName);
@@ -55,14 +75,24 @@ const SMTPSettings = (isEditablePage) => {
 
   const setInitialValue = () => {
     let updatedFormData;
-    updatedFormData = removeFormFields(SMTPSettingsFormData, ["clientId", "clientSecret", "tenantId",]);
+    updatedFormData = removeFormFields(SMTPSettingsFormData, [
+      "clientId",
+      "clientSecret",
+      "tenantId",
+    ]);
     handleColumnChange("emailProvider", setInitialData);
   };
 
   const getFieldsToRemove = (type) => {
     switch (type) {
       case "Office365":
-        return ["smtpServer", "smtpPort", "smtpUserName", "smtpPassword", "useSsl",];
+        return [
+          "smtpServer",
+          "smtpPort",
+          "smtpUserName",
+          "smtpPassword",
+          "useSsl",
+        ];
       case "Gmail":
         return ["clientId", "clientSecret", "tenantId"];
       case "Outlook":
@@ -73,7 +103,7 @@ const SMTPSettings = (isEditablePage) => {
   };
 
   const handleColumnChange = (dataField, updatedData) => {
-    if (dataField === 'emailProvider') {
+    if (dataField === "emailProvider") {
       let manageData = { ...SMTPSettingsFormData };
       const emailProvider = getValue(updatedData.emailProvider);
       const removeFields = getFieldsToRemove(emailProvider);
@@ -109,7 +139,7 @@ const SMTPSettings = (isEditablePage) => {
 
   useEffect(() => {
     const dropdownField = getFieldData(smtpSettingData, "emailProvider");
-    dropdownField.fieldSetting.options = EmailProviders
+    dropdownField.fieldSetting.options = EmailProviders;
   }, []);
 
   useEffect(() => {
@@ -140,13 +170,24 @@ const SMTPSettings = (isEditablePage) => {
   };
 
   useEffect(() => {
-    if (!isGetSmtpSettingsFetching && isGetSmtpSettingsSuccess && isGetSmtpSettingsData) {
-      const fieldsToRemove = getFieldsToRemove(isGetSmtpSettingsData.emailProvider);
+    if (
+      !isGetSmtpSettingsFetching &&
+      isGetSmtpSettingsSuccess &&
+      isGetSmtpSettingsData
+    ) {
+      const fieldsToRemove = getFieldsToRemove(
+        isGetSmtpSettingsData.emailProvider
+      );
       let formData;
       if (fieldsToRemove) {
         formData = removeFormFields(SMTPSettingsFormData, fieldsToRemove);
       }
-      setFieldSetting(formData, "emailprovider", FieldSettingType.DISABLED, true);
+      setFieldSetting(
+        formData,
+        "emailprovider",
+        FieldSettingType.DISABLED,
+        true
+      );
       formData.initialState = {
         emailProvider: isGetSmtpSettingsData?.emailProvider,
         smtpServer: decryptUrlData(isGetSmtpSettingsData.smtpServer),
@@ -162,7 +203,11 @@ const SMTPSettings = (isEditablePage) => {
       setSmtpSettingData(formData);
       setSmtpId(isGetSmtpSettingsData.smtpSettingId);
     }
-  }, [isGetSmtpSettingsFetching, isGetSmtpSettingsSuccess, isGetSmtpSettingsData,]);
+  }, [
+    isGetSmtpSettingsFetching,
+    isGetSmtpSettingsSuccess,
+    isGetSmtpSettingsData,
+  ]);
 
   if (isGetSmtpSettingsFetching) {
     return (
@@ -174,19 +219,23 @@ const SMTPSettings = (isEditablePage) => {
 
   const handleTestEmail = () => {
     setIsTestEmailModelOpen(true);
-  }
+  };
   const onCloseModal = () => {
     setIsTestEmailModelOpen(false);
-  }
+  };
 
   return (
     <div className="row mt-2 add-address-form">
-      <h4 className="organization-tab-title">SMTP Settings</h4>
-      <FormCreator
-        config={smtpSettingData}
-        ref={smtpRef}
-        onColumnChange={handleColumnChange}
-      />
+      <div className="col-12">
+        <h4 className="organization-tab-title">SMTP Settings</h4>
+      </div>
+      <div className="col-12">
+        <FormCreator
+          config={smtpSettingData}
+          ref={smtpRef}
+          onColumnChange={handleColumnChange}
+        />
+      </div>
       {isEditablePage ? (
         <div className="col-md-12 mt-2">
           <div className="d-flex align-item-end justify-content-end">
@@ -212,11 +261,7 @@ const SMTPSettings = (isEditablePage) => {
         modalTitle={"Test Outbound Email"}
         modelSizeClass="w-55"
       >
-        <TestEmails
-          onClose={onCloseModal}
-          smtpRef={smtpRef}
-
-        />
+        <TestEmails onClose={onCloseModal} smtpRef={smtpRef} />
       </CenterModel>
     </div>
   );

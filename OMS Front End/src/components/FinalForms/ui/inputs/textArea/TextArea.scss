@@ -4,25 +4,22 @@
   .text-area-input {
     box-shadow: none !important;
     border: 1px solid var(--inputBorder) !important;
-    border-radius: 7px !important;
-    -webkit-border-radius: 7px !important;
-    -moz-border-radius: 7px !important;
-    -ms-border-radius: 7px !important;
-    -o-border-radius: 7px !important;
+    border-radius: 6px !important;
     box-shadow: none !important;
-    padding: 10px 15px;
+    padding: 10px 8px;
     outline: none;
     width: 100%;
-    font-size: var(--commonFont);
+    min-height: 120px;
+    font-size: var(--commonFont-small);
+    transition: 0.5s all !important;
 
     &:focus-visible,
     &:focus {
       box-shadow: none !important;
-      border: 1px solid var(--inputBorderHover) !important;
+      border: 1px solid var(--themeColor) !important;
+      box-shadow: 0 0 .25rem .05rem rgba(105, 108, 255, .1) !important;
+      padding-left: 12px !important;
+
     }
   }
 }
-
-// .input-label-part {
-//   margin-bottom: 10px;
-// }

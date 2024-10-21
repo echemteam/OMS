@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import FormCreator from "../../../../components/FinalForms/FormCreator";
 import {
   assignUserFormData,
@@ -21,7 +21,6 @@ import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/a
 import FinalMolGrid from "../../../../components/FinalMolGrid/FinalMolGrid";
 import { setDropDownOptionField } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 
-
 const AssignUser = (props) => {
   const molGridRef = useRef();
   const asignUserFormRef = useRef();
@@ -29,18 +28,22 @@ const AssignUser = (props) => {
   const [listData, setListData] = useState();
   const [userForm] = useState(assignUserFormData);
   const [buttonVisible, setButtonVisible] = useState(false);
-  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
+  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] =
+    useState(false);
 
   const { formSetting } = assignUserFormData;
-  const actionColumn = assignUserListData.columns.find(column => column.name === "Action");
+  const actionColumn = assignUserListData.columns.find(
+    (column) => column.name === "Action"
+  );
   const hasAddPermission = hasFunctionalPermission(securityKey.ADDASSIGNUSERS);
-  const hasDeletePermission = hasFunctionalPermission(securityKey.DELETEASSIGNUSERS);
+  const hasDeletePermission = hasFunctionalPermission(
+    securityKey.DELETEASSIGNUSERS
+  );
 
   useEffect(() => {
     if (hasDeletePermission.hasAccess === true) {
       actionColumn.defaultAction.allowDelete = true;
-    }
-    else if (hasDeletePermission.hasAccess === false) {
+    } else if (hasDeletePermission.hasAccess === false) {
       actionColumn.defaultAction.allowDelete = false;
     }
   }, [hasDeletePermission, actionColumn.defaultAction.allowDelete]);
@@ -52,7 +55,7 @@ const AssignUser = (props) => {
     } else {
       setButtonVisible(false);
     }
-  }, [hasAddPermission, formSetting.isViewOnly])
+  }, [hasAddPermission, formSetting.isViewOnly]);
 
   const { confirm } = SwalAlert();
 
@@ -89,11 +92,25 @@ const AssignUser = (props) => {
   }, [props.isOpen]);
 
   useEffect(() => {
-    if (!isGetUnAssignedUserByRoleIdFetching && isGetUnAssignedUserByRoleId && GetUnAssignedUserByRoleIdData) {
-      setDropDownOptionField(GetUnAssignedUserByRoleIdData, 'userId', 'userName', assignUserFormData, 'userName');
+    if (
+      !isGetUnAssignedUserByRoleIdFetching &&
+      isGetUnAssignedUserByRoleId &&
+      GetUnAssignedUserByRoleIdData
+    ) {
+      setDropDownOptionField(
+        GetUnAssignedUserByRoleIdData,
+        "userId",
+        "userName",
+        assignUserFormData,
+        "userName"
+      );
       setShouldRerenderFormCreator((prevState) => !prevState);
     }
-  }, [isGetUnAssignedUserByRoleIdFetching, isGetUnAssignedUserByRoleId, GetUnAssignedUserByRoleIdData]);
+  }, [
+    isGetUnAssignedUserByRoleIdFetching,
+    isGetUnAssignedUserByRoleId,
+    GetUnAssignedUserByRoleIdData,
+  ]);
 
   const getLists = (pageObject, sortingString) => {
     const request = {
@@ -103,7 +120,7 @@ const AssignUser = (props) => {
       },
       filters: { searchText: "" },
       roleId: props.initData.roleId,
-      sortString: sortingString
+      sortString: sortingString,
     };
     getRolesMappingByRoleId(request);
   };
@@ -114,7 +131,7 @@ const AssignUser = (props) => {
 
   const handleSorting = (shortString) => {
     getLists(molGridRef.current.getCurrentPageObject(), shortString);
-  }
+  };
 
   useEffect(() => {
     if (isListSuccess && isListeData) {
@@ -187,27 +204,27 @@ const AssignUser = (props) => {
       <div className="row">
         <div className="col-12 assign-user-form">
           <div className="row mt-2 assign-user-model-section">
-            <FormCreator
-              ref={asignUserFormRef}
-              config={userForm}
-              {...userForm}
-              key={shouldRerenderFormCreator}
-            />
+            <div className="col-xxl-10 col-xl-10 col-md-10">
+              <FormCreator
+                ref={asignUserFormRef}
+                config={userForm}
+                {...userForm}
+                key={shouldRerenderFormCreator}
+              />
+            </div>
             <div className="col-xxl-2 col-xl-2 col-md-2 mt-4 right-btn">
-              {buttonVisible ?
+              {buttonVisible ? (
                 <Buttons
                   buttonTypeClassName="theme-button"
                   buttonText="Add"
                   onClick={handleUser}
                   isLoading={isAddRoleMappingLoading}
                 />
-                : null}
+              ) : null}
             </div>
           </div>
         </div>
-        <CardSection
-          cardTitle="Users"
-        >
+        <CardSection cardTitle="Users">
           <div className="col-md-12 table-striped">
             <FinalMolGrid
               ref={molGridRef}

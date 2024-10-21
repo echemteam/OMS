@@ -12,7 +12,7 @@ export const assignUserFormData = {
       title: "Assign User Section",
       row: {},
       style: {
-        sectionStyle: "col-lg-10 row mb-3",
+        sectionStyle: "row mb-3",
       },
       fields: [
         {

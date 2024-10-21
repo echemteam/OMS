@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 import "./FileUpload.scss";
 import { IconButton } from "@mui/material";
 import PhotoCamera from '@mui/icons-material/CameraEnhance';
-import DeleteIcon from '@mui/icons-material/Delete';
+import CloseIcon from '@mui/icons-material/Close';
 import ToastService from "../../../../../services/toastService/ToastService";
+import Iconify from "../../../../ui/iconify/Iconify";
 
 const FileUpload = ({
   name = "",
@@ -75,9 +76,7 @@ const FileUpload = ({
             <div className="upload-border">
               <div className="upload-group">
                 <div className="upload-icon">
-                  <IconButton color="primary" component="span">
-                    <PhotoCamera />
-                  </IconButton>
+                  <Iconify icon="bi:camera-fill" />
                 </div>
                 <p className="upload-text">Upload photo</p>
               </div>
@@ -90,11 +89,12 @@ const FileUpload = ({
           <div className="image-preview">
             <img src={filePreview} alt="Uploaded File" />
             <button className="clear-button" onClick={handleClearClick}>
-              <DeleteIcon />
+            <Iconify icon="maki:cross" />
             </button>
           </div>
         )}
       </div>
+      
     </div>
   );
 };

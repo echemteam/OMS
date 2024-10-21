@@ -27,7 +27,7 @@ export const addressFormData = {
       title: "Address Information Section",
       row: {},
       style: {
-        sectionStyle: "col-lg-12 row mb-3",
+        sectionStyle: "row mb-3",
       },
       fields: [
         {
