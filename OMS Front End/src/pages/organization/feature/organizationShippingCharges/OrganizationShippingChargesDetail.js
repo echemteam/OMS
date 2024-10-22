@@ -77,8 +77,12 @@ const OrganizationShippingChargesDetail = (isEditablePage) => {
 
     <div className="row mt-2 add-address-form">
       {/* <h4 className="organization-tab-title">Shipping Charges</h4> */}
+      <div className='col-12'>
+
       <FormCreator config={organizationShippingChargesData}
         ref={organizationShippingChargesRef} />
+        </div>
+
       {isEditablePage ?
         <div className="col-md-12 mt-2">
           <div className="d-flex align-item-end justify-content-end">

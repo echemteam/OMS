@@ -116,7 +116,7 @@ const FormFileUploadField = ({
         <>
             <div className="input-label-part">
                 {labelName && labelName !== "" && (
-                    <Label labelName={labelName} for={name} />
+                    <Label labelName={labelName} for={name}isRequired={inputProps.isRequired} />
                 )}
                 <FileUpload
                     onClear={handleClearFile}

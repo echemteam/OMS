@@ -23,7 +23,7 @@ export const addEditContactsFormData = {
       title: "Contact Information Section",
       row: {},
       style: {
-        sectionStyle: "col-lg-12 row mb-3",
+        sectionStyle: "row",
       },
       fields: [
         {
@@ -69,7 +69,7 @@ export const addEditContactsFormData = {
             maxLength: 6,
           },
           style: {
-            containerCss: "col-xxl-3 col-xl-12 col-md-12 mb-input ",
+            containerCss: "col-xxl-3 col-xl-12 col-md-12 mb-input mt-4",
           },
         },
         {

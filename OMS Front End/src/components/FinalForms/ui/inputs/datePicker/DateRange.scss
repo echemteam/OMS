@@ -1,26 +1,19 @@
-.input-field {
+.input-field-daterange {
   border: 1px solid var(--inputBorder) !important;
-  border-radius: 4px !important;
-  -webkit-border-radius: 4px !important;
-  -moz-border-radius: 4px !important;
-  -ms-border-radius: 4px !important;
-  -o-border-radius: 4px !important;
+  border-radius: 6px !important;
   width: 100%;
-  height: 25px;
+  height: 35px;
   transition: 0.5s all;
-  -webkit-transition: 0.5s all;
-  -moz-transition: 0.5s all;
-  -ms-transition: 0.5s all;
-  -o-transition: 0.5s all;
   box-shadow: none !important;
   padding: 0 8px;
-  font-size: 90%;
+  font-size:  var(--commonFont-extra);
   outline: none !important;
+  
   &:focus-visible,
   &:focus {
     outline: none !important;
     box-shadow: none !important;
-    border: 1px solid var(--inputBorderHover) !important;
+    border: 1px solid var(--themeColor) !important;
   }
 }
 .react-datepicker-popper{
@@ -112,7 +105,10 @@
 
 
 .date-picker {
-  width: 100%;
+
+
+
+
   .react-datepicker-wrapper {
     width: 100%;
 
@@ -122,15 +118,15 @@
       &:before {
         content: "";
         position: absolute;
-        right: 5px;
+        right: 10px;
         top: 50%;
         transform: translateY(-50%);
         opacity: 1;
         display: block;
         background: url(../../../../../assets/images/calender.png) no-repeat;
         background-size: contain;
-        width: 15px;
-        height: 15px;
+        width: 20px;
+        height: 20px;
         cursor: pointer;
         opacity: 0.5;
       }
@@ -138,13 +134,9 @@
       input {
         box-shadow: none !important;
         border: 1px solid var(--inputBorder) !important;
-        border-radius: 4px !important;
-        -webkit-border-radius: 4px !important;
-        -moz-border-radius: 4px !important;
-        -ms-border-radius: 4px !important;
-        -o-border-radius: 4px !important;
+        border-radius: 0px;
         width: 100%;
-        height: 25px;
+        height: 35px;
         transition: 0.5s all;
         -webkit-transition: 0.5s all;
         -moz-transition: 0.5s all;
@@ -153,11 +145,11 @@
         box-shadow: none !important;
         padding: 0 8px;
         outline: none !important;
-        font-size: 90%;
+        font-size:  var(--commonFont-small);
         &:focus-visible,
         &:focus {
           box-shadow: none !important;
-          border: 1px solid var(--inputBorderHover) !important;
+          border: 1px solid var(--themeColor) !important;
         }
 }
     }
@@ -238,15 +230,15 @@
   }
 }
 
-@media only screen and (max-width: 1560px) {
-  .input-field{
-    // height: 30px;
+@media only screen and (max-width: 1750px) {
+  .input-field-daterange{
+    height: 30px;
   }
   .date-picker {
     .react-datepicker-wrapper {
       .react-datepicker__input-container {
         input{
-          // height: 30px;
+          height: 30px;
         }
       }
     }

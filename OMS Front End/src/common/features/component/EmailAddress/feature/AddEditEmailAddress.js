@@ -71,7 +71,9 @@ const AddEditEmailModal = ({ contactId, emailAddressList, setEmailAddressList, e
             <div className="row">
                 <div className="col-md-12 add-edit-emailAddressForm">
                     <div className="row vertical-form add-edit-contactForm">
+                        <div className='col-12'>
                         <FormCreator config={formData} ref={ref} />
+                        </div>
                     </div>
                 </div>
                 <div className="col-md-12 mt-2">

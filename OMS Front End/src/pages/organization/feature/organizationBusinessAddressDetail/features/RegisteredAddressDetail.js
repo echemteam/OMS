@@ -87,7 +87,7 @@ const RegisteredAddressDetail = ({ registeredAddressRef, isGetAddressDetailsSucc
 
   return (
     <CardSection cardTitle="Registered Address">
-      <div className="row">
+      <div className="">
         <FormCreator
           config={registeredFormData}
           ref={registeredAddressRef}

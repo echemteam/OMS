@@ -19,7 +19,7 @@ export const RegisteredAddressForm = {
       sectionId: "physicalDetailSection",
       row: {},
       style: {
-        sectionStyle: "col-lg-12 row mb-3",
+        sectionStyle: "col-lg-12 row pr-0",
       },
       fields: [
         {

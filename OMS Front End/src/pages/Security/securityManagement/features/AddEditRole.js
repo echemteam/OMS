@@ -1,16 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from 'react'
-import { addEditRoleFormData } from './config/AddEditRoleForm.data';
-import Buttons from '../../../../components/ui/button/Buttons';
-import { useAddRolesMutation, useUpdateRolesMutation } from '../../../../app/services/securityRoleAPI';
-import ToastService from '../../../../services/toastService/ToastService';
-import { securityKey } from '../../../../data/SecurityKey';
-import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
-import PropTypes from 'prop-types';
-import FormCreator from '../../../../components/FinalForms/FormCreator';
+import React, { useEffect, useRef, useState } from "react";
+import { addEditRoleFormData } from "./config/AddEditRoleForm.data";
+import Buttons from "../../../../components/ui/button/Buttons";
+import {
+  useAddRolesMutation,
+  useUpdateRolesMutation,
+} from "../../../../app/services/securityRoleAPI";
+import ToastService from "../../../../services/toastService/ToastService";
+import { securityKey } from "../../../../data/SecurityKey";
+import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import PropTypes from "prop-types";
+import FormCreator from "../../../../components/FinalForms/FormCreator";
 
 const AddEditGroup = (props) => {
-
   const roleFormRef = useRef();
 
   const [roleForm, setRoleForm] = useState(addEditRoleFormData);
@@ -18,30 +20,39 @@ const AddEditGroup = (props) => {
   const { formSetting } = addEditRoleFormData;
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const hasAddPermission = hasFunctionalPermission(securityKey.ADDSECURITYROLE);
-  const hasEditPermission = hasFunctionalPermission(securityKey.EDITSECURITYROLE);
+  const hasEditPermission = hasFunctionalPermission(
+    securityKey.EDITSECURITYROLE
+  );
 
   useEffect(() => {
     if (props.isEdit) {
       if (hasEditPermission.isViewOnly === true) {
         formSetting.isViewOnly = true;
         setIsButtonDisable(true);
-      }
-      else {
+      } else {
         formSetting.isViewOnly = false;
         setIsButtonDisable(false);
       }
-    }
-    else if (!props.isEdit) {
+    } else if (!props.isEdit) {
       if (hasAddPermission.hasAccess === true) {
         formSetting.isViewOnly = false;
         setIsButtonDisable(false);
       }
     }
-  }, [props.isEdit, hasEditPermission, hasAddPermission, formSetting.isViewOnly])
+  }, [
+    props.isEdit,
+    hasEditPermission,
+    hasAddPermission,
+    formSetting.isViewOnly,
+  ]);
 
   const [
     addRoles,
-    { isLoading: isAddRoleLoading, isSuccess: isAddRoleSuccess, data: isAddRoleData },
+    {
+      isLoading: isAddRoleLoading,
+      isSuccess: isAddRoleSuccess,
+      data: isAddRoleData,
+    },
   ] = useAddRolesMutation();
   const [
     updateRoles,
@@ -52,7 +63,6 @@ const AddEditGroup = (props) => {
     },
   ] = useUpdateRolesMutation();
 
-
   const handleUser = () => {
     let roleData = roleFormRef.current.getFormData(); // Get form data from the FormCreator component.
     if (!props.isEdit && roleData) {
@@ -60,11 +70,11 @@ const AddEditGroup = (props) => {
     } else if (props.isEdit && roleData) {
       updateRoles(roleData);
     }
-  }
+  };
 
   useEffect(() => {
     onreset();
-  }, [props.initData])
+  }, [props.initData]);
 
   //** Reset Form */
   const onreset = () => {
@@ -96,9 +106,9 @@ const AddEditGroup = (props) => {
       <div className="row">
         <div className="col-md-12 add-role-input">
           <div className="row vertical-form">
-            <FormCreator
-              ref={roleFormRef}
-              config={roleForm} />
+            <div className="col-12">
+              <FormCreator ref={roleFormRef} config={roleForm} />
+            </div>
           </div>
         </div>
         <div className="col-md-12">
@@ -119,8 +129,8 @@ const AddEditGroup = (props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 AddEditGroup.propTypes = {
   isEdit: PropTypes.bool.isRequired,
@@ -128,4 +138,4 @@ AddEditGroup.propTypes = {
   onSuccess: PropTypes.func,
   onModalClose: PropTypes.func.isRequired,
 };
-export default AddEditGroup
+export default AddEditGroup;

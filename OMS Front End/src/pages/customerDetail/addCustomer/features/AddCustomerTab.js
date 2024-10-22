@@ -13,20 +13,20 @@ import PropTypes from 'prop-types';
 import CustomerApproval from "../../feature/cutomerApproval/CustomerApproval";
 
 //** Compoent's */
-const FinancialSettings = React.lazy(() => import("../../feature/customerSettingDetail/FinancialSettings"));
 const CustomerBasicDetail = React.lazy(() => import("../../feature/customerBasicDetail/CustomerBasicDetail"));
-const CustomerContactDetail = React.lazy(() => import("../../feature/customerContactDetail/CustomerContactDetail"));
 const CustomerAddressDetail = React.lazy(() => import("../../feature/customerAddressDetail/CustomerAddressDetail"));
+const CustomerContactDetail = React.lazy(() => import("../../feature/customerContactDetail/CustomerContactDetail"));
+const FinancialSettings = React.lazy(() => import("../../feature/customerSettingDetail/FinancialSettings"));
+const ShippingSettings = React.lazy(() => import("../../feature/customerSettingDetail/features/ShippingSetting/ShippingSettings"));
 // const CustomerSettingDetails = React.lazy(() => import("../../feature/customerSettingDetail/CustomerSettingDetails"));
 const CustomerDocumentDetail = React.lazy(() => import("../../feature/customerDocumentDetail/CustomerDocumentDetail"));
-const ShippingSettings = React.lazy(() => import("../../feature/customerSettingDetail/features/ShippingSetting/ShippingSettings"));
 
 const AddCustomerTab = () => {
 
   const childRef = useRef();
   const navigate = useNavigate();
   const [subCustomer, setSubCustomer] = useState(false);
-  const { activeTab, movePreviewPage, addCustomer, customerId } = useContext(BasicDetailContext);
+  const { activeTab, movePreviewPage, addCustomer, customerId, setActiveTab } = useContext(BasicDetailContext);
 
   const [
     updateCustomerStatus,

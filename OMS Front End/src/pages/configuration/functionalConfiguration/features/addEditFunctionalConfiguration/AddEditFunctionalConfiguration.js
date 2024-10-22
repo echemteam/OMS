@@ -1,19 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from 'react'
-import PropTypes from 'prop-types';
-import { AddEditFunctionalData } from './config/AddEditFunctional.data';
-import Buttons from '../../../../../components/ui/button/Buttons';
-import FormCreator from '../../../../../components/FinalForms/FormCreator';
-import { useAddEditFunctionalitiesMutation } from '../../../../../app/services/configurationAPI';
-import ToastService from '../../../../../services/toastService/ToastService';
-import { onResetForm } from '../../../../../utils/FormFields/ResetForm/handleResetForm';
-import ViewFunctionalEvents from '../functionalConfigurationList/viewFunctionalEvents/ViewFunctionalEvents';
+import React, { useEffect, useRef, useState } from "react";
+import PropTypes from "prop-types";
+import { AddEditFunctionalData } from "./config/AddEditFunctional.data";
+import Buttons from "../../../../../components/ui/button/Buttons";
+import FormCreator from "../../../../../components/FinalForms/FormCreator";
+import { useAddEditFunctionalitiesMutation } from "../../../../../app/services/configurationAPI";
+import ToastService from "../../../../../services/toastService/ToastService";
+import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleResetForm";
+import ViewFunctionalEvents from "../functionalConfigurationList/viewFunctionalEvents/ViewFunctionalEvents";
 
 const AddEditFunctionalConfiguration = (props) => {
   const functionalRef = useRef();
   const [functionalData, setFunctionalData] = useState(AddEditFunctionalData);
 
-  const [addEditFunctionalities, { isLoading: isAddEditFunctionalitiesLoading, isSuccess: isAddEditFunctionalitiesSuccess, data: allAddEditFunctionalitiesData, },] = useAddEditFunctionalitiesMutation();
+  const [
+    addEditFunctionalities,
+    {
+      isLoading: isAddEditFunctionalitiesLoading,
+      isSuccess: isAddEditFunctionalitiesSuccess,
+      data: allAddEditFunctionalitiesData,
+    },
+  ] = useAddEditFunctionalitiesMutation();
 
   useEffect(() => {
     if (isAddEditFunctionalitiesSuccess && allAddEditFunctionalitiesData) {
@@ -24,7 +31,7 @@ const AddEditFunctionalConfiguration = (props) => {
       }
       ToastService.success(allAddEditFunctionalitiesData.errorMessage);
       handleResetAndClose();
-      props.onGetData()
+      props.onGetData();
     }
   }, [isAddEditFunctionalitiesSuccess, allAddEditFunctionalitiesData]);
 
@@ -33,12 +40,14 @@ const AddEditFunctionalConfiguration = (props) => {
     if (formData) {
       let request = {
         ...formData,
-        functionalityId: props.initData.functionalityId ? props.initData.functionalityId : 0,
+        functionalityId: props.initData.functionalityId
+          ? props.initData.functionalityId
+          : 0,
         moduleId: props.moduleId ? props.moduleId : 0,
       };
       addEditFunctionalities(request);
     }
-  }
+  };
 
   useEffect(() => {
     onResetForm(functionalData, setFunctionalData, null);
@@ -46,12 +55,14 @@ const AddEditFunctionalConfiguration = (props) => {
       let UpdateData = { ...AddEditFunctionalData };
       UpdateData.initialState = {
         name: props.initData.functionalityName,
-        functionalityId: props.initData.functionalityId ? props.initData.functionalityId : 0,
+        functionalityId: props.initData.functionalityId
+          ? props.initData.functionalityId
+          : 0,
         moduleId: props.initData.moduleId ? props.initData.moduleId : 0,
       };
-      setFunctionalData(UpdateData)
+      setFunctionalData(UpdateData);
     }
-  }, [props.isOpen])
+  }, [props.isOpen]);
 
   const handleResetAndClose = () => {
     onResetForm(functionalData, setFunctionalData, null);
@@ -60,7 +71,9 @@ const AddEditFunctionalConfiguration = (props) => {
 
   return (
     <div className="row mt-2 add-address-form">
-      <FormCreator config={functionalData} ref={functionalRef} />
+      <div className="col-12">
+        <FormCreator config={functionalData} ref={functionalRef} />
+      </div>
       <div className="col-md-12 mt-2">
         <div className="d-flex align-item-end justify-content-end">
           <Buttons
@@ -76,17 +89,16 @@ const AddEditFunctionalConfiguration = (props) => {
           />
         </div>
       </div>
-      {props.initData.functionalityId ?
+      {props.initData.functionalityId ? (
         <div className="mt-2">
           <ViewFunctionalEvents
             functionalityId={props.initData.functionalityId}
           />
         </div>
-        : null
-      }
+      ) : null}
     </div>
-  )
-}
+  );
+};
 
 AddEditFunctionalConfiguration.propTypes = {
   initData: PropTypes.shape({
@@ -99,4 +111,4 @@ AddEditFunctionalConfiguration.propTypes = {
   onGetData: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
-export default AddEditFunctionalConfiguration
+export default AddEditFunctionalConfiguration;
