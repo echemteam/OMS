@@ -71,7 +71,8 @@ const OrderItemList = ({
       isGetOrderItemsByOrderIdSuccess &&
       isGetOrderItemsByOrderIdData
     ) {
-      setItemList(isGetOrderItemsByOrderIdData);
+      setItemList(isGetOrderItemsByOrderIdData.orderItems);
+      console.log(isGetOrderItemsByOrderIdData)
     }
   }, [
     isGetOrderItemsByOrderIdFetching,
@@ -174,11 +175,11 @@ const OrderItemList = ({
                       const address = item?.orderShippingAddress
                         ? item?.orderShippingAddress
                         : orderDetails?.orderAddressInformation
-                            ?.shippingAddress;
+                          ?.shippingAddress;
                       const addressId = item?.orderShippingAddress?.addressId
                         ? item?.orderShippingAddress.addressId
                         : orderDetails?.orderAddressInformation?.shippingAddress
-                            ?.addressId;
+                          ?.addressId;
                       return (
                         <Accordion.Item eventKey={item.orderItemId} key={index}>
                           <Accordion.Header
@@ -330,9 +331,9 @@ const OrderItemList = ({
                                         &nbsp;:&nbsp;{" "}
                                         {item.requestDate
                                           ? formatDate(
-                                              item.requestDate,
-                                              "MM/DD/YYYY hh:mm A"
-                                            )
+                                            item.requestDate,
+                                            "MM/DD/YYYY hh:mm A"
+                                          )
                                           : "N/A"}
                                       </span>
                                     </div>
@@ -344,9 +345,9 @@ const OrderItemList = ({
                                         &nbsp;:&nbsp;{" "}
                                         {item.promiseDate
                                           ? formatDate(
-                                              item.promiseDate,
-                                              "MM/DD/YYYY hh:mm A"
-                                            )
+                                            item.promiseDate,
+                                            "MM/DD/YYYY hh:mm A"
+                                          )
                                           : "N/A"}
                                       </span>
                                     </div>
@@ -402,7 +403,11 @@ const OrderItemList = ({
           <div className="total-order-price">
             <div className="total-order-value">
               <span>Total Order Price</span>
-              <span className="price">$ 9225.68</span>
+              <span className="price">
+                {isGetOrderItemsByOrderIdData && isGetOrderItemsByOrderIdData.totalOrderItemPrice > 0
+                  ? `$${isGetOrderItemsByOrderIdData.totalOrderItemPrice?.toFixed(2)}`
+                  : 'N/A'}
+              </span>
             </div>
           </div>
         </CardSection>

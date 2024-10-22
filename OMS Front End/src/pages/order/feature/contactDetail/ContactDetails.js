@@ -18,20 +18,20 @@ const ContactDetails = (props) => {
   // const editRef = useRef();
   const [formData, setFormData] = useState(contactInformationData);
   const [isModelOpen, setIsModelOpen] = useState(false);
-  const [getContectTypeId, setContectTypeId] = useState(null)
+  const [contactTypeId, SetContactTypeId] = useState(null)
   const [endUserEnableDisableButton, setEndUserEnableDisableButton] = useState(true)
   const [invoicerEnableDisableButton, setInvoiceEnableDisableButton] = useState(true)
   const [purchasingEnableDisableButton, setPurchasingEnableDisableButton] = useState(true)
   const [orderResetValue, setOrderResetValue] = useState(false)
 
-  const { conatctRef, orderCustomerId, moveNextPage, orderId ,movePreviewPage} = useContext(AddOrderContext);
+  const { conatctRef, orderCustomerId, moveNextPage, orderId, movePreviewPage } = useContext(AddOrderContext);
   const [getAllContactTypes, { isSuccess: isGetAllContactTypesSucess, data: allGetAllContactTypesData }] = useLazyGetAllContactTypesQuery();
 
   const [getAllEndUserId, { isFetching: isGetAllEndUserFetching, isSuccess: isgetAllEndUserSuccess, data: isgetAllEndUserData }] = useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery();
   const [getAllInvoiceSubmissionId, { isFetching: isGetAllInvoiceSubmissionFetching, isSuccess: isgetAllInvoiceSubmissionSuccess, data: isgetAllInvoiceSubmissionData }] = useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery();
   const [getAllPurchasingId, { isFetching: isGetAllPurchasingFetching, isSuccess: isgetAllPurchasingSuccess, data: isgetAllPurchasingData }] = useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery();
 
-   useEffect(() => {
+  useEffect(() => {
     if (orderCustomerId) {
       let req = {
         customerId: orderCustomerId,
@@ -120,19 +120,19 @@ const ContactDetails = (props) => {
 
 
   const handleDropdownApiCall = (data) => {
-    if (data === 2) {
+    if (data === ContactType.ENDUSER) {
       let req = {
         customerId: orderCustomerId,
         contactTypeId: ContactType.ENDUSER
       }
       getAllEndUserId(req)
-    } else if (data === 3) {
+    } else if (data === ContactType.PURCHASING) {
       let req = {
         customerId: orderCustomerId,
         contactTypeId: ContactType.PURCHASING
       }
       getAllPurchasingId(req)
-    } else if (data === 4) {
+    } else if (data === ContactType.INVOICESUBMISSION) {
       let req = {
         customerId: orderCustomerId,
         contactTypeId: ContactType.INVOICESUBMISSION
@@ -141,15 +141,15 @@ const ContactDetails = (props) => {
     }
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     handleClearContactDetails();
-  },[props.customerId])
+  }, [props.customerId])
 
- 
+
   const handleClearContactDetails = () => {
     onResetForm(formData, setFormData, null);
   }
-  
+
   useEffect(() => {
     getAllContactTypes();
     setEndUserEnableDisableButton(true);
@@ -172,7 +172,7 @@ const ContactDetails = (props) => {
 
   const handleInputGroupButton = (id) => {
     if (id > 0) {
-      setContectTypeId(id)
+      SetContactTypeId(id)
       if (endUserEnableDisableButton && ContactType.ENDUSER === id) {
         setIsModelOpen(!isModelOpen);
       }
@@ -346,11 +346,12 @@ const ContactDetails = (props) => {
             addEditContactMutation={useAddEditContactMutation}
             isOpen={isModelOpen}
             getContactById={useLazyGetCustomerContactByContactIdQuery}
-            getContectTypeId={getContectTypeId}
+            contactTypeId={contactTypeId}
             customerId={orderCustomerId}
             onhandleApiCall={handleDropdownApiCall}
             onSidebarClose={onSidebarClose}
             orderResetValue={orderResetValue}
+            allGetAllContactTypesData={allGetAllContactTypesData}
           // enableDisableButton={enableDisableButton}
           />
         </SidebarModel>

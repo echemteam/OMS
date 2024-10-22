@@ -54,6 +54,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETNOTESHISTORY = "GetNotesHistory";
         const string GETALLFUNCTIONALITYEVENTBYMODULEID = "GetAllFunctionalityEventByModuleId";
         const string GETALLMODULESWITHPENDINGREQUESTCOUNT = "GetAllModulesWithPendingRequestCount";
+        const string GETUNASSIGNEDSNIPPETBYEMAILTEMPLATEID = "GetUnAssignedSnippetByEmailTemplateId";
         #endregion
 
         public CommonRepository(DapperContext dapperContext) : base(dapperContext)
@@ -322,6 +323,14 @@ namespace OMS.Domain.Repository.Implementation
             }, commandType: CommandType.StoredProcedure);
 
             return getAllModulesWithPendingRequestCountResponse;
+        }
+        public async Task<List<GetUnAssignedSnippetByEmailTemplateIdResponse>> GetUnAssignedSnippetByEmailTemplateId(int emailTemplateId)
+        {
+            List<GetUnAssignedSnippetByEmailTemplateIdResponse> getUnAssignedSnippetByEmailTemplateId = await _context.GetList<GetUnAssignedSnippetByEmailTemplateIdResponse>(GETUNASSIGNEDSNIPPETBYEMAILTEMPLATEID, new
+            {
+                emailTemplateId
+            }, commandType: CommandType.StoredProcedure);
+            return getUnAssignedSnippetByEmailTemplateId;
         }
     }
 }

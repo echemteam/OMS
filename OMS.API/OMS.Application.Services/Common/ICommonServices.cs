@@ -50,5 +50,6 @@ namespace OMS.Application.Services.Common
         Task<List<GetNotesHistoryResponse>> GetNotesHistory(int entityId, int ownerId, byte ownerTypeId, string noteType);
         Task<List<GetAllFunctionalityEventByFunctionalityIdResponse>> GetAllFunctionalityEventByModuleId(int moduleId);
         Task<List<GetAllModulesWithPendingRequestCountResponse>> GetAllModulesWithPendingRequestCount(bool isPending);
+        Task<List<GetUnAssignedSnippetByEmailTemplateIdResponse>> GetUnAssignedSnippetByEmailTemplateId(int emailTemplateId);
     }
 }

@@ -10,6 +10,7 @@ import { ThirdPartyApiConfigurationViewDetails } from "../../pages/thirdPartyApi
 import EmailTemplate from "../../pages/configuration/emailTemplate/EmailTemplate";
 import OrdersGrid from "../../pages/order/orderGrid/OrdersGrid";
 import UserManagementViewTab from "../../pages/Security/userManagement/features/UserManagementViewTab";
+import Snippet from "../../pages/configuration/snippet/Snippet";
 
 const ApiProviders = React.lazy(() => import("../../pages/apiConfiguration/apiProviders/ApiProviders"));
 //** Not Found */
@@ -406,6 +407,16 @@ export const ComponentNavigation = [
     hasParams: false,
     text: 'EmailTemplate',
     securityKey: securityKey.DICTIONARY
+  },
+  {
+    id: 'Snippet',
+    path: '/configuration/Snippet',
+    exact: true,
+    title: '',
+    component: Snippet,
+    hasParams: false,
+    text: 'Snippet',
+   // securityKey: securityKey.DICTIONARY
   },
   {
     id: 'dictionary',

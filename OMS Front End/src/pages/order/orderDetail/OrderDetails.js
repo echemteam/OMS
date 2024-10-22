@@ -10,6 +10,7 @@ import { useLazyGetOrderDetailByOrderIdQuery } from "../../../app/services/order
 
 /** CSS Files */
 import "../Order.scss";
+import PaymentInformation from "./feature/paymentinformation/PaymentInformation";
 
 /** Lazily Loaded Components */
 const OrderAction = lazy(() => import("./feature/orderaction/OrderAction"));
@@ -119,6 +120,7 @@ const OrderDetails = () => {
             orderDetails={orderDetails}
             handleOrderItemShippingAddress={handleOrderItemShippingAddress}
           />
+          <PaymentInformation orderDetails={orderDetails}/>
         </div>
         {/* Right Side Section End */}
       </div>

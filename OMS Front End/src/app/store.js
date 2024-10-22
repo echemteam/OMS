@@ -38,6 +38,8 @@ import thirdPartyAPI from './services/thirdPartyAPI';
 import orderAPI from './services/orderAPI';
 import dictionaryAPI from './services/dictionaryAPI';
 import emailTemplateAPI from './services/emailTemplateAPI';
+import snippetAPI from './services/snippetAPI';
+import snippetEmailTemplateAPI from './services/snippetEmailTemplateAPI';
 
 export const store = configureStore({
   reducer: {
@@ -76,7 +78,8 @@ export const store = configureStore({
     [supplierFinancialSettingsAPI.reducerPath]: supplierFinancialSettingsAPI.reducer,
     [dictionaryAPI.reducerPath]: dictionaryAPI.reducer,
     [emailTemplateAPI.reducerPath]: emailTemplateAPI.reducer,
-
+    [snippetAPI.reducerPath]: snippetAPI.reducer,
+    [snippetEmailTemplateAPI.reducerPath]:snippetEmailTemplateAPI.reducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
     authapi.middleware,
@@ -112,6 +115,8 @@ export const store = configureStore({
     orderAPI.middleware,
     dictionaryAPI.middleware,
     emailTemplateAPI.middleware,
+    snippetAPI.middleware,
+    snippetEmailTemplateAPI.middleware
   ),
 })
 setupListeners(store.dispatch);

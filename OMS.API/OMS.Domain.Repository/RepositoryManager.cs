@@ -64,6 +64,8 @@ namespace OMS.Domain.Repository
         IDictionaryRepository _dictionaryRepository;
         IOrderDocumentRepository _orderDocumentRepository;
         IEmailTemplatesRepository _emailTemplatesRepository;
+        ISnippetRepository _snippetRepository;
+
         public ITestRepository test
         {
             get
@@ -660,6 +662,18 @@ namespace OMS.Domain.Repository
                     _emailTemplatesRepository = new EmailTemplatesRepository(_context);
                 }
                 return _emailTemplatesRepository;
+            }
+
+        }
+        public ISnippetRepository snippet
+        {
+            get
+            {
+                if (_snippetRepository == null)
+                {
+                    _snippetRepository = new SnippetRepository(_context);
+                }
+                return _snippetRepository;
             }
 
         }

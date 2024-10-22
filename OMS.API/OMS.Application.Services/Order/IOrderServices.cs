@@ -14,7 +14,7 @@ namespace OMS.Application.Services.Order
         Task<List<GetPoNumberDetailsByPoNumberResponse>> GetPoNumberDetailsByPoNumber(string poNumber);
         Task<AddEntityDto<int>> AddOrder(AddOrderRequest requestData, short CurrentUserId);
         Task<GetOrderResponse> GetOrders(GetOrderRequest request);
-        Task<List<GetOrderItemsByOrderIdResponse>> GetOrderItemsByOrderId(int orderId);
+        Task<GetOrderItemsByOrderIdResponse> GetOrderItemsByOrderId(int orderId);
         Task<GetOrderDetailByOrderIdResponse> GetOrderDetailByOrderId(int orderId);
         Task<AddEntityDto<int>> DeleteOrder(int orderId, int deletedBy);
         Task<AddEntityDto<int>> AddOrderDocuments(AddOrderDocumentsRequest requestData, short CurrentUserId);

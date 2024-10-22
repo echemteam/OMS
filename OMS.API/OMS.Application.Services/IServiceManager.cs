@@ -18,6 +18,7 @@ using OMS.Application.Services.PhoneNumber;
 using OMS.Application.Services.Roles;
 using OMS.Application.Services.RolesMapping;
 using OMS.Application.Services.Security;
+using OMS.Application.Services.Snippet;
 using OMS.Application.Services.Supplier;
 using OMS.Application.Services.SupplierAccoutingSetting;
 using OMS.Application.Services.SupplierDocuements;
@@ -56,5 +57,6 @@ namespace OMS.Application.Services
         IOrderServices orderServices { get; }
         IDictionaryServices dictionaryServices { get; }
         IEmailTemplatesService emailTemplatesService { get; }
+        ISnippetServices snippetServices { get; }
     }
 }
