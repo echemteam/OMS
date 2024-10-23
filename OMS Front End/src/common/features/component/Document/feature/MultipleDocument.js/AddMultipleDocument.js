@@ -70,8 +70,6 @@ const AddMultipleDocument = ({
     { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData },
   ] = addDocuments();
 
-  const [documentTypeInput, setDocumentTypeInput] = useState("");
-
   const toggleEdit = (index) => {
     const updatedEditableIndexes = [...editableIndexes];
     if (updatedEditableIndexes.includes(index)) {
@@ -95,7 +93,7 @@ const AddMultipleDocument = ({
 
   // Transform the document data before submitting
   const buildTransformedDocumentData = (data, isSupplier, keyId) => {
-    const transformDocumentTypeData = (data) => {
+        const transformDocumentTypeData = (data) => {
         if (data && typeof data === 'object') {
           console.log("Original Document Type Data:", data);
             return {
@@ -121,7 +119,7 @@ const AddMultipleDocument = ({
     };
 
   const handleSave = async () => {
-    const modifyData = uploadedFiles.map((data,index) => {
+        const modifyData = uploadedFiles.map((data,index) => {
       
       const matchingAttachment = attachment.find((att, ind) => ind === index);
       
@@ -131,8 +129,8 @@ const AddMultipleDocument = ({
         ...buildTransformedDocumentData(data, isSupplier, keyId),  
       };
     });
-    const IsAllDetailExist = modifyData.every(
-          (data) => data.name && data.base64File && data.documentTypeId !== null
+        const IsAllDetailExist = modifyData.every(
+          (data) => data.name && data.base64File && (data.documentTypeId !== 0 || data.documentType)
         );
   
     if (IsAllDetailExist) {
@@ -154,7 +152,7 @@ const AddMultipleDocument = ({
            ToastService.warning(ErrorMessage.DocumentDetailMissing);
          }
   };
-  
+
   
   
   
