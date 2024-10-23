@@ -1,12 +1,20 @@
 import React from "react";
 import Iconify from "../../../../../../components/ui/iconify/Iconify";
 
-const UserDetailsModel = ({contact}) => {
+const UserDetailsModel = ({ contact }) => {
 
   const getInitials = (firstName, lastName) => {
     return (
       (firstName?.[0] || "").toUpperCase() + (lastName?.[0] || "").toUpperCase()
     );
+  };
+
+  const getEmail = (isPrimary) =>
+    contact?.emailAddressList?.find((email) => email.isPrimary === isPrimary)?.emailAddress;
+
+  const getPhoneNumber = (isPrimary) => {
+    const phone = contact?.phoneNumberList?.find((number) => number.isPrimary === isPrimary);
+    return phone ? `${phone.phoneCode || ''} ${phone.phoneNumber || ''}` : null;
   };
   return (
     <>
@@ -22,49 +30,31 @@ const UserDetailsModel = ({contact}) => {
           <div className="desc-sec-bottom user-desc">
             {/* Email Start */}
             <div className="icon-detail">
-             
-              <span className="icon-part">
-                <Iconify icon="ic:round-email" /> 
-              </span>
-              <span className="info-part email-list">
-                <div class="values">{
-                    contact?.emailAddressList?.find((email) => !email.isPrimary)
-                      ?.emailAddress
-                  }</div>
-                <div class="values primary-email"> {
-                    contact?.emailAddressList?.find((email) => email.isPrimary)
-                      ?.emailAddress
-                  }</div>
-                {/* <span class="primary-email"></span> */}
-              </span>
+              {contact?.emailAddressList.length > 0 ? (<>
+                <span className="icon-part">
+                  <Iconify icon="ic:round-email" />
+                </span>
+                <span className="info-part email-list">
+                {getEmail(false) && <div className="values">{getEmail(false)}</div>}
+                {getEmail(true) && <div className="values primary-email">{getEmail(true)}</div>}
+                  {/* <span class="primary-email"></span> */}
+                </span>
+              </>) : null}
             </div>
             {/* Email End */}
             {/* Phone Start */}
             <div className="icon-detail">
-              <span className="icon-part contact-icon">
-                <Iconify icon="ic:round-phone" />
+              {contact?.phoneNumberList.length > 0 ?
+                (<>
+                  <span className="icon-part contact-icon">
+                    <Iconify icon="ic:round-phone" />
+                  </span>
+
+                  <span className="info-part contact-info">
+                {getPhoneNumber(false) && <div className="values">{getPhoneNumber(false)}</div>}
+                {getPhoneNumber(true) && (<div className="values primary-email">{getPhoneNumber(true)}</div>)}
               </span>
-              <span className="info-part contact-info">
-                <div class="values">   {contact?.phoneNumberList?.find((number) => number.isPrimary)
-                    ? `${contact?.phoneNumberList.find(
-                      (number) => !number.isPrimary
-                    )?.phoneCode || ''
-                    } ${contact?.phoneNumberList.find(
-                      (number) => !number.isPrimary
-                    )?.phoneNumber || ''
-                    }`
-                    : null}</div>
-                <div class="values primary-email">   {contact?.phoneNumberList?.find((number) => number.isPrimary)
-                    ? `${contact?.phoneNumberList.find(
-                      (number) => number.isPrimary
-                    )?.phoneCode || ''
-                    } ${contact?.phoneNumberList.find(
-                      (number) => number.isPrimary
-                    )?.phoneNumber || ''
-                    }`
-                    : null}</div>
-                {/* <span class="primary-email"></span> */}
-              </span>
+                </>) : null}
             </div>
             {/* Phone End */}
           </div>

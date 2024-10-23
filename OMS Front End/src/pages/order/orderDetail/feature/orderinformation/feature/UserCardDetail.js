@@ -5,7 +5,8 @@ import UserDetailsModel from "./UserDetailsModel";
 const UserCardDetail = ({ contact, handleToggleModalUsers }) => {
   const primaryEmail = contact?.emailAddressList?.find((email) => email.isPrimary)?.emailAddress;
   const primaryPhone = contact?.phoneNumberList?.find((number) => number.isPrimary);
-
+  const addressContactCardInfo =
+    contact?.emailAddressList?.length > 0 || contact?.phoneNumberList?.length > 0;
   return (
     <div className="contact-card">
       <div className="profile-name-btn">
@@ -25,10 +26,12 @@ const UserCardDetail = ({ contact, handleToggleModalUsers }) => {
                 </div>
                 <div className="tooltip-arrow-icon"></div>
               </div>
+              {addressContactCardInfo && (
               <div className="info-display info-user user-card">
                 <Iconify icon="ep:info-filled" className="info" />
                 <UserDetailsModel contact={contact} />
               </div>
+              )}
             </div>
           </div>
 
