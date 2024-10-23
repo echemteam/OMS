@@ -4,7 +4,9 @@ export const FieldSettingType = {
     MULTISELECT: "isMultiSelect",
     ISPRIMARYBUTTONVISIBLE: "isPrimaryButtonVisible",
     ISINFOBUTTONVISIBLE: "isInfoButtonVisible",
-    CKEDITORDISABLED: "CKEditorDisabled"
+    CKEDITORDISABLED: "CKEditorDisabled",
+    ISMULTIPLE:"isMultiple",
+    ISFILENAMECLEARED:"isFileNameCleared"
 }
 
 export const CustomerSupplierStatus = {

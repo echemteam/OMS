@@ -97,6 +97,12 @@ export const setFieldSetting = (formFieldsData, fieldId, fieldSettingType, value
             case 'CKEditorDisabled':
                     selectField.fieldSetting.isDisable = value;
                     break;
+            case 'isMultiple':
+                    selectField.fieldSetting.isMultiple = value;
+                    break;
+            case 'isFileNameCleared':
+                        selectField.fieldSetting.isFileNameCleared = value;
+                        break;
             default:
                 break;
         }

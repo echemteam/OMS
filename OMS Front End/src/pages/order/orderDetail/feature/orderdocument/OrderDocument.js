@@ -76,14 +76,21 @@ const OrderDocument = ({
   const [getFileType, setGetFileType] = useState([]);
   const [selectedDocument, setSelectedDocument] = useState(null);
   const [isModelOpenPDF, setIsModelOpenPDF] = useState(false);
+  const [currentlyDownloading, setCurrentlyDownloading] = useState(null);
 
   const { confirm } = SwalAlert();
   const [deleteOrderDocument, { isSuccess: isDeleteSuccess, data: isDeleteData }] = useDeleteOrderDocuementByIdMutation();
 
   const [Downalod, { isFetching: isDownalodFetching, isSuccess: isDownalodSucess, data: isDownalodData, }] = useLazyDownloadDocumentQuery();
   useEffect(() => {
-    if (orderDetails?.orderDocumentList) {
-      setDocumentDetails(orderDetails.orderDocumentList);
+        if (orderDetails?.orderDocumentList) {
+       const filteredDocuments = orderDetails.orderDocumentList?.filter(
+         (doc) => doc.documentTypeId === 2
+      );
+      if (filteredDocuments && filteredDocuments.length > 0) {
+        setDocumentDetails( filteredDocuments );
+      }
+      // setDocumentDetails(orderDetails.orderDocumentList);
     }
   }, [orderDetails]);
 
@@ -111,6 +118,7 @@ const OrderDocument = ({
 
   const handleDocumentAction = (fileName) => {
     setSelectedDocument(null);
+    setCurrentlyDownloading(fileName);
     let request = {
       folderName: "Order",
       keyId: orderDetails?.orderId,
@@ -133,6 +141,7 @@ const OrderDocument = ({
       setSelectedDocument(fileURL);
       setIsModelOpenPDF(true);
       setGetFileType(determineFileType(isDownalodData.fileName));
+      setCurrentlyDownloading(null);
     }
   }, [isDownalodFetching, isDownalodSucess, isDownalodData]);
 
@@ -181,10 +190,10 @@ const OrderDocument = ({
                                       className="btn-part pdf-view"
                                       title="View Order Document"
                                     >
-                                      {!isDownalodFetching ? (
-                                        <Iconify icon="icomoon-free:file-pdf" className="swap-icon" />
+                                      {currentlyDownloading === doc.documentName && isDownalodFetching ? (
+                                       <Iconify icon="mdi:loading" />
                                       ) : (
-                                        <Iconify icon="mdi:loading" />
+                                        <Iconify icon="icomoon-free:file-pdf" className="swap-icon" />
                                       )}
                                     </div>
                                     <div

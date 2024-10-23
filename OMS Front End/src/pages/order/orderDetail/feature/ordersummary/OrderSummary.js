@@ -10,6 +10,8 @@ import ToastService from "../../../../../services/toastService/ToastService";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import FileViewer from "react-file-viewer";
 import {getStatusTextColor } from "../../../../../utils/StatusColors/StatusColors";
+import AddMultipleOrderDocument from "../orderdocument/features/AddMultipleOrderDocument";
+import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
 
 const UpdateOrderDetails = lazy(() => import("./feature/UpdateOrderDetails"))
 
@@ -20,7 +22,9 @@ const OrderSummary = ({ orderId, orderDetails, onRefreshOrderDetails, isOrderDet
   const [isModelOpenPDF, setIsModelOpenPDF] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState(null);
   const [ordersummaryDetails, setOrderSummaryDetails] = useState(null);
-
+  const [buttonVisible, setButtonVisible] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSingleDocument, setIsSingleDocument] = useState(false);
   const [
     Downalod,
     {
@@ -30,12 +34,12 @@ const OrderSummary = ({ orderId, orderDetails, onRefreshOrderDetails, isOrderDet
     },
   ] = useLazyDownloadDocumentQuery();
 
-  const details = orderDetails?.orderDocumentList;
-  const documentNames = details?.find((doc) => doc.documentName === "")  
-
-
-  const handleToggleModalPDF = () => {
-        if (orderDetails?.poNumber) {
+    const details = orderDetails?.orderDocumentList || []
+    const documentNames = ordersummaryDetails?.orderDocumentList.length === 0
+    // const documentNames = details?.find((doc) => doc.documentName == null)  
+   
+   const handleToggleModalPDF = () => {
+      if (orderDetails?.poNumber) {
       // const documentNames = orderDetails.orderDocumentList?.filter(doc => doc.documentName).map(doc => doc.documentName)[0];
       const detail = details.find(
         (doc) => doc.documentTypeId === 0 || doc.documentTypeId === ""
@@ -56,10 +60,14 @@ const OrderSummary = ({ orderId, orderDetails, onRefreshOrderDetails, isOrderDet
   };
 
   useEffect(() => {
+    const filteredDocuments = details?.filter(
+      (doc) => doc.documentTypeId === 0 
+    );
+    orderDetails ={...orderDetails, orderDocumentList: filteredDocuments,}
     if (orderDetails) {
       setOrderSummaryDetails(orderDetails);
     }
-  }, [orderDetails]);
+    }, [orderDetails]);
 
   useEffect(() => {
     if (!isDownalodFetching && isDownalodSucess && isDownalodData) {
@@ -112,7 +120,23 @@ const OrderSummary = ({ orderId, orderDetails, onRefreshOrderDetails, isOrderDet
     }
   }
 
+  const handleDocToggleModal=()=>{
+    setIsSingleDocument(true);
+    setIsModalOpen(true);
+  }
 
+  const handleSuccess = () => {
+    handleCloseDocumentModel();
+    if (onRefreshOrderDetails) {
+      onRefreshOrderDetails();
+    }
+    setButtonVisible(false);
+  };
+
+  const handleCloseDocumentModel = () => {
+    setIsModalOpen(false);
+  };
+  
   return (
     <div className="icon-btn-header">
       <CardSection
@@ -126,9 +150,21 @@ const OrderSummary = ({ orderId, orderDetails, onRefreshOrderDetails, isOrderDet
         isCenterTile={true}
         CenterTitleTxt={ordersummaryDetails?.poNumber}
         // CenterBtnIcon= "icomoon-free:file-pdf" 
-       CenterBtnIcon={!isDownalodFetching ? (documentNames ? "" : "icomoon-free:file-pdf") :"svg-spinners:ring-resize" }
+        CenterBtnIcon={!isDownalodFetching ? (documentNames ?  "":"icomoon-free:file-pdf") :"svg-spinners:ring-resize" }
         centerBtnTitle="View Purchase Order"
         centerBtnOnClick={handleToggleModalPDF}
+         multipleButton={documentNames ? buttonVisible : null }
+        
+        rightButtonArray={ [
+          {
+            buttonTypeClassName: "theme-button",
+            onClick: handleDocToggleModal,
+            buttonText: "Add PO Document",
+            textWithIcon: true,
+            imagePath: AppIcons.PlusIcon,
+          },]}
+
+          
       >
         {(!isOrderDetailsFetch && orderDetails) ? (
           <div className="order-summery-list">
@@ -272,6 +308,20 @@ const OrderSummary = ({ orderId, orderDetails, onRefreshOrderDetails, isOrderDet
           ) : null}
         </div>
       </SidebarModel>
+
+      <CenterModel
+        showModal={isModalOpen}
+        handleToggleModal={handleCloseDocumentModel}
+        modalTitle="Add PO Order Document"
+        modelSizeClass="w-50s"
+      >
+        <AddMultipleOrderDocument
+          orderDetails={orderDetails}
+          onClose={handleCloseDocumentModel}
+          onSuccess={handleSuccess}
+          isSingleDocument={isSingleDocument}
+        />
+      </CenterModel>
       <UpdateOrderDetails orderId={orderId} orderDetailRef={orderDetailRef} onRefreshOrderDetails={onRefreshOrderDetails} />
     </div>
   );
