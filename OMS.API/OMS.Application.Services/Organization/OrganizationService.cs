@@ -55,7 +55,7 @@ namespace OMS.Application.Services.Organization
         public async Task<GetOrganizationProfileResponse> GetOrganizationProfile()
         {
             GetOrganizationProfileResponse response =  await repositoryManager.organization.GetOrganizationProfile();
-            if (response.AttachmentName != null)
+            if (response != null && response.AttachmentName != null)
             {
                 var filePath = Path.Combine(commonSettingService.ApplicationSettings.SaveFilePath!, "OrganizationProfilePic"!, response.AttachmentName);
                 if (File.Exists(filePath))
