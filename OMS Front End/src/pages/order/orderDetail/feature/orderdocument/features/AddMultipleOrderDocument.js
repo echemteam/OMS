@@ -88,7 +88,7 @@ const AddMultipleOrderDocument = ({
             ToastService.warning("Please Select Document");
             return;
         }
-        if (uploadedFiles.length > 0 && attachment.length > 0) {
+        if (uploadedFiles.length >= 0 && attachment.length >= 0) {
             const modifyData = uploadedFiles.map((data, index) => {
                 const matchingAttachment = attachment.find((att, ind) => ind === index);
                 return {
@@ -96,6 +96,12 @@ const AddMultipleOrderDocument = ({
                     base64File: matchingAttachment ? matchingAttachment.base64Data : null,
                 };
             });
+
+            if (modifyData.length === 0) {
+                ToastService.warning("Please Select Document");
+                return;
+            }
+
             const IsAllDetailExist = modifyData.every((data) => data.documentName && data.base64File && data.documentType !== null);
             if (IsAllDetailExist) {
                 const requestData = {
