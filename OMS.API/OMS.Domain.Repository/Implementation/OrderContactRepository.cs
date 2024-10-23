@@ -34,6 +34,7 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.OrderId,
                 requestData.ContactId,
                 requestData.ContactTypeId,
+                requestData.UpdatedBy,
                 
             }, CommandType.StoredProcedure);
         }

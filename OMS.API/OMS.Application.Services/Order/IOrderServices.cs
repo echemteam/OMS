@@ -22,7 +22,7 @@ namespace OMS.Application.Services.Order
         Task<AddEntityDto<long>> UpdateOrderItemByOrderItemId(UpdateOrderItemByOrderItemIdRequest updateOrderItemRequest, short CurrentUserId);
         Task<AddEntityDto<int>> UpdateOrderAddress(UpdateOrderAddressRequest requestData, short CurrentUserId);
         Task<AddEntityDto<int>> DeleteOrderDocuementById(int OrderDocumentId, int deletedBy);
-        Task<AddEntityDto<int>> UpdateOrderContact(UpdateOrderContactRequest requestData);
+        Task<AddEntityDto<int>> UpdateOrderContact(UpdateOrderContactRequest requestData, short CurrentUserId);
 
         Task<AddEntityDto<int>> UpdateOrderDetail(UpdateOrderDetailRequest requestData, short CurrentUserId);
         Task<AddEntityDto<long>> DeleteOrderItems(long orderItemId, int deletedBy);

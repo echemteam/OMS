@@ -148,7 +148,7 @@ namespace OMS.API.Controllers
             AddEntityDto<int> responseData = new();
             if (requestData != null)
             {
-                responseData = await _serviceManager.orderServices.UpdateOrderContact(requestData);
+                responseData = await _serviceManager.orderServices.UpdateOrderContact(requestData,CurrentUserId);
                 return APISucessResponce(responseData);
             }
             return APISucessResponce(responseData);
