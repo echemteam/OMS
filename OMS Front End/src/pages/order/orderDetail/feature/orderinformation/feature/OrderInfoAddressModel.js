@@ -62,10 +62,9 @@ useEffect(()=>{
   }, [isUpdateOrderAddressSuccess, isUpdateOrderAddressData]);
 
   useEffect(() => {
-    if (customerId) {
       getAddresssByCustomerId(customerId);
-    }
-  }, [customerId, getAddresssByCustomerId]);
+      setSelectedAddressId(defaultId);
+  }, [customerId, getAddresssByCustomerId,defaultId]);
 
   useEffect(() => {
     if (
@@ -92,15 +91,14 @@ useEffect(()=>{
   ]);
 
   useEffect(() => {
-    if(defaultId){
-    setSelectedAddressId(defaultId);
+    if (!defaultId || !dataList.length) return;
+  
     const defaultAddress = dataList.find((address) => address.addressId === defaultId);
     if (defaultAddress) {
       onGetData(defaultId);
-      setAddressTypeId(defaultAddress.addressTypeId); 
+      setAddressTypeId(defaultAddress.addressTypeId);
     }
-    }
-  }, [defaultId]);  
+  }, [defaultId, dataList, setAddressTypeId, onGetData]);
 
   const handleCheckboxChange = (id, addressTypeId) => {
     setSelectedAddressId((prevSelectedAddressId) => 

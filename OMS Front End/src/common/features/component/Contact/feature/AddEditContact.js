@@ -32,7 +32,6 @@ const AddEditContact = forwardRef(({ contactTypeId, keyId, isOrderContact, isUpd
     const [phoneNumberList, setPhoneNumberList] = useState([]);
     const [emailAddressList, setEmailAddressList] = useState([]);
     const [formData, setFormData] = useState(contactDetailFormData);
-
     //** API Call's */
     /**
         * This hook dynamically sets the API call based on the module (customer or supplier).
@@ -70,10 +69,10 @@ const AddEditContact = forwardRef(({ contactTypeId, keyId, isOrderContact, isUpd
                 return condition;
             };
             setDropDownOptionField(allGetAllContactTypesData, "contactTypeId", "type", formData, "contactTypeId", filterCondition);
-            //  setShouldRerenderFormCreator((prevState) => !prevState);
+              //setShouldRerenderFormCreator((prevState) => !prevState);
 
         }
-    }, [isGetAllContactTypesSucess, isUpdateContactModel, contactTypeId, allGetAllContactTypesData])
+    }, [isGetAllContactTypesSucess, isUpdateContactModel, contactTypeId, allGetAllContactTypesData,isOpen])
 
     const handlWithoutApprovalAddEdit = () => {
         const data = ref.current.getFormData();
