@@ -69,10 +69,12 @@ namespace OMS.Application.Services.Order
                 {
                     DataTable orderContactsListDataTable = ExportHelper.ListToDataTable(requestData.orderContactsList!);
                     orderContactsListDataTable.Columns.Add("OrderId", typeof(short));
+                    orderContactsListDataTable.Columns.Add("CreatedBy", typeof(short));
 
                     foreach (DataRow row in orderContactsListDataTable.Rows)
                     {
                         row["OrderId"] = responseData.KeyValue;
+                        row["CreatedBy"] = CurrentUserId;
                     }
                     await repositoryManager.orderContact.AddOrderContact(orderContactsListDataTable);
                 }
@@ -250,10 +252,10 @@ namespace OMS.Application.Services.Order
         {
             return await repositoryManager.order.DeleteOrderDocuementById(OrderDocumentId, deletedBy);
         }
-        public async Task<AddEntityDto<int>> UpdateOrderContact(UpdateOrderContactRequest requestData)
+        public async Task<AddEntityDto<int>> UpdateOrderContact(UpdateOrderContactRequest requestData, short CurrentUserId)
         {
             OrderContactsDto order = requestData.ToMapp<UpdateOrderContactRequest, OrderContactsDto>();
-             
+            order.UpdatedBy = CurrentUserId;
             return await repositoryManager.orderContact.UpdateOrderContact(order);
         }
         public async Task<AddEntityDto<int>> UpdateOrderDetail(UpdateOrderDetailRequest requestData, short CurrentUserId)

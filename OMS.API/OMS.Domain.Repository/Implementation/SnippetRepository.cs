@@ -1,4 +1,5 @@
 ﻿using OMS.Domain.Entities.API.Request.Snippet;
+using OMS.Domain.Entities.API.Response.Orders;
 using OMS.Domain.Entities.API.Response.Snippet;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Snippet;
@@ -21,6 +22,7 @@ namespace OMS.Domain.Repository.Implementation
         const string DELETEASSIGNEDSNIPPETBYSNIPPETEMAILTEMPLATEID = "DeleteAssignedSnippetBySnippetEmailTemplateId";
         const string ADDASSIGNEDSNIPPET = "AddAssignedSnippet";
         const string GETASSIGNEDSNIPPETBYEMAILTEMPLATEID = "GetAssignedSnippetByEmailTemplateId";
+        const string GETSNIPPETEMAILSNIPPETBYEMAILTEMPLATEID = "GetSnippetEmailSnippetByEmailTemplateId";
         #endregion
 
         public SnippetRepository(DapperContext dapperContext) : base(dapperContext)
@@ -109,6 +111,15 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.SortString
             }, true);
         }
+        public async Task<List<GetSnippetEmailSnippetByEmailTemplateIdResponse>> GetSnippetEmailSnippetByEmailTemplateId(int emailTemplateId)
+        {
+            List<GetSnippetEmailSnippetByEmailTemplateIdResponse> getSnippetEmailSnippetByEmailTemplateId = await _context.GetList<GetSnippetEmailSnippetByEmailTemplateIdResponse>(GETSNIPPETEMAILSNIPPETBYEMAILTEMPLATEID, new
+            {
+                emailTemplateId
+            }, CommandType.StoredProcedure);
+            return getSnippetEmailSnippetByEmailTemplateId;
+        }
+
         #endregion
     }
 }

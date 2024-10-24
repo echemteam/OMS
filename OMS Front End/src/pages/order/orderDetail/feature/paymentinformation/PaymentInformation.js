@@ -34,11 +34,10 @@ const PaymentInformation = ({ orderDetails }) => {
   }, [orderDetails]);
 
   useEffect(() => {
-    if (isGetDetailsbyCustomerID && data) {
-      console.log(data)
+    if (!isGetDetailsbyCustomerIdFetching && isGetDetailsbyCustomerID && data) {
       setFinancialInfo(data);
     }
-  }, [isGetDetailsbyCustomerID, data]);
+  }, [isGetDetailsbyCustomerIdFetching, isGetDetailsbyCustomerID, data]);
 
   useEffect(() => {
     if (!isGetDefaultValueFetching && isGetDefaultValueSuccess && isGetDefaultValueData && isgetRegisteredAddressesSuccess && isgetRegisteredAddressesData) {
@@ -83,7 +82,7 @@ const PaymentInformation = ({ orderDetails }) => {
       <CardSection cardTitle="Payment Information">
         <div className="row">
           <div className="col-xxl-5 col-lg-5 col-md-6 col-12">
-            {!isGetDetailsbyCustomerIdFetching && financialinancialInfo ?
+            {!isGetDetailsbyCustomerIdFetching && financialinancialInfo && isGetDetailsbyCustomerID ?
               <div className="financial-section">
                 <div className="financial-label">Financial</div>
                 <div className="financial-keyvalue-pair">
@@ -135,7 +134,7 @@ const PaymentInformation = ({ orderDetails }) => {
             }
           </div>
           <div className="col-xxl-7 col-lg-7 col-md-6 col-12">
-            {!isGetDefaultValueFetching && accountType ?
+            {!isGetDefaultValueFetching && accountType && isGetDefaultValueSuccess ?
               <div className="shipping-section">
                 <div className="shipping-label">Shipping</div>
                 <React.Fragment>

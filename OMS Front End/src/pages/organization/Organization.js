@@ -34,7 +34,7 @@ const OrganizationHistory = React.lazy(() =>
 );
 
 const Organization = () => {
-  const [activeTabId, setActiveTabId] = useState(0);
+  const [, setActiveTabId] = useState(0);
   const [companyName, setCompanyName] = useState();
   const handleActiveTab = (id) => {
     setActiveTabId(id);

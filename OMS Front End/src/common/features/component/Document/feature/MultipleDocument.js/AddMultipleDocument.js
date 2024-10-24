@@ -2,7 +2,7 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useRef, useState } from "react";
 import Buttons from "../../../../../../components/ui/button/Buttons";
-import FormCreator from "../../../../../../components/FinalForms/FormCreator";
+import FormCreator from "../../../../../../components/Forms/FormCreator";
 import { DocumentMultipleFormData } from "../../Config/MultipleDocuments.Data";
 import "../../Document.scss";
 import Iconify from "../../../../../../components/ui/iconify/Iconify";
@@ -64,7 +64,6 @@ const AddMultipleDocument = ({
     { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData },
   ] = addDocuments();
 
-
   const toggleEdit = (index) => {
     const updatedEditableIndexes = [...editableIndexes];
     if (updatedEditableIndexes.includes(index)) {
@@ -115,7 +114,9 @@ const AddMultipleDocument = ({
 
   const handleSave = async () => {
     const modifyData = uploadedFiles.map((data, index) => {
+
       const matchingAttachment = attachment.find((att, ind) => ind === index);
+
       return {
         ...data,
         base64File: matchingAttachment ? matchingAttachment.base64Data : null,
@@ -123,8 +124,9 @@ const AddMultipleDocument = ({
       };
     });
     const IsAllDetailExist = modifyData.every(
-      (data) => data.name && data.base64File && data.documentTypeId !== null
+      (data) => data.name && data.base64File && (data.documentTypeId !== 0 || data.documentType)
     );
+
     if (IsAllDetailExist) {
       const requestData = {
         storagePath: isSupplier ? ModulePathName.SUPPLIER : ModulePathName.CUSTOMER,
@@ -132,7 +134,13 @@ const AddMultipleDocument = ({
         documentInfoList: modifyData,
 
       };
+
+      // Uncomment and handle approval if needed
+      // if (!isSupplier && isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
+      //   await handleApprovalRequest(requestData, null);
+      // } else {
       add(requestData);
+      // }
     }
     else {
       ToastService.warning(ErrorMessage.DocumentDetailMissing);
@@ -141,6 +149,7 @@ const AddMultipleDocument = ({
 
   const handleFileUpload = (value) => {
     const files = value.split(", ");
+
     const newFiles = files.map((file) => {
       const fileExtension = getFileExtension(file);
       return {
@@ -150,6 +159,7 @@ const AddMultipleDocument = ({
         documentTypeId: null,
       };
     });
+
     setUploadedFiles((prevFiles) => [...prevFiles, ...newFiles]);
   };
 
@@ -177,11 +187,13 @@ const AddMultipleDocument = ({
     setUploadedFiles((prevFiles) =>
       prevFiles.map((file, i) =>
         i === index ? { ...file, name: newName } : file,
+
       )
     );
   };
 
   const handleDocumemtTypeChange = (index, documentTypeInput) => {
+
     setUploadedFiles((prevFiles) =>
       prevFiles.map((documentType, i) =>
         i === index ? { ...documentType, documentType: documentTypeInput } : documentType,
@@ -201,6 +213,7 @@ const AddMultipleDocument = ({
         ref={ref}
         onActionChange={formActionHandler}
         onFormDataChange={onFormDataChange}
+      //onDropdownAction={DDLActionHandler}
       />
       <table className="custom-table mt-4">
         <thead>
@@ -212,6 +225,7 @@ const AddMultipleDocument = ({
           </tr>
         </thead>
         <tbody>
+          {/* {console.log('uploadedFiles', uploadedFiles)} */}
           {uploadedFiles.length === 0 ? (
             <tr>
               <td colSpan="3">
@@ -228,6 +242,14 @@ const AddMultipleDocument = ({
                     className="file-icon"
                   />
                 </td>
+                {/* <td
+                  contentEditable="true"
+                  onBlur={(e) =>
+                    handleFileNameChange(index, e.target.textContent)
+                  }
+                >
+                  {file.name}
+                </td> */}
                 <td>
                   {" "}
                   <Input
@@ -299,6 +321,24 @@ const AddMultipleDocument = ({
                       </button>
                     </div>
                   )}
+
+
+                  {/* <select
+                    value={file.documentTypeId || ""}
+                    onChange={(e) =>
+                      handleTypeChange(index, { value: e.target.value })
+                    }
+                    className="custom-select"
+                  >
+                    <option value="" disabled>
+                      Select Document Type
+                    </option>
+                    {documentTypes.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select> */}
                 </td>
                 <td>
                   <button
@@ -320,7 +360,7 @@ const AddMultipleDocument = ({
       <div className="d-flex align-item-end justify-content-end mt-3">
         <Buttons
           buttonTypeClassName="theme-button"
-          isLoading={isAddLoading}
+          isLoading={isApprovelLoading || isAddLoading}
           buttonText="Save"
           onClick={handleSave}
         />

@@ -16,5 +16,6 @@ namespace OMS.Domain.Repository.Contract
         Task<AddEntityDto<int>> DeleteAssignedSnippetBySnippetEmailTemplateId(int snippetEmailTemplateId, short deletedBy);
         Task<AddEntityDto<int>> AddAssignedSnippet(SnippetEmailTemplateDto requestData);
         Task<EntityList<GetAssignedSnippetByEmailTemplateIdResponse>> GetAssignedSnippetByEmailTemplateId(GetAssignedSnippetByEmailTemplateIdRequest requestData);
+        Task<List<GetSnippetEmailSnippetByEmailTemplateIdResponse>> GetSnippetEmailSnippetByEmailTemplateId(int emailTemplateId);
     }
 }

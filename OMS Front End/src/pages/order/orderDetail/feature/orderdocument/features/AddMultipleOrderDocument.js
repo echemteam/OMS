@@ -12,6 +12,8 @@ import ToastService from "../../../../../../services/toastService/ToastService";
 import { ErrorMessage } from "../../../../../../data/appMessages";
 import Input from "../../../../../../components/ui/inputs/input/Input";
 import { useAddOrderDocumentsMutation } from "../../../../../../app/services/orderAPI";
+import { FieldSettingType } from "../../../../../../utils/Enums/commonEnums";
+import { setFieldSetting } from "../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 
 const getFileIcon = (extension) => {
     switch (extension) {
@@ -41,8 +43,12 @@ const getFileExtension = (filename) => {
     return parts.length > 1 ? parts.pop().toLowerCase() : "";
 };
 
-const AddMultipleOrderDocument = ({ orderDetails, onClose, onSuccess }) => {
-
+const AddMultipleOrderDocument = ({
+    orderDetails,
+    onClose,
+    onSuccess,
+    isSingleDocument
+}) => {
     const ref = useRef();
     const [attachment, setAttachment] = useState([]);
     const [uploadedFiles, setUploadedFiles] = useState([]);
@@ -63,8 +69,26 @@ const AddMultipleOrderDocument = ({ orderDetails, onClose, onSuccess }) => {
         }
     }, [isAddSuccess, isAddData]);
 
+    useEffect(() => {
+        const manageData = DocumentMultipleFormData;  
+        if (isSingleDocument) {
+            setFieldSetting(manageData, 'attachment', FieldSettingType.ISMULTIPLE, false);
+             setFieldSetting(manageData, 'attachment', FieldSettingType.ISFILENAMECLEARED, false);
+
+        } else {
+            setFieldSetting(manageData, 'attachment', FieldSettingType.ISMULTIPLE, true);
+             setFieldSetting(manageData, 'attachment', FieldSettingType.ISFILENAMECLEARED, true);
+
+        }
+       
+    }, [isSingleDocument]);
+
     const handleSave = async () => {
-        if (uploadedFiles.length > 0 && attachment.length > 0) {
+        if (isSingleDocument && uploadedFiles.length === 0) {
+            ToastService.warning("Please Select Document");
+            return;
+        }
+        if (uploadedFiles.length >= 0 && attachment.length >= 0) {
             const modifyData = uploadedFiles.map((data, index) => {
                 const matchingAttachment = attachment.find((att, ind) => ind === index);
                 return {
@@ -72,12 +96,19 @@ const AddMultipleOrderDocument = ({ orderDetails, onClose, onSuccess }) => {
                     base64File: matchingAttachment ? matchingAttachment.base64Data : null,
                 };
             });
+
+            if (modifyData.length === 0) {
+                ToastService.warning("Please Select Document");
+                return;
+            }
+
             const IsAllDetailExist = modifyData.every((data) => data.documentName && data.base64File && data.documentType !== null);
             if (IsAllDetailExist) {
                 const requestData = {
                     orderId: orderDetails.orderId,
                     storagePath: "Order",
-                    documentOrderList: modifyData,
+                    // documentOrderList: modifyData,
+                    documentOrderList: isSingleDocument ? [modifyData[0]] : modifyData,
                 }
                 add(requestData);
             } else {
@@ -87,34 +118,48 @@ const AddMultipleOrderDocument = ({ orderDetails, onClose, onSuccess }) => {
     };
 
     const handleFileUpload = (value) => {
-        const files = value.split(", ");
-        const newFiles = files.map((file) => {
+            const files = value.split(", ");
+
+            const newFiles = files.map((file) => {
             const fileExtension = getFileExtension(file);
             return {
                 documentName: file,
-                documentType: 2,
+                documentType: isSingleDocument ? 0 : 2,
                 extension: fileExtension,
             };
         });
-        setUploadedFiles((prevFiles) => [...prevFiles, ...newFiles]);
+
+        // setUploadedFiles((prevFiles) => [...prevFiles, ...newFiles]);  
+        if (isSingleDocument) {
+            setUploadedFiles(newFiles);  
+        } else {
+            setUploadedFiles((prevFiles) => [...prevFiles, ...newFiles]);  
+        }
     };
 
     const handleFileRemove = (index) => {
-        setUploadedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
-        setAttachment((prevFiles) => prevFiles.filter((_, i) => i !== index));
+            setUploadedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));  
+            setAttachment((prevFiles) => prevFiles.filter((_, i) => i !== index));  
     };
 
+    
     const formActionHandler = {
         DDL_FILE: handleFileUpload,
     };
 
     const onFormDataChange = (updatedData) => {
-        setAttachment((prevAttachments) => [
-            ...prevAttachments,
-            ...updatedData?.attachment,
-        ]);
+        const attachmentsArray = Array.isArray(updatedData?.attachment) 
+            ? updatedData.attachment 
+            : updatedData?.attachment ? [updatedData.attachment] : [];
+    
+        if (attachmentsArray.length > 0) {
+            setAttachment((prevAttachments) => [
+                ...prevAttachments,
+                ...attachmentsArray,
+            ]);
+        }
     };
-
+    
     const handleFileNameChange = (index, newName) => {
         setUploadedFiles((prevFiles) =>
             prevFiles.map((file, i) =>
@@ -122,6 +167,7 @@ const AddMultipleOrderDocument = ({ orderDetails, onClose, onSuccess }) => {
             )
         );
     };
+    
     return (
         <div className="row add-order-doc-se">
             <FormCreator
@@ -146,7 +192,9 @@ const AddMultipleOrderDocument = ({ orderDetails, onClose, onSuccess }) => {
                             </td>
                         </tr>
                     ) : (
-                        uploadedFiles.map((file, index) => (
+                        uploadedFiles.map((file, index) =>
+                         
+                        (
                             <tr key={index}>
                                 <td>
                                     <img
@@ -155,7 +203,15 @@ const AddMultipleOrderDocument = ({ orderDetails, onClose, onSuccess }) => {
                                         className="file-icon"
                                     />
                                 </td>
-                                <td>
+                                {/* <td
+                  contentEditable="true"
+                  onBlur={(e) =>
+                    handleFileNameChange(index, e.target.textContent)
+                  }
+                >
+                  {file.name}
+                </td> */}
+                                 <td>
                                     {" "}
                                     <Input
                                         type="text"
@@ -180,7 +236,7 @@ const AddMultipleOrderDocument = ({ orderDetails, onClose, onSuccess }) => {
                             </tr>
                         ))
                     )}
-                </tbody>
+                </tbody> 
             </table>
             <div className="d-flex align-item-end justify-content-end mt-3">
                 <Buttons

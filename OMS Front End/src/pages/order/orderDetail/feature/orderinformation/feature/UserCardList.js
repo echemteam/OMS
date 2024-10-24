@@ -10,7 +10,8 @@ const UserCardList = ({contact,handleCheckboxChange,selectedContactId}) => {
       (firstName?.[0] || "").toUpperCase() + (lastName?.[0] || "").toUpperCase()
     );
   };
-
+  const addressContactCardInfo =
+    contact?.emailAddressList?.length > 0 || contact?.phoneNumberList?.length > 0;
   return (
     <>
       <div className="contact-card card-list-popup">
@@ -20,11 +21,14 @@ const UserCardList = ({contact,handleCheckboxChange,selectedContactId}) => {
             <div className="right-name-btn">
               <div className="user-name text-ellipsis">{`${contact.firstName} ${contact.lastName}`}</div>
               <div className="btn-sec">
+              {addressContactCardInfo && (
                 <div className="info-display info-user user-card">
                   <Iconify icon="ep:info-filled" className="info" />
                   <UserDetailsModel contact={contact} />
                 </div>
+                )}
               </div>
+
             </div>
             <div className="user-details">
               <div className="email">

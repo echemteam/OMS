@@ -61,7 +61,7 @@ export const orderItemFormData = {
             dataField: "casNumber",
             fieldSetting: {
                 placeholder: "Enter CAS Number",
-                maxLength: 10,
+                maxLength: 15,
                 allowSpace: false
             },
             style: {
