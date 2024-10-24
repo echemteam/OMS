@@ -11,7 +11,7 @@ namespace OMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[CheckClientIpActionFilter]
+    [CheckClientIpActionFilter]
     public class AuthenticationController : BaseController
     {
         #region private variable

@@ -1,4 +1,5 @@
-﻿using ClientIPAuthentication.Enum;
+﻿using ClientIPAuthentication;
+using ClientIPAuthentication.Enum;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
@@ -15,7 +16,7 @@ namespace OMS.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    //[CheckClientIpActionFilter]
+    [CheckClientIpActionFilter]
     public class CommonController : BaseController
     {
         #region private variable

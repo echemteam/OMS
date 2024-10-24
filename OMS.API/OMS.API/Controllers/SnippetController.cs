@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using ClientIPAuthentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
-using OMS.Domain.Entities.API.Request.RoleMapping;
-using OMS.Domain.Entities.API.Request.Roles;
 using OMS.Domain.Entities.API.Request.Snippet;
 using OMS.Domain.Entities.API.Response.Snippet;
 using OMS.Domain.Entities.Entity.CommonEntity;
@@ -15,6 +13,7 @@ namespace OMS.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [CheckClientIpActionFilter]
     public class SnippetController : BaseController
     {
         #region private variable

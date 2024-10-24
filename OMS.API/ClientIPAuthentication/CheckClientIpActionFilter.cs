@@ -5,12 +5,15 @@ using ClientIPAuthentication.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 
 namespace ClientIPAuthentication
 {
     public class CheckClientIpActionFilter : ActionFilterAttribute
     {
+        private static readonly MemoryCache _memoryCache = new MemoryCache(new MemoryCacheOptions());
+
         public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             try
@@ -21,13 +24,28 @@ namespace ClientIPAuthentication
                 var remoteIPAddress = context.HttpContext.Connection.RemoteIpAddress?.ToString();
                 bool checkWhiteListIP = Convert.ToBoolean(configuration["CheckWhiteListIP"]);
 
-                if (checkWhiteListIP && !string.IsNullOrEmpty(remoteIPAddress))
+                var cacheKey = $"whitelist_ip_{remoteIPAddress}";
+
+                if (!_memoryCache.TryGetValue(cacheKey, out bool isWhitelisted))
                 {
                     GetIPAddressHelper getIpAddress = new(new ConnectionDapperContext(connectionString));
                     var getWhiteListIPAddress = await getIpAddress.GetWhiteListIPAddress(remoteIPAddress!);
-                    bool badIp = getWhiteListIPAddress.Id;
-                    //bool badIp = false;
-                    if (!badIp)
+
+                    isWhitelisted = getWhiteListIPAddress.Id;
+                    _memoryCache.Set(cacheKey, isWhitelisted, new MemoryCacheEntryOptions
+                    {
+                        AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
+                    });
+                }
+                else
+                {
+                    isWhitelisted = true;
+                }
+
+                if (checkWhiteListIP && !isWhitelisted)
+                {
+
+                    if (!isWhitelisted)
                     {
                         var response = new ResponseWrapper<object>
                         {
@@ -35,7 +53,7 @@ namespace ClientIPAuthentication
                             ResponseData = "Unauthorized",
                             IsEnType = false
                         };
-                        context.Result = new JsonResult(response) { StatusCode = StatusCodes.Status403Forbidden };
+                        context.Result = new JsonResult(response) { StatusCode = StatusCodes.Status401Unauthorized };
                         return;
                     }
                 }

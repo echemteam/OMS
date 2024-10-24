@@ -12,7 +12,7 @@ namespace OMS.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    //[CheckClientIpActionFilter]
+    [CheckClientIpActionFilter]
     public class ContactController : BaseController
     {
         #region private variable
@@ -25,6 +25,8 @@ namespace OMS.API.Controllers
             _serviceManager = serviceManager;
         }
         #endregion
+
+
 
         #region Contact API
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ClientIPAuthentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.User;
@@ -11,8 +12,8 @@ namespace OMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-  [Authorize]
-    //[CheckClientIpActionFilter]
+    [Authorize]
+    [CheckClientIpActionFilter]
     public class UserController : BaseController
     {
         #region private variable

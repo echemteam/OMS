@@ -1,4 +1,5 @@
-﻿using Common.Helper.Utility;
+﻿using ClientIPAuthentication;
+using Common.Helper.Utility;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request;
@@ -11,6 +12,7 @@ namespace OMS.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     //[Authorize]
+    [CheckClientIpActionFilter]
     public class TestController : BaseController
     {
         #region private variable 

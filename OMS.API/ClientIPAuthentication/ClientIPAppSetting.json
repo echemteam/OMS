@@ -1,7 +1,8 @@
 {
   "CentralizeSystem": {
     "connectionString": "server=47.190.78.205; database=EchemCentralizeSystem;user id = sa; password=Swami@86;integrated security = false; Connect Timeout = 1000;TrustServerCertificate=True;",
+    //"connectionString": "server=47.190.78.207; database=EchemCentralizeSystem;user id = sa; password=Swami@86;integrated security = false; Connect Timeout = 1000;TrustServerCertificate=True;",
     "providerName": "System.Data.EntityClient"
   },
-  "CheckWhiteListIP" : false
+  "CheckWhiteListIP" : true
 }
